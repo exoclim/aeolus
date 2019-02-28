@@ -1,0 +1,24 @@
+name: test_env
+channels:
+- conda-forge
+dependencies:
+- python=3.7
+- flake8-builtins!=1.4.0
+- flake8-comprehensions
+- flake8-copyright
+- flake8-docstrings
+- flake8-import-order
+- flake8-mutable
+- flake8-pep3101
+- flake8-print
+- flake8-quotes
+- ipykernel
+- iris
+- jupyter
+- matplotlib
+- numpy
+- pep8-naming
+- pytest>=2.4
+- pytest-cov
+- pytest-flake8
+# - pytest-mpl
