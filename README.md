@@ -15,7 +15,7 @@ After the dependencies are installed:
 ```bash
 git clone https://github.com/exoclim/aeolus.git
 
-cd octant
+cd aeolus
 
 python setup.py install
 ```
