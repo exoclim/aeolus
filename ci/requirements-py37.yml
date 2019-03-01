@@ -1,4 +1,4 @@
-name: test_env
+name: aeolus_py37
 channels:
 - conda-forge
 dependencies:
