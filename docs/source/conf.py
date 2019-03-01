@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Sphinx configuration."""
 #
 # Configuration file for the Sphinx documentation builder.
 #
@@ -16,8 +17,8 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-from glob import glob
 import os
+from glob import glob
 
 import aeolus
 
@@ -25,7 +26,7 @@ import aeolus
 # -- Project information -----------------------------------------------------
 
 project = "aeolus"
-copyright = "2018, the aeolus developers"
+copyright = "2018, the aeolus developers"  # noqa
 author = "The aeolus developers"
 
 # The short X.Y version
@@ -91,9 +92,9 @@ highlight_language = "python"
 html_theme_path = ["_themes"]
 
 # import sphinx_rtd_theme  # noqa
-# html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 # html_theme = 'sphinxdoc'
-html_theme = "sphinx13_aeolus"
+# html_theme = "sphinx13_aeolus"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
