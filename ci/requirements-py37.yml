@@ -16,6 +16,7 @@ dependencies:
 - iris
 - jupyter
 - matplotlib
+- metpy
 - numpy
 - pep8-naming
 - pytest>=2.4
