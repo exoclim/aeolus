@@ -50,8 +50,11 @@ def _read_const_file(name, directory=CONST_DIR):
         const_dict = {}
         for vardict in list_of_dicts:
             const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
+        return const_dict
     except FileNotFoundError:
-        raise LoadError(f"JSON file for {name} configuration not found, check the directory")
+        raise LoadError(
+            f"JSON file for {directory} {name} configuration not found, check the directory"
+        )
 
 
 def init_const(name, directory=None):
@@ -86,8 +89,6 @@ def init_const(name, directory=None):
     # transform the list of dictionaries into a dictionary
     const_dict = _read_const_file("general")  # TODO: make this more flexible?
     const_dict.update(_read_const_file(name, **kw))
-    for vardict in _read_const_file(name, **kw):
-        const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
     kls = make_dataclass(
         cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
     )

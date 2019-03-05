@@ -1,5 +1,5 @@
 Physical constants
 ==================
-.. autofunction:: aeolus.const.init_planet
+.. autofunction:: aeolus.const.init_const
 
 .. autoclass:: aeolus.const.ConstContainer
