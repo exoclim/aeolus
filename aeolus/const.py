@@ -37,16 +37,24 @@ class ConstContainer:
             )
             object.__setattr__(self, name, cube)
 
+    def _derive_const(self):
+        """Not implemented."""
+        pass
+
 
 def _read_const_file(name, directory=CONST_DIR):
     try:
         with (directory / name).with_suffix(".json").open("r") as fp:
-            return json.load(fp)
+            list_of_dicts = json.load(fp)
+        # transform the list of dictionaries into a dictionary
+        const_dict = {}
+        for vardict in list_of_dicts:
+            const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
     except FileNotFoundError:
         raise LoadError(f"JSON file for {name} configuration not found, check the directory")
 
 
-def init_planet(name, directory=None):
+def init_const(name, directory=None):
     """
     Create a dataclass with a given set of constants.
 
@@ -63,7 +71,7 @@ def init_planet(name, directory=None):
 
     Examples
     --------
-    >>> c = init_planet('earth')
+    >>> c = init_const('earth')
     >>> c
     EarthConstants(gravity [m s-2], radius [m], day [s], solar_constant [W m-2], ...)
     >>> c.gravity
@@ -76,7 +84,8 @@ def init_planet(name, directory=None):
     else:
         kw = {"directory": directory}
     # transform the list of dictionaries into a dictionary
-    const_dict = {}
+    const_dict = _read_const_file("general")  # TODO: make this more flexible?
+    const_dict.update(_read_const_file(name, **kw))
     for vardict in _read_const_file(name, **kw):
         const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
     kls = make_dataclass(

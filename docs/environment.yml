@@ -11,3 +11,5 @@ dependencies:
 - pytest
 - sphinx
 - sphinx_rtd_theme
+- tornado<6
+
