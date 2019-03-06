@@ -4,7 +4,8 @@ import numpy as np
 
 def roll_cube_e2w(cube_in, inplace=False):
     """
-    Takes a cube which goes longitude 0-360 back to -180-180.
+    Take a cube which goes longitude 0-360 back to -180-180.
+
     Works with global model output, and in some cases for regional.
     """
     if inplace:

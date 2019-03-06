@@ -5,13 +5,13 @@ from iris.util import broadcast_to_shape
 
 
 def get_cube_datetimes(cube):
-    """Get a list of `iris.cube.Cube`'s time points as `datetime.datetime`s """
+    """Get a list of `iris.cube.Cube`'s time points as `datetime.datetime`s."""
     return cube.coord("time").units.num2date(cube.coord("time").points)
 
 
 def coord_to_cube(cube, coord):
     """
-    Convert coordinate points to a cube of the same dimension as the given cube
+    Convert coordinate points to a cube of the same dimension as the given cube.
 
     Parameters
     ----------
