@@ -18,4 +18,6 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
 
    core
    const
+   coord_utils
+   plots
    utils
