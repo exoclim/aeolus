@@ -27,6 +27,7 @@ class ConstContainer:
     def __post_init__(self):
         """Do things automatically after __init__()."""
         self._convert_to_iris_cubes()
+        self._derive_const()
 
     def _convert_to_iris_cubes(self):
         """Loop through fields and convert each of them to `iris.cube.Cube`."""
@@ -38,8 +39,10 @@ class ConstContainer:
             object.__setattr__(self, name, cube)
 
     def _derive_const(self):
-        """Not implemented."""
-        pass
+        """Not fully implemented yet."""
+        name = "dry_air_gas_constant"
+        cube = self.molar_gas_constant / self.dry_air_molecular_weight
+        object.__setattr__(self, name, cube)
 
 
 def _read_const_file(name, directory=CONST_DIR):
