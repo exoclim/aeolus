@@ -24,7 +24,7 @@ def nearest_coord_value(cube, coord_name, val):
 
     Returns
     -------
-    point: int or float
+    int or float
         element of the coordinate array closest to the given `val`
     """
     coord = cube.coord(coord_name)
@@ -45,7 +45,7 @@ def coord_to_cube(cube, coord):
 
     Returns
     -------
-    new_cube: iris.cube.Cube
+    iris.cube.Cube
         Cube of broadcast coordinate
     """
     if isinstance(coord, str):

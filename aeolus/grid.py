@@ -1,4 +1,6 @@
 """Operations on geographical grid."""
+import iris
+
 import numpy as np
 
 
@@ -35,3 +37,31 @@ def roll_cube_e2w(cube_in, inplace=False):
         assert ((lon.points >= -180.0) & (lon.points <= 180.0)).all(), msg
     if not inplace:
         return cube
+
+
+def area_weights_cube(cube, r_planet=None):
+    """
+    Create a cube of area weights for an arbitrary planet.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude and latitude coordinates
+    r_planet: float
+        Radius of planet
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of area weights with the same metadata as the input cube
+    """
+    cube = cube.copy()
+    for dim_coord in cube.dim_coords:
+        if not dim_coord.has_bounds():
+            dim_coord.guess_bounds()
+    aw = iris.analysis.cartography.area_weights(cube)
+    if r_planet is not None:
+        aw *= (r_planet / iris.fileformats.pp.EARTH_RADIUS) ** 2  # FIXME
+    aw = cube.copy(data=aw)
+    aw.units = "m**2"
+    return aw
