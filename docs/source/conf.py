@@ -195,7 +195,7 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 # Options for intersphinx.
 intersphinx_mapping = {
-    "iris": ("https://scitools.org.uk/iris/docs/latest/iris/iris.html", None),
+    "iris": ("https://scitools.org.uk/iris/docs/latest/", None),
     "numpy": ("https://docs.scipy.org/doc/numpy", None),
     "python": ("https://docs.python.org/3/", None),
 }

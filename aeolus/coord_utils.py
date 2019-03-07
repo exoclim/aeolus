@@ -9,6 +9,29 @@ def get_cube_datetimes(cube):
     return cube.coord("time").units.num2date(cube.coord("time").points)
 
 
+def nearest_coord_value(cube, coord_name, val):
+    """
+    Get the nearest value of a coordinate.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with the coordinate
+    coord_name: str or iris.coords.Coord
+        Coordinate where to look the nearest point up
+    val: int or float
+        The value to find
+
+    Returns
+    -------
+    point: int or float
+        element of the coordinate array closest to the given `val`
+    """
+    coord = cube.coord(coord_name)
+    i = coord.nearest_neighbour_index(val)
+    return coord.points[i]
+
+
 def coord_to_cube(cube, coord):
     """
     Convert coordinate points to a cube of the same dimension as the given cube.
