@@ -11,6 +11,20 @@ from .exceptions import LoadError
 CONST_DIR = Path(__file__).parent / "phys_const_store"
 
 
+class ScalarCube(iris.cube.Cube):
+    """Cube without coordinates."""
+
+    @property
+    def asc(self):
+        """Convert cube to AuxCoord for math ops."""
+        return iris.coords.AuxCoord(self.data, units=self.units, long_name=self.long_name)
+
+    @classmethod
+    def from_cube(cls, cube):
+        """Convert iris cube to ScalarCube."""
+        return cls(**{k: getattr(cube, k) for k in ["data", "units", "long_name"]})
+
+
 class ConstContainer:
     """Base class for creating dataclasses and storing planetary constants."""
 
@@ -33,7 +47,7 @@ class ConstContainer:
         """Loop through fields and convert each of them to `iris.cube.Cube`."""
         for name in self.__dataclass_fields__:
             _field = getattr(self, name)
-            cube = iris.cube.Cube(
+            cube = ScalarCube(
                 data=_field.get("value"), units=_field.get("units", 1), long_name=name
             )
             object.__setattr__(self, name, cube)
@@ -41,7 +55,8 @@ class ConstContainer:
     def _derive_const(self):
         """Not fully implemented yet."""
         name = "dry_air_gas_constant"
-        cube = self.molar_gas_constant / self.dry_air_molecular_weight
+        cube = ScalarCube.from_cube(self.molar_gas_constant / self.dry_air_molecular_weight)
+        cube.rename(name)
         object.__setattr__(self, name, cube)
 
 

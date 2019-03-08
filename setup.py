@@ -36,7 +36,7 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     setup_requires=["numpy>=1.7"],
-    install_requires=["numpy>=1.7", "pytest>=3.3", "pandas>=0.20", "scitools-iris>=2.0.*"],
+    install_requires=["numpy>=1.7", "pytest>=3.3", "matplotlib>=3", "scitools-iris>=2.0.*"],
     classifiers=[
         "Intended Audience :: Science/Research",
         "Natural Language :: English",
