@@ -20,5 +20,6 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    const
    coord_utils
    grid
+   misc
    plots
    utils

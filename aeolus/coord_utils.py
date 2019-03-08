@@ -61,7 +61,7 @@ def coord_to_cube(cube, coord):
         new_cube = iris.cube.Cube(
             data=_data,
             units=_coord.units,
-            standard_name=_coord.name(),
+            long_name=_coord.name(),
             dim_coords_and_dims=dc,
             aux_coords_and_dims=ac,
         )
