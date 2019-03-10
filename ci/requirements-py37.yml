@@ -15,7 +15,7 @@ dependencies:
 - ipykernel
 - iris
 - jupyter
-- matplotlib
+- matplotlib<3,>=2
 - metpy
 - numpy
 - pep8-naming
