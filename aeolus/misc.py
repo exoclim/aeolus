@@ -9,8 +9,8 @@ import numpy as np
 from .coord_utils import nearest_coord_value
 
 bound_names = {
-    "longitude0": "east",
-    "longitude1": "west",
+    "longitude0": "west",
+    "longitude1": "east",
     "latitude0": "south",
     "latitude1": "north",
 }
