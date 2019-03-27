@@ -4,7 +4,20 @@ import iris
 import numpy as np
 
 
-def roll_cube_e2w(cube_in, inplace=False):
+def _shift_to_pm180(x):
+    """Shift array to -180 to +180 degrees range."""
+    return np.sort((x + 180) % 360 - 180)
+
+
+def _is_longitude_global(lon_points):
+    """Return True if array of longitudes covers the whole sphere."""
+    dx = np.diff(lon_points)[0]  # assume regular grid
+    case_0_360 = ((lon_points[0] - dx) <= 0) and ((lon_points[-1] + dx) >= 360)
+    case_pm180 = ((lon_points[0] - dx) <= -180) and ((lon_points[-1] + dx) >= 180)
+    return case_0_360 or case_pm180
+
+
+def roll_cube_e2w(cube_in, coord_name="longitude", inplace=False):
     """
     Take a cube which goes longitude 0-360 back to -180-180.
 
@@ -14,27 +27,22 @@ def roll_cube_e2w(cube_in, inplace=False):
         cube = cube_in
     else:
         cube = cube_in.copy()
-    lon = cube.coord("longitude")
-    if (lon.points >= 0.0).all():
-        if (lon.points <= 360.0).all():
-            subtract = -180.0
-            cube.data = np.roll(cube.data, len(lon.points) // 2, axis=-1)
-        else:
-            # because for regional runs, UM output
-            # can have longitudes > 360
-            # In this case no data roll needed
-            subtract = -360.0
+    xcoord = cube.coord(coord_name)
+    if (xcoord.points >= 0.0).all():
+        if _is_longitude_global(xcoord.points):
+            # Shift data symmetrically only when dealing with global cubes
+            cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
 
-        if lon.has_bounds():
-            bounds = lon.bounds + subtract
+        if xcoord.has_bounds():
+            bounds = _shift_to_pm180(xcoord.bounds)  # + subtract
         else:
             bounds = None
-        cube.replace_coord(lon.copy(points=lon.points + subtract, bounds=bounds))
+        cube.replace_coord(xcoord.copy(points=_shift_to_pm180(xcoord.points), bounds=bounds))
     else:
         # Nothing to do, the cube is already centered on 0 longitude
         # unless there is something wrong with longitude
-        msg = "Incorrect longitude values:" f"from {lon.points.min()} to {lon.points.max()}"
-        assert ((lon.points >= -180.0) & (lon.points <= 180.0)).all(), msg
+        msg = f"Incorrect {coord_name} values: from {xcoord.points.min()} to {xcoord.points.max()}"
+        assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), msg
     if not inplace:
         return cube
 
@@ -63,5 +71,6 @@ def area_weights_cube(cube, r_planet=None):
     if r_planet is not None:
         aw *= (r_planet / iris.fileformats.pp.EARTH_RADIUS) ** 2  # FIXME
     aw = cube.copy(data=aw)
+    aw.rename("grid_cell_area")
     aw.units = "m**2"
     return aw
