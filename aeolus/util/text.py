@@ -1,5 +1,5 @@
 """Text-related formatting functions."""
-import LatLon23 as LL
+from LatLon23 import Latitude, Longitude
 
 from ..exceptions import ArgumentError
 
@@ -31,9 +31,9 @@ def fmt_lonlat(value, lon_or_lat, degree=False):
     '0'
     """
     if lon_or_lat.lower().startswith("lat"):
-        res = LL.Latitude(value)
+        res = Latitude(value)
     elif lon_or_lat.lower().startswith("lon"):
-        res = LL.Longitude(value)
+        res = Longitude(value)
     else:
         raise ArgumentError("2nd arg or the function should start with `lon` or `lat`")
     out = res.to_string("%d%H")

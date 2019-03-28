@@ -40,3 +40,9 @@ class LoadError(AeolusError):
     """Raised when input files or directories are not found."""
 
     pass
+
+
+class BoundaryError(AeolusError):
+    """Raised when there is an error with geographical regions."""
+
+    pass
