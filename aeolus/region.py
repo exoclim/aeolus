@@ -1,5 +1,5 @@
 """Subsetting variables over geographical regions."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import iris
 
@@ -10,10 +10,10 @@ from .exceptions import BoundaryError
 class BoundsRect:
     """Bounding longitudes and latitudes of a given lon-lat rectangle."""
 
-    west: float
-    east: float
-    south: float
-    north: float
+    west: float = field(metadata={"coord": "longitude"})
+    east: float = field(metadata={"coord": "longitude"})
+    south: float = field(metadata={"coord": "latitude"})
+    north: float = field(metadata={"coord": "latitude"})
 
     def __post_init__(self):  # noqa
         # if self.west > self.east:
@@ -58,29 +58,55 @@ class Region(object):
         """
         self.name = name
         self.description = description
+
         self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound)
+        self._sides = [
+            (key, f.metadata["coord"]) for key, f in self.bounds.__dataclass_fields__.items()
+        ]
+
         self.lon_size = abs(self.bounds.east - self.bounds.west)
         self.lat_size = self.bounds.north - self.bounds.south
 
     def __repr__(self):  # noqa
-        return (f"Geographical region '{self.name}' (west={self.bounds.west}, "
-                f"east={self.bounds.east}, south={self.bounds.south}, north={self.bounds.north})")
+        txt = (
+            f"Geographical region '{self.name}' (west={self.bounds.west}, "
+            f"east={self.bounds.east}, south={self.bounds.south}, north={self.bounds.north})"
+        )
+        if self.description:
+            txt += "\n\n"
+            txt += self.description
+        return txt
+
+    def __getitem__(self, index):  # noqa
+        return {
+            "value": getattr(self.bounds, self._sides[index][0]),
+            "name": self._sides[index][0],
+            "coord": self._sides[index][1],
+        }
+
+    def _perpendicular_side_limits(self, side):
+        """Get minimum and maximum values of the region boundary perpendicular to the given one."""
+        if side in ["west", "east"]:
+            coord_name = "latitude"
+            _min, _max = self.bounds.south, self.bounds.north
+        elif side in ["south", "north"]:
+            coord_name = "longitude"
+            _min, _max = self.bounds.west, self.bounds.east
+        else:
+            raise BoundaryError(f"Boundary name '{side}' is not valid")
+        return coord_name, (_min, _max)
 
     @property
     def constraint(self):
         """Constraint to select data within the region."""
-        cnstr = iris.Constraint(
-            latitude=lambda x: self.bounds.south <= x <= self.bounds.north,
-        )
+        cnstr = iris.Constraint(latitude=lambda x: self.bounds.south <= x <= self.bounds.north)
         if self.bounds.west < self.bounds.east:
             # Western boundary is to the west
-            cnstr &= iris.Constraint(
-                longitude=lambda x: self.bounds.west <= x <= self.bounds.east
-            )
+            cnstr &= iris.Constraint(longitude=lambda x: self.bounds.west <= x <= self.bounds.east)
         else:
             # Region wrapping around dateline (180deg)
             cnstr &= iris.Constraint(
-                longitude=lambda x: (self.bounds.west >= x) or (x >= self.bounds.east)
+                longitude=lambda x: (self.bounds.west <= x) or (x <= self.bounds.east)
             )
         return cnstr
 

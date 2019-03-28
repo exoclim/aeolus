@@ -8,14 +8,6 @@ import numpy as np
 
 from .coord_utils import nearest_coord_value
 
-bound_names = {
-    "longitude0": "west",
-    "longitude1": "east",
-    "latitude0": "south",
-    "latitude1": "north",
-}
-ll_other = {"longitude": "latitude", "latitude": "longitude"}
-
 
 def vertical_cross_section_area(cube2d, r_planet):
     """Create a cube of vertical cross-section areas in metres."""
@@ -41,25 +33,23 @@ def vertical_cross_section_area(cube2d, r_planet):
     return vc_area
 
 
-def horizontal_fluxes_through_box_boundaries(
-    scalar_cube, latlon_box_dict, u, v, r_planet, vertical_constraint=None
+def horizontal_fluxes_through_region_boundaries(
+    scalar_cube, region, u, v, r_planet, vertical_constraint=None
 ):
     """Calculate horizontal fluxes of `scalar_cube` through planes of a rectangular region."""
     perpendicular_wind_cmpnts = {"longitude": u, "latitude": v}
 
     total_h_fluxes = iris.cube.CubeList()
-    for i, (ll_coord, ll_val) in enumerate(latlon_box_dict.items()):
-        this_coord = ll_coord[:-1]
-        other_coord = ll_other[ll_coord[:-1]]  # perpendicular coordinate
-        nearest = nearest_coord_value(scalar_cube, this_coord, ll_val)
-        if abs(nearest - ll_val) > 10:
+    for bound in region:
+        this_coord = bound["coord"]
+        other_coord, (other_min, other_max) = region._perpendicular_side_limits(bound["name"])
+        nearest = nearest_coord_value(scalar_cube, this_coord, bound["value"])
+        if abs(nearest - bound["value"]) > 10:
             warnings.warn(
-                f"Nearest value is {np.round(nearest - ll_val, 2)} deg away"
+                f"Nearest value is {np.round(nearest - bound['value'], 2)} deg away"
                 f" from the given value of {this_coord}"
             )
         vcross_cnstr = iris.Constraint(**{this_coord: nearest})
-        other_min = latlon_box_dict[f"{other_coord}0"]
-        other_max = latlon_box_dict[f"{other_coord}1"]
         if vertical_constraint is not None:
             vcross_cnstr &= vertical_constraint
         if other_max >= other_min:
@@ -78,19 +68,17 @@ def horizontal_fluxes_through_box_boundaries(
             * scalar_cube.extract(vcross_cnstr)
             * vcross_area
         )
-        cube.rename(f"{scalar_cube.name()}_flux_through_{bound_names[ll_coord]}_boundary")
+        cube.rename(f"{scalar_cube.name()}_flux_through_{bound['name']}_boundary")
         # Total flux
         cube_total = cube.collapsed(cube.dim_coords, iris.analysis.SUM)
         total_h_fluxes.append(cube_total)
     return total_h_fluxes
 
 
-def net_horizontal_flux_to_region(
-    scalar_cube, latlon_box_dict, u, v, r_planet, vertical_constraint=None
-):
+def net_horizontal_flux_to_region(scalar_cube, region, u, v, r_planet, vertical_constraint=None):
     """Calculate horizontal fluxes of `scalar_cube` quantity and add them to get the net result."""
-    total_h_fluxes = horizontal_fluxes_through_box_boundaries(
-        scalar_cube, latlon_box_dict, u, v, r_planet, vertical_constraint=vertical_constraint
+    total_h_fluxes = horizontal_fluxes_through_region_boundaries(
+        scalar_cube, region, u, v, r_planet, vertical_constraint=vertical_constraint
     )
     net_flux = (
         total_h_fluxes.extract_strict(
@@ -107,5 +95,6 @@ def net_horizontal_flux_to_region(
         )
     )
     net_flux.rename(f"net_{scalar_cube.name()}_horizontal_flux_to_region")
+    net_flux.attributes["region_str"] = str(region)
 
     return net_flux
