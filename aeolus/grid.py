@@ -1,12 +1,8 @@
 """Operations on geographical grid."""
 import iris
+from iris.analysis.cartography import wrap_lons
 
 import numpy as np
-
-
-def _shift_to_pm180(x):
-    """Shift array to -180 to +180 degrees range."""
-    return np.sort((x + 180) % 360 - 180)
 
 
 def _is_longitude_global(lon_points):
@@ -34,10 +30,10 @@ def roll_cube_e2w(cube_in, coord_name="longitude", inplace=False):
             cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
 
         if xcoord.has_bounds():
-            bounds = _shift_to_pm180(xcoord.bounds)  # + subtract
+            bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract
         else:
             bounds = None
-        cube.replace_coord(xcoord.copy(points=_shift_to_pm180(xcoord.points), bounds=bounds))
+        cube.replace_coord(xcoord.copy(points=wrap_lons(xcoord.points, -180, 360), bounds=bounds))
     else:
         # Nothing to do, the cube is already centered on 0 longitude
         # unless there is something wrong with longitude
