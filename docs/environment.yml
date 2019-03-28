@@ -12,4 +12,5 @@ dependencies:
 - sphinx
 - sphinx_rtd_theme
 - tornado<6
-
+- pip:
+  - latlon23
