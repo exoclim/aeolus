@@ -1,5 +1,10 @@
 [
     {
+        "name": "stefan_boltzmann",
+        "units": "W m-2 K-4",
+        "value": 5.670367e-8
+    },
+    {
         "name": "molar_gas_constant",
         "units": "J K-1 mol-1",
         "value": 8.3144621
