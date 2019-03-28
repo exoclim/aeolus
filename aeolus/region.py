@@ -16,8 +16,8 @@ class BoundsRect:
     north: float
 
     def __post_init__(self):  # noqa
-        if self.west > self.east:
-            raise BoundaryError("West boundary value should be less than east")
+        # if self.west > self.east:
+        #     raise BoundaryError("West boundary value should be less than east")
         if self.south > self.north:
             raise BoundaryError("South boundary value should be less than north")
 
@@ -59,7 +59,7 @@ class Region(object):
         self.name = name
         self.description = description
         self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound)
-        self.lon_size = self.bounds.east - self.bounds.west
+        self.lon_size = abs(self.bounds.east - self.bounds.west)
         self.lat_size = self.bounds.north - self.bounds.south
 
     def __repr__(self):  # noqa
@@ -69,10 +69,20 @@ class Region(object):
     @property
     def constraint(self):
         """Constraint to select data within the region."""
-        return iris.Constraint(
-            longitude=lambda x: self.bounds.west <= x <= self.bounds.east,
+        cnstr = iris.Constraint(
             latitude=lambda x: self.bounds.south <= x <= self.bounds.north,
         )
+        if self.bounds.west < self.bounds.east:
+            # Western boundary is to the west
+            cnstr &= iris.Constraint(
+                longitude=lambda x: self.bounds.west <= x <= self.bounds.east
+            )
+        else:
+            # Region wrapping around dateline (180deg)
+            cnstr &= iris.Constraint(
+                longitude=lambda x: (self.bounds.west >= x) or (x >= self.bounds.east)
+            )
+        return cnstr
 
     def add_to_ax(self, ax, **kwargs):
         """Add a Rectangle patch to matplotlib axes `ax` with given keyword arguments `kwargs`."""

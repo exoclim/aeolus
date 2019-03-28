@@ -32,10 +32,12 @@ def roll_cube_e2w(cube_in, coord_name="longitude", inplace=False):
             cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
 
         if xcoord.has_bounds():
-            bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract
+            bounds = np.sort(wrap_lons(xcoord.bounds, -180, 360), axis=0)  # + subtract
         else:
             bounds = None
-        cube.replace_coord(xcoord.copy(points=wrap_lons(xcoord.points, -180, 360), bounds=bounds))
+        cube.replace_coord(
+            xcoord.copy(points=np.sort(wrap_lons(xcoord.points, -180, 360)), bounds=bounds)
+        )
     else:
         # Nothing to do, the cube is already centered on 0 longitude
         # unless there is something wrong with longitude
