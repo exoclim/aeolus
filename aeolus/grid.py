@@ -1,6 +1,7 @@
 """Operations on geographical grid."""
 import iris
 from iris.analysis.cartography import wrap_lons
+from iris.util import is_regular
 
 import numpy as np
 
@@ -25,6 +26,7 @@ def roll_cube_e2w(cube_in, coord_name="longitude", inplace=False):
         cube = cube_in.copy()
     xcoord = cube.coord(coord_name)
     if (xcoord.points >= 0.0).all():
+        assert is_regular(xcoord), "Operation is only valid for a regularly spaced coordinate."
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
             cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
