@@ -96,6 +96,14 @@ class Region(object):
             raise BoundaryError(f"Boundary name '{side}' is not valid")
         return coord_name, (_min, _max)
 
+    @classmethod
+    def from_cube(cls, cube):
+        """Create a Region from limits of longitude and latitude of the cube."""
+        lons = cube.coord("longitude").points
+        lats = cube.coord("latitude").points
+        name = f"extent_of_{cube.name()}"
+        return cls(lons.min(), lons.max(), lats.min(), lats.max(), name=name)
+
     @property
     def constraint(self):
         """Constraint to select data within the region."""
