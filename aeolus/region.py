@@ -122,11 +122,20 @@ class Region(object):
             if margin_units == "points":
                 idx0 += margin
                 idx1 -= margin
+                lon0 = lons[idx0]
+                lon1 = lons[idx1]
+                lat0 = lats[idx0]
+                lat1 = lats[idx1]
             else:
                 lon0 = lons[idx0] + margin
                 lon1 = lons[idx1] - margin
                 lat0 = lats[idx0] + margin
                 lat1 = lats[idx1] - margin
+        else:
+            lon0 = lons[idx0]
+            lon1 = lons[idx1]
+            lat0 = lats[idx0]
+            lat1 = lats[idx1]
 
         return cls(lon0, lon1, lat0, lat1, name=name)
 
