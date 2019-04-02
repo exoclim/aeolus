@@ -97,12 +97,38 @@ class Region(object):
         return coord_name, (_min, _max)
 
     @classmethod
-    def from_cube(cls, cube):
-        """Create a Region from limits of longitude and latitude of the cube."""
+    def from_cube(cls, cube, margin=None, margin_units="points"):
+        """
+        Create a Region from limits of longitude and latitude of the cube.
+
+        Parameters
+        ----------
+        cube: iris.cube.Cube
+            Source cube
+        margin: scalar, optional
+            Use `margin` number of points or degrees to create a region smaller than the cube
+        margin_units: str, optional
+            Units of margin. Can be "points" or "degrees".
+
+        Returns
+        -------
+        aeolus.region.Region
+        """
+        name = f"extent_of_{cube.name()}"
         lons = cube.coord("longitude").points
         lats = cube.coord("latitude").points
-        name = f"extent_of_{cube.name()}"
-        return cls(lons.min(), lons.max(), lats.min(), lats.max(), name=name)
+        idx0, idx1 = 0, -1
+        if margin is not None:
+            if margin_units == "points":
+                idx0 += margin
+                idx1 -= margin
+            else:
+                lon0 = lons[idx0] + margin
+                lon1 = lons[idx1] - margin
+                lat0 = lats[idx0] + margin
+                lat1 = lats[idx1] - margin
+
+        return cls(lon0, lon1, lat0, lat1, name=name)
 
     @property
     def constraint(self):
