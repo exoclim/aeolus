@@ -3,7 +3,7 @@
 [![Documentation Status](https://readthedocs.org/projects/aeolus/badge/?version=latest)](https://aeolus.readthedocs.io/en/latest/?badge=latest)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE)
 
-# aeolus
+# aeolus :wind_face:
 Python library for object-oriented analysis of atmospheric model output built on top of [iris](https://github.com/SciTools/iris).
 
 The documentation is available [here](https://aeolus.readthedocs.io/en/latest/).
