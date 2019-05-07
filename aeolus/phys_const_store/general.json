@@ -1,5 +1,10 @@
 [
     {
+        "name": "earth_day",
+        "units": "s",
+        "value": 86400,
+    },
+    {
         "name": "stefan_boltzmann",
         "units": "W m-2 K-4",
         "value": 5.670367e-8
