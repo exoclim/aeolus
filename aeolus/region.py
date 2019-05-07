@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 import iris
 
 from .exceptions import BoundaryError
+from .util import fmt_lonlat
 
 
 @dataclass
@@ -95,6 +96,9 @@ class Region(object):
         else:
             raise BoundaryError(f"Boundary name '{side}' is not valid")
         return coord_name, (_min, _max)
+
+    def to_str(self, sep="_"):  # noqa
+        return sep.join([fmt_lonlat(i["value"], i["coord"]) for i in self])
 
     @classmethod
     def from_cube(cls, cube, margin=None, margin_units="points"):
