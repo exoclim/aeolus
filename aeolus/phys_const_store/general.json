@@ -2,7 +2,7 @@
     {
         "name": "earth_day",
         "units": "s",
-        "value": 86400,
+        "value": 86400
     },
     {
         "name": "stefan_boltzmann",
