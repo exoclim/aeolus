@@ -71,7 +71,7 @@ def _read_const_file(name, directory=CONST_DIR):
         return const_dict
     except FileNotFoundError:
         raise LoadError(
-            f"JSON file for {directory} {name} configuration not found, check the directory"
+            f"JSON file for {name} configuration not found, check the directory: {directory}"
         )
 
 
