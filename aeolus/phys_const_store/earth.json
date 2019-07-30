@@ -21,8 +21,8 @@
     },
     {
         "name": "semi_major_axis",
-        "units": "m",
-        "value": 149600000000.0
+        "units": "au",
+        "value": 1.0
     },
     {
         "name": "eccentricity",

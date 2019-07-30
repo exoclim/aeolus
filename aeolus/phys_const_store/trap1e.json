@@ -2,27 +2,27 @@
     {
         "name": "gravity",
         "units": "m s-2",
-        "value": 10.9
+        "value": 9.12
     },
     {
         "name": "radius",
         "units": "m",
-        "value": 7160000.0
+        "value": 5804071.0
     },
     {
         "name": "day",
         "units": "s",
-        "value": 966500.0
+        "value": 527006.7
     },
     {
         "name": "solar_constant",
         "units": "W m-2",
-        "value": 881.700
+        "value": 900.482
     },
     {
         "name": "semi_major_axis",
         "units": "au",
-        "value": 0.0485
+        "value": 0.02928
     },
     {
         "name": "eccentricity",
