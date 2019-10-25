@@ -24,5 +24,6 @@ dependencies:
 - pytest-cov
 - pytest-flake8
 # - pytest-mpl
+- pyvista
 - pip:
   - latlon23

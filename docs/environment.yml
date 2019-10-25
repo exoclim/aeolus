@@ -10,6 +10,7 @@ dependencies:
 - nbsphinx
 - numpy
 - pytest
+- pyvista
 - sphinx
 - sphinx_rtd_theme
 - tornado
