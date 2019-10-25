@@ -1,4 +1,7 @@
 """Text-related formatting functions."""
+import itertools
+import string
+
 from LatLon23 import Latitude, Longitude
 
 from ..exceptions import ArgumentError
@@ -42,3 +45,10 @@ def fmt_lonlat(value, lon_or_lat, degree=False):
     if value == 0:
         out = out[:-1]
     return out
+
+
+def subplot_label_generator():
+    """Return generator of alphabetic labelling of subplots."""
+    for i in itertools.count(1):
+        for p in itertools.product(string.ascii_lowercase, repeat=i):
+            yield "".join(p)

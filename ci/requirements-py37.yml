@@ -3,6 +3,7 @@ channels:
 - conda-forge
 dependencies:
 - python=3.7
+- cartopy
 - flake8-builtins!=1.4.0
 - flake8-comprehensions
 - flake8-copyright
@@ -13,7 +14,7 @@ dependencies:
 - flake8-print
 - flake8-quotes
 - ipykernel
-- iris
+- iris>2.2.1
 - jupyter
 - matplotlib<3,>=2
 - metpy

@@ -1,0 +1,92 @@
+"""Plotting functions used with cartopy."""
+import cartopy.crs as ccrs
+from cartopy.mpl.geoaxes import GeoAxes
+from matplotlib.transforms import offset_copy
+from mpl_toolkits.axes_grid1 import AxesGrid
+
+from ..util.text import fmt_lonlat
+
+
+class GeoAxesGrid(AxesGrid):
+    """
+    A subclass of :class:`mpl_toolkits.axes_grid1.AxesGrid` representing
+    a grid of maps with the same projection :class:`~cartopy.crs.Projection`.
+    .. note::
+       * `axes_class` is defined automatically
+       * The :class:`AxesGrid` built-in labelling is always switched off,
+         and instead a standard procedure of creating
+         grid lines and labels should be used.
+    """
+
+    def __init__(self, fig, rect, nrows_ncols, projection, **axesgrid_kw):
+        """
+        Build a :class:`GeoAxesGrid` instance with a grid nrows*ncols
+        :class:`GeoAxes` with a projection :class:`~cartopy.crs.Projection`
+        in :class:`~matplotlib.figure.Figure` *fig* with
+        *rect=[left, bottom, width, height]* (in
+        :class:`~matplotlib.figure.Figure` coordinates) or
+        the subplot position code (e.g., "121").
+        Kwargs:
+          Keyword           Default   Description
+          ================  ========  =========================================
+          direction         "row"     [ "row" | "column" ]
+          axes_pad          0.02      float| pad between axes given in inches
+                                      or tuple-like of floats,
+                                      (horizontal padding, vertical padding)
+          add_all           True      [ True | False ]
+          share_all         False     [ True | False ]
+          aspect            True      [ True | False ]
+          cbar_mode         None      [ "each" | "single" | "edge" ]
+          cbar_location     "right"   [ "left" | "right" | "bottom" | "top" ]
+          cbar_pad          None
+          cbar_size         "5%"
+          cbar_set_cax      True      [ True | False ]
+          ================  ========  =========================================
+        *cbar_set_cax* : if True, each axes in the grid has a cax
+          attribute that is bind to associated cbar_axes.
+        """
+        axesgrid_kw["axes_class"] = (GeoAxes, dict(map_projection=projection))
+        axesgrid_kw["label_mode"] = ""  # note the empty label_mode
+        super(GeoAxesGrid, self).__init__(fig, rect, nrows_ncols, **axesgrid_kw)
+
+
+def label_global_map_gridlines(
+    fig, ax, xticks, yticks, xoff=-10, yoff=-10, degree=False, **text_kw
+):
+    """
+    Label gridlines of a global cartopy map.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure.Figure
+        Figure object
+    ax: cartopy.mpl.geoaxes.GeoAxesSubplot
+        Cartopy axes
+    xticks: array-like
+        Sequence of longitude ticks
+    yticks: array-like
+        Sequence of latitude ticks
+    xoff: float, optional
+        Longitude label offset from the axis
+    yoff: float, optional
+        Latitude label offset from the axis
+    degree: bool, optional
+        Add a degree symbol to tick labels
+    **text_kw: dict, optional
+        Label text properties.
+    """
+    geodetic_trans = ccrs.Geodetic()
+    xlab_kw = ylab_kw = dict(va="center", ha="center", **text_kw)
+    for xtick in xticks:
+        s = fmt_lonlat(xtick, "lon", degree=degree)
+        text_transform = offset_copy(
+            geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=0, y=yoff
+        )
+        ax.text(xtick, -90, s, transform=text_transform, **xlab_kw)
+
+    for ytick in yticks:
+        s = fmt_lonlat(ytick, "lat", degree=degree)
+        text_transform = offset_copy(
+            geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=xoff, y=0
+        )
+        ax.text(-180, ytick, s, transform=text_transform, **ylab_kw)
