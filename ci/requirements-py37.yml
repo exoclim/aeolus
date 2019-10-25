@@ -14,7 +14,7 @@ dependencies:
 - flake8-print
 - flake8-quotes
 - ipykernel
-- iris>2.2.1
+- iris=>2.2.1
 - jupyter
 - matplotlib<3,>=2
 - metpy
