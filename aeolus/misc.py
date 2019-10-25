@@ -7,6 +7,7 @@ import iris
 import numpy as np
 
 from .coord_utils import nearest_coord_value
+from .exceptions import AeolusWarning
 
 
 def vertical_cross_section_area(cube2d, r_planet):
@@ -47,7 +48,8 @@ def horizontal_fluxes_through_region_boundaries(
         if abs(nearest - bound["value"]) > 10:
             warnings.warn(
                 f"Nearest value is {np.round(nearest - bound['value'], 2)} deg away"
-                f" from the given value of {this_coord}"
+                f" from the given value of {this_coord}",
+                AeolusWarning,
             )
         vcross_cnstr = iris.Constraint(**{this_coord: nearest})
         if vertical_constraint is not None:
