@@ -68,3 +68,12 @@ def coord_to_cube(cube, coord):
     else:
         new_cube = iris.cube.Cube(data=_data, standard_name=_coord.name(), units=_coord.units)
     return new_cube
+
+
+def _guess_bounds_lonlat(cube, coords=["latitude", "longitude"]):
+    """Auto-generate bounds for coordinates of a cube."""
+    for coord_name in coords:
+        c = cube.coord(coord_name)
+        if not c.has_bounds():
+            if len(c.points) > 1:
+                c.guess_bounds()

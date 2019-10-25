@@ -60,7 +60,8 @@ def horizontal_fluxes_through_region_boundaries(
                 **{other_coord: lambda x: (other_max >= x) or (other_min <= x)}
             )
             cube = scalar_cube.extract(vcross_cnstr)
-        vcross_area = vertical_cross_section_area(cube, r_planet=r_planet)
+        cube_slice = next(cube.slices([cube.coord(axis="z").name(), other_coord]))
+        vcross_area = vertical_cross_section_area(cube_slice, r_planet=r_planet)
 
         # Calculate energy flux (2d)
         cube = (
