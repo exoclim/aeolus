@@ -1,8 +1,8 @@
 """Test grid submodule."""
+from aeolus import grid
+
 import numpy as np
 import numpy.testing as npt
-
-from aeolus import grid
 
 
 def test_cell_centres():

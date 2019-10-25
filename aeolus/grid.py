@@ -83,6 +83,7 @@ def area_weights_cube(cube, r_planet=None):
 def _cell_bounds(points, bound_position=0.5):
     """
     Calculate coordinate cell boundaries.
+
     Taken from SciTools iris package.
 
     Parameters
@@ -122,6 +123,7 @@ def _cell_bounds(points, bound_position=0.5):
 def _cell_centres(bounds, bound_position=0.5):
     """
     Calculate coordinate cell centres.
+
     Taken from SciTools iris package.
 
     Parameters
@@ -135,7 +137,7 @@ def _cell_centres(bounds, bound_position=0.5):
     Returns
     -------
     centres: numpy.array
-        Array of shape (M+1,)
+        Array of shape (M-1,)
 
     Examples
     --------
