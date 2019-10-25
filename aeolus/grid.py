@@ -1,9 +1,13 @@
 """Operations on geographical grid."""
+from warnings import warn
+
 import iris
 from iris.analysis.cartography import wrap_lons
 from iris.util import is_regular
 
 import numpy as np
+
+from .exceptions import AeolusWarning
 
 
 def _is_longitude_global(lon_points):
@@ -74,3 +78,78 @@ def area_weights_cube(cube, r_planet=None):
     aw.rename("grid_cell_area")
     aw.units = "m**2"
     return aw
+
+
+def _cell_bounds(points, bound_position=0.5):
+    """
+    Calculate coordinate cell boundaries.
+    Taken from SciTools iris package.
+
+    Parameters
+    ----------
+    points: numpy.array
+        One-dimensional array of uniformy spaced values of shape (M,)
+    bound_position: bool, optional
+        The desired position of the bounds relative to the position
+        of the points.
+
+    Returns
+    -------
+    bounds: numpy.array
+        Array of shape (M+1,)
+
+    Examples
+    --------
+    >>> a = np.arange(-1, 2.5, 0.5)
+    >>> a
+    array([-1. , -0.5,  0. ,  0.5,  1. ,  1.5,  2. ])
+    >>> cell_bounds(a)
+    array([-1.25, -0.75, -0.25,  0.25,  0.75,  1.25,  1.75,  2.25])
+
+    See Also
+    --------
+    aeolus.grid._cell_centres
+    """
+    assert points.ndim == 1, "Only 1D points are allowed"
+    diffs = np.diff(points)
+    if not np.allclose(diffs, diffs[0]):
+        warn("_cell_bounds() is supposed to work only for uniformly spaced points", AeolusWarning)
+    delta = diffs[0] * bound_position
+    bounds = np.concatenate([[points[0] - delta], points + delta])
+    return bounds
+
+
+def _cell_centres(bounds, bound_position=0.5):
+    """
+    Calculate coordinate cell centres.
+    Taken from SciTools iris package.
+
+    Parameters
+    ----------
+    bounds: numpy.array
+        One-dimensional array of cell boundaries of shape (M,)
+    bound_position: bool, optional
+        The desired position of the bounds relative to the position
+        of the points.
+
+    Returns
+    -------
+    centres: numpy.array
+        Array of shape (M+1,)
+
+    Examples
+    --------
+    >>> a = np.arange(-1, 3., 1.)
+    >>> a
+    array([-1,  0,  1,  2])
+    >>> cell_centres(a)
+    array([-0.5,  0.5,  1.5])
+
+    See Also
+    --------
+    aeolus.grid._cell_bounds
+    """
+    assert bounds.ndim == 1, "Only 1D points are allowed"
+    deltas = np.diff(bounds) * bound_position
+    centres = bounds[:-1] + deltas
+    return centres
