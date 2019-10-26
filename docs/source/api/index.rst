@@ -21,6 +21,6 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    coord_utils
    grid
    misc
-   plots
+   plot
    region
    util
