@@ -3,75 +3,72 @@ from warnings import warn
 
 import numpy as np
 
-import pyvista as pv
+import pyvista
 
 from ..exceptions import AeolusWarning
 from ..grid import _cell_bounds
 
 
-def grid_from_sph_coords(lons, lats, levels):
+def grid_from_sph_coords(theta, phi, r):
     """
     Create a structured grid from arrays of spherical coordinates.
 
     Parameters
     ----------
-    lon: array-like
-        Array of longitudes of shape (M,) [degrees]
-    lat: array-like
-        Array of latitudes of shape (N,) [degrees]
-    levels: array-like
-        Array of vertical levels of shape (P,)
+    theta: array-like
+        Azimuthal angle in degrees [0, 360)
+    phi: array-like
+        Polar (zenith) angle in degrees [0, 180]
+    r: array-like
+        Distance (radius) from the point of origin
 
     Returns
     -------
     pyvista.StructuredGrid
     """
-    x, y, z = np.meshgrid(np.radians(lons), np.radians(lats), levels)
+    x, y, z = np.meshgrid(np.radians(theta), np.radians(phi), r)
     # Transform grid to cartesian coordinates
-    x_cart = levels * np.cos(y) * np.cos(x)
-    y_cart = levels * np.cos(y) * np.sin(x)
-    z_cart = levels * np.sin(y)
+    x_cart = z * np.sin(y) * np.cos(x)
+    y_cart = z * np.sin(y) * np.sin(x)
+    z_cart = z * np.cos(y)
     # Make a grid object
-    return pv.StructuredGrid(x_cart, y_cart, z_cart)
+    return pyvista.StructuredGrid(x_cart, y_cart, z_cart)
 
 
-def transform_vectors_sph_to_cart(lon, lat, levels, u, v, w):
+def transform_vectors_sph_to_cart(theta, phi, r, u, v, w):
     """
-    Transform vectors from spherical coordinates (r, lat, lon) to cartesian coordinates (z, y, x).
+    Transform vectors from spherical (r, phi, theta) to cartesian coordinates (z, y, x).
+
+    Note the "reverse" order of arrays's axes, commonly used in geosciences.
 
     Parameters
     ----------
-    lon: array-like
-        Array of longitudes of shape (M,) [degrees]
-    lat: array-like
-        Array of latitudes of shape (N,) [degrees]
-    levels: array-like
-        Array of vertical levels of shape (P,)
+    theta: array-like
+        Azimuthal angle in degrees [0, 360) of shape (M,)
+    phi: array-like
+        Polar (zenith) angle in degrees [0, 180] of shape (N,)
+    r: array-like
+        Distance (radius) from the point of origin of shape (P,)
     u: array-like
-        Array of x-wind component (zonal wind) of shape (P, N, M)
+        X-component of the vector of shape (P, N, M)
     v: array-like
-        Array of y-wind component (meridional wind) of shape (P, N, M)
+        Y-component of the vector of shape (P, N, M)
     w: array-like
-        Array of z-wind component (vertical wind) of shape (P, N, M)
+        Z-component of the vector of shape (P, N, M)
 
     Returns
     -------
     u_t, v_t, w_t: array-like
-        Arrays of transformed x-, y-, z-wind components, respectively.
+        Arrays of transformed x-, y-, z-components, respectively.
     """
-    xx, yy, _ = np.meshgrid(np.radians(lon), np.radians(lat), levels, indexing="ij")
-    x, y = xx.squeeze(), yy.squeeze()
+    xx, yy, _ = np.meshgrid(np.radians(theta), np.radians(phi), r, indexing="ij")
+    th, ph = xx.squeeze(), yy.squeeze()
 
     # Transform wind components from spherical to cartesian coordinates
     # https://en.wikipedia.org/wiki/Vector_fields_in_cylindrical_and_spherical_coordinates
-    #
-    # Note spherical coordinates are usually defined using a polar angle,
-    # while here `y` is latitude and `v` is reversed
-    u_t = np.cos(y) * np.cos(x) * w - np.sin(y) * np.cos(x) * v - np.sin(x) * u
-
-    v_t = np.cos(y) * np.sin(x) * w - np.sin(y) * np.sin(x) * v + np.cos(x) * u
-
-    w_t = np.sin(y) * w + np.cos(y) * v
+    u_t = np.sin(ph) * np.cos(th) * w + np.cos(ph) * np.cos(th) * v - np.sin(th) * u
+    v_t = np.sin(ph) * np.sin(th) * w + np.cos(ph) * np.sin(th) * v + np.cos(th) * u
+    w_t = np.cos(ph) * w - np.sin(ph) * v
 
     return u_t, v_t, w_t
 
@@ -101,7 +98,7 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
     """
     if grid is None:
         lons = _cell_bounds(cube.coord("longitude").points)
-        lats = _cell_bounds(cube.coord("latitude").points)
+        lats = 90.0 - _cell_bounds(cube.coord("latitude").points)
         if cube.ndim == 3:
             # TODO check if _cell_bounds should be here
             levels = _cell_bounds(cube.coord("level_height").points)
@@ -170,7 +167,7 @@ def grid_for_vector_cubes_sph(
     ), "Wind components should have the same array size!"
 
     lons = u.coord("longitude").points
-    lats = u.coord("latitude").points
+    lats = 90.0 - u.coord("latitude").points
     levels = z_scale * u.coord("level_height").points + z_offset
 
     # Stride vectors
@@ -191,7 +188,7 @@ def grid_for_vector_cubes_sph(
         [
             i.transpose(inv_axes).swapaxes(u.ndim - 2, u.ndim - 1).ravel("C")
             for i in transform_vectors_sph_to_cart(
-                lons_s, lats_s, levels, u_sdata, v_sdata, w_sdata
+                lons_s, lats_s, levels, u_sdata, -v_sdata, w_sdata
             )
         ],
         axis=1,
