@@ -4,7 +4,7 @@ matplotlib<3,>=2
 metpy
 nbsphinx
 numpy
-pytest
+proj>=4.9.0
 pyvista
 sphinx
 sphinx_rtd_theme
