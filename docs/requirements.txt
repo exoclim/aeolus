@@ -1,10 +1,8 @@
-cartopy
 iris>=2.2.1
 matplotlib<3,>=2
 metpy
 nbsphinx
 numpy
-proj4>=4.9.0
 pyvista
 sphinx
 sphinx_rtd_theme
