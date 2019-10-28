@@ -3,7 +3,7 @@ import iris
 
 import numpy as np
 
-from .coord_utils import ensure_bounds, UM_LATLON
+from .coord_utils import UM_LATLON, ensure_bounds
 from .grid import area_weights_cube
 
 
@@ -31,10 +31,10 @@ def calc_spatial(cube, aggr, coords=UM_LATLON):
 
     """
     ensure_bounds(cube)
-    flag = all([cube.coord(c).has_bounds() for c in coords])
+    flag = all(cube.coord(c).has_bounds() for c in coords)
     aggregator = getattr(iris.analysis, aggr.upper())
     if flag and isinstance(aggregator, iris.analysis.WeightedAggregator):
-        kw = dict(weights=area_weights_cube(cube, normalize=True).data)
+        kw = {"weights": area_weights_cube(cube, normalize=True).data}
     else:
         kw = {}
     return cube.collapsed(coords, aggregator, **kw)

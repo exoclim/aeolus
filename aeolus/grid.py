@@ -7,7 +7,7 @@ from iris.util import is_regular
 
 import numpy as np
 
-from .coord_utils import ensure_bounds, UM_LATLON
+from .coord_utils import UM_LATLON, ensure_bounds
 from .exceptions import AeolusWarning
 
 
