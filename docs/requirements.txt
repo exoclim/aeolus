@@ -1,0 +1,12 @@
+cartopy
+iris=>2.2.1
+matplotlib<3,>=2
+metpy
+nbsphinx
+numpy
+pytest
+pyvista
+sphinx
+sphinx_rtd_theme
+tornado
+latlon23
