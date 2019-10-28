@@ -16,6 +16,7 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
 .. toctree::
    :maxdepth: 1
 
+   calc
    core
    const
    coord_utils
