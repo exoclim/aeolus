@@ -5,3 +5,7 @@ Plotting functions
 .. autoclass:: aeolus.plot.GeoAxesGrid
 
 .. autofunction:: aeolus.plot.label_global_map_gridlines
+
+.. autofunction:: aeolus.plot.pv.grid_for_scalar_cube_sph
+
+.. autofunction:: aeolus.plot.pv.grid_for_vector_cubes_sph
