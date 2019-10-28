@@ -7,6 +7,7 @@ from iris.util import is_regular
 
 import numpy as np
 
+from .coord_utils import UM_LATLON
 from .exceptions import AeolusWarning
 
 
@@ -18,7 +19,7 @@ def _is_longitude_global(lon_points):
     return case_0_360 or case_pm180
 
 
-def roll_cube_e2w(cube_in, coord_name="longitude", inplace=False):
+def roll_cube_e2w(cube_in, coord_name=UM_LATLON[1], inplace=False):
     """
     Take a cube which goes longitude 0-360 back to -180-180.
 
@@ -155,3 +156,91 @@ def _cell_centres(bounds, bound_position=0.5):
     deltas = np.diff(bounds) * bound_position
     centres = bounds[:-1] + deltas
     return centres
+
+
+def add_binned_lon_lat(cube, lon_bins, lat_bins, coord_names=UM_LATLON, inplace=False):
+    """
+    Add binned longitude and latitude as auxiliary coordinates to a cube.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude and latitude coordinates.
+    lon_bins: array-like
+        Longitude bins.
+    lat_bins: array-like
+        Latitude bins.
+    coord_names: list, optional
+        List of latitude and longitude labels.
+    inplace: bool, optional
+        Do this in-place or copy the cube.
+
+    Returns
+    -------
+    iris.cube.Cube
+    """
+    if inplace:
+        cube_out = cube
+    else:
+        cube_out = cube.copy()
+    for name, target_points in zip(coord_names, (lat_bins, lon_bins)):
+        binned_points = np.digitize(cube_out.coord(name).points, target_points)
+        binned_points = np.clip(binned_points, 0, len(target_points) - 1)
+        new_coord = iris.coords.AuxCoord(binned_points, long_name=f"{name}_binned")
+        cube_out.add_aux_coord(new_coord, cube_out.coord_dims(name))
+    return cube_out
+
+
+def coarsen_cube(cube, lon_bins, lat_bins, coord_names=UM_LATLON, inplace=False):
+    """
+    Block-average cube in longitude and latitude.
+
+    Note: no weighting is applied!
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude and latitude coordinates.
+    lon_bins: array-like
+        Longitude bins.
+    lat_bins: array-like
+        Latitude bins.
+    coord_names: list, optional
+        List of latitude and longitude labels.
+    inplace: bool, optional
+        Do this in-place or copy the cube.
+
+    Returns
+    -------
+    iris.cube.Cube
+    """
+    if inplace:
+        cube_out = cube
+    else:
+        cube_out = cube.copy()
+    add_binned_lon_lat(cube_out, lon_bins, lat_bins, coord_names=coord_names, inplace=True)
+
+    # To avoid oversampling on the edges, extract subset within the boundaries of target coords
+    for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
+        cube_out = cube_out.extract(
+            iris.Constraint(**{coord: lambda p: target_points.min() <= p <= target_points.max()})
+        )
+
+    for coord in coord_names:
+        cube_out = cube_out.aggregated_by([f"{coord}_binned"], iris.analysis.MEAN)
+
+    for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
+        dim = cube_out.coord_dims(coord)
+        units = cube_out.coord(coord).units
+        cube_out.remove_coord(coord)
+        aux = cube_out.coord(f"{coord}_binned")
+        new_points = target_points[aux.points]
+        #         if len(aux.points) < len(target_points):
+        #             new_points =
+        new_coord = iris.coords.DimCoord.from_coord(aux.copy(points=new_points, bounds=None))
+        cube_out.remove_coord(f"{coord}_binned")
+        new_coord.rename(coord)
+        new_coord.units = units
+        cube_out.add_dim_coord(new_coord, dim)
+
+    return cube_out
