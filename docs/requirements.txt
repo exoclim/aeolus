@@ -1,5 +1,5 @@
 cartopy
-iris=>2.2.1
+iris>=2.2.1
 matplotlib<3,>=2
 metpy
 nbsphinx
