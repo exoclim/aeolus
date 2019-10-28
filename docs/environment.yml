@@ -3,16 +3,16 @@ channels:
 - conda-forge
 dependencies:
 - python=3.7
-- cartopy
+# - cartopy
 - iris=>2.2.1
 - matplotlib<3,>=2
 - metpy
 - nbsphinx
 - numpy
-- pytest
-- pyvista
+# - pytest
+# - pyvista
 - sphinx
 - sphinx_rtd_theme
 - tornado
 - pip:
-  - LatLon23
+  - latlon23
