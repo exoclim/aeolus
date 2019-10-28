@@ -7,7 +7,7 @@ from iris.util import is_regular
 
 import numpy as np
 
-from .coord_utils import UM_LATLON
+from .coord_utils import ensure_bounds, UM_LATLON
 from .exceptions import AeolusWarning
 
 
@@ -52,7 +52,7 @@ def roll_cube_e2w(cube_in, coord_name=UM_LATLON[1], inplace=False):
         return cube
 
 
-def area_weights_cube(cube, r_planet=None):
+def area_weights_cube(cube, r_planet=None, normalize=False):
     """
     Create a cube of area weights for an arbitrary planet.
 
@@ -60,8 +60,10 @@ def area_weights_cube(cube, r_planet=None):
     ----------
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates
-    r_planet: float
-        Radius of planet
+    r_planet: float, optional
+        Radius of the planet.
+    normalize: bool, optional
+        Normalize areas.
 
     Returns
     -------
@@ -69,15 +71,27 @@ def area_weights_cube(cube, r_planet=None):
         Cube of area weights with the same metadata as the input cube
     """
     cube = cube.copy()
-    for dim_coord in cube.dim_coords:
-        if not dim_coord.has_bounds():
-            dim_coord.guess_bounds()
-    aw = iris.analysis.cartography.area_weights(cube)
-    if r_planet is not None:
-        aw *= (r_planet / iris.fileformats.pp.EARTH_RADIUS) ** 2  # FIXME
-    aw = cube.copy(data=aw)
-    aw.rename("grid_cell_area")
-    aw.units = "m**2"
+    ensure_bounds(cube)
+    aw = iris.analysis.cartography.area_weights(cube, normalize=normalize)
+    if normalize:
+        aw = cube.copy(data=aw)
+        aw.rename("normalized_grid_cell_area")
+        aw.units = "1"
+    else:
+        cs = cube.coord_system("CoordSystem")
+        if r_planet is not None:
+            r = r_planet
+        elif cs is not None:
+            r = cs.semi_major_axis
+        else:
+            r = None
+
+        # TODO: retrieve semi_major_axis from planet const
+        if r is not None:
+            aw *= (r / iris.fileformats.pp.EARTH_RADIUS) ** 2
+        aw = cube.copy(data=aw)
+        aw.rename("grid_cell_area")
+        aw.units = "m**2"
     return aw
 
 
