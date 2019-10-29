@@ -19,6 +19,7 @@ def test_integrate():
         data=arr,
         dim_coords_and_dims=[i[::-1] for i in [*enumerate((zc, yc, xc))]],
         standard_name="x_wind",
+        units="m/s",
     )
     x_int = calc.integrate(cube, "longitude")
     npt.assert_allclose(x_int.data, np.array([[3.0, 15.0, 27.0, 39.0], [51.0, 63.0, 75.0, 87.0]]))
