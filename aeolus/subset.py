@@ -31,7 +31,7 @@ def _select_mean(cube):
 def _dim_constr(*coords):
     """Make an `iris.Constraint` from given dimensional coordinates."""
     return iris.Constraint(
-        cube_func=lambda x: set([dc.name() for dc in x.dim_coords]) == set(coords)
+        cube_func=lambda x: {dc.name() for dc in x.dim_coords} == set(coords)
     )
 
 

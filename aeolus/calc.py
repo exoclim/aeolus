@@ -183,6 +183,21 @@ def calc_sfc_water_balance(cubelist):
 
 
 def calc_total_precip(cubelist, ptype=None):
+    """
+    Calculate total precipitation flux [mm day^-1].
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    ptype: str, optional
+        Precipitation type (stra|conv).
+
+    Returns
+    -------
+    iris.cube.Cube
+        Sum of cubes of precipitation with units converted to mm per day.
+    """
     conv = ["convective_rainfall_flux", "convective_snowfall_flux"]
     stra = ["stratiform_rainfall_flux", "stratiform_snowfall_flux"]
     if ptype is None:
