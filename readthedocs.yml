@@ -19,3 +19,9 @@ formats: []
 #     - requirements: docs/requirements.txt
 conda:
   environment: docs/environment.yml
+
+build:
+  image: latest
+python:
+  version: 3.7
+  setup_py_install: true

@@ -195,9 +195,11 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 # Options for intersphinx.
 intersphinx_mapping = {
+    "cartopy": ("https://scitools.org.uk/cartopy/docs/latest/", None),
     "iris": ("https://scitools.org.uk/iris/docs/latest/", None),
     "numpy": ("https://docs.scipy.org/doc/numpy", None),
     "python": ("https://docs.python.org/3/", None),
+    "pyvista": ("https://docs.pyvista.org/", None),
 }
 
 # -- Autodoc settings --
