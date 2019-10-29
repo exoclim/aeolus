@@ -5,6 +5,12 @@ from iris.util import broadcast_to_shape
 
 
 __all__ = (
+    "UM_TIME",
+    "UM_HGT",
+    "UM_LEV",
+    "UM_LATLON",
+    "UM_Z_COORDS",
+    "UM_TIME_COORDS",
     "get_cube_datetimes",
     "nearest_coord_value",
     "coord_to_cube",
@@ -12,10 +18,12 @@ __all__ = (
     "ensure_bounds",
 )
 
-UM_TIME_COORDS = ["forecast_reference_time", "forecast_period", "time"]
-UM_Z_COORDS = ["sigma", "model_level_number"]
-UM_HEIGHT = "level_height"
+UM_TIME = "time"
+UM_LEV = "model_level_number"
+UM_HGT = "level_height"
 UM_LATLON = ["latitude", "longitude"]
+UM_Z_COORDS = ["sigma", UM_LEV]
+UM_TIME_COORDS = ["forecast_reference_time", "forecast_period", UM_TIME]
 
 
 def get_cube_datetimes(cube):
@@ -93,7 +101,7 @@ def ensure_bounds(cube, coords=UM_LATLON):
                 c.guess_bounds()
 
 
-def z_interp_cube(cube, z=None, z_coord_name=UM_HEIGHT, replace_z_coord=True):
+def z_interp_cube(cube, z=None, z_coord_name=UM_HGT, replace_z_coord=True):
     """
     Interpolate cube to z points in vertical and use height as dim coord.
 

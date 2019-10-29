@@ -3,8 +3,9 @@ import iris
 
 import numpy as np
 
-from .coord_utils import UM_LATLON, ensure_bounds
+from .coord_utils import UM_LATLON, UM_TIME, ensure_bounds
 from .grid import area_weights_cube
+from .subset import extract_last_year
 
 
 __all__ = ("calc_spatial", "calc_meridional_mean")
@@ -63,3 +64,9 @@ def calc_meridional_mean(cube, lat_name=UM_LATLON[0]):
     coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, (0,))
     cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
     return cube_mean
+
+
+def last_year_mean(cube):
+    """Get the time mean of over the last year."""
+    last_year_constraint = extract_last_year(cube)
+    return cube.extract(last_year_constraint).collapsed(UM_TIME, iris.analysis.MEAN)
