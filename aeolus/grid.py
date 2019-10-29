@@ -7,8 +7,9 @@ from iris.util import is_regular
 
 import numpy as np
 
+from .const import init_const
 from .coord_utils import UM_LATLON, ensure_bounds
-from .exceptions import AeolusWarning
+from .exceptions import AeolusWarning, LoadError
 
 
 def _is_longitude_global(lon_points):
@@ -84,9 +85,12 @@ def area_weights_cube(cube, r_planet=None, normalize=False):
         elif cs is not None:
             r = cs.semi_major_axis
         else:
-            r = None
+            try:
+                r = init_const(cube.attributes["planet_conf"]).radius
+            except (KeyError, LoadError):
+                warn("Using default Earth radius", AeolusWarning)
+                r = None
 
-        # TODO: retrieve semi_major_axis from planet const
         if r is not None:
             aw *= (r / iris.fileformats.pp.EARTH_RADIUS) ** 2
         aw = cube.copy(data=aw)
