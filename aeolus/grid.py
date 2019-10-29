@@ -12,6 +12,9 @@ from .coord_utils import UM_LATLON, ensure_bounds
 from .exceptions import AeolusWarning, LoadError
 
 
+__all__ = ("roll_cube_e2w", "area_weights_cube", "add_binned_lon_lat", "coarsen_cube")
+
+
 def _is_longitude_global(lon_points):
     """Return True if array of longitudes covers the whole sphere."""
     dx = np.diff(lon_points)[0]  # assume regular grid

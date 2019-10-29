@@ -7,6 +7,9 @@ from .exceptions import BoundaryError
 from .util import fmt_lonlat
 
 
+__all__ = ("Region",)
+
+
 @dataclass
 class BoundsRect:
     """Bounding longitudes and latitudes of a given lon-lat rectangle."""

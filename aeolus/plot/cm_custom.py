@@ -1,6 +1,8 @@
 """Custom colormaps."""
 from matplotlib.colors import ListedColormap
 
+__all__ = ("cloudtypes_cmap",)
+
 _cloudtypes_data = [
     [1.000_000, 0.984_314, 0.992_157],
     [1.000_000, 0.984_314, 0.992_157],

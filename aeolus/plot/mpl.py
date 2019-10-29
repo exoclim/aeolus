@@ -3,6 +3,8 @@ import matplotlib.colors as mcolors
 
 import numpy as np
 
+__all__ = ("MidpointNormalize",)
+
 
 class MidpointNormalize(mcolors.Normalize):
     """Normalise data around a midpoint."""

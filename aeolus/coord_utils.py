@@ -4,6 +4,14 @@ import iris
 from iris.util import broadcast_to_shape
 
 
+__all__ = (
+    "get_cube_datetimes",
+    "nearest_coord_value",
+    "coord_to_cube",
+    "z_interp_cube",
+    "ensure_bounds",
+)
+
 UM_TIME_COORDS = ["forecast_reference_time", "forecast_period", "time"]
 UM_Z_COORDS = ["sigma", "model_level_number"]
 UM_HEIGHT = "level_height"

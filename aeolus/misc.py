@@ -10,6 +10,13 @@ from .coord_utils import nearest_coord_value
 from .exceptions import AeolusWarning
 
 
+__all__ = (
+    "vertical_cross_section_area",
+    "horizontal_fluxes_through_region_boundaries",
+    "net_horizontal_flux_to_region",
+)
+
+
 def vertical_cross_section_area(cube2d, r_planet):
     """Create a cube of vertical cross-section areas in metres."""
     cube2d = cube2d.copy()

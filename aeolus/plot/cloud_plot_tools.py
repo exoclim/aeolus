@@ -10,6 +10,9 @@ import numpy as np
 from .cm_custom import cloudtypes_cmap
 
 
+__all__ = ("CloudPlotter", "cloudtypes_cmap")
+
+
 class CloudPlotter:
     """Factory to create a composite plot of low, medium, high cloud area fractions."""
 

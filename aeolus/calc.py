@@ -7,6 +7,9 @@ from .coord_utils import UM_LATLON, ensure_bounds
 from .grid import area_weights_cube
 
 
+__all__ = ("calc_spatial", "calc_meridional_mean")
+
+
 def calc_spatial(cube, aggr, coords=UM_LATLON):
     """
     Calculate spatial statistic with geographic grid weights.

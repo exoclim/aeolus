@@ -9,6 +9,9 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 from ..util.text import fmt_lonlat
 
 
+__all__ = ("GeoAxesGrid", "label_global_map_gridlines")
+
+
 class GeoAxesGrid(AxesGrid):
     """
     Grid of cartopy axes.

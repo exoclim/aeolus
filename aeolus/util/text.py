@@ -7,6 +7,9 @@ from LatLon23 import Latitude, Longitude
 from ..exceptions import ArgumentError
 
 
+__all__ = ("fmt_lonlat", "subplot_label_generator")
+
+
 def fmt_lonlat(value, lon_or_lat, degree=False):
     r"""
     Convert longitude or latitude value to string with a hemisphere identifier.

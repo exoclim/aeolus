@@ -9,6 +9,14 @@ from ..exceptions import AeolusWarning
 from ..grid import _cell_bounds
 
 
+__all__ = (
+    "grid_from_sph_coords",
+    "transform_vectors_sph_to_cart",
+    "grid_for_scalar_cube_sph",
+    "grid_for_vector_cubes_sph",
+)
+
+
 def grid_from_sph_coords(theta, phi, r):
     """
     Create a structured grid from arrays of spherical coordinates.
