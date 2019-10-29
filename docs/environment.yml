@@ -12,5 +12,6 @@ dependencies:
 - pyvista
 - sphinx
 - sphinx_rtd_theme
+- tornado
 - pip:
   - latlon23
