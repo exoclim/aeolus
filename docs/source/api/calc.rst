@@ -14,7 +14,11 @@ Statistics
 
 Diagnostics
 -----------
-.. autofunction:: aeolus.calc.toa_cloud_radiative_effect
-.. autofunction:: aeolus.calc.toa_net
-.. autofunction:: aeolus.calc.total_precip
+.. autofunction:: aeolus.calc.heat_redist_eff
+.. autofunction:: aeolus.calc.minmaxdiff
+.. autofunction:: aeolus.calc.sfc_net_energy
 .. autofunction:: aeolus.calc.sfc_water_balance
+.. autofunction:: aeolus.calc.region_mean_diff
+.. autofunction:: aeolus.calc.toa_cloud_radiative_effect
+.. autofunction:: aeolus.calc.toa_net_energy
+.. autofunction:: aeolus.calc.total_precip

@@ -5,7 +5,16 @@ from .stats import spatial
 from ..exceptions import ArgumentError
 
 
-__all__ = ("toa_cloud_radiative_effect", "toa_net", "total_precip", "sfc_water_balance")
+__all__ = (
+    "heat_redist_eff",
+    "minmaxdiff",
+    "sfc_net_energy",
+    "sfc_water_balance",
+    "region_mean_diff",
+    "toa_cloud_radiative_effect",
+    "toa_net_energy",
+    "total_precip",
+)
 
 
 def toa_cloud_radiative_effect(cubelist, kind):
@@ -45,14 +54,14 @@ def toa_cloud_radiative_effect(cubelist, kind):
     return cre
 
 
-def toa_net(cubelist):
+def toa_net_energy(cubelist):
     """
-    Calculate domain-average TOA radiative flux.
+    Calculate domain-average TOA energy flux.
 
     Parameters
     ----------
     cubelist: iris.cube.CubeList
-        Input list of cubes
+        Input list of cubes.
 
     Returns
     -------
@@ -62,13 +71,48 @@ def toa_net(cubelist):
     terms = cubelist.extract(
         ["toa_incoming_shortwave_flux", "toa_outgoing_shortwave_flux", "toa_outgoing_longwave_flux"]
     )
-    assert len(terms) == 3, f"Error when extracting TOA radiation terms from\n{cubelist}"
+    assert len(terms) == 3, f"Error when extracting TOA energy fluxes from\n{cubelist}"
     terms_ave = []
     for cube in terms:
         terms_ave.append(spatial(cube, "mean"))
     toa_net = terms_ave[0] - terms_ave[1] - terms_ave[2]
     toa_net.rename("toa_net_radiative_flux")
     return toa_net
+
+
+def sfc_net_energy(cubelist):
+    """
+    Calculate domain-average surface energy flux.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube with reduced dimensions.
+    """
+    terms = cubelist.extract(
+        [
+            "surface_downwelling_shortwave_flux_in_air",
+            "upwelling_shortwave_flux_in_air",
+            "surface_downwelling_longwave_flux_in_air",
+            "upwelling_longwave_flux_in_air",
+            "surface_upward_sensible_heat_flux",
+            "surface_upward_latent_heat_flux",
+        ]
+    )
+    assert len(terms) == 6, f"Error when extracting SFC energy fluxes from\n{cubelist}"
+    terms_ave = []
+    for cube in terms:
+        terms_ave.append(spatial(cube, "mean"))
+    sfc_net = (
+        terms_ave[0] - terms_ave[1] + terms_ave[2] - terms_ave[3] - terms_ave[4] - terms_ave[5]
+    )
+    sfc_net.rename("surface_net_energy_flux")
+    return sfc_net
 
 
 def sfc_water_balance(cubelist):
@@ -78,7 +122,7 @@ def sfc_water_balance(cubelist):
     Parameters
     ----------
     cubelist: iris.cube.CubeList
-        Input list of cubes
+        Input list of cubes.
 
     Returns
     -------
@@ -130,3 +174,83 @@ def total_precip(cubelist, ptype=None):
     tot_precip.convert_units("mm day-1")
     tot_precip.rename("total_precipitation_flux")
     return tot_precip
+
+
+def heat_redist_eff(cubelist, region_a, region_b):
+    r"""
+    Heat redistribution efficiency (Leconte et al. 2013).
+
+    .. math::
+
+        \eta=\frac{OLR_{TOA,night}}{OLR_{TOA,day}}
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    region_a: aeolus.region.Region
+        First region (usually nightside).
+    region_b: aeolus.region.Region
+        Second region (usually dayside).
+
+    Returns
+    -------
+    iris.cube.Cube
+        Eta parameter.
+    """
+    toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
+    toa_olr_a = spatial(toa_olr.extract(region_a.constraint), "mean")
+    toa_olr_b = spatial(toa_olr.extract(region_b.constraint), "mean")
+    eta = toa_olr_a / toa_olr_b
+    eta.rename("heat_redistribution_efficiency")
+    return eta
+
+
+def minmaxdiff(cubelist, name):
+    """
+    Spatial maximum minus spatial minimum for a given cube.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    name: str
+        Cube name.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Difference between the extrema.
+    """
+    _min = spatial(cubelist.extract_strict(name), "min")
+    _max = spatial(cubelist.extract_strict(name), "max")
+    diff = _max - _min
+    diff.rename(f"{name}_difference")
+    return diff
+
+
+def region_mean_diff(cubelist, name, region_a, region_b):
+    """
+    Difference between averages over two regions for a given cube.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    name: str
+        Cube name.
+    region_a: aeolus.region.Region
+        First region.
+    region_b: aeolus.region.Region
+        Second region.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Difference between the region averages.
+    """
+    mean_a = spatial(cubelist.extract_strict(name).extract(region_a.constraint), "mean")
+    mean_b = spatial(cubelist.extract_strict(name).extract(region_b.constraint), "mean")
+    diff = mean_a - mean_b
+    diff.rename(f"{name}_mean_diff_{region_a}_{region_b}")
+    return diff
