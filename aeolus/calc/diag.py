@@ -149,7 +149,7 @@ def sfc_water_balance(cubelist):
 
 def total_precip(cubelist, ptype=None):
     """
-    Calculate total precipitation flux [mm day^-1].
+    Calculate total precipitation flux [:math:`mm~day^{-1}`].
 
     Parameters
     ----------
@@ -346,7 +346,7 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
     Water vapour / water condensate path, i.e. a vertical integral of this quantity.
 
     .. math::
-        WP = \int_{z_sfc}^{z_top} \rho q dz
+        WP = \int_{z_{sfc}}^{z_{top}} \rho q dz
 
     Parameters
     ----------
