@@ -78,14 +78,15 @@ def _read_const_file(name, directory=CONST_DIR):
         )
 
 
-def init_const(name, directory=None):
+def init_const(name="general", directory=None):
     """
     Create a dataclass with a given set of constants.
 
     Parameters
     ----------
-    name: str
+    name: str, optional
         Name of the constants set. Should be identical to the JSON file name.
+        If not given, only general physical constants are returned.
     directory: pathlib.Path, optional
         Path to a folder with JSON files containing constants for a specific planet.
 
@@ -109,7 +110,8 @@ def init_const(name, directory=None):
         kw = {"directory": directory}
     # transform the list of dictionaries into a dictionary
     const_dict = _read_const_file("general")  # TODO: make this more flexible?
-    const_dict.update(_read_const_file(name, **kw))
+    if name != "general":
+        const_dict.update(_read_const_file(name, **kw))
     kls = make_dataclass(
         cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
     )

@@ -1,17 +1,22 @@
 """Some commonly used diagnostics in atmospheric science."""
 import iris
 
+import numpy as np
+
 from .stats import spatial
+from ..const import init_const
 from ..exceptions import ArgumentError
 
 
 __all__ = (
+    "ghe_norm",
     "heat_redist_eff",
     "minmaxdiff",
     "sfc_net_energy",
     "sfc_water_balance",
     "region_mean_diff",
     "toa_cloud_radiative_effect",
+    "toa_eff_temp",
     "toa_net_energy",
     "total_precip",
 )
@@ -254,3 +259,50 @@ def region_mean_diff(cubelist, name, region_a, region_b):
     diff = mean_a - mean_b
     diff.rename(f"{name}_mean_diff_{region_a}_{region_b}")
     return diff
+
+
+def toa_eff_temp(cubelist):
+    """
+    Calculate effective temperature from TOA OLR.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+
+    Returns
+    -------
+    iris.cube.Cube
+    """
+    toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
+    sbc = init_const().stefan_boltzmann.asc
+    t_eff = (spatial(toa_olr, "mean") / sbc) ** 0.25
+    t_eff.rename("toa_effective_temperature")
+    return t_eff
+
+
+def ghe_norm(cubelist):
+    """
+    Normalised greenhouse effect parameter.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Difference between the region averages.
+    """
+    t_sfc = spatial(cubelist.extract_strict("surface_temperature"), "mean")
+    # t_sfc = spatial(
+    #     cubelist.extract_strict("air_temperature").extract(iris.Constraint(level_height=0)),
+    #     "mean",
+    # )
+    t_eff = toa_eff_temp(cubelist)
+    one = t_eff.copy(data=np.ones(t_eff.shape))
+    one.units = "1"
+    gh_norm = one - (t_eff / t_sfc) ** 4
+    gh_norm.rename("normalised_greenhouse_effect_parameter")
+    return gh_norm

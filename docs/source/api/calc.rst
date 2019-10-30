@@ -14,11 +14,13 @@ Statistics
 
 Diagnostics
 -----------
+.. autofunction:: aeolus.calc.ghe_norm
 .. autofunction:: aeolus.calc.heat_redist_eff
 .. autofunction:: aeolus.calc.minmaxdiff
 .. autofunction:: aeolus.calc.sfc_net_energy
 .. autofunction:: aeolus.calc.sfc_water_balance
 .. autofunction:: aeolus.calc.region_mean_diff
 .. autofunction:: aeolus.calc.toa_cloud_radiative_effect
+.. autofunction:: aeolus.calc.toa_eff_temp
 .. autofunction:: aeolus.calc.toa_net_energy
 .. autofunction:: aeolus.calc.total_precip
