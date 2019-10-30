@@ -57,10 +57,17 @@ class ConstContainer:
 
     def _derive_const(self):
         """Not fully implemented yet."""
-        name = "dry_air_gas_constant"
-        cube = ScalarCube.from_cube(self.molar_gas_constant / self.dry_air_molecular_weight)
-        cube.rename(name)
-        object.__setattr__(self, name, cube)
+        derivatives = {
+            "dry_air_gas_constant": lambda slf: slf.molar_gas_constant
+            / slf.dry_air_molecular_weight
+        }
+        for name, func in derivatives.items():
+            try:
+                cube = ScalarCube.from_cube(func(self))
+                cube.rename(name)
+                object.__setattr__(self, name, cube)
+            except AttributeError:
+                pass
 
 
 def _read_const_file(name, directory=CONST_DIR):
