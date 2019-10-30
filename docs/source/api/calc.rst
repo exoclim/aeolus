@@ -1,11 +1,20 @@
-Atmospheric science calculations
-================================
+Science calculations
+====================
 
-.. autofunction:: aeolus.calc.calc_spatial
-.. autofunction:: aeolus.calc.calc_spatial_quartiles
-.. autofunction:: aeolus.calc.calc_meridional_mean
-.. autofunction:: aeolus.calc.calc_toa_cloud_radiative_effect
-.. autofunction:: aeolus.calc.calc_toa_net
-.. autofunction:: aeolus.calc.calc_total_precip
-.. autofunction:: aeolus.calc.calc_sfc_water_balance
+Calculus
+--------
 .. autofunction:: aeolus.calc.integrate
+
+Statistics
+----------
+.. autofunction:: aeolus.calc.spatial
+.. autofunction:: aeolus.calc.spatial_quartiles
+.. autofunction:: aeolus.calc.meridional_mean
+.. autofunction:: aeolus.calc.last_year_mean
+
+Diagnostics
+-----------
+.. autofunction:: aeolus.calc.toa_cloud_radiative_effect
+.. autofunction:: aeolus.calc.toa_net
+.. autofunction:: aeolus.calc.total_precip
+.. autofunction:: aeolus.calc.sfc_water_balance
