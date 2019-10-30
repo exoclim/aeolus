@@ -3,12 +3,15 @@ import iris
 
 import numpy as np
 
+from .calculus import integrate
 from .stats import spatial
 from ..const import init_const
+from ..coord_utils import UM_HGT
 from ..exceptions import ArgumentError
 
 
 __all__ = (
+    "bond_albedo",
     "ghe_norm",
     "heat_redist_eff",
     "minmaxdiff",
@@ -19,6 +22,7 @@ __all__ = (
     "toa_eff_temp",
     "toa_net_energy",
     "total_precip",
+    "water_path",
 )
 
 
@@ -186,7 +190,6 @@ def heat_redist_eff(cubelist, region_a, region_b):
     Heat redistribution efficiency (Leconte et al. 2013).
 
     .. math::
-
         \eta=\frac{OLR_{TOA,night}}{OLR_{TOA,day}}
 
     Parameters
@@ -282,8 +285,11 @@ def toa_eff_temp(cubelist):
 
 
 def ghe_norm(cubelist):
-    """
+    r"""
     Normalised greenhouse effect parameter.
+
+    .. math::
+        GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^{1/4}
 
     Parameters
     ----------
@@ -306,3 +312,61 @@ def ghe_norm(cubelist):
     gh_norm = one - (t_eff / t_sfc) ** 4
     gh_norm.rename("normalised_greenhouse_effect_parameter")
     return gh_norm
+
+
+def bond_albedo(cubelist):
+    r"""
+    Bold albedo.
+
+    .. math::
+        1 - 4 \frac{OSR_{TOA}}{S_{0}}
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+        Cubes must have "planet_conf" attribute to get solar constant.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Difference between the region averages.
+    """
+    toa_osr = spatial(cubelist.extract_strict("toa_outgoing_shortwave_flux"), "mean")
+    sc = init_const(toa_osr.attributes["planet_conf"]).solar_constant
+    one = toa_osr.copy(data=np.ones(toa_osr.shape))
+    one.units = "1"
+    b_alb = one - 4 * toa_osr / sc.asc
+    b_alb.rename("bond_albedo")
+    return b_alb
+
+
+def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
+    r"""
+    Water vapour / water condensate path, i.e. a vertical integral of this quantity.
+
+    .. math::
+        WP = \int_{z_sfc}^{z_top} \rho q dz
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing appropriate mixing ratio and air density.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Difference between the region averages.
+    """
+    if kind == "water_vapour":
+        varname = "specific_humidity"
+    elif kind == "liquid_water":
+        varname = "mass_fraction_of_cloud_liquid_water_in_air"
+    elif kind == "ice_water":
+        varname = "mass_fraction_of_cloud_ice_in_air"
+
+    q = cubelist.extract_strict(varname)
+    rho = cubelist.extract_strict("air_density")
+    wp = integrate(q * rho, coord_name)
+    wp.rename(f"{kind}_path")
+    return wp

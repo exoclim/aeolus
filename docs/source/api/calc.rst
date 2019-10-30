@@ -14,6 +14,7 @@ Statistics
 
 Diagnostics
 -----------
+.. autofunction:: aeolus.calc.bond_albedo
 .. autofunction:: aeolus.calc.ghe_norm
 .. autofunction:: aeolus.calc.heat_redist_eff
 .. autofunction:: aeolus.calc.minmaxdiff
@@ -24,3 +25,4 @@ Diagnostics
 .. autofunction:: aeolus.calc.toa_eff_temp
 .. autofunction:: aeolus.calc.toa_net_energy
 .. autofunction:: aeolus.calc.total_precip
+.. autofunction:: aeolus.calc.water_path
