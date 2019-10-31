@@ -31,7 +31,7 @@ class NotYetImplementedError(AeolusError):
 
 
 class ArgumentError(AeolusError):
-    """Raised when argument type is not recognized."""
+    """Raised when argument type is not recognised or is not allowed."""
 
     pass
 
@@ -44,5 +44,11 @@ class LoadError(AeolusError):
 
 class BoundaryError(AeolusError):
     """Raised when there is an error with geographical regions."""
+
+    pass
+
+
+class NotFoundError(AeolusError):
+    """Raised when metadata is not found."""
 
     pass
