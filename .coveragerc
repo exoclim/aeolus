@@ -1,0 +1,8 @@
+[report]
+include = aeolus/*
+omit =
+    */setup.py
+    */_version.py
+    docs/*
+    aeolus/tests/*
+    *__init__*
