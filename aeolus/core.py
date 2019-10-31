@@ -74,7 +74,7 @@ class Run:
 
     def proc_data(self, func=None, **func_args):
         """
-        Post-process data for easier analysis and store it in .
+        Post-process data for easier analysis and store it in `self.proc` attribute.
 
         Parameters
         ----------
@@ -93,3 +93,18 @@ class Run:
                 if coord.coord_system:
                     # Replace coordinate system with the planet radius given in `self.const`
                     coord.coord_system = self._coord_system
+
+    def add_data(self, func=None, **func_args):
+        """
+        Calculate additional diagnostics (of type `iris.cube.Cube`) and add them to `self.proc`.
+
+        Parameters
+        ----------
+        func: callable
+            Function that takes `iris.cube.CubeList` (`self.proc`) as its first argument
+            and appends new cubes to it (and does not return anything).
+        **func_args: dict-like, optional
+            Keyword arguments passed to `func`.
+        """
+        if callable(func):
+            func(self.proc, **func_args)
