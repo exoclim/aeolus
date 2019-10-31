@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Functionality related to coordinates of cubes."""
 import iris
-from iris.exceptions import ArgumentError, NotFoundError
 from iris.util import broadcast_to_shape, guess_coord_axis
+
+from .exceptions import ArgumentError, NotFoundError
 
 
 __all__ = (
