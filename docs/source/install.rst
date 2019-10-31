@@ -31,9 +31,9 @@ Alternative method: clone from Github
 ========================================
 
 You can also directly clone the `Github repo
-<https://github.com/dennissergeev/aeolus>`_ ::
+<https://github.com/exoclim/aeolus>`_ ::
 
-  git clone https://www.github.com/dennissergeev/aeolus.git
+  git clone https://www.github.com/exoclim/aeolus.git
   cd aeolus
   python setup.py install
 
