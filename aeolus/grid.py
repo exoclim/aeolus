@@ -12,7 +12,13 @@ from .coord_utils import UM_LATLON, ensure_bounds
 from .exceptions import AeolusWarning, LoadError
 
 
-__all__ = ("roll_cube_e2w", "area_weights_cube", "add_binned_lon_lat", "coarsen_cube")
+__all__ = (
+    "roll_cube_0_360",
+    "roll_cube_pm180",
+    "area_weights_cube",
+    "add_binned_lon_lat",
+    "coarsen_cube",
+)
 
 
 def _is_longitude_global(lon_points):
@@ -23,11 +29,28 @@ def _is_longitude_global(lon_points):
     return case_0_360 or case_pm180
 
 
-def roll_cube_e2w(cube_in, coord_name=UM_LATLON[1], inplace=False):
+def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
     """
-    Take a cube which goes longitude 0-360 back to -180-180.
+    Take a cube spanning 0...360 degrees in longitude and roll it to -180...180 degrees.
 
     Works with global model output, and in some cases for regional.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude and latitude coordinates.
+    coord_name: str, optional
+        Name of the longitude coordinate.
+    inplace: bool, optional
+        Do this in-place or copy the cube.
+
+    Returns
+    -------
+    iris.cube.Cube
+
+    See also
+    --------
+    aeolus.grid.roll_cube_0_360
     """
     if inplace:
         cube = cube_in
@@ -52,6 +75,46 @@ def roll_cube_e2w(cube_in, coord_name=UM_LATLON[1], inplace=False):
         # unless there is something wrong with longitude
         msg = f"Incorrect {coord_name} values: from {xcoord.points.min()} to {xcoord.points.max()}"
         assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), msg
+    if not inplace:
+        return cube
+
+
+def roll_cube_0_360(cube_in, inplace=False):
+    """
+    Take a cube spanning -180...180 degrees in longitude and roll it to 0...360 degrees.
+
+    Works with global model output, and in some cases for regional.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude and latitude coordinates.
+    coord_name: str, optional
+        Name of the longitude coordinate.
+    inplace: bool, optional
+        Do this in-place or copy the cube.
+
+    Returns
+    -------
+    iris.cube.Cube
+
+    See also
+    --------
+    aeolus.grid.roll_cube_pm180
+    """
+    if inplace:
+        cube = cube_in
+    else:
+        cube = cube_in.copy()
+    lon = cube.coord("longitude")
+    if (lon.points < 0.0).any():
+        add = 180
+        cube.data = np.roll(cube.data, len(lon.points) // 2, axis=-1)
+        if lon.has_bounds():
+            bounds = lon.bounds + add
+        else:
+            bounds = None
+        cube.replace_coord(lon.copy(points=lon.points + add, bounds=bounds))
     if not inplace:
         return cube
 
