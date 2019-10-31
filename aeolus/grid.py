@@ -7,7 +7,6 @@ from iris.util import is_regular
 
 import numpy as np
 
-from .const import init_const
 from .coord_utils import UM_LATLON, ensure_bounds
 from .exceptions import AeolusWarning, LoadError
 
@@ -152,7 +151,7 @@ def area_weights_cube(cube, r_planet=None, normalize=False):
             r = cs.semi_major_axis
         else:
             try:
-                r = init_const(cube.attributes["planet_conf"]).radius
+                r = cube.attributes["planet_conf"].radius
             except (KeyError, LoadError):
                 warn("Using default Earth radius", AeolusWarning)
                 r = None

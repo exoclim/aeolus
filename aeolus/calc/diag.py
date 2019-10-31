@@ -333,7 +333,7 @@ def bond_albedo(cubelist):
         Difference between the region averages.
     """
     toa_osr = spatial(cubelist.extract_strict("toa_outgoing_shortwave_flux"), "mean")
-    sc = init_const(toa_osr.attributes["planet_conf"]).solar_constant
+    sc = toa_osr.attributes["planet_conf"].solar_constant
     one = toa_osr.copy(data=np.ones(toa_osr.shape))
     one.units = "1"
     b_alb = one - 4 * toa_osr / sc.asc
