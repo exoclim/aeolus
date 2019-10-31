@@ -70,14 +70,23 @@ class Run:
             fnames = str(files)
         else:
             raise ArgumentError(f"Input type {type(files)} is not allowed.")
-        self.raw_data = iris.load(fnames)
+        self.raw = iris.load(fnames)
 
-    def proc_data(self, func=None):
-        """Post-process data for easier analysis."""
-        self.proc_data = iris.cube.CubeList()
+    def proc_data(self, func=None, **func_args):
+        """
+        Post-process data for easier analysis and store it in .
+
+        Parameters
+        ----------
+        func: callable
+            Function that takes `iris.cube.CubeList` as its first argument.
+        **func_args: dict-like, optional
+            Keyword arguments passed to `func`.
+        """
+        self.proc = iris.cube.CubeList()
         if callable(func):
-            self.proc_data = func(self.raw_data)
-        for cube in self.proc_data:
+            self.proc = func(self.raw, **func_args)
+        for cube in self.proc:
             # add constants to cube attributes
             cube.attributes["planet_conf"] = self.const
             for coord in cube.coords():
