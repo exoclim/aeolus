@@ -1,0 +1,33 @@
+package:
+  name: aeolus
+  version: {{ environ['VERSION'] }}
+
+source:
+  git_url: https://github.com/exoclim/aeolus.git
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - numpy
+    - iris
+  run:
+    - python
+    - numpy
+    - iris
+
+build:
+  script_env:
+   - VERSION
+   - CONDA_BLD_PATH
+
+test:
+  imports:
+    - aeolus
+    - numpy
+    - iris
+
+about:
+  home: https://aeolus.readthedocs.io
+  license: LGPL-3.0 
+  license_file: LICENSE

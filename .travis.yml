@@ -35,3 +35,10 @@ script:
     else
       pytest aeolus -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v;
     fi;
+
+after_success:
+  - if [[ "$CONDA_ENV" != "docs" ]]; then
+      conda install conda-build anaconda-client;
+      conda list;
+      bash conda.recipe/conda_upload.sh;
+    fi;
