@@ -21,9 +21,9 @@ before_install:
 
 install:
   - if [[ "$CONDA_ENV" == "docs" ]]; then
-      conda env create -n test_env --file docs/environment.yml;
+      conda env create --file docs/environment.yml;
     else
-      conda env create -n test_env --file ci/requirements-$CONDA_ENV.yml;
+      conda env create --file ci/requirements-$CONDA_ENV.yml;
     fi;
   - source activate test_env
   - conda list

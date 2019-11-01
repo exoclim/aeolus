@@ -40,7 +40,7 @@ setup(
     install_requires=[
         "numpy>=1.7",
         "pytest>=3.3",
-        "matplotlib>=2",
+        "matplotlib>=2,<3",
         "scitools-iris>=2.2",
         "latlon23",
     ],
