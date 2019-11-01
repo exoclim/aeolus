@@ -25,7 +25,7 @@ install:
     else
       conda env create -n test_env --file ci/requirements-$CONDA_ENV.yml;
     fi;
-  - conda activate test_env
+  - source activate test_env
   - conda list
   - python setup.py develop
 
