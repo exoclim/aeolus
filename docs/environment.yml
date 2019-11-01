@@ -8,6 +8,7 @@ dependencies:
 - matplotlib
 - nbsphinx
 - numpy
+- pip
 - pyvista
 - sphinx
 - sphinx_rtd_theme

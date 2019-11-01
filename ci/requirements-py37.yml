@@ -17,6 +17,7 @@ dependencies:
 - matplotlib<3,>=2
 - numpy
 - pep8-naming
+- pip
 - pytest>=2.4
 - pytest-cov
 - pytest-flake8

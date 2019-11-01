@@ -35,6 +35,7 @@ setup(
     package_dir={"aeolus": "aeolus"},
     packages=find_packages(),
     zip_safe=False,
+    python_requires=">=3.7",
     setup_requires=["numpy>=1.7"],
     install_requires=[
         "numpy>=1.7",
