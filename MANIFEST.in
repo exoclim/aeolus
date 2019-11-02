@@ -1,4 +1,6 @@
 include LICENSE
+include aeolus/const/const_store/*.json
 recursive-include docs *
 prune docs/build
 include versioneer.py
+global-exclude *.py[cod]

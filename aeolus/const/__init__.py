@@ -6,12 +6,12 @@ from pathlib import Path
 
 import iris
 
-from .exceptions import LoadError
+from ..exceptions import LoadError
 
 
 __all__ = ("init_const",)
 
-CONST_DIR = Path(__file__).parent / "phys_const_store"
+CONST_DIR = Path(__file__).parent / "const_store"
 
 
 class ScalarCube(iris.cube.Cube):
