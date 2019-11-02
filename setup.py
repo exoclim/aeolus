@@ -29,6 +29,7 @@ setup(
     cmdclass=CMDCLASS,
     description="Python library for object-oriented analysis of atmospheric model output",
     long_description=get_readme(),
+    long_description_content_type="text/markdown",
     author="Denis Sergeev",
     author_email="dennis.sergeev@gmail.com",
     url="https://github.com/exoclim/aeolus",
