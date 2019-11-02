@@ -1,14 +1,17 @@
 PKG_NAME=aeolus
 USER=dennissergeev
 
-OS=$TRAVIS_OS_NAME-64
-mkdir ~/conda-bld
-conda config --set anaconda_upload no
+PYCODE="import ${PKG_NAME}; print(${PKG_NAME}.__version__)"
+export VERSION=`python -c "${PYCODE}"`
+
+# OS=$TRAVIS_OS_NAME-64
 export CONDA_BLD_PATH=~/conda-bld
-export VERSION=`python -c 'import aeolus; print(aeolus.__version__)'`
+mkdir $CONDA_BLD_PATH
+conda config --set anaconda_upload no
+conda config --add channels conda-forge
+conda config –set channel_priority strict
 conda build --no-test .
 PKG_FULL_NAME=`conda build --output .`
-# echo 'PKG_FULL_NAME='$PKG_FULL_NAME
 if [[ $VERSION == *"+"* ]]; then
     LABEL="nightly";
 else
@@ -18,4 +21,4 @@ echo ""
 echo "label: $LABEL"
 echo "version: $VERSION"
 echo ""
-anaconda --token $CONDA_UPLOAD_TOKEN upload -u $USER -l $LABEL --force $PKG_FULL_NAME
+anaconda upload -t $CONDA_UPLOAD_TOKEN -u $USER -l $LABEL --force $PKG_FULL_NAME

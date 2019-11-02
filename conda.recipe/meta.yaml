@@ -7,14 +7,18 @@ source:
 
 requirements:
   build:
-    - python
+    - python=3.7
     - setuptools
-    - numpy
-    - iris
+    - numpy=>1.16
+    - iris=>2.2.1
+    - matplotlib<3,>=2
+    - pyvista
   run:
-    - python
-    - numpy
-    - iris
+    - python=3.7
+    - numpy=>1.16
+    - iris=>2.2.1
+    - matplotlib<3,>=2
+    - pyvista
 
 build:
   script_env:
