@@ -36,9 +36,9 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     python_requires=">=3.7",
-    setup_requires=["numpy>=1.7"],
+    setup_requires=["numpy>=1.16"],
     install_requires=[
-        "numpy>=1.7",
+        "numpy>=1.16",
         "pytest>=3.3",
         "matplotlib>=2,<3",
         "scitools-iris>=2.2",
@@ -47,8 +47,8 @@ setup(
     classifiers=[
         "Intended Audience :: Science/Research",
         "Natural Language :: English",
-        "License :: OSI Approved :: LGPL License",
-        "Operating System :: POSIX :: Linux",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 ",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Topic :: Scientific/Engineering :: Atmospheric Science",
