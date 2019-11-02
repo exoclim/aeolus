@@ -3,10 +3,18 @@ Changelog
 
 .. default-role:: py:obj
 
-v0.0.1
--------
+0.2
+---
 
-:Release: v0.0.1
-:Date: 1 March 2019
+:Release: v0.2
+:Date: 2 November 2019
 
-* First release
+* Technical updates
+
+0.1
+---
+
+:Release: v0.1
+:Date: 31 October 2019
+
+* First packaged release
