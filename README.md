@@ -1,4 +1,5 @@
 [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Conda](https://img.shields.io/conda/v/dennissergeev/aeolus?color=dark-green&logo=anaconda)](https://anaconda.org/dennissergeev/aeolus)
 [![PyPI](https://img.shields.io/pypi/v/aeolus.svg?logo=python&logoColor=white)](https://pypi.org/project/aeolus/)
 [![Build Status](https://travis-ci.com/exoclim/aeolus.svg?branch=master)](https://travis-ci.com/exoclim/aeolus?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/aeolus/badge/?version=latest)](https://aeolus.readthedocs.io/en/latest/?badge=latest)

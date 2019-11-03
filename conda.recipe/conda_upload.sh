@@ -21,4 +21,4 @@ echo ""
 echo "label: $LABEL"
 echo "version: $VERSION"
 echo ""
-anaconda upload -t $CONDA_UPLOAD_TOKEN -u $USER -l $LABEL --force $PKG_FULL_NAME
+anaconda -t $CONDA_UPLOAD_TOKEN upload -u $USER -l $LABEL --force $PKG_FULL_NAME
