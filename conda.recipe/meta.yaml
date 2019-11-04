@@ -35,3 +35,6 @@ about:
   home: https://aeolus.readthedocs.io
   license: LGPL-3.0 
   license_file: LICENSE
+  summary: "Python library for object-oriented analysis of atmospheric model output built on top of iris."
+  dev_url: https://github.com/exoclim/aeolus
+  doc_url: https://aeolus.readthedocs.io

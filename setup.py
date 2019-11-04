@@ -34,6 +34,7 @@ setup(
     author_email="dennis.sergeev@gmail.com",
     url="https://github.com/exoclim/aeolus",
     package_dir={"aeolus": "aeolus"},
+    package_data={"aeolus": ["aeolus/const/store/*.json"]},
     packages=find_packages(),
     zip_safe=False,
     python_requires=">=3.7",
