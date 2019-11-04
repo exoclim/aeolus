@@ -22,8 +22,10 @@ requirements:
 
 build:
   script_env:
-   - VERSION
-   - CONDA_BLD_PATH
+    - VERSION
+    - CONDA_BLD_PATH
+  always_include_files:
+    - aeolus/const/store/*.json
 
 test:
   imports:
