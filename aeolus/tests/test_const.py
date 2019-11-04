@@ -11,7 +11,7 @@ import numpy.testing as npt
 import pytest
 
 
-THIS_DIR = Path(__file__).parent
+TST_DATA = Path(__file__).parent / "data"
 CONST_FILE = "dummy"
 
 
@@ -36,18 +36,18 @@ def test_loaderror():
     with pytest.raises(LoadError):
         const.init_const(CONST_FILE)
     with pytest.raises(LoadError):
-        const.init_const(CONST_FILE, directory=THIS_DIR / "nonexistent_directory")
+        const.init_const(CONST_FILE, directory=TST_DATA / "nonexistent_directory")
 
 
 def test_argumenterror():
     """Test raising ArgumentError."""
     with pytest.raises(ArgumentError):
-        const.init_const(CONST_FILE, directory=str(THIS_DIR))
+        const.init_const(CONST_FILE, directory=str(TST_DATA))
 
 
 def test_init_const_custom():
     """Test init_const function with a custom JSON file."""
-    cnsts = const.init_const(CONST_FILE, directory=THIS_DIR)
+    cnsts = const.init_const(CONST_FILE, directory=TST_DATA)
     assert str(cnsts).startswith("DummyConstants")
     assert isinstance(cnsts, const.const.ConstContainer)
     for key in cnsts.__dataclass_fields__.keys():
