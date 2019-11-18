@@ -343,7 +343,7 @@ def bond_albedo(cubelist):
 
 def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
     r"""
-    Water vapour / water condensate path, i.e. a vertical integral of this quantity.
+    Water vapour or condensate path, i.e. a vertical integral of a water phase.
 
     .. math::
         WP = \int_{z_{sfc}}^{z_{top}} \rho q dz
@@ -352,6 +352,12 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes containing appropriate mixing ratio and air density.
+    kind: str, optional
+        Short name of the water phase to be integrated.
+        Options are water_vapour (default) | liquid_water | ice_water | cloud_water
+        `cloud_water` is the sum of liquid and ice phases.
+    coord_name: str or iris.coords.Coord, optional
+        Vertical coordinate for integration.
 
     Returns
     -------
@@ -359,13 +365,14 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
         Difference between the region averages.
     """
     if kind == "water_vapour":
-        varname = "specific_humidity"
+        q = cubelist.extract_strict("specific_humidity")
     elif kind == "liquid_water":
-        varname = "mass_fraction_of_cloud_liquid_water_in_air"
+        q = cubelist.extract_strict("mass_fraction_of_cloud_liquid_water_in_air")
     elif kind == "ice_water":
-        varname = "mass_fraction_of_cloud_ice_in_air"
-
-    q = cubelist.extract_strict(varname)
+        q = cubelist.extract_strict("mass_fraction_of_cloud_ice_in_air")
+    elif kind == "cloud_water":
+        q = cubelist.extract_strict("mass_fraction_of_cloud_liquid_water_in_air")
+        q += cubelist.extract_strict("mass_fraction_of_cloud_ice_in_air")
     rho = cubelist.extract_strict("air_density")
     wp = integrate(q * rho, coord_name)
     wp.rename(f"{kind}_path")
