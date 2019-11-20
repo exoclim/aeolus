@@ -42,7 +42,7 @@ class GeoAxesGrid(AxesGrid):
 
 
 def label_global_map_gridlines(
-    fig, ax, xticks, yticks, xoff=-10, yoff=-10, degree=False, **text_kw
+    fig, ax, xticks=[], yticks=[], xoff=-10, yoff=-10, degree=False, **text_kw
 ):
     """
     Label gridlines of a global cartopy map.
@@ -50,34 +50,48 @@ def label_global_map_gridlines(
     Parameters
     ----------
     fig: matplotlib.figure.Figure
-        Figure object
+        Figure object.
     ax: cartopy.mpl.geoaxes.GeoAxesSubplot
-        Cartopy axes
-    xticks: array-like
-        Sequence of longitude ticks
-    yticks: array-like
-        Sequence of latitude ticks
+        Cartopy axes.
+    xticks: array-like, optional
+        Sequence of longitude ticks.
+    yticks: array-like, optional
+        Sequence of latitude ticks.
     xoff: float, optional
-        Longitude label offset from the axis
+        Longitude label offset from the axis (units are points).
+        If negative (by default), the labels are drawn at the east boundary,
+        otherwise at the west boundary.
     yoff: float, optional
-        Latitude label offset from the axis
+        Latitude label offset from the axis (units are points).
+        If negative (by default), the labels are drawn at the south boundary,
+        otherwise at the north boundary.
     degree: bool, optional
-        Add a degree symbol to tick labels
+        Add a degree symbol to tick labels.
     **text_kw: dict, optional
         Label text properties.
     """
+    # Define what boundary to use
+    extent = ax.get_extent(crs=ccrs.PlateCarree())
+    if xoff <= 0:
+        xpos = extent[0]  # labels at the east boundary
+    else:
+        xpos = extent[1]  # labels at the west boundary
+    if yoff <= 0:
+        ypos = extent[2]  # labels at the south boundary
+    else:
+        ypos = extent[3]  # labels at the north boundary
     geodetic_trans = ccrs.Geodetic()
-    xlab_kw = ylab_kw = dict(va="center", ha="center", **text_kw)
+    xlab_kw = ylab_kw = {**{"va": "center", "ha": "center"}, **text_kw}
     for xtick in xticks:
         s = fmt_lonlat(xtick, "lon", degree=degree)
         text_transform = offset_copy(
             geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=0, y=yoff
         )
-        ax.text(xtick, -90, s, transform=text_transform, **xlab_kw)
+        ax.text(xtick, ypos, s, transform=text_transform, **xlab_kw)
 
     for ytick in yticks:
         s = fmt_lonlat(ytick, "lat", degree=degree)
         text_transform = offset_copy(
             geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=xoff, y=0
         )
-        ax.text(-180, ytick, s, transform=text_transform, **ylab_kw)
+        ax.text(xpos, ytick, s, transform=text_transform, **ylab_kw)
