@@ -131,7 +131,7 @@ class Region(object):
             name = f"extent_of_{cube.name()}"
         lons = cube.coord(UM_LATLON[1]).points
         if shift_lons:
-            lons = wrap_lons(lons, -180, 360)
+            lons = sorted(wrap_lons(lons, -180, 360))
         lats = cube.coord(UM_LATLON[0]).points
         idx0, idx1 = 0, -1
         if margin is not None:
