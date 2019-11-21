@@ -14,6 +14,7 @@ __all__ = (
     "DIM_CONSTR_MYX",
     "DIM_CONSTR_ZYX",
     "DIM_CONSTR_YX",
+    "DIM_CONSTR_YX_R",
     "extract_last_month",
     "extract_last_year",
     "l_range_constr",
@@ -77,3 +78,4 @@ DIM_CONSTR_TYX = _dim_constr(UM_TIME, *UM_LATLON)
 DIM_CONSTR_MYX = _dim_constr(UM_LEV, *UM_LATLON)
 DIM_CONSTR_ZYX = _dim_constr(UM_HGT, *UM_LATLON)
 DIM_CONSTR_YX = _dim_constr(*UM_LATLON)
+DIM_CONSTR_YX_R = _dim_constr(*UM_LATLON, strict=False)
