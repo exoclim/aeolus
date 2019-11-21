@@ -31,15 +31,16 @@ def _select_mean(cube):
 
 def _dim_constr(*coords, strict=True):
     """Make an `iris.Constraint` from given dimensional coordinates."""
-    # make a cube function with local variables
+    coord_set = set(coords)
+
     def __cube_func(cube):  # noqa
         cube_dimcoords = {dc.name() for dc in cube.dim_coords}
         if strict:
             # Cube has exactly the same dim coords
-            return cube_dimcoords == set(coords)
+            return cube_dimcoords == coord_set
         else:
             # Cube has these dim coords and possibly other
-            return cube_dimcoords.issubset(coords)
+            return coord_set.issubset(cube_dimcoords)
 
     return iris.Constraint(cube_func=__cube_func)
 
