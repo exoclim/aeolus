@@ -63,7 +63,8 @@ def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
             cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
 
         if xcoord.has_bounds():
-            bounds = np.sort(wrap_lons(xcoord.bounds, -180, 360), axis=0)  # + subtract
+            bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract
+            bounds = bounds[bounds[:, 0].argsort(axis=0)]
         else:
             bounds = None
         cube.replace_coord(
