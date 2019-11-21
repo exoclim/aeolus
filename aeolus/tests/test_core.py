@@ -17,7 +17,7 @@ from aeolus.exceptions import LoadError
 
 import pytest
 
-TEST_DATA = Path(__file__).parent / "test_data"
+TST_DATA = Path(__file__).parent / "data"
 
 # _counter = itertools.count()
 

@@ -6,7 +6,8 @@ import iris
 
 from .const import init_const
 from .exceptions import AeolusWarning, ArgumentError
-
+from .region import Region
+from .subset import DIM_CONSTR_YX_R
 
 __all__ = ("Run",)
 
@@ -25,7 +26,17 @@ class Run:
         Physical constants used in calculations for this run.
     """
 
-    def __init__(self, files=None, name="", description="", planet="", const_dir=None):
+    def __init__(
+        self,
+        files=None,
+        name="",
+        description="",
+        planet="",
+        const_dir=None,
+        model_type=None,
+        parent=None,
+        children=None,
+    ):
         """
         Instantiate a `Run` object.
 
@@ -43,6 +54,12 @@ class Run:
             If not given, Earth physical constants are initialised.
         const_dir: pathlib.Path, optional
             Path to a folder with JSON files containing constants for a specific planet.
+        model_type: str, optional
+            Type of the model run, global or LAM.
+        parent: aeolus.core.Run, optional
+            Pointer to this run's driving model if this is a LAM-type simulation.
+        children: list, optional
+            List of `aeolus.core.Run` objects if this is a driving model.
 
         See also
         --------
@@ -51,9 +68,7 @@ class Run:
         self.name = name
         self.description = description
 
-        if files is not None:
-            self.load_data(files)
-
+        # Planetary constants
         self.const = init_const(planet, directory=const_dir)
         try:
             self.const.radius.convert_units("m")
@@ -61,6 +76,19 @@ class Run:
         except AttributeError:
             self._coord_system = None
             warn("Run initialised without a coordinate system.", AeolusWarning)
+
+        # If the model is global or LAM (nested) and what its driving model is
+        self.model_type = model_type
+        self.parent = parent
+        self.children = children
+
+        if files is not None:
+            self.load_data(files)
+            try:
+                cube_yx = self.raw.extract(DIM_CONSTR_YX_R)[0]
+                self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
+            except IndexError:
+                warn("Run initialised without a domain.")
 
     def load_data(self, files):
         """Load cubes."""
