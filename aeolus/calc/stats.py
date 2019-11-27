@@ -79,5 +79,5 @@ def meridional_mean(cube, lat_name=UM_LATLON[0]):
 
 def last_year_mean(cube):
     """Get the time mean of over the last year."""
-    last_year_constraint = extract_last_year(cube)
-    return cube.extract(last_year_constraint).collapsed(UM_TIME, iris.analysis.MEAN)
+    last_year = extract_last_year(cube)
+    return last_year.collapsed(UM_TIME, iris.analysis.MEAN)
