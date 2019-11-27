@@ -19,6 +19,14 @@ CONST_DIR = Path(__file__).parent / "store"
 class ScalarCube(iris.cube.Cube):
     """Cube without coordinates."""
 
+    def __repr__(self):
+        """Repr of this class."""
+        return f"<ScalarCube of {self.long_name} [{self.units}]>"
+
+    def __deepcopy__(self, memo):
+        """Deep copy of a scalar cube."""
+        return self.from_cube(self._deepcopy(memo))
+
     @property
     def asc(self):
         """Convert cube to AuxCoord for math ops."""
