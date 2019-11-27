@@ -25,7 +25,7 @@ def integrate(cube, coord):
     """
     # TODO: allow non-dim coordinates
     c = cube.coord(coord)
-    others = [dc.name() for dc in cube.dim_coords if dc.name() != c.name()]
+    others = [dc.name() for dc in cube.dim_coords if cube.coord_dims(dc) != cube.coord_dims(c)]
     dim = cube.coord_dims(c)[0]
     data = np.trapz(cube.data, c.points, axis=dim)
     res = next(cube.slices(others)).copy(data=data)
