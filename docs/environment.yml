@@ -6,11 +6,13 @@ dependencies:
 - cartopy
 - iris
 - matplotlib
+- metpy>=0.11
 - nbsphinx
 - numpy
 - pip
 - pyvista
 - sphinx
 - sphinx_rtd_theme
+- xarray
 - pip:
   - latlon23

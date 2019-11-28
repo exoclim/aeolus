@@ -17,7 +17,7 @@ Contributions are welcome.
 
 The list of dependencies can be found in [`ci/`](ci/requirements-py37.yml) and the best way to install them in a separate environment is to use [`conda`](https://conda.io)
 ```bash
-conda install -c conda-forge cartopy iris matplotlib numpy
+conda install -c conda-forge cartopy iris matplotlib numpy metpy xarray
 pip install latlon23
 ```
 

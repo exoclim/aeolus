@@ -24,6 +24,8 @@ Aeolus depends on the following Python packages
 - matplotlib
 - numpy
 - latlon23
+- metpy
+- xarray
 
 Additionally, a :ref:`submodule <pyvista_ref>` that provides an interface to `PyVista <https://docs.pyvista.org/>`_ obviously requires it to be installed.
 
@@ -37,7 +39,7 @@ The recommended installation method is via `conda <https://conda.io/docs/>`_
 
 First, prepare the environment by conda-installing all the dependencies from the conda-forge channel ::
 
-  conda install -c conda-forge cartopy iris matplotlib numpy
+  conda install -c conda-forge cartopy iris matplotlib numpy metpy xarray
   pip install latlon23
 
 Then install aeolus ::
