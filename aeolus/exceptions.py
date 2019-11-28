@@ -52,3 +52,9 @@ class NotFoundError(AeolusError):
     """Raised when metadata is not found."""
 
     pass
+
+
+class UnitFormatError(AeolusError):
+    """Raised when cube units cannot be formatted."""
+
+    pass
