@@ -44,7 +44,9 @@ setup(
         "numpy>=1.16",
         "pytest>=3.3",
         "matplotlib>=2,<3",
+        "metpy>=0.11",
         "scitools-iris>=2.2",
+        "xarray",
         "latlon23",
     ],
     classifiers=[
