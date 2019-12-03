@@ -47,13 +47,16 @@ def preprocess_iris(f):
         """Convert metpy calc result to `iris.cube.Cube`."""
         try:
             data = arr.magnitude
-            units = str(arr.units)
+            units = str(arr.units).replace(" ** ", "^").replace(" * ", " ")
         except AttributeError:
             # output is probably a numpy array without units
             data = np.asarray(arr)
             units = "1"
         cube_out = donor_cube.copy(data=data)
-        cube_out.units = units
+        try:
+            cube_out.units = units
+        except ValueError:
+            cube_out.units = "unknown"
         cube_out.rename(name)
         cube_out.attributes.pop("STASH", None)
         return cube_out
