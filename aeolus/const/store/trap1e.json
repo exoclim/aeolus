@@ -20,6 +20,11 @@
         "value": 900.482
     },
     {
+        "name": "reference_surface_pressure",
+        "units": "Pa",
+        "value": 100000.0
+    },
+    {
         "name": "semi_major_axis",
         "units": "au",
         "value": 0.02928

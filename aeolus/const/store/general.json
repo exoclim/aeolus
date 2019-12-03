@@ -10,11 +10,6 @@
         "value": 5.670367e-8
     },
     {
-        "name": "molar_gas_constant",
-        "units": "J K-1 mol-1",
-        "value": 8.3144621
-    },
-    {
         "name": "water_heat_vaporization",
         "units": "m2 s-2",
         "value": 2.501e6
@@ -23,5 +18,20 @@
         "name": "water_molecular_weight",
         "units": "kg mol-1",
         "value": 18.01528e-3
+    },
+    {
+        "name": "molar_gas_constant",
+        "units": "J K-1 mol-1",
+        "value": 8.3144621
+    },
+    {
+        "name": "boltzmann",
+        "units": "m^2 kg s^-2 K^-1",
+        "value": 1.38064852e-23
+    },
+    {
+        "name": "avogadro",
+        "units": "1",
+        "value": 6.02214076e23
     }
 ]
