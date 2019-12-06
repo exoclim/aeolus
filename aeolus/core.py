@@ -34,6 +34,7 @@ class Run:
         planet="",
         const_dir=None,
         model_type=None,
+        timestep=None,
         parent=None,
         children=None,
     ):
@@ -56,6 +57,8 @@ class Run:
             Path to a folder with JSON files containing constants for a specific planet.
         model_type: str, optional
             Type of the model run, global or LAM.
+        timestep: int, optional
+            Model time step in s.
         parent: aeolus.core.Run, optional
             Pointer to this run's driving model if this is a LAM-type simulation.
         children: list, optional
@@ -79,6 +82,7 @@ class Run:
 
         # If the model is global or LAM (nested) and what its driving model is
         self.model_type = model_type
+        self.timestep = timestep
         self.parent = parent
         self.children = children
 
