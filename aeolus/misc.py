@@ -42,7 +42,7 @@ def vertical_cross_section_area(cube2d, r_planet):
 
 
 def horizontal_fluxes_through_region_boundaries(
-    scalar_cube, region, u, v, r_planet, vertical_constraint=None
+    scalar_cube, region, u, v, r_planet, vertical_constraint=None, warn_thresh=10
 ):
     """Calculate horizontal fluxes of `scalar_cube` through planes of a rectangular region."""
     perpendicular_wind_cmpnts = {"longitude": u, "latitude": v}
@@ -52,15 +52,15 @@ def horizontal_fluxes_through_region_boundaries(
         this_coord = bound["coord"]
         other_coord, (other_min, other_max) = region._perpendicular_side_limits(bound["name"])
         nearest = nearest_coord_value(scalar_cube, this_coord, bound["value"])
-        if abs(nearest - bound["value"]) > 10:
+        if abs(nearest - bound["value"]) >= warn_thresh:
             warnings.warn(
                 f"Nearest value is {np.round(nearest - bound['value'], 2)} deg away"
                 f" from the given value of {this_coord}",
                 AeolusWarning,
             )
         vcross_cnstr = iris.Constraint(**{this_coord: nearest})
-        if vertical_constraint is not None:
-            vcross_cnstr &= vertical_constraint
+        vcross_cnstr &= vertical_constraint
+
         if other_max >= other_min:
             vcross_cnstr &= iris.Constraint(**{other_coord: lambda x: other_min <= x <= other_max})
             cube = scalar_cube.extract(vcross_cnstr)
@@ -73,14 +73,13 @@ def horizontal_fluxes_through_region_boundaries(
         vcross_area = vertical_cross_section_area(cube_slice, r_planet=r_planet)
 
         # Calculate energy flux (2d)
-        cube = (
-            perpendicular_wind_cmpnts[this_coord].extract(vcross_cnstr)
-            * scalar_cube.extract(vcross_cnstr)
-            * vcross_area
-        )
+        cube = perpendicular_wind_cmpnts[this_coord].extract(vcross_cnstr) * cube * vcross_area
         cube.rename(f"{scalar_cube.name()}_flux_through_{bound['name']}_boundary")
         # Total flux
-        cube_total = cube.collapsed(cube.dim_coords, iris.analysis.SUM)
+        collapsible_dims = [
+            i for i in cube.dim_coords if iris.util.guess_coord_axis(i) in ["Z", "Y", "X"]
+        ]
+        cube_total = cube.collapsed(collapsible_dims, iris.analysis.SUM)
         total_h_fluxes.append(cube_total)
     return total_h_fluxes
 
