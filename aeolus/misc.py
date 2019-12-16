@@ -6,7 +6,8 @@ import iris
 
 import numpy as np
 
-from .coord_utils import nearest_coord_value
+from .const import get_planet_radius
+from .coord_utils import nearest_coord_value, UM_LATLON
 from .exceptions import AeolusWarning
 
 
@@ -17,10 +18,12 @@ __all__ = (
 )
 
 
-def vertical_cross_section_area(cube2d, r_planet):
+def vertical_cross_section_area(cube2d, r_planet=None):
     """Create a cube of vertical cross-section areas in metres."""
     cube2d = cube2d.copy()
-    m_per_deg = (np.pi / 180) * r_planet
+    if r_planet is None:
+        r = get_planet_radius(cube2d)
+    m_per_deg = (np.pi / 180) * r
     if iris.util.guess_coord_axis(cube2d.dim_coords[1]) == "X":
         m_per_deg *= np.cos(np.deg2rad(cube2d.coord(axis="Y").points[0]))
 
@@ -42,10 +45,13 @@ def vertical_cross_section_area(cube2d, r_planet):
 
 
 def horizontal_fluxes_through_region_boundaries(
-    scalar_cube, region, u, v, r_planet, vertical_constraint=None, warn_thresh=10
+    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None, warn_thresh=10
 ):
     """Calculate horizontal fluxes of `scalar_cube` through planes of a rectangular region."""
-    perpendicular_wind_cmpnts = {"longitude": u, "latitude": v}
+    perpendicular_wind_cmpnts = {UM_LATLON[1]: u, UM_LATLON[0]: v}
+
+    if r_planet is None:
+        r = get_planet_radius(scalar_cube)
 
     total_h_fluxes = iris.cube.CubeList()
     for bound in region:
@@ -70,7 +76,7 @@ def horizontal_fluxes_through_region_boundaries(
             )
             cube = scalar_cube.extract(vcross_cnstr)
         cube_slice = next(cube.slices([cube.coord(axis="z").name(), other_coord]))
-        vcross_area = vertical_cross_section_area(cube_slice, r_planet=r_planet)
+        vcross_area = vertical_cross_section_area(cube_slice, r_planet=r)
 
         # Calculate energy flux (2d)
         cube = perpendicular_wind_cmpnts[this_coord].extract(vcross_cnstr) * cube * vcross_area
@@ -84,10 +90,12 @@ def horizontal_fluxes_through_region_boundaries(
     return total_h_fluxes
 
 
-def net_horizontal_flux_to_region(scalar_cube, region, u, v, r_planet, vertical_constraint=None):
+def net_horizontal_flux_to_region(
+    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None
+):
     """Calculate horizontal fluxes of `scalar_cube` quantity and add them to get the net result."""
     total_h_fluxes = horizontal_fluxes_through_region_boundaries(
-        scalar_cube, region, u, v, r_planet, vertical_constraint=vertical_constraint
+        scalar_cube, region, u, v, r_planet=r_planet, vertical_constraint=vertical_constraint
     )
     net_flux = (
         total_h_fluxes.extract_strict(

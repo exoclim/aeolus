@@ -3,15 +3,16 @@
 import json
 from dataclasses import make_dataclass
 from pathlib import Path
+from warnings import warn
 
 import iris
 
 import numpy as np
 
-from ..exceptions import ArgumentError, LoadError
+from ..exceptions import ArgumentError, AeolusWarning, LoadError
 
 
-__all__ = ("init_const",)
+__all__ = ("init_const", "get_planet_radius")
 
 CONST_DIR = Path(__file__).parent / "store"
 
@@ -139,3 +140,17 @@ def init_const(name="general", directory=None):
         cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
     )
     return kls(**const_dict)
+
+
+def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
+    """Get planet radius from cube attributes or coordinate system."""
+    cs = cube.coord_system("CoordSystem")
+    if cs is not None:
+        r = cs.semi_major_axis
+    else:
+        try:
+            r = cube.attributes["planet_conf"].radius
+        except (KeyError, LoadError):
+            warn("Using default Earth radius", AeolusWarning)
+            r = default
+    return r

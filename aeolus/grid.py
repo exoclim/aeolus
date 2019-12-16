@@ -7,8 +7,9 @@ from iris.util import is_regular
 
 import numpy as np
 
+from .const import get_planet_radius
 from .coord_utils import UM_LATLON, ensure_bounds
-from .exceptions import AeolusWarning, LoadError
+from .exceptions import AeolusWarning
 
 
 __all__ = (
@@ -145,20 +146,11 @@ def area_weights_cube(cube, r_planet=None, normalize=False):
         aw.rename("normalized_grid_cell_area")
         aw.units = "1"
     else:
-        cs = cube.coord_system("CoordSystem")
-        if r_planet is not None:
-            r = r_planet
-        elif cs is not None:
-            r = cs.semi_major_axis
+        if r_planet is None:
+            r = get_planet_radius(cube)
         else:
-            try:
-                r = cube.attributes["planet_conf"].radius
-            except (KeyError, LoadError):
-                warn("Using default Earth radius", AeolusWarning)
-                r = None
-
-        if r is not None:
-            aw *= (r / iris.fileformats.pp.EARTH_RADIUS) ** 2
+            r = r_planet
+        aw *= (r / iris.fileformats.pp.EARTH_RADIUS) ** 2
         aw = cube.copy(data=aw)
         aw.rename("grid_cell_area")
         aw.units = "m**2"
