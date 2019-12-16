@@ -9,7 +9,7 @@ import iris
 
 import numpy as np
 
-from ..exceptions import ArgumentError, AeolusWarning, LoadError
+from ..exceptions import AeolusWarning, ArgumentError, LoadError
 
 
 __all__ = ("init_const", "get_planet_radius")

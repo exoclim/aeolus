@@ -7,7 +7,7 @@ import iris
 import numpy as np
 
 from .const import get_planet_radius
-from .coord_utils import nearest_coord_value, UM_LATLON
+from .coord_utils import UM_LATLON, nearest_coord_value
 from .exceptions import AeolusWarning
 
 
