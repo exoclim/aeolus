@@ -23,6 +23,8 @@ def vertical_cross_section_area(cube2d, r_planet=None):
     cube2d = cube2d.copy()
     if r_planet is None:
         r = get_planet_radius(cube2d)
+    else:
+        r = r_planet
     m_per_deg = (np.pi / 180) * r
     if iris.util.guess_coord_axis(cube2d.dim_coords[1]) == "X":
         m_per_deg *= np.cos(np.deg2rad(cube2d.coord(axis="Y").points[0]))
@@ -52,6 +54,8 @@ def horizontal_fluxes_through_region_boundaries(
 
     if r_planet is None:
         r = get_planet_radius(scalar_cube)
+    else:
+        r = r_planet
 
     total_h_fluxes = iris.cube.CubeList()
     for bound in region:
