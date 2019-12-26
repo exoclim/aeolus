@@ -39,14 +39,11 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     python_requires=">=3.7",
-    setup_requires=["numpy>=1.16"],
     install_requires=[
         "numpy>=1.16",
         "pytest>=3.3",
-        "matplotlib>=2,<3",
-        "metpy>=0.11",
-        "scitools-iris>=2.2",
-        "xarray",
+        "matplotlib>=2",
+        "scitools-iris>=2.3",
         "latlon23",
     ],
     classifiers=[

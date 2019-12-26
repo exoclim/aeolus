@@ -1,0 +1,6 @@
+name: aeolus_py37
+channels:
+- conda-forge
+dependencies:
+- metpy>=0.11
+- xarray

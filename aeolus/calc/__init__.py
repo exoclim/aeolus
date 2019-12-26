@@ -14,11 +14,9 @@ from .diag import (
     total_precip,
     water_path,
 )
-from .metpy import preprocess_iris
 from .stats import last_year_mean, meridional_mean, spatial, spatial_quartiles
 
 __all__ = (
-    "preprocess_iris",
     "integrate",
     "bond_albedo",
     "ghe_norm",

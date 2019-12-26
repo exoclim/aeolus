@@ -1,0 +1,5 @@
+name: aeolus_py37
+channels:
+- conda-forge
+dependencies:
+- pyvista>=0.23
