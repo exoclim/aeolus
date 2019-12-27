@@ -38,9 +38,10 @@ script:
 
 after_success:
  - if [[ "$CONDA_ENV" == "docs" ]]; then
-      git checkout gh-pages;
+      git checkout -b gh-pages;
+      git fetch -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
       cp -rv docs/_build/* docs/;
-      git add docs/html docs/doctrees;
+      git add -q docs/html docs/doctrees;
       git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "deploy docs to gh-pages";
       git push -f -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
     else
