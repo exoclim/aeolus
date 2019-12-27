@@ -38,7 +38,7 @@ script:
 
 after_success:
   - if [[ "$CONDA_ENV" == "docs" ]]; then
-      echo 'bld dir=' $TRAVIS_BUILD_DIR
+      echo 'bld dir=' $TRAVIS_BUILD_DIR;
       if [ -n "$GITHUB_API_KEY" ]; then
         git checkout gh-pages;
         git add docs/html docs/doctrees;
