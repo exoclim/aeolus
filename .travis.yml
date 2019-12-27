@@ -42,6 +42,8 @@ after_success:
       git fetch -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
       cp -rv docs/_build/* docs/;
       git add docs/html docs/doctrees;
+      touch .nojekyll;
+      git add .nojekyll;
       git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "deploy docs to gh-pages";
       git push -f -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
       echo "pages deployed"
