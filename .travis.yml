@@ -41,7 +41,7 @@ after_success:
       echo 'bld dir=' $TRAVIS_BUILD_DIR;
       git checkout gh-pages;
       git add docs/html docs/doctrees;
-      git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "DOC: deploy docs to gh-pages";
+      git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "deploy docs to gh-pages";
       git push -f -q https://exoclim:$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
     else
       conda install -c conda-forge conda-build anaconda-client;
