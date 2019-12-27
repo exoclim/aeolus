@@ -31,13 +31,23 @@ install:
 
 script:
   - if [[ "$CONDA_ENV" == "docs" ]]; then
-      sphinx-build -n -b html -d docs/build/doctrees docs/source docs/build/html;
+      sphinx-build -n -b html -d docs/doctrees docs/source docs/html;
     else
       pytest aeolus -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v;
     fi;
 
 after_success:
-  - if [[ "$CONDA_ENV" != "docs" ]]; then
+  - if [[ "$CONDA_ENV" == "docs" ]]; then
+      echo 'bld dir=' $TRAVIS_BUILD_DIR
+      if [ -n "$GITHUB_API_KEY" ]; then
+        git checkout gh-pages
+        git add docs/html docs/doctrees
+        git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "DOC: deploy docs to gh-pages"
+        # Make sure to make the output quiet, or else the API token will leak!
+        # This works because the API key can replace your password.
+        git push -f -q https://exoclim:$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null
+      fi
+    else
       conda install -c conda-forge conda-build anaconda-client;
       conda list;
       bash conda.recipe/conda_upload.sh;
