@@ -46,7 +46,7 @@ after_success:
       git add .nojekyll;
       git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "deploy docs to gh-pages";
       git push -f -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
-      echo "pages deployed"
+      echo "pages deployed";
     else
       conda install -c conda-forge conda-build anaconda-client;
       conda list;
