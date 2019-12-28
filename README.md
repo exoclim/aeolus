@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/aeolus.svg?logo=pypi&logoColor=white)](https://pypi.org/project/aeolus/)
 [![Travis](https://img.shields.io/travis/com/exoclim/aeolus?logo=travis)](https://travis-ci.com/exoclim/aeolus?branch=master)
 [![Documentation](https://img.shields.io/badge/docs-latest-green?logo=github)](https://exoclim.github.io/aeolus)
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg?logo=gnu)](LICENSE)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # aeolus :wind_face:
@@ -12,34 +12,3 @@ Python library for object-oriented analysis of atmospheric model output built on
 The documentation is available [here](https://exoclim.github.io/aeolus).
 
 Contributions are welcome.
-
-## Installation
-
-The list of dependencies can be found in [`ci/`](ci/requirements-py37.yml) and the best way to install them in a separate environment is to use [`conda`](https://conda.io)
-```bash
-conda install -c conda-forge cartopy iris matplotlib numpy metpy xarray
-pip install latlon23
-```
-
-After the required packages are installed, `aeolus` can be installed either from conda, PyPI, or from source.
-
-### conda
-```bash
-conda install -c dennissergeev aeolus
-```
-
-
-### PyPI
-```bash
-pip install aeolus
-```
-
-
-### From source
-```bash
-git clone https://github.com/exoclim/aeolus.git
-
-cd aeolus
-
-python setup.py install
-```
