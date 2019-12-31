@@ -3,6 +3,10 @@ sudo: false
 notifications:
   email: false
 
+env:
+  global:
+    - GH_PAGES_DIR="$HOME/gh-pages"
+
 matrix:
   fast_finish: true
   include:
@@ -38,17 +42,9 @@ script:
 
 after_success:
  - if [[ "$CONDA_ENV" == "docs" ]]; then
-      git checkout -b gh-pages;
-      git fetch -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
-      cp -rv docs/_build/* docs/;
-      git add docs/html docs/doctrees;
-      touch .nojekyll;
-      git add .nojekyll;
-      git -c user.name='travis' -c user.email='travis@nowhere.org' commit -m "deploy docs to gh-pages";
-      git push -f -q https://$GITHUB_API_KEY@github.com/exoclim/aeolus gh-pages &>/dev/null;
-      echo "pages deployed";
-    else
-      conda install -c conda-forge conda-build anaconda-client;
-      conda list;
-      bash conda.recipe/conda_upload.sh;
-    fi;
+     bash ci/deploy_docs.sh
+   else
+     conda install -c conda-forge conda-build anaconda-client;
+     conda list;
+     bash conda.recipe/conda_upload.sh;
+   fi;
