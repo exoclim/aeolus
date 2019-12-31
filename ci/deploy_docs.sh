@@ -23,13 +23,13 @@ fi
 # files present with the commit message "Deploy to GitHub Pages".
 echo Updating $VERSION docs...
 # rm -rf ${VERSION}
-mkdir ${VERSION}
+mkdir -p ${VERSION}
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/html/ ${VERSION}/html
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/doctrees ${VERSION}/doctrees
 touch .nojekyll
-if [[ "${VERSION}" != "dev" ]]; then
-    ln -snf ${VERSION} latest
-fi
+# if [[ "${VERSION}" != "dev" ]]; then
+ln -snf ${VERSION} latest
+# fi
 
 # Generate our json list of versions
 # echo Generating versions.json...
@@ -37,7 +37,7 @@ fi
 
 echo Staging...
 git add -A .
-if [[ "${VERSION}" == "dev"]]; then
+if [[ "${VERSION}" == "dev" ]]; then
     git commit --amend --reset-author --no-edit
 else
     git commit -m "Deploy ${VERSION} to GitHub Pages"
