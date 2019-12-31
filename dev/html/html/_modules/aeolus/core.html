@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aeolus.core &mdash; aeolus 0.4.1+28.g7fdbc52 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> aeolus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.1+28.g7fdbc52
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">aeolus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>aeolus.core</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aeolus.core</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Core submodule of aeolus package.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+
+<span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">init_const</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span>
+<span class="kn">from</span> <span class="nn">.region</span> <span class="kn">import</span> <span class="n">Region</span>
+<span class="kn">from</span> <span class="nn">.subset</span> <span class="kn">import</span> <span class="n">DIM_CONSTR_YX_R</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">,)</span>
+
+
+<div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run">[docs]</a><span class="k">class</span> <span class="nc">Run</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A single model &#39;run&#39;, i.e. simulation.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: str</span>
+<span class="sd">        The run&#39;s name.</span>
+<span class="sd">    description: str</span>
+<span class="sd">        A description of the run.</span>
+<span class="sd">    const: aeolus.const.ConstContainer</span>
+<span class="sd">        Physical constants used in calculations for this run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Run.__init__"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">planet</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">const_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">children</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate a `Run` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        files: str or pathlib.Path, optional</span>
+<span class="sd">            Wildcard for loading files.</span>
+<span class="sd">        name: str, optional</span>
+<span class="sd">            The run&#39;s name.</span>
+<span class="sd">        description: str, optional</span>
+<span class="sd">            A description of the model. This is not used internally by</span>
+<span class="sd">            aeolus; it is solely for the user&#39;s information.</span>
+<span class="sd">        planet: str, optional</span>
+<span class="sd">            Planet configuration. This is used to get appropriate physical constants.</span>
+<span class="sd">            If not given, Earth physical constants are initialised.</span>
+<span class="sd">        const_dir: pathlib.Path, optional</span>
+<span class="sd">            Path to a folder with JSON files containing constants for a specific planet.</span>
+<span class="sd">        model_type: str, optional</span>
+<span class="sd">            Type of the model run, global or LAM.</span>
+<span class="sd">        timestep: int, optional</span>
+<span class="sd">            Model time step in s.</span>
+<span class="sd">        parent: aeolus.core.Run, optional</span>
+<span class="sd">            Pointer to this run&#39;s driving model if this is a LAM-type simulation.</span>
+<span class="sd">        children: list, optional</span>
+<span class="sd">            List of `aeolus.core.Run` objects if this is a driving model.</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        aeolus.const.init_const</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+
+        <span class="c1"># Planetary constants</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="n">planet</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">const_dir</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_coord_system</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coord_systems</span><span class="o">.</span><span class="n">GeogCS</span><span class="p">(</span><span class="n">semi_major_axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_coord_system</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Run initialised without a coordinate system.&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+
+        <span class="c1"># If the model is global or LAM (nested) and what its driving model is</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">=</span> <span class="n">model_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestep</span> <span class="o">=</span> <span class="n">timestep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">children</span>
+
+        <span class="k">if</span> <span class="n">files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">DIM_CONSTR_YX_R</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">Region</span><span class="o">.</span><span class="n">from_cube</span><span class="p">(</span><span class="n">cube_yx</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2">_domain&quot;</span><span class="p">,</span> <span class="n">shift_lons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Run initialised without a domain.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Run.load_data"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load cubes.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="n">fnames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input type {type(files)} is not allowed.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Run.proc_data"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.proc_data">[docs]</a>    <span class="k">def</span> <span class="nf">proc_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">func_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Post-process data for easier analysis and store it in `self.proc` attribute.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        func: callable</span>
+<span class="sd">            Function that takes `iris.cube.CubeList` as its first argument.</span>
+<span class="sd">        **func_args: dict-like, optional</span>
+<span class="sd">            Keyword arguments passed to `func`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proc</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="o">**</span><span class="n">func_args</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">:</span>
+            <span class="c1"># add constants to cube attributes</span>
+            <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">const</span>
+            <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">coords</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">coord</span><span class="o">.</span><span class="n">coord_system</span><span class="p">:</span>
+                    <span class="c1"># Replace coordinate system with the planet radius given in `self.const`</span>
+                    <span class="n">coord</span><span class="o">.</span><span class="n">coord_system</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coord_system</span></div>
+
+<div class="viewcode-block" id="Run.add_data"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.add_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">func_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate additional diagnostics (of type `iris.cube.Cube`) and add them to `self.proc`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        func: callable</span>
+<span class="sd">            Function that takes `iris.cube.CubeList` (`self.proc`) as its first argument</span>
+<span class="sd">            and appends new cubes to it (and does not return anything).</span>
+<span class="sd">        **func_args: dict-like, optional</span>
+<span class="sd">            Keyword arguments passed to `func`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">,</span> <span class="o">**</span><span class="n">func_args</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, the aeolus developers
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
