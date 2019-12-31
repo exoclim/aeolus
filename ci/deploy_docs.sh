@@ -13,7 +13,8 @@ git config user.name "Travis CI"
 git config user.email "travis@nobody.org"
 
 if [[ "${TRAVIS_TAG}" != "" ]]; then
-    export VERSION=${TRAVIS_TAG%.*}
+    # export VERSION=${TRAVIS_TAG%.*}
+    export VERSION=${TRAVIS_TAG}
 else
     export VERSION=dev
 fi
@@ -22,6 +23,7 @@ fi
 # files present with the commit message "Deploy to GitHub Pages".
 echo Updating $VERSION docs...
 # rm -rf ${VERSION}
+mkdir ${VERSION}
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/html/ ${VERSION}/html
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/doctrees ${VERSION}/doctrees
 touch .nojekyll
