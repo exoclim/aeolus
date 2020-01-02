@@ -8,10 +8,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Science calculations &mdash; aeolus 0.4.1+30.g43c76fe documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.1+33.g3e35c28 documentation</title>
   
 
   
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   
   
   
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1+30.g43c76fe
+                0.4.1+33.g3e35c28
               </div>
             
           
@@ -269,6 +271,26 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.3)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
 <li><p><strong>lat_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the latitude coordinate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Collapsed cube.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.3)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aeolus.calc.zonal_mean">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">zonal_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">lon_name='longitude'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#zonal_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.zonal_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate cube’s zonal average.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.3)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
+<li><p><strong>lon_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the longitude coordinate.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

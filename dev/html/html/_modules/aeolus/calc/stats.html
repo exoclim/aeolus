@@ -8,10 +8,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.calc.stats &mdash; aeolus 0.4.1+30.g43c76fe documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0.4.1+33.g3e35c28 documentation</title>
   
 
   
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   
   
   
@@ -61,7 +63,7 @@
             
             
               <div class="version">
-                0.4.1+30.g43c76fe
+                0.4.1+33.g3e35c28
               </div>
             
           
@@ -233,7 +235,7 @@
     <span class="k">return</span> <span class="n">cube_mean</span></div>
 
 
-<span class="k">def</span> <span class="nf">zonal_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lon_name</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<div class="viewcode-block" id="zonal_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.zonal_mean">[docs]</a><span class="k">def</span> <span class="nf">zonal_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lon_name</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate cube&#39;s zonal average.</span>
 
@@ -250,7 +252,7 @@
 <span class="sd">        Collapsed cube.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cube_mean</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">lon_name</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">cube_mean</span>
+    <span class="k">return</span> <span class="n">cube_mean</span></div>
 
 
 <div class="viewcode-block" id="last_year_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.last_year_mean">[docs]</a><span class="k">def</span> <span class="nf">last_year_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
