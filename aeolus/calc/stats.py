@@ -72,8 +72,28 @@ def meridional_mean(cube, lat_name=UM_LATLON[0]):
         Collapsed cube.
     """
     coslat = np.cos(np.deg2rad(cube.coord(lat_name).points))
-    coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, (0,))
+    coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
     cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
+    return cube_mean
+
+
+def zonal_mean(cube, lon_name=UM_LATLON[1]):
+    """
+    Calculate cube's zonal average.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with a latitude coordinate.
+    lon_name: str, optional
+        Name of the longitude coordinate.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Collapsed cube.
+    """
+    cube_mean = cube.collapsed(lon_name, iris.analysis.MEAN)
     return cube_mean
 
 
