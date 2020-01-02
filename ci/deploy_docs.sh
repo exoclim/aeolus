@@ -24,8 +24,8 @@ fi
 echo Updating $VERSION docs...
 # rm -rf ${VERSION}
 mkdir -p ${VERSION}
-cp -R ${TRAVIS_BUILD_DIR}/docs/_build/html/ ${VERSION}/html
-cp -R ${TRAVIS_BUILD_DIR}/docs/_build/doctrees ${VERSION}/doctrees
+cp -R ${TRAVIS_BUILD_DIR}/docs/_build/html ${VERSION}/
+cp -R ${TRAVIS_BUILD_DIR}/docs/_build/doctrees ${VERSION}/
 touch .nojekyll
 # if [[ "${VERSION}" != "dev" ]]; then
 ln -snf ${VERSION} latest
