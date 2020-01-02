@@ -14,7 +14,7 @@ from .diag import (
     total_precip,
     water_path,
 )
-from .stats import last_year_mean, meridional_mean, spatial, spatial_quartiles
+from .stats import last_year_mean, meridional_mean, zonal_mean, spatial, spatial_quartiles
 
 __all__ = (
     "integrate",
@@ -31,6 +31,7 @@ __all__ = (
     "total_precip",
     "last_year_mean",
     "meridional_mean",
+    "zonal_mean",
     "spatial",
     "spatial_quartiles",
     "water_path",
