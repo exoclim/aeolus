@@ -14,11 +14,9 @@ __all__ = (
     "bond_albedo",
     "ghe_norm",
     "heat_redist_eff",
-    "minmaxdiff",
     "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",
-    "region_mean_diff",
     "toa_cloud_radiative_effect",
     "toa_eff_temp",
     "toa_net_energy",
@@ -220,56 +218,6 @@ def heat_redist_eff(cubelist, region_a, region_b):
     eta = toa_olr_a / toa_olr_b
     eta.rename("heat_redistribution_efficiency")
     return eta
-
-
-def minmaxdiff(cubelist, name):
-    """
-    Spatial maximum minus spatial minimum for a given cube.
-
-    Parameters
-    ----------
-    cubelist: iris.cube.CubeList
-        Input list of cubes.
-    name: str
-        Cube name.
-
-    Returns
-    -------
-    iris.cube.Cube
-        Difference between the extrema with collapsed spatial dimensions.
-    """
-    _min = spatial(cubelist.extract_strict(name), "min")
-    _max = spatial(cubelist.extract_strict(name), "max")
-    diff = _max - _min
-    diff.rename(f"{name}_difference")
-    return diff
-
-
-def region_mean_diff(cubelist, name, region_a, region_b):
-    """
-    Difference between averages over two regions for a given cube.
-
-    Parameters
-    ----------
-    cubelist: iris.cube.CubeList
-        Input list of cubes.
-    name: str
-        Cube name.
-    region_a: aeolus.region.Region
-        First region.
-    region_b: aeolus.region.Region
-        Second region.
-
-    Returns
-    -------
-    iris.cube.Cube
-        Difference between the region averages with collapsed spatial dimensions.
-    """
-    mean_a = spatial(cubelist.extract_strict(name).extract(region_a.constraint), "mean")
-    mean_b = spatial(cubelist.extract_strict(name).extract(region_b.constraint), "mean")
-    diff = mean_a - mean_b
-    diff.rename(f"{name}_mean_diff_{region_a}_{region_b}")
-    return diff
 
 
 def toa_eff_temp(cubelist):
