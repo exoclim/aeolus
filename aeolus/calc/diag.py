@@ -52,7 +52,7 @@ def toa_cloud_radiative_effect(cubelist, kind):
     Returns
     -------
     iris.cube.Cube
-        Cube of CRE with reduced dimensions.
+        Cube of CRE with collapsed spatial dimensions.
     """
     name = f"toa_cloud_radiative_effect_{kind}"
     if kind == "sw":
@@ -87,7 +87,7 @@ def toa_net_energy(cubelist):
     Returns
     -------
     iris.cube.Cube
-        Cube with reduced dimensions.
+        Cube of TOA energy balance with collapsed spatial dimensions.
     """
     terms = cubelist.extract(
         ["toa_incoming_shortwave_flux", "toa_outgoing_shortwave_flux", "toa_outgoing_longwave_flux"]
@@ -113,7 +113,7 @@ def sfc_net_energy(cubelist):
     Returns
     -------
     iris.cube.Cube
-        Cube with reduced dimensions.
+        Cube of surface energy balance with collapsed spatial dimensions.
     """
     terms = cubelist.extract(
         [
@@ -148,7 +148,7 @@ def sfc_water_balance(cubelist):
     Returns
     -------
     iris.cube.Cube
-        Cube with reduced dimensions.
+        Cube of E-P with collapsed spatial dimensions.
     """
     terms = cubelist.extract(["precipitation_flux", "surface_upward_water_flux"])
     terms_ave = []
@@ -212,7 +212,7 @@ def heat_redist_eff(cubelist, region_a, region_b):
     Returns
     -------
     iris.cube.Cube
-        Eta parameter.
+        Cube of eta parameter with collapsed spatial dimensions.
     """
     toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
     toa_olr_a = spatial(toa_olr.extract(region_a.constraint), "mean")
@@ -236,7 +236,7 @@ def minmaxdiff(cubelist, name):
     Returns
     -------
     iris.cube.Cube
-        Difference between the extrema.
+        Difference between the extrema with collapsed spatial dimensions.
     """
     _min = spatial(cubelist.extract_strict(name), "min")
     _max = spatial(cubelist.extract_strict(name), "max")
@@ -263,7 +263,7 @@ def region_mean_diff(cubelist, name, region_a, region_b):
     Returns
     -------
     iris.cube.Cube
-        Difference between the region averages.
+        Difference between the region averages with collapsed spatial dimensions.
     """
     mean_a = spatial(cubelist.extract_strict(name).extract(region_a.constraint), "mean")
     mean_b = spatial(cubelist.extract_strict(name).extract(region_b.constraint), "mean")
@@ -273,7 +273,7 @@ def region_mean_diff(cubelist, name, region_a, region_b):
 
 
 def toa_eff_temp(cubelist):
-    """
+    r"""
     Calculate effective temperature from TOA OLR.
 
     Parameters
@@ -284,6 +284,7 @@ def toa_eff_temp(cubelist):
     Returns
     -------
     iris.cube.Cube
+        Cube of :math:`T_{eff}` with collapsed spatial dimensions.
     """
     toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
     sbc = init_const().stefan_boltzmann.asc
@@ -307,7 +308,7 @@ def ghe_norm(cubelist):
     Returns
     -------
     iris.cube.Cube
-        Difference between the region averages.
+        Cube of greenhouse effect parameter with collapsed spatial dimensions.
     """
     t_sfc = spatial(cubelist.extract_strict("surface_temperature"), "mean")
     # t_sfc = spatial(
@@ -338,7 +339,7 @@ def bond_albedo(cubelist):
     Returns
     -------
     iris.cube.Cube
-        Difference between the region averages.
+        Cube of bond albedo with collapsed spatial dimensions.
     """
     toa_osr = spatial(cubelist.extract_strict("toa_outgoing_shortwave_flux"), "mean")
     sc = toa_osr.attributes["planet_conf"].solar_constant
@@ -370,7 +371,7 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
     Returns
     -------
     iris.cube.Cube
-        Difference between the region averages.
+        Cube of water path with collapsed vertical dimension.
     """
     if kind == "water_vapour":
         q = cubelist.extract_strict("specific_humidity")
