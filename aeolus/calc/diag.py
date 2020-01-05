@@ -15,15 +15,27 @@ __all__ = (
     "ghe_norm",
     "heat_redist_eff",
     "minmaxdiff",
+    "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",
     "region_mean_diff",
     "toa_cloud_radiative_effect",
     "toa_eff_temp",
     "toa_net_energy",
-    "total_precip",
     "water_path",
 )
+PRECIP_MAPPING = {
+    "total": [
+        "convective_rainfall_flux",
+        "convective_snowfall_flux",
+        "stratiform_rainfall_flux",
+        "stratiform_snowfall_flux",
+    ],
+    "conv": ["convective_rainfall_flux", "convective_snowfall_flux"],
+    "stra": ["stratiform_rainfall_flux", "stratiform_snowfall_flux"],
+    "rain": ["convective_rainfall_flux", "stratiform_rainfall_flux"],
+    "snow": ["convective_snowfall_flux", "stratiform_snowfall_flux"],
+}
 
 
 def toa_cloud_radiative_effect(cubelist, kind):
@@ -147,42 +159,38 @@ def sfc_water_balance(cubelist):
     return net
 
 
-def total_precip(cubelist, ptype=None):
+def precip_sum(cubelist, ptype="total"):
     """
-    Calculate total precipitation flux [:math:`mm~day^{-1}`].
+    Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].
 
     Parameters
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
     ptype: str, optional
-        Precipitation type (stra|conv).
+        Precipitation type (total|stra|conv|rain|snow).
 
     Returns
     -------
     iris.cube.Cube
         Sum of cubes of precipitation with units converted to mm per day.
     """
-    conv = ["convective_rainfall_flux", "convective_snowfall_flux"]
-    stra = ["stratiform_rainfall_flux", "stratiform_snowfall_flux"]
-    if ptype is None:
-        varnames = stra + conv
-    elif ptype == "stra":
-        varnames = stra
-    elif ptype == "conv":
-        varnames = conv
-    else:
+    try:
+        varnames = PRECIP_MAPPING[ptype]
+    except KeyError:
         raise ArgumentError(f"Unknown ptype={ptype}")
-    tot_precip = cubelist.extract_strict(varnames[0]).copy()
-    for varname in varnames[1:]:
+    precip = 0.0
+    for varname in varnames:
         try:
-            tot_precip += cubelist.extract_strict(varname)
+            cube = cubelist.extract_strict(varname)
+            const = cube.attributes["planet_conf"]
+            precip += cube
         except iris.exceptions.ConstraintMismatchError:
             pass
-    tot_precip /= iris.coords.AuxCoord(1000, units="kg m-3")
-    tot_precip.convert_units("mm day-1")
-    tot_precip.rename("total_precipitation_flux")
-    return tot_precip
+    precip /= const.condensible_density.asc
+    precip.convert_units("mm day^-1")
+    precip.rename(f"{ptype}_precip_rate")
+    return precip
 
 
 def heat_redist_eff(cubelist, region_a, region_b):
