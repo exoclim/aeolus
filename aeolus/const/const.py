@@ -93,7 +93,9 @@ def _read_const_file(name, directory=CONST_DIR):
         # transform the list of dictionaries into a dictionary
         const_dict = {}
         for vardict in list_of_dicts:
-            const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
+            const_dict[vardict["name"]] = {
+                k: v for k, v in vardict.items() if k != "name"
+            }
         return const_dict
     except FileNotFoundError:
         raise LoadError(
@@ -137,20 +139,26 @@ def init_const(name="general", directory=None):
     if name != "general":
         const_dict.update(_read_const_file(name, **kw))
     kls = make_dataclass(
-        cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
+        cls_name,
+        fields=[*const_dict.keys()],
+        bases=(ConstContainer,),
+        frozen=True,
+        repr=False,
     )
     return kls(**const_dict)
 
 
 def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
-    """Get planet radius from cube attributes or coordinate system."""
+    """Get planet radius in metres from cube attributes or coordinate system."""
     cs = cube.coord_system("CoordSystem")
     if cs is not None:
         r = cs.semi_major_axis
     else:
         try:
-            r = cube.attributes["planet_conf"].radius
+            r = cube.attributes["planet_conf"].radius.copy()
+            r.convert_units("m")
+            r = float(r.data)
         except (KeyError, LoadError):
-            warn("Using default Earth radius", AeolusWarning)
+            warn("Using default radius", AeolusWarning)
             r = default
     return r
