@@ -7,7 +7,7 @@ from .calculus import integrate
 from .stats import spatial
 from ..const import init_const
 from ..coord_utils import UM_HGT
-from ..exceptions import ArgumentError
+from ..exceptions import ArgumentError, MissingCubeError
 
 
 __all__ = (
@@ -180,20 +180,22 @@ def precip_sum(cubelist, ptype="total", const=None):
         varnames = PRECIP_MAPPING[ptype]
     except KeyError:
         raise ArgumentError(f"Unknown ptype={ptype}")
+    if len(cubelist.extract(varnames)) == 0:
+        raise MissingCubeError(
+            f"{varnames} required for ptype={ptype} are missing from cubelist:\n{cubelist}"
+        )
     precip = 0.0
     for varname in varnames:
         try:
             cube = cubelist.extract_strict(varname)
             if const is None:
-                const = cube.attributes["planet_conf"]
+                const = cube.attributes.get("planet_conf", None)
             precip += cube
         except iris.exceptions.ConstraintMismatchError:
             pass
     if const is not None:
         precip /= const.condensible_density.asc
         precip.convert_units("mm day^-1")
-    else:
-        precip = iris.cube.Cube(np.nan)
     precip.rename(f"{ptype}_precip_rate")
     return precip
 

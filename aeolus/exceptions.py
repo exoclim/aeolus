@@ -58,3 +58,9 @@ class UnitFormatError(AeolusError):
     """Raised when cube units cannot be formatted."""
 
     pass
+
+
+class MissingCubeError(AeolusError):
+    """Raised when cubes required for a calculation are missing."""
+
+    pass
