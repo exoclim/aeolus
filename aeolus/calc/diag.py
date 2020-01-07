@@ -157,7 +157,7 @@ def sfc_water_balance(cubelist):
     return net
 
 
-def precip_sum(cubelist, ptype="total"):
+def precip_sum(cubelist, ptype="total", const=None):
     """
     Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].
 
@@ -167,6 +167,9 @@ def precip_sum(cubelist, ptype="total"):
         Input list of cubes.
     ptype: str, optional
         Precipitation type (total|stra|conv|rain|snow).
+    const: aeolus.const.const.ConstContainer, optional
+        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        If not given, attempt to retrieve it from cube attributes.
 
     Returns
     -------
@@ -181,12 +184,14 @@ def precip_sum(cubelist, ptype="total"):
     for varname in varnames:
         try:
             cube = cubelist.extract_strict(varname)
-            const = cube.attributes["planet_conf"]
+            if const is None:
+                const = cube.attributes["planet_conf"]
             precip += cube
         except iris.exceptions.ConstraintMismatchError:
             pass
-    precip /= const.condensible_density.asc
-    precip.convert_units("mm day^-1")
+    if const is not None:
+        precip /= const.condensible_density.asc
+        precip.convert_units("mm day^-1")
     precip.rename(f"{ptype}_precip_rate")
     return precip
 
@@ -271,7 +276,7 @@ def ghe_norm(cubelist):
     return gh_norm
 
 
-def bond_albedo(cubelist):
+def bond_albedo(cubelist, const=None):
     r"""
     Bold albedo.
 
@@ -282,7 +287,9 @@ def bond_albedo(cubelist):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
-        Cubes must have "planet_conf" attribute to get solar constant.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        If not given, attempt to retrieve it from cube attributes.
 
     Returns
     -------
@@ -290,7 +297,9 @@ def bond_albedo(cubelist):
         Cube of bond albedo with collapsed spatial dimensions.
     """
     toa_osr = spatial(cubelist.extract_strict("toa_outgoing_shortwave_flux"), "mean")
-    sc = toa_osr.attributes["planet_conf"].solar_constant
+    if const is None:
+        const = toa_osr.attributes["planet_conf"]
+    sc = const.solar_constant
     one = toa_osr.copy(data=np.ones(toa_osr.shape))
     one.units = "1"
     b_alb = one - 4 * toa_osr / sc.asc
