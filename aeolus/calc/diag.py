@@ -192,6 +192,8 @@ def precip_sum(cubelist, ptype="total", const=None):
     if const is not None:
         precip /= const.condensible_density.asc
         precip.convert_units("mm day^-1")
+    else:
+        precip = iris.cube.Cube(np.nan)
     precip.rename(f"{ptype}_precip_rate")
     return precip
 
