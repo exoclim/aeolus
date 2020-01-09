@@ -134,7 +134,7 @@ def sfc_net_energy(cubelist):
     return sfc_net
 
 
-def sfc_water_balance(cubelist):
+def sfc_water_balance(cubelist, const=None):
     """
     Calculate domain-average precipitation minus evaporation.
 
@@ -142,18 +142,35 @@ def sfc_water_balance(cubelist):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        If not given, attempt is made to retrieve it from cube attributes.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of E-P with collapsed spatial dimensions.
+        Cube of P-E with collapsed spatial dimensions.
     """
-    terms = cubelist.extract(["precipitation_flux", "surface_upward_water_flux"])
-    terms_ave = []
-    for cube in terms:
-        terms_ave.append(spatial(cube, "mean"))
-    net = terms_ave[0] - terms_ave[1]
-    net.rename("surface_net_water_flux")
+    if const is None:
+        const = cubelist[0].attributes["planet_conf"]
+    try:
+        evap = cubelist.extract_strict("surface_upward_water_flux")
+    except iris.exceptions.ConstraintMismatchError:
+        try:
+            lhf = cubelist.extract_strict("surface_upward_latent_heat_flux")
+            evap = lhf / const.water_heat_vaporization.asc
+            evap /= const.condensible_density.asc
+        except (KeyError, iris.exceptions.ConstraintMismatchError):
+            raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
+    try:
+        precip = cubelist.extract_strict("precipitation_flux")
+        precip /= const.condensible_density.asc
+    except iris.exceptions.ConstraintMismatchError:
+        precip = precip_sum(cubelist, ptype="total", const=const)
+    precip.convert_units("mm h^-1")
+    evap.convert_units("mm h^-1")
+    net = spatial(precip - evap, "mean")
+    net.rename("surface_net_downward_water_flux")
     return net
 
 
