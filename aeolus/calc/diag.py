@@ -261,8 +261,11 @@ def toa_eff_temp(cubelist):
         Cube of :math:`T_{eff}` with collapsed spatial dimensions.
     """
     toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
-    sbc = init_const().stefan_boltzmann.asc
-    t_eff = (spatial(toa_olr, "mean") / sbc) ** 0.25
+    sbc = init_const().stefan_boltzmann
+    try:
+        t_eff = (spatial(toa_olr, "mean") / sbc) ** 0.25
+    except ValueError:
+        t_eff = (spatial(toa_olr, "mean") / sbc.asc) ** 0.25
     t_eff.rename("toa_effective_temperature")
     return t_eff
 
