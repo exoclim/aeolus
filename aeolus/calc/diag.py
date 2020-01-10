@@ -87,10 +87,16 @@ def toa_net_energy(cubelist):
     iris.cube.Cube
         Cube of TOA energy balance with collapsed spatial dimensions.
     """
-    terms = cubelist.extract(
-        ["toa_incoming_shortwave_flux", "toa_outgoing_shortwave_flux", "toa_outgoing_longwave_flux"]
-    )
-    assert len(terms) == 3, f"Error when extracting TOA energy fluxes from\n{cubelist}"
+    varnames = [
+        "toa_incoming_shortwave_flux",
+        "toa_outgoing_shortwave_flux",
+        "toa_outgoing_longwave_flux",
+    ]
+    terms = cubelist.extract(varnames)
+    if len(terms) != 3:
+        raise MissingCubeError(
+            f"{varnames} required for TOA energy balance are missing from cubelist:\n{cubelist}"
+        )
     terms_ave = []
     for cube in terms:
         terms_ave.append(spatial(cube, "mean"))
@@ -113,17 +119,19 @@ def sfc_net_energy(cubelist):
     iris.cube.Cube
         Cube of surface energy balance with collapsed spatial dimensions.
     """
-    terms = cubelist.extract(
-        [
-            "surface_downwelling_shortwave_flux_in_air",
-            "upwelling_shortwave_flux_in_air",
-            "surface_downwelling_longwave_flux_in_air",
-            "upwelling_longwave_flux_in_air",
-            "surface_upward_sensible_heat_flux",
-            "surface_upward_latent_heat_flux",
-        ]
-    )
-    assert len(terms) == 6, f"Error when extracting SFC energy fluxes from\n{cubelist}"
+    varnames = [
+        "surface_downwelling_shortwave_flux_in_air",
+        "upwelling_shortwave_flux_in_air",
+        "surface_downwelling_longwave_flux_in_air",
+        "upwelling_longwave_flux_in_air",
+        "surface_upward_sensible_heat_flux",
+        "surface_upward_latent_heat_flux",
+    ]
+    terms = cubelist.extract(varnames)
+    if len(terms) != 6:
+        raise MissingCubeError(
+            f"{varnames} required for SFC energy balance are missing from cubelist:\n{cubelist}"
+        )
     terms_ave = []
     for cube in terms:
         terms_ave.append(spatial(cube, "mean"))
