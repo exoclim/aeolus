@@ -313,7 +313,7 @@ def bond_albedo(cubelist, const=None):
     Bold albedo.
 
     .. math::
-        1 - 4 \frac{OSR_{TOA}}{S_{0}}
+        4 \frac{OSR_{TOA}}{S_{0}}
 
     Parameters
     ----------
@@ -332,9 +332,10 @@ def bond_albedo(cubelist, const=None):
     if const is None:
         const = toa_osr.attributes["planet_conf"]
     sc = const.solar_constant
-    one = toa_osr.copy(data=np.ones(toa_osr.shape))
-    one.units = "1"
-    b_alb = one - 4 * toa_osr / sc.asc
+    try:
+        b_alb = 4 * toa_osr / sc
+    except ValueError:
+        b_alb = 4 * toa_osr / sc.asc
     b_alb.rename("bond_albedo")
     return b_alb
 
