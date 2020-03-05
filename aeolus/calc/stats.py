@@ -2,13 +2,15 @@
 from warnings import warn
 
 import iris
+from iris.util import broadcast_to_shape
 
 import numpy as np
 
-from ..coord_utils import UM_LATLON, UM_TIME, ensure_bounds
+from ..coord_utils import UM_HGT, UM_LATLON, UM_TIME, ensure_bounds
 from ..exceptions import AeolusWarning
 from ..grid import area_weights_cube
 from ..subset import extract_last_year
+from .calculus import integrate
 
 
 __all__ = (
@@ -19,6 +21,8 @@ __all__ = (
     "region_mean_diff",
     "zonal_mean",
     "last_year_mean",
+    "vertical_cumsum",
+    "vertical_mean",
 )
 
 
@@ -163,3 +167,70 @@ def last_year_mean(cube):
     """Get the time mean of over the last year."""
     last_year = extract_last_year(cube)
     return last_year.collapsed(UM_TIME, iris.analysis.MEAN)
+
+
+def vertical_mean(cube, coord=UM_HGT, weight_by=None):
+    """
+    Vertical mean of a cube with optional weighting.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube to average.
+    coord: str or iris.coords.Coord
+        Coordinate of the dimension over which the averaging is done.
+    weight_by: str or iris.coords.Coord or iris.cube.Cube, optional
+        Coordinate of the given cube or another cube used for weighting.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Collapsed cube.
+    """
+    if weight_by is None:
+        vmean = cube.collapsed(coord, iris.analysis.MEAN)
+    else:
+        if isinstance(weight_by, (str, iris.coords.Coord)):
+            vmean = cube.collapsed(
+                UM_HGT,
+                iris.analysis.MEAN,
+                weights=cube.coord(weight_by).points.squeeze(),
+            )
+        elif isinstance(weight_by, iris.cube.Cube):
+            a_copy = cube.copy()
+            b_copy = weight_by.copy()
+            a_copy.coord(coord).bounds = None
+            b_copy.coord(coord).bounds = None
+            prod = b_copy * a_copy
+            vmean = integrate(prod, coord) / integrate(weight_by, coord)
+        else:
+            raise ValueError(f"unrecognised type of weight_by: {type(weight_by)}")
+    vmean.rename(f"vertical_mean_of_{cube.name()}")
+    return vmean
+
+
+def vertical_cumsum(cube, coord=UM_HGT):
+    """
+    Vertical cumulative sum of a cube.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Input cube.
+    coord: str or iris.coords.Coord
+        Coordinate of the dimension over which the cumulative sum is calculated.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Collapsed cube.
+    """
+    c = cube.coord(coord).copy()
+    dim = cube.coord_dims(c)
+    c.guess_bounds()
+    z_weights = broadcast_to_shape(c.bounds[:, 1] - c.bounds[:, 0], cube.shape, dim)
+    data = np.nancumsum(cube.data * z_weights, axis=dim[0])
+    res = cube.copy(data=data)
+    res.rename(f"vertical_cumulative_sum_of_{cube.name()}")
+    res.units = cube.units * c.units
+    return res

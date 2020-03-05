@@ -14,6 +14,8 @@ Statistics
 .. autofunction:: aeolus.calc.meridional_mean
 .. autofunction:: aeolus.calc.zonal_mean
 .. autofunction:: aeolus.calc.last_year_mean
+.. autofunction:: aeolus.calc.vertical_mean
+.. autofunction:: aeolus.calc.vertical_cumsum
 
 Diagnostics
 -----------
