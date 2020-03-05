@@ -13,20 +13,22 @@ __all__ = (
     "UM_LATLON",
     "UM_Z_COORDS",
     "UM_TIME_COORDS",
-    "get_cube_datetimes",
-    "nearest_coord_value",
     "coord_to_cube",
     "ensure_bounds",
+    "get_cube_datetimes",
+    "get_dim_coord",
+    "nearest_coord_value",
     "not_equal_coord_axes",
     "regrid_3d",
-    "get_dim_coord",
+    "replace_z_coord",
 )
 
 UM_TIME = "time"
-UM_LEV = "model_level_number"
 UM_HGT = "level_height"
 UM_LATLON = ["latitude", "longitude"]
-UM_Z_COORDS = ["sigma", UM_LEV]
+UM_SIGMA = "sigma"
+UM_LEV = "model_level_number"
+UM_Z_COORDS = [UM_SIGMA, UM_LEV]
 UM_TIME_COORDS = ["forecast_reference_time", "forecast_period", UM_TIME]
 
 
@@ -206,50 +208,32 @@ def get_dim_coord(cube, axis):
     raise NotFoundError(f"Cube has no coordinate for axis {axis}")
 
 
-# def z_interp_cube(cube, z=None, z_coord_name=UM_HGT, replace_z_coord=True):
-#     """
-#     Interpolate cube to z points in vertical and use height as dim coord.
-#
-#     Parameters
-#     ----------
-#     cube: iris.cube.Cube
-#         Input cube
-#     z: numpy.array, optional
-#         Array of z-points as target for interpolation.
-#     z_coord_name: str, optional
-#         Vertical coordinate for interpolation.
-#     replace_z_coord: bool, optional
-#         Replace model levels with level height.
-#
-#     Returns
-#     -------
-#     iris.cube.Cube
-#         Interpolated cube with updated coordinate data
-#     """
-#     cube_out = cube.copy()
-#     # Remove model level numbers and other redundant coords
-#     if replace_z_coord:
-#         for coord in UM_Z_COORDS:
-#             try:
-#                 cube_out.remove_coord(coord)
-#             except iris.exceptions.CoordinateNotFoundError:
-#                 pass
-#         # and use level height as dim coord
-#         try:
-#             iris.util.promote_aux_coord_to_dim_coord(cube_out, z_coord_name)
-#         except ValueError:
-#             cube_out.coord(z_coord_name).bounds = None
-#             cube_out.coord(z_coord_name).guess_bounds()
-#             iris.util.promote_aux_coord_to_dim_coord(cube_out, z_coord_name)
-#
-#     if z is not None:
-#         height_target = [(z_coord_name, z)]
-#         cube_out = cube_out.interpolate(height_target, iris.analysis.Linear())
-#
-#     # Code below is for rescaling z-coordinate
-#     # lh = cube_out.coord(z_coord_name)
-#     # dim = cube_out.coord_dims(z_coord_name)[0]
-#     # cube_out.remove_coord(z_coord_name)
-#     # lh = lh.copy(lh.points * zscale, bounds=None)
-#     # cube_out.add_dim_coord(lh, dim)
-#     return cube_out
+def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
+    """
+    Replace dimensional vertical coordinate.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Input cube.
+    promote_coord: str or iris.coords.Coord
+        Coordinate to become a dimensional z-coordinate.
+    remove_coord: list-like
+        List of coordinates to remove.
+        By default, model levels and sigma coordinates are removed.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Copy of the input cube with a new vertical coordinate.
+    """
+    new_cube = cube.copy()
+    new_cube.coord(promote_coord).bounds = None
+    iris.util.promote_aux_coord_to_dim_coord(new_cube, promote_coord)
+    ensure_bounds(new_cube, coords=[promote_coord])
+    for coord in remove_coord:
+        try:
+            new_cube.remove_coord(coord)
+        except iris.exceptions.CoordinateNotFoundError:
+            pass
+    return new_cube

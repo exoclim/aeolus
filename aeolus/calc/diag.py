@@ -37,8 +37,11 @@ PRECIP_MAPPING = {
 
 
 def toa_cloud_radiative_effect(cubelist, kind):
-    """
+    r"""
     Calculate domain-average TOA cloud radiative effect (CRE).
+
+    .. math::
+        CRE_{TOA} = F_{up,clear-sky} - F_{up,all-sky}
 
     Parameters
     ----------

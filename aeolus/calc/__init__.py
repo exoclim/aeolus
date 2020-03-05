@@ -19,6 +19,8 @@ from .stats import (
     region_mean_diff,
     spatial,
     spatial_quartiles,
+    vertical_cumsum,
+    vertical_mean,
     zonal_mean,
 )
 
@@ -40,5 +42,7 @@ __all__ = (
     "zonal_mean",
     "spatial",
     "spatial_quartiles",
+    "vertical_cumsum",
+    "vertical_mean",
     "water_path",
 )

@@ -6,11 +6,11 @@ from iris.util import broadcast_to_shape
 
 import numpy as np
 
+from .calculus import integrate
 from ..coord_utils import UM_HGT, UM_LATLON, UM_TIME, ensure_bounds
 from ..exceptions import AeolusWarning
 from ..grid import area_weights_cube
 from ..subset import extract_last_year
-from .calculus import integrate
 
 
 __all__ = (
