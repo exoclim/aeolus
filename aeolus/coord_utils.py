@@ -149,6 +149,7 @@ def regrid_3d(cube, target, vert_coord=None):
         else:
             z = target.coord(vert_coord)
         cube = cube.interpolate([(z.name(), z.points)], iris.analysis.Linear())
+        ensure_bounds(cube, coords=[z])
 
     # Match coordinate information
     # XXX is this needed?
