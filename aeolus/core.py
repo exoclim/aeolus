@@ -37,6 +37,7 @@ class Run:
         timestep=None,
         parent=None,
         children=None,
+        processed=True,
     ):
         """
         Instantiate a `Run` object.
@@ -63,6 +64,8 @@ class Run:
             Pointer to this run's driving model if this is a LAM-type simulation.
         children: list, optional
             List of `aeolus.core.Run` objects if this is a driving model.
+        processed: bool, optional
+            If True, data from `files` is assigned to `proc` attribute.
 
         See also
         --------
@@ -85,6 +88,7 @@ class Run:
         self.timestep = timestep
         self.parent = parent
         self.children = children
+        self.processed = processed
 
         if files is not None:
             self.load_data(files)
@@ -102,7 +106,10 @@ class Run:
             fnames = str(files)
         else:
             raise ArgumentError(f"Input type {type(files)} is not allowed.")
-        self.raw = iris.load(fnames)
+        if self.processed:
+            self.proc = iris.load(fnames)
+        else:
+            self.raw = iris.load(fnames)
 
     def proc_data(self, func=None, **func_args):
         """
@@ -115,16 +122,20 @@ class Run:
         **func_args: dict-like, optional
             Keyword arguments passed to `func`.
         """
-        self.proc = iris.cube.CubeList()
-        if callable(func):
-            self.proc = func(self.raw, **func_args)
-        for cube in self.proc:
-            # add constants to cube attributes
-            cube.attributes["planet_conf"] = self.const
-            for coord in cube.coords():
-                if coord.coord_system:
-                    # Replace coordinate system with the planet radius given in `self.const`
-                    coord.coord_system = self._coord_system
+        if self.processed:
+            warn("Run's data is already processed. Skipping.", AeolusWarning)
+        else:
+            self.proc = iris.cube.CubeList()
+            if callable(func):
+                self.proc = func(self.raw, **func_args)
+            for cube in self.proc:
+                # add constants to cube attributes
+                cube.attributes["planet_conf"] = self.const
+                for coord in cube.coords():
+                    if coord.coord_system:
+                        # Replace coordinate system with the planet radius given in `self.const`
+                        coord.coord_system = self._coord_system
+            self.processed = True
 
     def add_data(self, func=None, **func_args):
         """
