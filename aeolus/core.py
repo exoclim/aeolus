@@ -75,13 +75,7 @@ class Run:
         self.description = description
 
         # Planetary constants
-        self.const = init_const(planet, directory=const_dir)
-        try:
-            self.const.radius.convert_units("m")
-            self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
-        except AttributeError:
-            self._coord_system = None
-            warn("Run initialised without a coordinate system.", AeolusWarning)
+        self._update_planet(planet=planet, const_dir=const_dir)
 
         # If the model is global or LAM (nested) and what its driving model is
         self.model_type = model_type
@@ -108,8 +102,29 @@ class Run:
             raise ArgumentError(f"Input type {type(files)} is not allowed.")
         if self.processed:
             self.proc = iris.load(fnames)
+            self._add_planet_conf_to_cubes()
         else:
             self.raw = iris.load(fnames)
+
+    def _update_planet(self, planet="", const_dir=None):
+        """Add or update planetary constants."""
+        self.const = init_const(planet=planet, directory=const_dir)
+        try:
+            self.const.radius.convert_units("m")
+            self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
+        except AttributeError:
+            self._coord_system = None
+            warn("Run initialised without a coordinate system.", AeolusWarning)
+
+    def _add_planet_conf_to_cubes(self):
+        """Add or update planetary constants container to cube attributes within `self.proc`."""
+        for cube in self.proc:
+            # add constants to cube attributes
+            cube.attributes["planet_conf"] = self.const
+            for coord in cube.coords():
+                if coord.coord_system:
+                    # Replace coordinate system with the planet radius given in `self.const`
+                    coord.coord_system = self._coord_system
 
     def proc_data(self, func=None, **func_args):
         """
@@ -128,13 +143,7 @@ class Run:
             self.proc = iris.cube.CubeList()
             if callable(func):
                 self.proc = func(self.raw, **func_args)
-            for cube in self.proc:
-                # add constants to cube attributes
-                cube.attributes["planet_conf"] = self.const
-                for coord in cube.coords():
-                    if coord.coord_system:
-                        # Replace coordinate system with the planet radius given in `self.const`
-                        coord.coord_system = self._coord_system
+            self._add_planet_conf_to_cubes()
             self.processed = True
 
     def add_data(self, func=None, **func_args):
