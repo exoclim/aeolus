@@ -18,7 +18,16 @@ class CloudPlotter:
 
     _stash_items = {"lo": "m01s09i203", "me": "m01s09i204", "hi": "m01s09i205"}
     _scales = {"lo": 100, "me": 200, "hi": 400}
-    cloud_labels = ["no cloud", "low", "medium", "low+med", "high", "hi+low", "hi+med", "all"]
+    cloud_labels = [
+        "No\nCloud",
+        "L",
+        "M",
+        "L + M",
+        "H",
+        "H + L",
+        "H + M",
+        "All",
+    ]
 
     def __init__(self, cubelist):
         """Initialise CloudPlotter from `iris.cube.CubeList` containing cloud fractions."""
