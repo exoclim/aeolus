@@ -37,7 +37,7 @@ class Run:
         timestep=None,
         parent=None,
         children=None,
-        processed=True,
+        processed=False,
     ):
         """
         Instantiate a `Run` object.
@@ -87,7 +87,10 @@ class Run:
         if files is not None:
             self.load_data(files)
             try:
-                cube_yx = self.raw.extract(DIM_CONSTR_YX_R)[0]
+                if self.processed:
+                    cube_yx = self.proc.extract(DIM_CONSTR_YX_R)[0]
+                else:
+                    cube_yx = self.raw.extract(DIM_CONSTR_YX_R)[0]
                 self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
             except IndexError:
                 warn("Run initialised without a domain.")
@@ -108,7 +111,7 @@ class Run:
 
     def _update_planet(self, planet="", const_dir=None):
         """Add or update planetary constants."""
-        self.const = init_const(planet=planet, directory=const_dir)
+        self.const = init_const(planet, directory=const_dir)
         try:
             self.const.radius.convert_units("m")
             self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
