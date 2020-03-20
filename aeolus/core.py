@@ -25,6 +25,7 @@ class Run:
     const: aeolus.const.ConstContainer
         Physical constants used in calculations for this run.
     """
+    attr_keys = ["name", "description", "planet", "model_type", "timestep", "parent", "children"]
 
     def __init__(
         self,
@@ -163,3 +164,33 @@ class Run:
         """
         if callable(func):
             func(self.proc, **func_args)
+
+    def to_netcdf(self, path):
+        """
+        Save `proc` cubelist to a netCDF file with appropriate metadata.
+
+        Parameters
+        ----------
+        path: str or pathlib.Path
+            File path.
+        """
+        run_attrs = {}
+        for key in self.attr_keys:
+            if key:
+                run_attrs[key] = str(getattr(self, key))
+        # Remove planet_conf attribute before saving
+        out = iris.cube.CubeList()
+        old_attrs = {}
+        for cube in self.proc:
+            old_attrs[cube.name()] = cube.attributes.copy()
+            new_attrs = {**cube.attributes, **run_attrs}
+            try:
+                new_attrs.pop("planet_conf")
+            except KeyError:
+                pass
+            cube.attributes = new_attrs
+            out.append(cube)
+        iris.save(out, str(path))
+        # Restore original attributes
+        for cube in self.proc:
+            cube.attributes = old_attrs[cube.name()]
