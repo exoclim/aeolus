@@ -25,6 +25,7 @@ class Run:
     const: aeolus.const.ConstContainer
         Physical constants used in calculations for this run.
     """
+
     attr_keys = ["name", "description", "planet", "model_type", "timestep", "parent", "children"]
 
     def __init__(
@@ -85,7 +86,7 @@ class Run:
         self.children = children
         self.processed = processed
 
-        if files is not None:
+        if files:
             self.load_data(files)
             try:
                 if self.processed:
@@ -95,6 +96,8 @@ class Run:
                 self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
             except IndexError:
                 warn("Run initialised without a domain.")
+        else:
+            warn("Run initialised without input files")
 
     def load_data(self, files):
         """Load cubes."""
@@ -112,6 +115,7 @@ class Run:
 
     def _update_planet(self, planet="", const_dir=None):
         """Add or update planetary constants."""
+        self.planet = planet
         self.const = init_const(planet, directory=const_dir)
         try:
             self.const.radius.convert_units("m")
