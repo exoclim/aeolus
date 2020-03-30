@@ -3,6 +3,17 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.3
+-----
+
+:Date: 30 March 2020
+
+* Add diagnostics: `vertical_mean()`, `vertical_sum()`
+* Improve diagnostics (`sfc_water_balance()`) and utilities (`regrid3d()`)
+* Allow for the initialisation of `Run` from a pre-processed data
+* Add a method to `Run` to save processed cubelist to netCDF
+* Fix a few bugs
+
 0.4.2
 -----
 
