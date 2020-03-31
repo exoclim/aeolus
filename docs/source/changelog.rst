@@ -3,6 +3,14 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.4
+-----
+
+:Date: TBA
+
+* Add diagnostics: `plot.add_custom_legend()`
+* Minor fixes in the travis integration
+
 0.4.3
 -----
 
