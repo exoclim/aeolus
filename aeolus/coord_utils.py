@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Functionality related to coordinates of cubes."""
+from cartopy.util import add_cyclic_point
 import iris
 from iris.util import broadcast_to_shape, guess_coord_axis
 
@@ -13,6 +14,7 @@ __all__ = (
     "UM_LATLON",
     "UM_Z_COORDS",
     "UM_TIME_COORDS",
+    "add_cyclic_point_to_cube",
     "coord_to_cube",
     "ensure_bounds",
     "get_cube_datetimes",
@@ -238,3 +240,60 @@ def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
         except iris.exceptions.CoordinateNotFoundError:
             pass
     return new_cube
+
+
+def add_cyclic_point_to_cube(cube, coord=UM_LATLON[1]):
+    """
+    Add a cyclic point to a cube and a corresponding coordinate.
+
+    A wrapper for `cartopy.util.add_cyclic_point()`, generalising it for iris cubes.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        An n-dimensional cube of data to add a cyclic point to.
+    coord: iris.coords.Coord or str
+        A 1-dimensional coordinate which specifies the coordinate values for
+        the dimension the cyclic point is to be added to. The coordinate
+        values must be regularly spaced. Defaults to "longitude".
+
+    Returns
+    -------
+    cyclic_cube
+        The cube with a cyclic point added.
+    """
+    the_coord = cube.coord(coord)
+    dim = cube.coord_dims(the_coord)
+
+    cy_data, cy_coord_pnts = add_cyclic_point(cube.data, coord=the_coord.points, axis=dim[0])
+
+    dim_coords_and_dims = [
+        (coord, cube.coord_dims(coord)) for coord in cube.dim_coords if coord != the_coord
+    ]
+    dim_coords_and_dims.append((the_coord.copy(cy_coord_pnts), dim))
+
+    aux_coords_and_dims = [
+        (coord, cube.coord_dims(coord))
+        for coord in cube.aux_coords
+        if cube.coord_dims(coord) != dim
+    ]
+    other_kwargs = {
+        key: getattr(cube, key, None)
+        for key in [
+            "attributes",
+            "standard_name",
+            "long_name",
+            "var_name",
+            "units",
+            "cell_methods",
+            "aux_factories",
+            "cell_measures_and_dims",
+        ]
+    }
+    cyclic_cube = iris.cube.Cube(
+        cy_data,
+        dim_coords_and_dims=dim_coords_and_dims,
+        aux_coords_and_dims=aux_coords_and_dims,
+        **other_kwargs,
+    )
+    return cyclic_cube

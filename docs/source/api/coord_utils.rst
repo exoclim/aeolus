@@ -1,5 +1,6 @@
 Cube coordinate functionality
 =============================
+.. autofunction:: aeolus.coord_utils.add_cyclic_point_to_cube
 .. autofunction:: aeolus.coord_utils.coord_to_cube
 .. autofunction:: aeolus.coord_utils.ensure_bounds
 .. autofunction:: aeolus.coord_utils.get_cube_datetimes
