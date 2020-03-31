@@ -180,7 +180,7 @@ class Run:
         """
         run_attrs = {}
         for key in self.attr_keys:
-            if key:
+            if getattr(self, key):
                 run_attrs[key] = str(getattr(self, key))
         # Remove planet_conf attribute before saving
         out = iris.cube.CubeList()
