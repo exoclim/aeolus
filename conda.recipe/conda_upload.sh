@@ -9,7 +9,6 @@ export CONDA_BLD_PATH=~/conda-bld
 mkdir $CONDA_BLD_PATH
 conda config --set anaconda_upload no
 conda config --add channels conda-forge
-conda config -–set channel_priority strict
 conda build --no-test .
 PKG_FULL_NAME=`conda build --output .`
 if [[ $VERSION == *"+"* ]]; then
