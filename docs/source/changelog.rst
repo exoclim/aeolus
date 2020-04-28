@@ -8,6 +8,8 @@ Changelog
 
 :Date: TBA
 
+* Add Titan constants (some orbital parameters are those for Saturn for simplicity)
+* Fix a typo in Earth constants
 * Add diagnostics: `plot.add_custom_legend()`
 * Minor fixes in the travis integration
 
