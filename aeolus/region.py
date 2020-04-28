@@ -4,9 +4,9 @@ from dataclasses import dataclass, field
 import iris
 from iris.analysis.cartography import wrap_lons
 
-from .coord_utils import UM_LATLON
+from .coord import UM_LATLON
 from .exceptions import BoundaryError
-from .util import fmt_lonlat
+from .plot.text import fmt_lonlat
 
 
 __all__ = ("Region",)

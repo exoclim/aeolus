@@ -8,6 +8,10 @@ Changelog
 
 :Date: TBA
 
+* API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule,
+remove `util` folder by moving `text` to `plot`.
+* Add Titan constants (some orbital parameters are those for Saturn for simplicity)
+* Fix a typo in Earth constants
 * Add diagnostics: `plot.add_custom_legend()`
 * Minor fixes in the travis integration
 

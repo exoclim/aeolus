@@ -19,11 +19,8 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    calc
    core
    const
-   coord_utils
-   grid
+   coord
    io
-   misc
    plot
    region
    subset
-   util

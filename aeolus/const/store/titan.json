@@ -2,50 +2,50 @@
     {
         "name": "gravity",
         "units": "m s-2",
-        "value": 9.80665
+        "value": 1.352
     },
     {
         "name": "radius",
         "units": "m",
-        "value": 6371200.0
+        "value": 2575000
     },
     {
         "name": "day",
         "units": "s",
-        "value": 86400.0
+        "value": 1377589.4
     },
     {
         "name": "solar_constant",
         "units": "W m-2",
-        "value": 1361.0
+        "value": 14.964564222333161
     },
     {
         "name": "semi_major_axis",
         "units": "au",
-        "value": 1.0
+        "value": 9.53667594
     },
     {
         "name": "eccentricity",
-        "value": 0.0167
+        "value": 0.05386179
     },
     {
         "name": "obliquity",
         "units": "degree",
-        "value": 23.45
+        "value": 0.4726
     },
     {
         "name": "dry_air_spec_heat_press",
         "units": "m2 s-2 K-1",
-        "value": 1005.0
+        "value": 1000.0
     },
     {
         "name": "dry_air_molecular_weight",
         "units": "kg mol-1",
-        "value": 0.0289644
+        "value": 0.0273
     },
     {
         "name": "condensible_density",
         "units": "kg m-3",
-        "value": 1000.0
+        "value": 453.4
     }
 ]

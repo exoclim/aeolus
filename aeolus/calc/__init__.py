@@ -12,6 +12,7 @@ from .diag import (
     toa_net_energy,
     water_path,
 )
+from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
     last_year_mean,
     meridional_mean,
@@ -29,7 +30,9 @@ __all__ = (
     "bond_albedo",
     "ghe_norm",
     "heat_redist_eff",
+    "horizontal_fluxes_through_region_boundaries",
     "minmaxdiff",
+    "net_horizontal_flux_to_region",
     "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",

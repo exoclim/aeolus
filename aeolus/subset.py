@@ -3,7 +3,7 @@ from datetime import timedelta
 
 import iris
 
-from .coord_utils import UM_HGT, UM_LATLON, UM_LEV, UM_TIME, get_cube_datetimes
+from .coord import UM_HGT, UM_LATLON, UM_LEV, UM_TIME, get_cube_datetimes
 
 
 __all__ = (

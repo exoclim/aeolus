@@ -7,9 +7,8 @@ from iris.util import broadcast_to_shape
 import numpy as np
 
 from .calculus import integrate
-from ..coord_utils import UM_HGT, UM_LATLON, UM_TIME, ensure_bounds
+from ..coord import UM_HGT, UM_LATLON, UM_TIME, area_weights_cube, ensure_bounds
 from ..exceptions import AeolusWarning
-from ..grid import area_weights_cube
 from ..subset import extract_last_year
 
 
@@ -134,12 +133,8 @@ def meridional_mean(cube, lat_name=UM_LATLON[0]):
         Collapsed cube.
     """
     coslat = np.cos(np.deg2rad(cube.coord(lat_name).points))
-    coslat2d = iris.util.broadcast_to_shape(
-        coslat, cube.shape, cube.coord_dims(lat_name)
-    )
-    cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(
-        coslat
-    )
+    coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
+    cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
     return cube_mean
 
 
@@ -192,9 +187,7 @@ def vertical_mean(cube, coord=UM_HGT, weight_by=None):
     else:
         if isinstance(weight_by, (str, iris.coords.Coord)):
             vmean = cube.collapsed(
-                UM_HGT,
-                iris.analysis.MEAN,
-                weights=cube.coord(weight_by).points.squeeze(),
+                UM_HGT, iris.analysis.MEAN, weights=cube.coord(weight_by).points.squeeze()
             )
         elif isinstance(weight_by, iris.cube.Cube):
             a_copy = cube.copy()

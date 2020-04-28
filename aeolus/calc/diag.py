@@ -6,7 +6,7 @@ import numpy as np
 from .calculus import integrate
 from .stats import spatial
 from ..const import init_const
-from ..coord_utils import UM_HGT
+from ..coord import UM_HGT
 from ..exceptions import ArgumentError, MissingCubeError
 
 

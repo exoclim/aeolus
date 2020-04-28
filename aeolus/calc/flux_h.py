@@ -1,49 +1,17 @@
 # -*- coding: utf-8 -*-
-"""Miscellaneous."""
+"""Integrated fluxes."""
 import warnings
 
 import iris
 
 import numpy as np
 
-from .const import get_planet_radius
-from .coord_utils import UM_LATLON, nearest_coord_value
-from .exceptions import AeolusWarning
+from ..const import get_planet_radius
+from ..coord import UM_LATLON, nearest_coord_value, vertical_cross_section_area
+from ..exceptions import AeolusWarning
 
 
-__all__ = (
-    "vertical_cross_section_area",
-    "horizontal_fluxes_through_region_boundaries",
-    "net_horizontal_flux_to_region",
-)
-
-
-def vertical_cross_section_area(cube2d, r_planet=None):
-    """Create a cube of vertical cross-section areas in metres."""
-    cube2d = cube2d.copy()
-    if r_planet is None:
-        r = get_planet_radius(cube2d)
-    else:
-        r = r_planet
-    m_per_deg = (np.pi / 180) * r
-    if iris.util.guess_coord_axis(cube2d.dim_coords[1]) == "X":
-        m_per_deg *= np.cos(np.deg2rad(cube2d.coord(axis="Y").points[0]))
-
-    for dim_coord in cube2d.dim_coords:
-        if not dim_coord.has_bounds():
-            dim_coord.guess_bounds()
-    x_bounds = cube2d.coord(cube2d.dim_coords[1]).bounds
-    z_bounds = cube2d.coord(cube2d.dim_coords[0]).bounds
-
-    vc_area = cube2d.copy(
-        data=(z_bounds[:, 1] - z_bounds[:, 0])[:, None]
-        * ((x_bounds[:, 1] - x_bounds[:, 0])[None, :] * m_per_deg)
-    )
-    vc_area.units = "m**2"
-    vc_area.rename("vertical_section_area")
-    for dim_coord in vc_area.dim_coords:
-        dim_coord.bounds = None
-    return vc_area
+__all__ = ("horizontal_fluxes_through_region_boundaries", "net_horizontal_flux_to_region")
 
 
 def horizontal_fluxes_through_region_boundaries(
