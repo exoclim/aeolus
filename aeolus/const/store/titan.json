@@ -47,5 +47,10 @@
         "name": "condensible_density",
         "units": "kg m-3",
         "value": 453.4
+    },
+    {
+        "name": "reference_surface_pressure",
+        "units": "Pa",
+        "value": 150000.0
     }
 ]
