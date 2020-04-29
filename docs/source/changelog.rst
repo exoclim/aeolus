@@ -10,9 +10,10 @@ Changelog
 
 * API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule,
 remove `util` folder by moving `text` to `plot`.
+* Add a function to attach non-Earth auxiliary time coordinates to a cube
 * Add Titan constants (some orbital parameters are those for Saturn for simplicity)
 * Fix a typo in Earth constants
-* Add diagnostics: `plot.add_custom_legend()`
+* Add a new function for matplotlib plots: `plot.add_custom_legend()`
 * Minor fixes in the travis integration
 
 0.4.3

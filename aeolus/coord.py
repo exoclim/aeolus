@@ -6,12 +6,13 @@ from cartopy.util import add_cyclic_point
 
 import iris
 from iris.analysis.cartography import wrap_lons
+from iris.coord_categorisation import _months_in_season, add_categorised_coord
 from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 
 import numpy as np
 
 from .const import get_planet_radius
-from .exceptions import ArgumentError, AeolusWarning, NotFoundError
+from .exceptions import AeolusWarning, ArgumentError, NotFoundError
 
 
 __all__ = (
@@ -639,3 +640,64 @@ def add_cyclic_point_to_cube(cube, coord=UM_LATLON[1]):
         **other_kwargs,
     )
     return cyclic_cube
+
+
+def add_planet_calendar(
+    cube,
+    time_coord,
+    days_in_year,
+    days_in_month,
+    days_in_day,
+    run_start_day=0,
+    seasons=("djf", "mam", "jja", "son"),
+    planet="planet",
+):
+    """
+    Add an auxiliary time axis with the non-Earth period lengths.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Input cube.
+    time_coord: iris.coords.Coord or str
+        Original time coordinate of the cube.
+    days_in_year: int or float
+        Number of Earth days in one year on the given planet.
+    days_in_month: int or float
+        Number of Earth days in one month on the given planet.
+    days_in_day: int or float
+        Number of Earth days in one day on the given planet (e.g. ~16 for Titan).
+    run_start_day: int or float, optional
+        Earth day of the start of the simulation.
+    seasons: tuple, optional
+        Sequences of letters corresponding to month names.
+    planet: str, optional
+        Name of the planet to be used to name the new coordinate.
+    """
+
+    def rel_day(coord, value):
+        """Get the relative number of the day."""
+        start = coord.units.num2date(coord.points[0])
+        current = coord.units.num2date(value)
+        iday = run_start_day + (current - start).days
+        return iday
+
+    def determine_season(coord, value):
+        """Determine season from the month number."""
+        assert coord.name() == f"{planet}_month"
+        for season in seasons:
+            if value + 1 in _months_in_season(season):
+                return season
+
+    new_coords = {
+        "year": lambda c, v: rel_day(c, v) // days_in_year,
+        "month": lambda c, v: (rel_day(c, v) % days_in_year) // days_in_month,
+        "day": lambda c, v: (rel_day(c, v) % days_in_month) // days_in_day,
+        "season": determine_season,
+    }
+    for key, op in new_coords.items():
+        if key == "season":
+            coord = f"{planet}_month"
+        else:
+            coord = time_coord
+        add_categorised_coord(cube, f"{planet}_{key}", coord, op)
