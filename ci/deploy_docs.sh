@@ -16,20 +16,20 @@ if [[ "${TRAVIS_TAG}" != "" ]]; then
     # export VERSION=${TRAVIS_TAG%.*}
     export VERSION=${TRAVIS_TAG}
 else
-    export VERSION=dev
+    export VERSION="dev"
 fi
 
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message "Deploy to GitHub Pages".
 echo Updating $VERSION docs...
-# rm -rf ${VERSION}
+rm -rf ${VERSION}
 mkdir -p ${VERSION}
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/html ${VERSION}/
 cp -R ${TRAVIS_BUILD_DIR}/docs/_build/doctrees ${VERSION}/
 touch .nojekyll
-# if [[ "${VERSION}" != "dev" ]]; then
-ln -snf ${VERSION} latest
-# fi
+if [[ "${VERSION}" != "dev" ]]; then
+    ln -snf ${VERSION} latest
+fi
 
 # Generate our json list of versions
 # echo Generating versions.json...
