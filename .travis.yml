@@ -24,6 +24,7 @@ before_install:
   - conda info -a
 
 install:
+  - echo "travistag=$TRAVIS_TAG"
   - if [[ "$CONDA_ENV" == "docs" ]]; then
       conda env create -n test_env --file docs/environment.yml;
     else
