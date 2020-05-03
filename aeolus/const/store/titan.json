@@ -49,8 +49,13 @@
         "value": 453.4
     },
     {
+        "name": "condensible_heat_vaporization",
+        "units": "m2 s-2",
+        "value": 5.30574e5
+    },
+    {
         "name": "reference_surface_pressure",
         "units": "Pa",
-        "value": 150000.0
+        "value": 146700.0
     }
 ]

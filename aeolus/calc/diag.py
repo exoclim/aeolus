@@ -169,7 +169,7 @@ def sfc_water_balance(cubelist, const=None):
     except iris.exceptions.ConstraintMismatchError:
         try:
             lhf = cubelist.extract_strict("surface_upward_latent_heat_flux")
-            evap = lhf / const.water_heat_vaporization.asc
+            evap = lhf / const.condensible_heat_vaporization.asc
             evap /= const.condensible_density.asc
         except (KeyError, iris.exceptions.ConstraintMismatchError):
             raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
