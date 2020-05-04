@@ -1,9 +1,10 @@
-name: aeolus_py37
+name: aeolus_py38
 channels:
 - conda-forge
 dependencies:
-- python=3.7
+- python=3.8
 - cartopy
+- dask
 - flake8-builtins!=1.4.0
 - flake8-comprehensions
 - flake8-copyright
@@ -14,8 +15,9 @@ dependencies:
 - flake8-print
 - flake8-quotes
 - iris>=2.3
-- matplotlib
+- matplotlib>=3.0
 # - metpy>=0.11
+- mo_pack
 - numpy
 - pep8-naming
 - pip

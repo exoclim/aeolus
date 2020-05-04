@@ -3,11 +3,12 @@ Changelog
 
 .. default-role:: py:obj
 
-0.4.4
+0.4.5
 -----
 
-:Date: TBA
+:Date: 04 May 2020 
 
+* Add Python 3.8 to build matrix
 * API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule,
 remove `util` folder by moving `text` to `plot`.
 * Add a function to attach non-Earth auxiliary time coordinates to a cube
@@ -30,7 +31,7 @@ remove `util` folder by moving `text` to `plot`.
 0.4.2
 -----
 
-:Date: 5 January 2020
+:Date: 05 January 2020
 
 * Improve calculation of precipitation sums
 * Add a helper function to retrieve planet radius from a cube
@@ -43,7 +44,7 @@ remove `util` folder by moving `text` to `plot`.
 0.4.1
 -----
 
-:Date: 3 December 2019
+:Date: 03 December 2019
 
 * Add a few standard constants
 * Improve units in metpy interface
@@ -71,7 +72,7 @@ remove `util` folder by moving `text` to `plot`.
 0.2
 ---
 
-:Date: 2 November 2019
+:Date: 02 November 2019
 
 * Technical updates
 

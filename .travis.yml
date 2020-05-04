@@ -11,6 +11,7 @@ matrix:
   fast_finish: true
   include:
   - env: CONDA_ENV=py37
+  - env: CONDA_ENV=py38
   - env: CONDA_ENV=docs
 
 before_install:
@@ -28,7 +29,7 @@ install:
   - if [[ "$CONDA_ENV" == "docs" ]]; then
       conda env create -n test_env --file docs/environment.yml;
     else
-      conda env create -n test_env --file ci/requirements-$CONDA_ENV.yml;
+      conda env create -n test_env --file ci/environment-$CONDA_ENV.yml;
     fi;
   - source activate test_env
   - conda list
@@ -44,7 +45,7 @@ script:
 after_success:
  - if [[ "$CONDA_ENV" == "docs" ]]; then
      bash ci/deploy_docs.sh;
-   else
+   elif [[ "$CONDA_ENV" == "py38" ]]; then
      conda install -c conda-forge conda-build conda-verify anaconda-client;
      conda list;
      bash conda.recipe/conda_upload.sh;
