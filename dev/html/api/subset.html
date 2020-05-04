@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Subset cubes using constraints &mdash; aeolus 0.4.1+35.g53e310f documentation</title>
+  <title>Subset cubes using constraints &mdash; aeolus 0.4.4 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Utilities" href="util.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
     <link rel="prev" title="Regions" href="region.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1+35.g53e310f
+                0.4.4
               </div>
             
           
@@ -96,14 +96,11 @@
 <li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="coord_utils.html">Cube coordinate functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="grid.html">Operations on geographical grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
-<li class="toctree-l2"><a class="reference internal" href="misc.html">Miscellaneous</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Subset cubes using constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="util.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -200,21 +197,21 @@
 </style>
 <div class="section" id="subset-cubes-using-constraints">
 <h1>Subset cubes using constraints<a class="headerlink" href="#subset-cubes-using-constraints" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="aeolus.subset.extract_last_month">
-<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">extract_last_month</code><span class="sig-paren">(</span><em class="sig-param">cube</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_month"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.extract_last_month" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">extract_last_month</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_month"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.extract_last_month" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract time slices within the last months of a cube.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aeolus.subset.extract_last_year">
-<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">extract_last_year</code><span class="sig-paren">(</span><em class="sig-param">cube</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.extract_last_year" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">extract_last_year</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.extract_last_year" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract time slices within the last year of a cube.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aeolus.subset.l_range_constr">
-<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">l_range_constr</code><span class="sig-paren">(</span><em class="sig-param">h_min</em>, <em class="sig-param">h_max</em>, <em class="sig-param">units='km'</em>, <em class="sig-param">coord='level_height'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#l_range_constr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.l_range_constr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.subset.</code><code class="sig-name descname">l_range_constr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">h_min</span></em>, <em class="sig-param"><span class="n">h_max</span></em>, <em class="sig-param"><span class="n">units</span><span class="o">=</span><span class="default_value">'km'</span></em>, <em class="sig-param"><span class="n">coord</span><span class="o">=</span><span class="default_value">'level_height'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#l_range_constr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.subset.l_range_constr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a constraint on length range.</p>
 </dd></dl>
 
@@ -228,7 +225,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="util.html" class="btn btn-neutral float-right" title="Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="region.html" class="btn btn-neutral float-left" title="Regions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -240,7 +237,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, the aeolus developers
+        &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>

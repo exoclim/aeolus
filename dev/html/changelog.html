@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Changelog &mdash; aeolus 0.4.1+35.g53e310f documentation</title>
+  <title>Changelog &mdash; aeolus 0.4.4 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contributor’s Guide" href="contributing.html" />
-    <link rel="prev" title="Utilities" href="api/util.html" /> 
+    <link rel="prev" title="Subset cubes using constraints" href="api/subset.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1+35.g53e310f
+                0.4.4
               </div>
             
           
@@ -94,11 +94,14 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">API reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.4.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.4.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.3.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">0.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">0.1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributor’s Guide</a></li>
@@ -193,13 +196,60 @@
 <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.4.1<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.4.5<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>v0.4.1</p>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>04 May 2020</p>
 </dd>
-<dt class="field-even">Date</dt>
-<dd class="field-even"><p>3 December 2019</p>
+</dl>
+<ul class="simple">
+<li><p>Add Python 3.8 to build matrix</p></li>
+<li><p>API changes: merge <code class="xref py py-obj docutils literal notranslate"><span class="pre">grid</span></code> into <code class="xref py py-obj docutils literal notranslate"><span class="pre">coord</span></code>; move <code class="xref py py-obj docutils literal notranslate"><span class="pre">misc</span></code> flux calculations to <code class="xref py py-obj docutils literal notranslate"><span class="pre">calc</span></code> submodule,</p></li>
+</ul>
+<p>remove <code class="xref py py-obj docutils literal notranslate"><span class="pre">util</span></code> folder by moving <code class="xref py py-obj docutils literal notranslate"><span class="pre">text</span></code> to <code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code>.
+* Add a function to attach non-Earth auxiliary time coordinates to a cube
+* Add Titan constants (some orbital parameters are those for Saturn for simplicity)
+* Fix a typo in Earth constants
+* Add a new function for matplotlib plots: <code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.add_custom_legend()</span></code>
+* Minor fixes in the travis integration</p>
+</div>
+<div class="section" id="id2">
+<h2>0.4.3<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>30 March 2020</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Add diagnostics: <code class="xref py py-obj docutils literal notranslate"><span class="pre">vertical_mean()</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">vertical_sum()</span></code></p></li>
+<li><p>Improve diagnostics (<code class="xref py py-obj docutils literal notranslate"><span class="pre">sfc_water_balance()</span></code>) and utilities (<code class="xref py py-obj docutils literal notranslate"><span class="pre">regrid3d()</span></code>)</p></li>
+<li><p>Allow for the initialisation of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Run</span></code> from a pre-processed data</p></li>
+<li><p>Add a method to <code class="xref py py-obj docutils literal notranslate"><span class="pre">Run</span></code> to save processed cubelist to netCDF</p></li>
+<li><p>Fix a few bugs</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>0.4.2<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>05 January 2020</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Improve calculation of precipitation sums</p></li>
+<li><p>Add a helper function to retrieve planet radius from a cube</p></li>
+<li><p>Add <code class="xref py py-obj docutils literal notranslate"><span class="pre">timestep</span></code> attribute to <code class="xref py py-obj docutils literal notranslate"><span class="pre">Run</span></code></p></li>
+<li><p>Improve docstrings</p></li>
+<li><p>Remove two functions from <code class="xref py py-obj docutils literal notranslate"><span class="pre">pv</span></code> submodule (now in <code class="xref py py-obj docutils literal notranslate"><span class="pre">pyvista</span></code> library)</p></li>
+<li><p>Move documentation to github pages</p></li>
+<li><p>Fix a few bugs</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>0.4.1<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>03 December 2019</p>
 </dd>
 </dl>
 <ul class="simple">
@@ -207,14 +257,11 @@
 <li><p>Improve units in metpy interface</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>0.4.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>0.4.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>v0.4.0</p>
-</dd>
-<dt class="field-even">Date</dt>
-<dd class="field-even"><p>28 November 2019</p>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>28 November 2019</p>
 </dd>
 </dl>
 <ul class="simple">
@@ -222,14 +269,11 @@
 <li><p>Fix a few bugs</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>0.3.2<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>0.3.2<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>v0.3.2</p>
-</dd>
-<dt class="field-even">Date</dt>
-<dd class="field-even"><p>21 November 2019</p>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>21 November 2019</p>
 </dd>
 </dl>
 <ul class="simple">
@@ -238,28 +282,22 @@
 <li><p>Add test data</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>0.2<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>0.2<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>v0.2</p>
-</dd>
-<dt class="field-even">Date</dt>
-<dd class="field-even"><p>2 November 2019</p>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>02 November 2019</p>
 </dd>
 </dl>
 <ul class="simple">
 <li><p>Technical updates</p></li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2>0.1<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>0.1<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Release</dt>
-<dd class="field-odd"><p>v0.1</p>
-</dd>
-<dt class="field-even">Date</dt>
-<dd class="field-even"><p>31 October 2019</p>
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>31 October 2019</p>
 </dd>
 </dl>
 <ul class="simple">
@@ -279,7 +317,7 @@
         <a href="contributing.html" class="btn btn-neutral float-right" title="Contributor’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api/util.html" class="btn btn-neutral float-left" title="Utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api/subset.html" class="btn btn-neutral float-left" title="Subset cubes using constraints" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -288,7 +326,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, the aeolus developers
+        &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>

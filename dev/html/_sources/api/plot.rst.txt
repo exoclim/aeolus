@@ -8,6 +8,8 @@ Plotting functions
 
 .. autofunction:: aeolus.plot.label_global_map_gridlines
 
+.. autofunction:: aeolus.plot.add_custom_legend
+
 
 .. _pyvista_ref:
 

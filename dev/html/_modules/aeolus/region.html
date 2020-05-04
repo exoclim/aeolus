@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.region &mdash; aeolus 0.4.1+35.g53e310f documentation</title>
+  <title>aeolus.region &mdash; aeolus 0.4.4 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.4.1+35.g53e310f
+                0.4.4
               </div>
             
           
@@ -162,9 +162,9 @@
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.analysis.cartography</span> <span class="kn">import</span> <span class="n">wrap_lons</span>
 
-<span class="kn">from</span> <span class="nn">.coord_utils</span> <span class="kn">import</span> <span class="n">UM_LATLON</span>
+<span class="kn">from</span> <span class="nn">.coord</span> <span class="kn">import</span> <span class="n">UM_LATLON</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">BoundaryError</span>
-<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">fmt_lonlat</span>
+<span class="kn">from</span> <span class="nn">.plot.text</span> <span class="kn">import</span> <span class="n">fmt_lonlat</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Region&quot;</span><span class="p">,)</span>
@@ -187,8 +187,8 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;BoundsRect(west=</span><span class="si">{self.west}</span><span class="s2">, east=</span><span class="si">{self.east}</span><span class="s2">, south=</span><span class="si">{self.south}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;north=</span><span class="si">{self.north}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;BoundsRect(west=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">west</span><span class="si">}</span><span class="s2">, east=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">east</span><span class="si">}</span><span class="s2">, south=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">south</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;north=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">north</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
 
@@ -233,8 +233,8 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="n">txt</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Geographical region &#39;</span><span class="si">{self.name}</span><span class="s2">&#39; (west=</span><span class="si">{self.bounds.west}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;east=</span><span class="si">{self.bounds.east}</span><span class="s2">, south=</span><span class="si">{self.bounds.south}</span><span class="s2">, north=</span><span class="si">{self.bounds.north}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Geographical region &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; (west=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">west</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;east=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">east</span><span class="si">}</span><span class="s2">, south=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">south</span><span class="si">}</span><span class="s2">, north=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">north</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
@@ -257,7 +257,7 @@
             <span class="n">coord_name</span> <span class="o">=</span> <span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">_min</span><span class="p">,</span> <span class="n">_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">west</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">east</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">BoundaryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Boundary name &#39;</span><span class="si">{side}</span><span class="s2">&#39; is not valid&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">BoundaryError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Boundary name &#39;</span><span class="si">{</span><span class="n">side</span><span class="si">}</span><span class="s2">&#39; is not valid&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">coord_name</span><span class="p">,</span> <span class="p">(</span><span class="n">_min</span><span class="p">,</span> <span class="n">_max</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>  <span class="c1"># noqa</span>
@@ -286,7 +286,7 @@
 <span class="sd">        aeolus.region.Region</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;extent_of_{cube.name()}&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;extent_of_</span><span class="si">{</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">lons</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">points</span>
         <span class="k">if</span> <span class="n">shift_lons</span><span class="p">:</span>
             <span class="n">lons</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wrap_lons</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span>
@@ -347,7 +347,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, the aeolus developers
+        &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>

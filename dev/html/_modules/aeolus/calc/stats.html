@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.calc.stats &mdash; aeolus 0.4.1+35.g53e310f documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0.4.4 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.4.1+35.g53e310f
+                0.4.4
               </div>
             
           
@@ -160,16 +160,27 @@
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">broadcast_to_shape</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..coord_utils</span> <span class="kn">import</span> <span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">UM_TIME</span><span class="p">,</span> <span class="n">ensure_bounds</span>
+<span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">UM_HGT</span><span class="p">,</span> <span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">UM_TIME</span><span class="p">,</span> <span class="n">area_weights_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span>
-<span class="kn">from</span> <span class="nn">..grid</span> <span class="kn">import</span> <span class="n">area_weights_cube</span>
 <span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">extract_last_year</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;spatial&quot;</span><span class="p">,</span> <span class="s2">&quot;spatial_quartiles&quot;</span><span class="p">,</span> <span class="s2">&quot;meridional_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;last_year_mean&quot;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;spatial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;spatial_quartiles&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;meridional_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minmaxdiff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;region_mean_diff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;zonal_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;last_year_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vertical_cumsum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vertical_mean&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="spatial"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.spatial">[docs]</a><span class="k">def</span> <span class="nf">spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">aggr</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">):</span>
@@ -211,6 +222,56 @@
     <span class="n">q25</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PERCENTILE</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="n">q75</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PERCENTILE</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">q25</span><span class="p">,</span> <span class="n">q75</span></div>
+
+
+<div class="viewcode-block" id="minmaxdiff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.minmaxdiff">[docs]</a><span class="k">def</span> <span class="nf">minmaxdiff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spatial maximum minus spatial minimum for a given cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cubelist: iris.cube.CubeList</span>
+<span class="sd">        Input list of cubes.</span>
+<span class="sd">    name: str</span>
+<span class="sd">        Cube name.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Difference between the extrema with collapsed spatial dimensions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_min</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">)</span>
+    <span class="n">_max</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">_max</span> <span class="o">-</span> <span class="n">_min</span>
+    <span class="n">diff</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_difference&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">diff</span></div>
+
+
+<div class="viewcode-block" id="region_mean_diff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.region_mean_diff">[docs]</a><span class="k">def</span> <span class="nf">region_mean_diff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">region_a</span><span class="p">,</span> <span class="n">region_b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Difference between averages over two regions for a given cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cubelist: iris.cube.CubeList</span>
+<span class="sd">        Input list of cubes.</span>
+<span class="sd">    name: str</span>
+<span class="sd">        Cube name.</span>
+<span class="sd">    region_a: aeolus.region.Region</span>
+<span class="sd">        First region.</span>
+<span class="sd">    region_b: aeolus.region.Region</span>
+<span class="sd">        Second region.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Difference between the region averages with collapsed spatial dimensions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mean_a</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">region_a</span><span class="o">.</span><span class="n">constraint</span><span class="p">),</span> <span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+    <span class="n">mean_b</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">region_b</span><span class="o">.</span><span class="n">constraint</span><span class="p">),</span> <span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">mean_a</span> <span class="o">-</span> <span class="n">mean_b</span>
+    <span class="n">diff</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mean_diff_</span><span class="si">{</span><span class="n">region_a</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">region_b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">diff</span></div>
 
 
 <div class="viewcode-block" id="meridional_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.meridional_mean">[docs]</a><span class="k">def</span> <span class="nf">meridional_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lat_name</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
@@ -259,6 +320,71 @@
     <span class="sd">&quot;&quot;&quot;Get the time mean of over the last year.&quot;&quot;&quot;</span>
     <span class="n">last_year</span> <span class="o">=</span> <span class="n">extract_last_year</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">last_year</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">UM_TIME</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="vertical_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.vertical_mean">[docs]</a><span class="k">def</span> <span class="nf">vertical_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">UM_HGT</span><span class="p">,</span> <span class="n">weight_by</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vertical mean of a cube with optional weighting.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube to average.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate of the dimension over which the averaging is done.</span>
+<span class="sd">    weight_by: str or iris.coords.Coord or iris.cube.Cube, optional</span>
+<span class="sd">        Coordinate of the given cube or another cube used for weighting.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Collapsed cube.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">weight_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmean</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weight_by</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">Coord</span><span class="p">)):</span>
+            <span class="n">vmean</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span>
+                <span class="n">UM_HGT</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">weight_by</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weight_by</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+            <span class="n">a_copy</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">b_copy</span> <span class="o">=</span> <span class="n">weight_by</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">a_copy</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">b_copy</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">prod</span> <span class="o">=</span> <span class="n">b_copy</span> <span class="o">*</span> <span class="n">a_copy</span>
+            <span class="n">vmean</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">prod</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span> <span class="o">/</span> <span class="n">integrate</span><span class="p">(</span><span class="n">weight_by</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unrecognised type of weight_by: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">weight_by</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">vmean</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vertical_mean_of_</span><span class="si">{</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vmean</span></div>
+
+
+<div class="viewcode-block" id="vertical_cumsum"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.vertical_cumsum">[docs]</a><span class="k">def</span> <span class="nf">vertical_cumsum</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">UM_HGT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vertical cumulative sum of a cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Input cube.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate of the dimension over which the cumulative sum is calculated.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Collapsed cube.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+    <span class="n">z_weights</span> <span class="o">=</span> <span class="n">broadcast_to_shape</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">bounds</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="o">.</span><span class="n">bounds</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nancumsum</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="n">z_weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vertical_cumulative_sum_of_</span><span class="si">{</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">units</span> <span class="o">*</span> <span class="n">c</span><span class="o">.</span><span class="n">units</span>
+    <span class="k">return</span> <span class="n">res</span></div>
 </pre></div>
 
            </div>
@@ -271,7 +397,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, the aeolus developers
+        &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>

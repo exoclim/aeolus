@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>I/O &mdash; aeolus 0.4.1+35.g53e310f documentation</title>
+  <title>I/O &mdash; aeolus 0.4.4 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -40,8 +40,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Miscellaneous" href="misc.html" />
-    <link rel="prev" title="Operations on geographical grid" href="grid.html" /> 
+    <link rel="next" title="Plotting functions" href="plot.html" />
+    <link rel="prev" title="Cube coordinate functionality" href="coord.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1+35.g53e310f
+                0.4.4
               </div>
             
           
@@ -96,14 +96,11 @@
 <li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="coord_utils.html">Cube coordinate functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="grid.html">Operations on geographical grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">I/O</a></li>
-<li class="toctree-l2"><a class="reference internal" href="misc.html">Miscellaneous</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="util.html">Utilities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -200,9 +197,9 @@
 </style>
 <div class="section" id="i-o">
 <h1>I/O<a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="aeolus.io.load_multidir">
-<code class="sig-prename descclassname">aeolus.io.</code><code class="sig-name descname">load_multidir</code><span class="sig-paren">(</span><em class="sig-param">path_mask</em>, <em class="sig-param">labels</em>, <em class="sig-param">label_name='run'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.io.</code><code class="sig-name descname">load_multidir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_mask</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">label_name</span><span class="o">=</span><span class="default_value">'run'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load cubelists from multiple directories and merge.</p>
 </dd></dl>
 
@@ -216,10 +213,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="misc.html" class="btn btn-neutral float-right" title="Miscellaneous" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="plot.html" class="btn btn-neutral float-right" title="Plotting functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="grid.html" class="btn btn-neutral float-left" title="Operations on geographical grid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="coord.html" class="btn btn-neutral float-left" title="Cube coordinate functionality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -228,7 +225,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, the aeolus developers
+        &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>
