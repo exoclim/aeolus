@@ -54,6 +54,11 @@
         "value": 5.30574e5
     },
     {
+        "name": "condensible_molecular_weight",
+        "units": "kg mol-1",
+        "value": 0.016
+    },
+    {
         "name": "reference_surface_pressure",
         "units": "Pa",
         "value": 146700.0
