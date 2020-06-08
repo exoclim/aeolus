@@ -305,7 +305,7 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
     lat_bins: array-like
         Latitude bins.
     model: aeolus.model.Model, optional
-        Model class with a relevant coordinate names.
+        Model class with relevant coordinate names.
 
     Returns
     -------
@@ -528,7 +528,7 @@ def replace_z_coord(cube, model=um):
     cube: iris.cube.Cube
         Input cube.
     model: aeolus.model.Model, optional
-        Model class with a relevant coordinate names.
+        Model class with relevant coordinate names.
 
     Returns
     -------

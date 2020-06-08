@@ -6,8 +6,8 @@ import numpy as np
 from .calculus import integrate
 from .stats import spatial
 from ..const import init_const
-from ..coord import UM_HGT
 from ..exceptions import ArgumentError, MissingCubeError
+from ..model import um
 
 
 __all__ = (
@@ -343,7 +343,7 @@ def bond_albedo(cubelist, const=None):
     return b_alb
 
 
-def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
+def water_path(cubelist, kind="water_vapour", model=um):
     r"""
     Water vapour or condensate path, i.e. a vertical integral of a water phase.
 
@@ -358,8 +358,9 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
         Short name of the water phase to be integrated.
         Options are water_vapour (default) | liquid_water | ice_water | cloud_water
         `cloud_water` is the sum of liquid and ice phases.
-    coord_name: str or iris.coords.Coord, optional
-        Vertical coordinate for integration.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
+        `model.z` is used as a vertical coordinate for integration.
 
     Returns
     -------
@@ -376,6 +377,6 @@ def water_path(cubelist, kind="water_vapour", coord_name=UM_HGT):
         q = cubelist.extract_strict("mass_fraction_of_cloud_liquid_water_in_air")
         q += cubelist.extract_strict("mass_fraction_of_cloud_ice_in_air")
     rho = cubelist.extract_strict("air_density")
-    wp = integrate(q * rho, coord_name)
+    wp = integrate(q * rho, model.z)
     wp.rename(f"{kind}_path")
     return wp

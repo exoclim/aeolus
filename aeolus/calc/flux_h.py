@@ -7,18 +7,19 @@ import iris
 import numpy as np
 
 from ..const import get_planet_radius
-from ..coord import UM_LATLON, nearest_coord_value, vertical_cross_section_area
+from ..coord import nearest_coord_value, vertical_cross_section_area
 from ..exceptions import AeolusWarning
+from ..model import um
 
 
 __all__ = ("horizontal_fluxes_through_region_boundaries", "net_horizontal_flux_to_region")
 
 
 def horizontal_fluxes_through_region_boundaries(
-    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None, warn_thresh=10
+    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None, warn_thresh=10, model=um
 ):
     """Calculate horizontal fluxes of `scalar_cube` through planes of a rectangular region."""
-    perpendicular_wind_cmpnts = {UM_LATLON[1]: u, UM_LATLON[0]: v}
+    perpendicular_wind_cmpnts = {um.x: u, um.y: v}
 
     if r_planet is None:
         r = get_planet_radius(scalar_cube)
@@ -50,7 +51,7 @@ def horizontal_fluxes_through_region_boundaries(
         cube_slice = next(cube.slices([cube.coord(axis="z").name(), other_coord]))
         vcross_area = vertical_cross_section_area(cube_slice, r_planet=r)
 
-        # Calculate energy flux (2d)
+        # Calculate side flux (2d)
         cube = perpendicular_wind_cmpnts[this_coord].extract(vcross_cnstr) * cube * vcross_area
         cube.rename(f"{scalar_cube.name()}_flux_through_{bound['name']}_boundary")
         # Total flux
@@ -63,11 +64,17 @@ def horizontal_fluxes_through_region_boundaries(
 
 
 def net_horizontal_flux_to_region(
-    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None
+    scalar_cube, region, u, v, r_planet=None, vertical_constraint=None, model=um
 ):
     """Calculate horizontal fluxes of `scalar_cube` quantity and add them to get the net result."""
     total_h_fluxes = horizontal_fluxes_through_region_boundaries(
-        scalar_cube, region, u, v, r_planet=r_planet, vertical_constraint=vertical_constraint
+        scalar_cube,
+        region,
+        u,
+        v,
+        r_planet=r_planet,
+        vertical_constraint=vertical_constraint,
+        model=model,
     )
     net_flux = (
         total_h_fluxes.extract_strict(

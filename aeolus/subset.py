@@ -86,7 +86,7 @@ class DimConstr:
         Parameters
         ----------
         model: aeolus.model.Model, optional
-            Model class with a relevant longitude coordinate name.
+            Model class with relevant coordinate names.
         """
         self.tmyx = _dim_constr(model.t, model.l, model.y, model.x)
         self.tzyx = _dim_constr(model.t, model.z, model.y, model.x)
