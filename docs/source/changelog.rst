@@ -6,6 +6,18 @@ Changelog
 0.4.5
 -----
 
+:Date: 08 June 2020
+
+* API changes:
+  - add `model` submodule for model-specific variable and coordinate names
+  - replace all `UM_*` variables with the `model` reference
+  - replace all `DIM_CONSTR_*` by a class `DimConstr` with each of the constraints as an attribute
+  - replace `coord.add_binned_lon_lat()` by a generic `coord.add_binned_coord()` function
+* Minor bug fixes and clean-up 
+
+0.4.4
+-----
+
 :Date: 04 May 2020 
 
 * Add Python 3.8 to build matrix
