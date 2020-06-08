@@ -1,33 +1,36 @@
 """Subsetting variables over geographical regions."""
-from dataclasses import dataclass, field
-
 import iris
 from iris.analysis.cartography import wrap_lons
 
 from .exceptions import BoundaryError
 from .model import um
-from .model.base import Model
 from .plot.text import fmt_lonlat
 
 
 __all__ = ("Region",)
 
 
-@dataclass
 class BoundsRect:
     """Bounding longitudes and latitudes of a given lon-lat rectangle."""
 
-    model: Model = um
-    west: float = field(metadata={"coord": um.x})
-    east: float = field(metadata={"coord": um.x})
-    south: float = field(metadata={"coord": um.y})
-    north: float = field(metadata={"coord": um.y})
+    _side_names = ("west", "east", "south", "north")
 
-    def __post_init__(self):  # noqa
-        # if self.west > self.east:
-        #     raise BoundaryError("West boundary value should be less than east")
+    def __init__(self, west_bound, east_bound, south_bound, north_bound, model=um):
+        """Initialise BoundsRect."""
+        self.west = west_bound
+        self.east = east_bound
+        self.south = south_bound
+        self.north = north_bound
+        self.model = model
+        self.west_coord = model.x
+        self.east_coord = model.x
+        self.south_coord = model.y
+        self.north_coord = model.y
         if self.south > self.north:
-            raise BoundaryError("South boundary value should be less than north")
+            raise BoundaryError(
+                f"South boundary value ({self.south}) should be less than north ({self.north})"
+            )
+        self.sides = [(name, getattr(self, f"{name}_coord")) for name in self._side_names]
 
     def __repr__(self):  # noqa
         return (
@@ -72,10 +75,8 @@ class Region:
         self.description = description
         self.model = model
 
-        self.bounds = BoundsRect(model, west_bound, east_bound, south_bound, north_bound)
-        self._sides = [
-            (key, f.metadata["coord"]) for key, f in self.bounds.__dataclass_fields__.items()
-        ]
+        self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound, model)
+        self._sides = self.bounds.sides
 
         self.lon_size = abs(self.bounds.east - self.bounds.west)
         self.lat_size = self.bounds.north - self.bounds.south

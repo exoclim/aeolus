@@ -343,7 +343,7 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
 
 
 def get_cube_datetimes(cube):
-    """Get a list of `iris.cube.Cube`'s time points as `datetime.datetime`s."""
+    """Get a list of cube time points as python datetimes."""
     return cube.coord("time").units.num2date(cube.coord("time").points)
 
 
