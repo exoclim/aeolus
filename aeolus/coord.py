@@ -13,16 +13,11 @@ import numpy as np
 
 from .const import get_planet_radius
 from .exceptions import AeolusWarning, ArgumentError, NotFoundError
+from .model import um
 
 
 __all__ = (
-    "UM_TIME",
-    "UM_HGT",
-    "UM_LEV",
-    "UM_LATLON",
-    "UM_Z_COORDS",
-    "UM_TIME_COORDS",
-    "add_binned_lon_lat",
+    "add_binned_coord",
     "add_cyclic_point_to_cube",
     "area_weights_cube",
     "coarsen_cube",
@@ -39,14 +34,6 @@ __all__ = (
     "vertical_cross_section_area",
 )
 
-UM_TIME = "time"
-UM_HGT = "level_height"
-UM_LATLON = ["latitude", "longitude"]
-UM_SIGMA = "sigma"
-UM_LEV = "model_level_number"
-UM_Z_COORDS = [UM_SIGMA, UM_LEV]
-UM_TIME_COORDS = ["forecast_reference_time", "forecast_period", UM_TIME]
-
 
 def _is_longitude_global(lon_points):
     """Return True if array of longitudes covers the whole sphere."""
@@ -56,7 +43,7 @@ def _is_longitude_global(lon_points):
     return case_0_360 or case_pm180
 
 
-def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
+def roll_cube_pm180(cube_in, model=um):
     """
     Take a cube spanning 0...360 degrees in longitude and roll it to -180...180 degrees.
 
@@ -66,10 +53,8 @@ def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
     ----------
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates.
-    coord_name: str, optional
-        Name of the longitude coordinate.
-    inplace: bool, optional
-        Do this in-place or copy the cube.
+    model: aeolus.model.Model, optional
+        Model class with a relevant longitude coordinate name.
 
     Returns
     -------
@@ -79,10 +64,8 @@ def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
     --------
     aeolus.coord.roll_cube_0_360
     """
-    if inplace:
-        cube = cube_in
-    else:
-        cube = cube_in.copy()
+    cube = cube_in.copy()
+    coord_name = model.x  # get the name of the longitude coordinate
     xcoord = cube.coord(coord_name)
     if (xcoord.points >= 0.0).all():
         assert is_regular(xcoord), "Operation is only valid for a regularly spaced coordinate."
@@ -103,11 +86,9 @@ def roll_cube_pm180(cube_in, coord_name=UM_LATLON[1], inplace=False):
         # unless there is something wrong with longitude
         msg = f"Incorrect {coord_name} values: from {xcoord.points.min()} to {xcoord.points.max()}"
         assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), msg
-    if not inplace:
-        return cube
 
 
-def roll_cube_0_360(cube_in, inplace=False):
+def roll_cube_0_360(cube_in, model=um):
     """
     Take a cube spanning -180...180 degrees in longitude and roll it to 0...360 degrees.
 
@@ -117,10 +98,8 @@ def roll_cube_0_360(cube_in, inplace=False):
     ----------
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates.
-    coord_name: str, optional
-        Name of the longitude coordinate.
-    inplace: bool, optional
-        Do this in-place or copy the cube.
+    model: aeolus.model.Model, optional
+        Model class with a relevant longitude coordinate name.
 
     Returns
     -------
@@ -130,11 +109,9 @@ def roll_cube_0_360(cube_in, inplace=False):
     --------
     aeolus.coord.roll_cube_pm180
     """
-    if inplace:
-        cube = cube_in
-    else:
-        cube = cube_in.copy()
-    lon = cube.coord("longitude")
+    cube = cube_in.copy()
+    coord_name = model.x  # get the name of the longitude coordinate
+    lon = cube.coord(coord_name)
     if (lon.points < 0.0).any():
         add = 180
         cube.data = np.roll(cube.data, len(lon.points) // 2, axis=-1)
@@ -143,8 +120,7 @@ def roll_cube_0_360(cube_in, inplace=False):
         else:
             bounds = None
         cube.replace_coord(lon.copy(points=lon.points + add, bounds=bounds))
-    if not inplace:
-        return cube
+    return cube
 
 
 def area_weights_cube(cube, r_planet=None, normalize=False):
@@ -289,40 +265,32 @@ def _cell_centres(bounds, bound_position=0.5):
     return centres
 
 
-def add_binned_lon_lat(cube, lon_bins, lat_bins, coord_names=UM_LATLON, inplace=False):
+def add_binned_coord(cube, coord_name, bins):
     """
     Add binned longitude and latitude as auxiliary coordinates to a cube.
 
     Parameters
     ----------
     cube: iris.cube.Cube
-        Cube with longitude and latitude coordinates.
-    lon_bins: array-like
-        Longitude bins.
-    lat_bins: array-like
-        Latitude bins.
-    coord_names: list, optional
-        List of latitude and longitude labels.
-    inplace: bool, optional
-        Do this in-place or copy the cube.
+        Cube with the given coordinate.
+    coord_name: str or iris.coords.Coord
+        Coordinate name.
+    bins: array-like
+        Coordinate bins.
 
     Returns
     -------
     iris.cube.Cube
     """
-    if inplace:
-        cube_out = cube
-    else:
-        cube_out = cube.copy()
-    for name, target_points in zip(coord_names, (lat_bins, lon_bins)):
-        binned_points = np.digitize(cube_out.coord(name).points, target_points)
-        binned_points = np.clip(binned_points, 0, len(target_points) - 1)
-        new_coord = iris.coords.AuxCoord(binned_points, long_name=f"{name}_binned")
-        cube_out.add_aux_coord(new_coord, cube_out.coord_dims(name))
+    cube_out = cube.copy()
+    binned_points = np.digitize(cube_out.coord(coord_name).points, bins)
+    binned_points = np.clip(binned_points, 0, len(bins) - 1)
+    new_coord = iris.coords.AuxCoord(binned_points, long_name=f"{coord_name}_binned")
+    cube_out.add_aux_coord(new_coord, cube_out.coord_dims(coord_name))
     return cube_out
 
 
-def coarsen_cube(cube, lon_bins, lat_bins, coord_names=UM_LATLON, inplace=False):
+def coarsen_cube(cube, lon_bins, lat_bins, model=um):
     """
     Block-average cube in longitude and latitude.
 
@@ -336,20 +304,17 @@ def coarsen_cube(cube, lon_bins, lat_bins, coord_names=UM_LATLON, inplace=False)
         Longitude bins.
     lat_bins: array-like
         Latitude bins.
-    coord_names: list, optional
-        List of latitude and longitude labels.
-    inplace: bool, optional
-        Do this in-place or copy the cube.
+    model: aeolus.model.Model, optional
+        Model class with a relevant longitude coordinate name.
 
     Returns
     -------
     iris.cube.Cube
     """
-    if inplace:
-        cube_out = cube
-    else:
-        cube_out = cube.copy()
-    add_binned_lon_lat(cube_out, lon_bins, lat_bins, coord_names=coord_names, inplace=True)
+    cube_out = cube.copy()
+    coord_names = [model.y, model.x]
+    cube_out = add_binned_coord(cube_out, model.x, lon_bins)
+    cube_out = add_binned_coord(cube_out, model.y, lat_bins)
 
     # To avoid oversampling on the edges, extract subset within the boundaries of target coords
     for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
@@ -443,10 +408,10 @@ def coord_to_cube(cube, coord):
     return new_cube
 
 
-def ensure_bounds(cube, coords=UM_LATLON):
+def ensure_bounds(cube, coords=("x", "y"), model=um):
     """Auto-generate bounds for cube coordinates."""
-    for coord_name in coords:
-        c = cube.coord(coord_name)
+    for coord in coords:
+        c = cube.coord(getattr(model, coord))
         if not c.has_bounds():
             if len(c.points) > 1:
                 c.guess_bounds()
@@ -554,7 +519,7 @@ def get_dim_coord(cube, axis):
     raise NotFoundError(f"Cube has no coordinate for axis {axis}")
 
 
-def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
+def replace_z_coord(cube, model=um):
     """
     Replace dimensional vertical coordinate.
 
@@ -562,11 +527,8 @@ def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
     ----------
     cube: iris.cube.Cube
         Input cube.
-    promote_coord: str or iris.coords.Coord
-        Coordinate to become a dimensional z-coordinate.
-    remove_coord: list-like
-        List of coordinates to remove.
-        By default, model levels and sigma coordinates are removed.
+    model: aeolus.model.Model, optional
+        Model class with a relevant longitude coordinate name.
 
     Returns
     -------
@@ -574,10 +536,11 @@ def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
         Copy of the input cube with a new vertical coordinate.
     """
     new_cube = cube.copy()
-    new_cube.coord(promote_coord).bounds = None
-    iris.util.promote_aux_coord_to_dim_coord(new_cube, promote_coord)
-    ensure_bounds(new_cube, coords=[promote_coord])
-    for coord in remove_coord:
+    new_cube.coord(model.z).bounds = None
+    iris.util.promote_aux_coord_to_dim_coord(new_cube, model.z)
+    ensure_bounds(new_cube, coords=[model.z])
+    for coord in [model.s, model.l]:
+        # By default, model levels and sigma coordinates are removed.
         try:
             new_cube.remove_coord(coord)
         except iris.exceptions.CoordinateNotFoundError:
@@ -585,7 +548,7 @@ def replace_z_coord(cube, promote_coord=UM_HGT, remove_coord=UM_Z_COORDS):
     return new_cube
 
 
-def add_cyclic_point_to_cube(cube, coord=UM_LATLON[1]):
+def add_cyclic_point_to_cube(cube, coord=um.x):
     """
     Add a cyclic point to a cube and a corresponding coordinate.
 
@@ -598,7 +561,7 @@ def add_cyclic_point_to_cube(cube, coord=UM_LATLON[1]):
     coord: iris.coords.Coord or str
         A 1-dimensional coordinate which specifies the coordinate values for
         the dimension the cyclic point is to be added to. The coordinate
-        values must be regularly spaced. Defaults to "longitude".
+        values must be regularly spaced. Defaults to the "x"-coordinate.
 
     Returns
     -------

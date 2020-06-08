@@ -1,6 +1,6 @@
 Cube coordinate functionality
 =============================
-.. autofunction:: aeolus.coord.add_binned_lon_lat
+.. autofunction:: aeolus.coord.add_binned_coord
 .. autofunction:: aeolus.coord.add_cyclic_point_to_cube
 .. autofunction:: aeolus.coord.add_planet_calendar 
 .. autofunction:: aeolus.coord.area_weights_cube
