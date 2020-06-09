@@ -123,7 +123,7 @@ def roll_cube_0_360(cube_in, model=um):
     return cube
 
 
-def area_weights_cube(cube, r_planet=None, normalize=False):
+def area_weights_cube(cube, r_planet=None, normalize=False, model=um):
     """
     Create a cube of area weights for an arbitrary planet.
 
@@ -135,6 +135,8 @@ def area_weights_cube(cube, r_planet=None, normalize=False):
         Radius of the planet.
     normalize: bool, optional
         Normalize areas.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
 
     Returns
     -------
@@ -142,7 +144,7 @@ def area_weights_cube(cube, r_planet=None, normalize=False):
         Cube of area weights with the same metadata as the input cube
     """
     cube = cube.copy()
-    ensure_bounds(cube)
+    ensure_bounds(cube, model=model)
     aw = iris.analysis.cartography.area_weights(cube, normalize=normalize)
     if normalize:
         aw = cube.copy(data=aw)
@@ -267,7 +269,7 @@ def _cell_centres(bounds, bound_position=0.5):
 
 def add_binned_coord(cube, coord_name, bins):
     """
-    Add binned longitude and latitude as auxiliary coordinates to a cube.
+    Bin coordinate points and add them as an auxiliary coordinate to a cube.
 
     Parameters
     ----------
@@ -411,7 +413,11 @@ def coord_to_cube(cube, coord):
 def ensure_bounds(cube, coords=("x", "y"), model=um):
     """Auto-generate bounds for cube coordinates."""
     for coord in coords:
-        c = cube.coord(getattr(model, coord))
+        try:
+            c_name = getattr(model, coord)
+        except (AttributeError, TypeError):
+            c_name = coord
+        c = cube.coord(c_name)
         if not c.has_bounds():
             if len(c.points) > 1:
                 c.guess_bounds()
@@ -428,7 +434,7 @@ def not_equal_coord_axes(cube1, cube2):
     return set(filter(None, dims))
 
 
-def regrid_3d(cube, target, vert_coord=None):
+def regrid_3d(cube, target, model=um):
     """
     Regrid a cube in the horizontal and in the vertical on to coordinates of the target cube.
 
@@ -440,9 +446,8 @@ def regrid_3d(cube, target, vert_coord=None):
         The cube to be regridded.
     target: iris.cube.Cube
         The cube to regrid to.
-    vert_coord: str or iris.coords.Coord, optional
-        The coordinate for the vertical interpolation.
-        If not given, the target's z-axis `iris.coord.DimCoord` is used.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
 
     Returns
     -------
@@ -454,8 +459,9 @@ def regrid_3d(cube, target, vert_coord=None):
 
     # Interpolate in the vertical if needed
     if "Z" in neq_axes:
+        vert_coord = model.z
         if vert_coord is None:
-            z = get_dim_coord(target, "z")
+            z = get_dim_coord(target, "Z")
         else:
             z = target.coord(vert_coord)
         cube = cube.interpolate([(z.name(), z.points)], iris.analysis.Linear())

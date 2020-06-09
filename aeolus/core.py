@@ -6,8 +6,9 @@ import iris
 
 from .const import init_const
 from .exceptions import AeolusWarning, ArgumentError
+from .model import um
 from .region import Region
-from .subset import DIM_CONSTR_YX_R
+from .subset import DimConstr
 
 __all__ = ("Run",)
 
@@ -24,6 +25,8 @@ class Run:
         A description of the run.
     const: aeolus.const.ConstContainer
         Physical constants used in calculations for this run.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
     """
 
     attr_keys = ["name", "description", "planet", "model_type", "timestep", "parent", "children"]
@@ -35,6 +38,7 @@ class Run:
         description="",
         planet="",
         const_dir=None,
+        model=um,
         model_type=None,
         timestep=None,
         parent=None,
@@ -58,6 +62,8 @@ class Run:
             If not given, Earth physical constants are initialised.
         const_dir: pathlib.Path, optional
             Path to a folder with JSON files containing constants for a specific planet.
+        model: aeolus.model.Model, optional
+            Model class with relevant coordinate and variable names.
         model_type: str, optional
             Type of the model run, global or LAM.
         timestep: int, optional
@@ -79,6 +85,10 @@ class Run:
         # Planetary constants
         self._update_planet(planet=planet, const_dir=const_dir)
 
+        # Model-specific names of variables and coordinates
+        self.model = model
+        self.dim_constr = DimConstr(model=self.model)
+
         # If the model is global or LAM (nested) and what its driving model is
         self.model_type = model_type
         self.timestep = timestep
@@ -90,9 +100,9 @@ class Run:
             self.load_data(files)
             try:
                 if self.processed:
-                    cube_yx = self.proc.extract(DIM_CONSTR_YX_R)[0]
+                    cube_yx = self.proc.extract(self.dim_constr.yx_r)[0]
                 else:
-                    cube_yx = self.raw.extract(DIM_CONSTR_YX_R)[0]
+                    cube_yx = self.raw.extract(self.dim_constr.yx_r)[0]
                 self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
             except IndexError:
                 warn("Run initialised without a domain.")
