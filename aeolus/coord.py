@@ -86,6 +86,7 @@ def roll_cube_pm180(cube_in, model=um):
         # unless there is something wrong with longitude
         msg = f"Incorrect {coord_name} values: from {xcoord.points.min()} to {xcoord.points.max()}"
         assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), msg
+    return cube
 
 
 def roll_cube_0_360(cube_in, model=um):
