@@ -40,10 +40,10 @@ setup(
     zip_safe=False,
     python_requires=">=3.7",
     install_requires=[
-        "numpy>=1.16",
+        "numpy>=1.17",
         "pytest>=3.3",
-        "matplotlib>=2",
-        "scitools-iris>=2.3",
+        "matplotlib>=3",
+        "scitools-iris>=2.4",
         "latlon23",
     ],
     classifiers=[
@@ -52,6 +52,7 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Scientific/Engineering :: Atmospheric Science",
     ],
 )

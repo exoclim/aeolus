@@ -1,31 +1,36 @@
 """Subsetting variables over geographical regions."""
-from dataclasses import dataclass, field
-
 import iris
 from iris.analysis.cartography import wrap_lons
 
-from .coord_utils import UM_LATLON
 from .exceptions import BoundaryError
-from .util import fmt_lonlat
+from .model import um
+from .plot.text import fmt_lonlat
 
 
 __all__ = ("Region",)
 
 
-@dataclass
 class BoundsRect:
     """Bounding longitudes and latitudes of a given lon-lat rectangle."""
 
-    west: float = field(metadata={"coord": UM_LATLON[1]})
-    east: float = field(metadata={"coord": UM_LATLON[1]})
-    south: float = field(metadata={"coord": UM_LATLON[0]})
-    north: float = field(metadata={"coord": UM_LATLON[0]})
+    _side_names = ("west", "east", "south", "north")
 
-    def __post_init__(self):  # noqa
-        # if self.west > self.east:
-        #     raise BoundaryError("West boundary value should be less than east")
+    def __init__(self, west_bound, east_bound, south_bound, north_bound, model=um):
+        """Initialise BoundsRect."""
+        self.west = west_bound
+        self.east = east_bound
+        self.south = south_bound
+        self.north = north_bound
+        self.model = model
+        self.west_coord = model.x
+        self.east_coord = model.x
+        self.south_coord = model.y
+        self.north_coord = model.y
         if self.south > self.north:
-            raise BoundaryError("South boundary value should be less than north")
+            raise BoundaryError(
+                f"South boundary value ({self.south}) should be less than north ({self.north})"
+            )
+        self.sides = [(name, getattr(self, f"{name}_coord")) for name in self._side_names]
 
     def __repr__(self):  # noqa
         return (
@@ -34,7 +39,7 @@ class BoundsRect:
         )
 
 
-class Region(object):
+class Region:
     """
     Rectangular geographical region.
 
@@ -48,27 +53,30 @@ class Region(object):
         A constraint object associated with the region
     """
 
-    def __init__(self, west_bound, east_bound, south_bound, north_bound, name="", description=""):
+    def __init__(
+        self, west_bound, east_bound, south_bound, north_bound, name="", description="", model=um
+    ):
         """
         Instantiate a `Region` object.
 
         Parameters
         ----------
-        name: str
-            The region's name.
-        description : str, optional
-            A description of the region.
         west_bound, east_bound, south_bound, north_bound : scalar, optional
             The western, eastern, southern, and northern boundaries, respectively, of the
             region.
+        name: str, optional
+            The region's name.
+        description : str, optional
+            A description of the region.
+        model: aeolus.model.Model, optional
+            Model class with a relevant coordinate names.
         """
         self.name = name
         self.description = description
+        self.model = model
 
-        self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound)
-        self._sides = [
-            (key, f.metadata["coord"]) for key, f in self.bounds.__dataclass_fields__.items()
-        ]
+        self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound, model)
+        self._sides = self.bounds.sides
 
         self.lon_size = abs(self.bounds.east - self.bounds.west)
         self.lat_size = self.bounds.north - self.bounds.south
@@ -93,10 +101,10 @@ class Region(object):
     def _perpendicular_side_limits(self, side):
         """Get minimum and maximum values of the region boundary perpendicular to the given one."""
         if side in ["west", "east"]:
-            coord_name = UM_LATLON[0]
+            coord_name = self.model.y
             _min, _max = self.bounds.south, self.bounds.north
         elif side in ["south", "north"]:
-            coord_name = UM_LATLON[1]
+            coord_name = self.model.x
             _min, _max = self.bounds.west, self.bounds.east
         else:
             raise BoundaryError(f"Boundary name '{side}' is not valid")
@@ -106,7 +114,9 @@ class Region(object):
         return sep.join([fmt_lonlat(i["value"], i["coord"]) for i in self])
 
     @classmethod
-    def from_cube(cls, cube, name=None, margin=None, margin_units="points", shift_lons=False):
+    def from_cube(
+        cls, cube, name=None, margin=None, margin_units="points", shift_lons=False, model=um
+    ):
         """
         Create a Region from limits of longitude and latitude of the cube.
 
@@ -122,6 +132,8 @@ class Region(object):
             Units of margin. Can be "points" or "degrees".
         shift_lons: bool, optional
             Shift longitudes to -180...180.
+        model: aeolus.model.Model, optional
+            Model class with a relevant coordinate names.
 
         Returns
         -------
@@ -129,10 +141,10 @@ class Region(object):
         """
         if name is None:
             name = f"extent_of_{cube.name()}"
-        lons = cube.coord(UM_LATLON[1]).points
+        lons = cube.coord(model.x).points
         if shift_lons:
             lons = sorted(wrap_lons(lons, -180, 360))
-        lats = cube.coord(UM_LATLON[0]).points
+        lats = cube.coord(model.y).points
         idx0, idx1 = 0, -1
         if margin is not None:
             if margin_units == "points":

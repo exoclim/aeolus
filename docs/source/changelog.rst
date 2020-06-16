@@ -3,14 +3,30 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.5
+-----
+
+:Date: 08 June 2020
+
+* API changes:
+  - add `model` submodule for model-specific variable and coordinate names
+  - replace all `UM_*` variables with the `model` reference
+  - replace all `DIM_CONSTR_*` by a class `DimConstr` with each of the constraints as an attribute
+  - replace `coord.add_binned_lon_lat()` by a generic `coord.add_binned_coord()` function
+* Minor bug fixes and clean-up 
+
 0.4.4
 -----
 
-:Date: TBA
+:Date: 04 May 2020 
 
+* Add Python 3.8 to build matrix
+* API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule,
+remove `util` folder by moving `text` to `plot`.
+* Add a function to attach non-Earth auxiliary time coordinates to a cube
 * Add Titan constants (some orbital parameters are those for Saturn for simplicity)
 * Fix a typo in Earth constants
-* Add diagnostics: `plot.add_custom_legend()`
+* Add a new function for matplotlib plots: `plot.add_custom_legend()`
 * Minor fixes in the travis integration
 
 0.4.3
@@ -27,7 +43,7 @@ Changelog
 0.4.2
 -----
 
-:Date: 5 January 2020
+:Date: 05 January 2020
 
 * Improve calculation of precipitation sums
 * Add a helper function to retrieve planet radius from a cube
@@ -40,7 +56,7 @@ Changelog
 0.4.1
 -----
 
-:Date: 3 December 2019
+:Date: 03 December 2019
 
 * Add a few standard constants
 * Improve units in metpy interface
@@ -68,7 +84,7 @@ Changelog
 0.2
 ---
 
-:Date: 2 November 2019
+:Date: 02 November 2019
 
 * Technical updates
 

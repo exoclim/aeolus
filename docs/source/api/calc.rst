@@ -29,3 +29,7 @@ Diagnostics
 .. autofunction:: aeolus.calc.toa_eff_temp
 .. autofunction:: aeolus.calc.toa_net_energy
 .. autofunction:: aeolus.calc.water_path
+
+Horizontal fluxes
+-----------------
+.. autofunction:: aeolus.calc.net_horizontal_flux_to_region 

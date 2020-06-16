@@ -1,5 +1,4 @@
 # Project-specific
-aeolus/utils.c
 docs/source/examples/*.ipynb
 docs/source/examples/index.rst
 

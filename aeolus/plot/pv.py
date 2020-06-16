@@ -5,14 +5,11 @@ import numpy as np
 
 from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 
+from ..coord import _cell_bounds
 from ..exceptions import AeolusWarning
-from ..grid import _cell_bounds
 
 
-__all__ = (
-    "grid_for_scalar_cube_sph",
-    "grid_for_vector_cubes_sph",
-)
+__all__ = ("grid_for_scalar_cube_sph", "grid_for_vector_cubes_sph")
 
 
 def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scalar3d"):

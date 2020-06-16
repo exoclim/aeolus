@@ -52,5 +52,10 @@
         "name": "condensible_density",
         "units": "kg m-3",
         "value": 1000.0
+    },
+    {
+        "name": "condensible_heat_vaporization",
+        "units": "m2 s-2",
+        "value": 2.501e6
     }
 ]

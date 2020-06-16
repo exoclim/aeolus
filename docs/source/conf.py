@@ -202,7 +202,7 @@ intersphinx_mapping = {
     "iris": ("https://scitools.org.uk/iris/docs/latest/", None),
     "matplotlib": ("https://matplotlib.org", None),
     "mpl_toolkits": ("https://matplotlib.org", None),
-    "numpy": ("https://docs.scipy.org/doc/numpy", None),
+    "numpy": ("https://numpy.org/doc/stable", None),
     "python": ("https://docs.python.org/3/", None),
     "pyvista": ("https://docs.pyvista.org/", None),
 }

@@ -6,7 +6,7 @@ from matplotlib.transforms import offset_copy
 
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-from ..util.text import fmt_lonlat
+from .text import fmt_lonlat
 
 
 __all__ = ("GeoAxesGrid", "label_global_map_gridlines")

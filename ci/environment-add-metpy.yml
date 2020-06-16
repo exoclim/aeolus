@@ -1,5 +1,5 @@
-name: aeolus_py37
 channels:
 - conda-forge
 dependencies:
-- pyvista>=0.23
+- metpy>=0.11
+- xarray

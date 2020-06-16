@@ -20,8 +20,10 @@ See also
 --------
 
 - The `iris`_ package, upon which aeolus relies heavily.
+- The repository with `code`_ used for the figures in `Sergeev et al. (2020) <https://arxiv.org/abs/2004.03007>`_.
 
-.. _iris:  https://scitools.org.uk/iris/docs/latest/
+.. _iris: https://scitools.org.uk/iris/docs/latest/
+.. _code: https://github.com/dennissergeev/exoconvection-apj-2020
 
 
 License

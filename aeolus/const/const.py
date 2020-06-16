@@ -72,7 +72,10 @@ class ConstContainer:
         """Not fully implemented yet."""
         derivatives = {
             "dry_air_gas_constant": lambda slf: slf.molar_gas_constant
-            / slf.dry_air_molecular_weight
+            / slf.dry_air_molecular_weight,
+            "molecular_weight_ratio": lambda slf: slf.condensible_molecular_weight
+            / slf.dry_air_molecular_weight,
+            "poisson_exponent": lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press,
         }
         for name, func in derivatives.items():
             try:
@@ -93,9 +96,7 @@ def _read_const_file(name, directory=CONST_DIR):
         # transform the list of dictionaries into a dictionary
         const_dict = {}
         for vardict in list_of_dicts:
-            const_dict[vardict["name"]] = {
-                k: v for k, v in vardict.items() if k != "name"
-            }
+            const_dict[vardict["name"]] = {k: v for k, v in vardict.items() if k != "name"}
         return const_dict
     except FileNotFoundError:
         raise LoadError(
@@ -139,11 +140,7 @@ def init_const(name="general", directory=None):
     if name != "general":
         const_dict.update(_read_const_file(name, **kw))
     kls = make_dataclass(
-        cls_name,
-        fields=[*const_dict.keys()],
-        bases=(ConstContainer,),
-        frozen=True,
-        repr=False,
+        cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
     )
     return kls(**const_dict)
 
