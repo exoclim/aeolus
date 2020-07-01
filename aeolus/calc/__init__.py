@@ -1,7 +1,9 @@
 """Science calculations."""
-from .calculus import integrate
+from .calculus import d_dx, d_dy, d_dz, deriv, integrate
 from .diag import (
     bond_albedo,
+    dry_lapse_rate,
+    flux,
     ghe_norm,
     heat_redist_eff,
     precip_sum,
@@ -26,8 +28,14 @@ from .stats import (
 )
 
 __all__ = (
+    "d_dx",
+    "d_dy",
+    "d_dz",
+    "deriv",
     "integrate",
     "bond_albedo",
+    "dry_lapse_rate",
+    "flux",
     "ghe_norm",
     "heat_redist_eff",
     "horizontal_fluxes_through_region_boundaries",

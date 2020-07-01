@@ -1,8 +1,64 @@
 """Generic calculus functions."""
+import iris
+from iris.analysis.calculus import differentiate
+
+
 import numpy as np
 
+from ..model import um
 
-__all__ = ("integrate",)
+
+__all__ = (
+    "d_dx",
+    "d_dy",
+    "d_dz",
+    "deriv",
+    "integrate",
+)
+
+
+def d_dx(cube, model=um):
+    """Derivative w.r.t. x-coordinate."""
+    return deriv(cube, model.x)
+
+
+def d_dy(cube, model=um):
+    """Derivative w.r.t. y-coordinate."""
+    return deriv(cube, model.y)
+
+
+def d_dz(cube, model=um):
+    """Derivative w.r.t. z-coordinate."""
+    return deriv(cube, model.z)
+
+
+def deriv(cube, coord):
+    """
+    Derivative w.r.t. the given coordinate.
+
+    Uses `iris.analysis.calculus.differentiate` and then
+    interpolates the result to the grid points of the original cube.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Input cube containing the given coordinate.
+    coord: str or iris.coords.Coord
+        Coordinate for differentiation.
+
+    Returns
+    -------
+    iris.cube.Cube
+        d(cube)/d(coord).
+
+    See also
+    --------
+    aeolus.calc.calculus.d_dx, aeolus.calc.calculus.d_dy, aeolus.calc.calculus.d_dz
+    """
+    pnts = cube.coord(coord).points
+    diff = differentiate(cube, coord)
+    res = diff.interpolate([(coord, pnts)], iris.analysis.Linear())
+    return res
 
 
 def integrate(cube, coord):
@@ -21,7 +77,7 @@ def integrate(cube, coord):
     Returns
     -------
     iris.cube.Cube
-        integrated cube.
+        Integrated cube.
     """
     # TODO: allow non-dim coordinates
     c = cube.coord(coord)

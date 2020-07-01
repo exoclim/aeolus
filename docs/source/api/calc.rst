@@ -3,6 +3,10 @@ Science calculations
 
 Calculus
 --------
+.. autofunction:: aeolus.calc.d_dx
+.. autofunction:: aeolus.calc.d_dy
+.. autofunction:: aeolus.calc.d_dz
+.. autofunction:: aeolus.calc.deriv
 .. autofunction:: aeolus.calc.integrate
 
 Statistics
@@ -20,6 +24,8 @@ Statistics
 Diagnostics
 -----------
 .. autofunction:: aeolus.calc.bond_albedo
+.. autofunction:: aeolus.calc.dry_lapse_rate
+.. autofunction:: aeolus.calc.flux
 .. autofunction:: aeolus.calc.ghe_norm
 .. autofunction:: aeolus.calc.heat_redist_eff
 .. autofunction:: aeolus.calc.precip_sum

@@ -3,6 +3,17 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.6
+-----
+
+:Date: TBA
+
+* New `calc` functions:
+  - Add convenience functions to `calculus` for doing simple derivatives
+  - Add `dry_lapse_rate()` and `flux()` functions
+* Other changes:
+  - Append names to `model.um`
+
 0.4.5
 -----
 

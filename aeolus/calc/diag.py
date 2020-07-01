@@ -3,7 +3,7 @@ import iris
 
 import numpy as np
 
-from .calculus import integrate
+from .calculus import d_dz, integrate
 from .stats import spatial
 from ..const import init_const
 from ..exceptions import ArgumentError, MissingCubeError
@@ -12,6 +12,8 @@ from ..model import um
 
 __all__ = (
     "bond_albedo",
+    "dry_lapse_rate",
+    "flux",
     "ghe_norm",
     "heat_redist_eff",
     "precip_sum",
@@ -34,6 +36,47 @@ PRECIP_MAPPING = {
     "rain": ["convective_rainfall_flux", "stratiform_rainfall_flux"],
     "snow": ["convective_snowfall_flux", "stratiform_snowfall_flux"],
 }
+
+
+def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
+    r"""
+    Calculate horizontal or vertical flux of some quantity.
+
+    .. math::
+        F_{x} = u (\rho q),
+        F_{y} = v (\rho q),
+        F_{z} = w (\rho q)
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    quantity: str or iris.Constraint
+        Quantity (present in the cube list).
+    axis: str
+        Axis of the flux component (x|y|z)
+    weight_by_density: bool, optional
+        Multiply by a cube of air density (must be present in the input cube list).
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of a flux component with the same dimensions as input cubes.
+    """
+    if axis.lower() == "x":
+        u = cubelist.extract_strict(model.u)
+    elif axis.lower() == "y":
+        u = cubelist.extract_strict(model.v)
+    elif axis.lower() == "z":
+        u = cubelist.extract_strict(model.w)
+    q = cubelist.extract_strict(quantity)
+    fl = u * q
+    if weight_by_density:
+        fl *= cubelist.extract_strict(model.dens)
+    fl.rename(f"flux_of_{quantity}_along_{axis.lower()}_axis")
+    return fl
 
 
 def toa_cloud_radiative_effect(cubelist, kind):
@@ -380,3 +423,26 @@ def water_path(cubelist, kind="water_vapour", model=um):
     wp = integrate(q * rho, model.z)
     wp.rename(f"{kind}_path")
     return wp
+
+
+def dry_lapse_rate(cubelist, model=um):
+    r"""
+    Dry lapse rate, or the change of air temperature with altitude.
+
+    .. math::
+        \gamma = \partial T_{air} / \partial z
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing temperature.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of dT/dz.
+    """
+    temp = cubelist.extract_strict(model.temp)
+    return d_dz(temp, model=model)
