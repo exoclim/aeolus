@@ -48,6 +48,8 @@ class Model:
     sfc_lhf: str = None
     # Extra physics
     temp: str = None
+    dens: str = None
+    ghgt: str = None
     rh: str = None
     # Precip & Cloud
     cld_ice_mf: str = None
