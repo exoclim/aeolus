@@ -12,7 +12,7 @@ Changelog
 
   - Add convenience functions to `calculus` for doing simple derivatives
   - Add a function to calculate horizontal divergence in spherical coordinates
-  - Add `dry_lapse_rate()` and `flux()` functions
+  - Add `air_density`, `air_temperature`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
 
 * Other changes:
 

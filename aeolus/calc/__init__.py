@@ -1,9 +1,12 @@
 """Science calculations."""
 from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
+    air_density,
+    air_temperature,
     bond_albedo,
     dry_lapse_rate,
     flux,
+    geopotential_height,
     ghe_norm,
     heat_redist_eff,
     precip_sum,
@@ -34,9 +37,12 @@ __all__ = (
     "deriv",
     "div_h",
     "integrate",
+    "air_density",
+    "air_temperature",
     "bond_albedo",
     "dry_lapse_rate",
     "flux",
+    "geopotential_height",
     "ghe_norm",
     "heat_redist_eff",
     "horizontal_fluxes_through_region_boundaries",

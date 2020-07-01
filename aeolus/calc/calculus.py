@@ -148,6 +148,7 @@ def div_h(i_cube, j_cube, r_planet=None, model=um):
         div = div.regrid(i_cube, iris.analysis.Linear())
     else:
         raise NotYetImplementedError("Non-spherical coordinates are not implemented yet.")
+    div.rename("horizontal_divergence")
     return div
 
 

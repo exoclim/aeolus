@@ -1,19 +1,25 @@
 """Some commonly used diagnostics in atmospheric science."""
 import iris
+from iris.exceptions import ConstraintMismatchError as CME
 
 import numpy as np
 
 from .calculus import d_dz, integrate
 from .stats import spatial
 from ..const import init_const
+from ..coord import coord_to_cube, ensure_bounds
 from ..exceptions import ArgumentError, MissingCubeError
 from ..model import um
+from ..subset import _dim_constr
 
 
 __all__ = (
+    "air_density",
+    "air_temperature",
     "bond_albedo",
     "dry_lapse_rate",
     "flux",
+    "geopotential_height",
     "ghe_norm",
     "heat_redist_eff",
     "precip_sum",
@@ -24,18 +30,141 @@ __all__ = (
     "toa_net_energy",
     "water_path",
 )
-PRECIP_MAPPING = {
-    "total": [
-        "convective_rainfall_flux",
-        "convective_snowfall_flux",
-        "stratiform_rainfall_flux",
-        "stratiform_snowfall_flux",
-    ],
-    "conv": ["convective_rainfall_flux", "convective_snowfall_flux"],
-    "stra": ["stratiform_rainfall_flux", "stratiform_snowfall_flux"],
-    "rain": ["convective_rainfall_flux", "stratiform_rainfall_flux"],
-    "snow": ["convective_snowfall_flux", "stratiform_snowfall_flux"],
-}
+
+
+def _precip_name_mapping(model=um):
+    """Generate lists of variable names for `precip_sum()`."""
+    return {
+        "total": [model.ls_rain, model.ls_snow, model.cv_rain, model.cv_snow],
+        "conv": [model.cv_rain, model.cv_snow],
+        "stra": [model.ls_rain, model.ls_snow],
+        "rain": [model.ls_rain, model.cv.rain],
+        "snow": [model.ls_snow, model.cv_snow],
+    }
+
+
+def air_temperature(cubelist, const=None, model=um):
+    """
+    Get the real temperature from the given cube list.
+
+    If not present, it is attempted to calculate it from other variables,
+    Exner pressure or air pressure, and potential temperature.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing temperature.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        If not given, an attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of air temperature.
+    """
+    try:
+        return cubelist.extract_strict(model.temp)
+    except CME:
+        try:
+            thta = cubelist.extract_strict(model.thta)
+        except CME:
+            raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
+
+        if len(cubelist.extract(model.exner)) == 1:
+            exner = cubelist.extract_strict(model.exner)
+        elif len(cubelist.extract(model.pres)) == 1:
+            if const is None:
+                const = thta.attributes["planet_conf"]
+            pres = cubelist.extract(model.pres, strict=True)
+            exner = (pres / const.reference_surface_pressure.asc) ** (
+                const.dry_air_gas_constant / const.dry_air_spec_heat_press
+            ).data
+        else:
+            raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
+        temp = thta * exner
+        temp.rename(model.temp)
+        temp.convert_units("K")
+        return temp
+
+
+def air_density(cubelist, const=None, model=um):
+    """
+    Get air density from the given cube list.
+
+    If not present, it is attempted to calculate it from pressure and temperature.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing temperature.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have `dry_air_gas_constant` as an attribute.
+        If not given, an attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of air density.
+    """
+    try:
+        return cubelist.extract_strict(model.dens)
+    except CME:
+        try:
+            temp = cubelist.extract(model.temp, strict=True)
+            pres = cubelist.extract(model.pres, strict=True)
+            if const is None:
+                const = pres.attributes["planet_conf"]
+            rho = pres / (const.dry_air_gas_constant.asc * temp)
+            rho.rename(model.dens)
+            rho.convert_units("kg m^-3")
+            return rho
+        except CME:
+            _msg = f"Unable to get variables from\n{cubelist}\nto calculate air density"
+            raise MissingCubeError(_msg)
+
+
+def geopotential_height(cubelist, const=None, model=um):
+    """
+    Get geopotential height from the given cube list.
+
+    If not present, the altitude coordinate is transformed into a cube.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing temperature.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have `gravity` as an attribute.
+        If not given, an attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of geopotential height.
+    """
+    try:
+        return cubelist.extract_strict(model.ghgt)
+    except CME:
+        try:
+            cube_w_height = cubelist.extract(_dim_constr(model.z, strict=False))[0]
+            if const is None:
+                const = cube_w_height.attributes["planet_conf"]
+            g_hgt = coord_to_cube(cube_w_height, model.z) * const.gravity.asc
+            g_hgt.attributes = {k: v for k, v in cube_w_height.attributes.items() if k != "STASH"}
+            ensure_bounds(g_hgt, [model.z])
+            g_hgt.rename(model.ghgt)
+            g_hgt.convert_units("m^2 s^-2")
+            return g_hgt
+        except CME:
+            _msg = f"No cubes in \n{cubelist}\nwith {model.z} as a coordinate."
+            raise MissingCubeError(_msg)
 
 
 def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
@@ -188,7 +317,7 @@ def sfc_net_energy(cubelist):
     return sfc_net
 
 
-def sfc_water_balance(cubelist, const=None):
+def sfc_water_balance(cubelist, const=None, model=um):
     """
     Calculate domain-average precipitation minus evaporation.
 
@@ -199,6 +328,8 @@ def sfc_water_balance(cubelist, const=None):
     const: aeolus.const.const.ConstContainer, optional
         Must have a `ScalarCube` of `condensible_density` as an attribute.
         If not given, attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
@@ -208,27 +339,27 @@ def sfc_water_balance(cubelist, const=None):
     if const is None:
         const = cubelist[0].attributes["planet_conf"]
     try:
-        evap = cubelist.extract_strict("surface_upward_water_flux")
-    except iris.exceptions.ConstraintMismatchError:
+        evap = cubelist.extract_strict("surface_upward_water_flux")  # FIXME
+    except CME:
         try:
-            lhf = cubelist.extract_strict("surface_upward_latent_heat_flux")
+            lhf = cubelist.extract_strict(model.sfc_lhf)
             evap = lhf / const.condensible_heat_vaporization.asc
             evap /= const.condensible_density.asc
-        except (KeyError, iris.exceptions.ConstraintMismatchError):
+        except (KeyError, CME):
             raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
     try:
-        precip = cubelist.extract_strict("precipitation_flux")
+        precip = cubelist.extract_strict(model.ppn)
         precip /= const.condensible_density.asc
-    except iris.exceptions.ConstraintMismatchError:
-        precip = precip_sum(cubelist, ptype="total", const=const)
+    except CME:
+        precip = precip_sum(cubelist, ptype="total", const=const, model=model)
     precip.convert_units("mm h^-1")
     evap.convert_units("mm h^-1")
     net = spatial(precip - evap, "mean")
-    net.rename("surface_net_downward_water_flux")
+    net.rename("surface_net_downward_water_flux")  # FIXME
     return net
 
 
-def precip_sum(cubelist, ptype="total", const=None):
+def precip_sum(cubelist, ptype="total", const=None, model=um):
     """
     Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].
 
@@ -241,6 +372,8 @@ def precip_sum(cubelist, ptype="total", const=None):
     const: aeolus.const.const.ConstContainer, optional
         Must have a `ScalarCube` of `condensible_density` as an attribute.
         If not given, attempt to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
@@ -248,7 +381,7 @@ def precip_sum(cubelist, ptype="total", const=None):
         Sum of cubes of precipitation with units converted to mm per day.
     """
     try:
-        varnames = PRECIP_MAPPING[ptype]
+        varnames = _precip_name_mapping(model=model)[ptype]
     except KeyError:
         raise ArgumentError(f"Unknown ptype={ptype}")
     if len(cubelist.extract(varnames)) == 0:
@@ -262,7 +395,7 @@ def precip_sum(cubelist, ptype="total", const=None):
             if const is None:
                 const = cube.attributes.get("planet_conf", None)
             precip += cube
-        except iris.exceptions.ConstraintMismatchError:
+        except CME:
             pass
     if const is not None:
         precip /= const.condensible_density.asc

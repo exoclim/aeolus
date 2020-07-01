@@ -24,9 +24,12 @@ Statistics
 
 Diagnostics
 -----------
+.. autofunction:: aeolus.calc.air_density
+.. autofunction:: aeolus.calc.air_temperature
 .. autofunction:: aeolus.calc.bond_albedo
 .. autofunction:: aeolus.calc.dry_lapse_rate
 .. autofunction:: aeolus.calc.flux
+.. autofunction:: aeolus.calc.geopotential_height
 .. autofunction:: aeolus.calc.ghe_norm
 .. autofunction:: aeolus.calc.heat_redist_eff
 .. autofunction:: aeolus.calc.precip_sum
