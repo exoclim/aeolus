@@ -18,23 +18,23 @@ __all__ = (
 
 
 def d_dx(cube, model=um):
-    """Derivative w.r.t. x-coordinate."""
+    """Calculate a derivative w.r.t. x-coordinate."""
     return deriv(cube, model.x)
 
 
 def d_dy(cube, model=um):
-    """Derivative w.r.t. y-coordinate."""
+    """Calculate a derivative w.r.t. y-coordinate."""
     return deriv(cube, model.y)
 
 
 def d_dz(cube, model=um):
-    """Derivative w.r.t. z-coordinate."""
+    """Calculate a derivative w.r.t. z-coordinate."""
     return deriv(cube, model.z)
 
 
 def deriv(cube, coord):
     """
-    Derivative w.r.t. the given coordinate.
+    Calculate a derivative w.r.t. the given coordinate.
 
     Uses `iris.analysis.calculus.differentiate` and then
     interpolates the result to the grid points of the original cube.
