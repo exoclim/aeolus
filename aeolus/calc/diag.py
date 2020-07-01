@@ -1,6 +1,6 @@
 """Some commonly used diagnostics in atmospheric science."""
 import iris
-from iris.exceptions import ConstraintMismatchError as CME
+from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 import numpy as np
 
@@ -67,10 +67,10 @@ def air_temperature(cubelist, const=None, model=um):
     """
     try:
         return cubelist.extract_strict(model.temp)
-    except CME:
+    except ConMisErr:
         try:
             thta = cubelist.extract_strict(model.thta)
-        except CME:
+        except ConMisErr:
             raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
 
         if len(cubelist.extract(model.exner)) == 1:
@@ -113,7 +113,7 @@ def air_density(cubelist, const=None, model=um):
     """
     try:
         return cubelist.extract_strict(model.dens)
-    except CME:
+    except ConMisErr:
         try:
             temp = cubelist.extract(model.temp, strict=True)
             pres = cubelist.extract(model.pres, strict=True)
@@ -123,7 +123,7 @@ def air_density(cubelist, const=None, model=um):
             rho.rename(model.dens)
             rho.convert_units("kg m^-3")
             return rho
-        except CME:
+        except ConMisErr:
             _msg = f"Unable to get variables from\n{cubelist}\nto calculate air density"
             raise MissingCubeError(_msg)
 
@@ -151,7 +151,7 @@ def geopotential_height(cubelist, const=None, model=um):
     """
     try:
         return cubelist.extract_strict(model.ghgt)
-    except CME:
+    except ConMisErr:
         try:
             cube_w_height = cubelist.extract(_dim_constr(model.z, strict=False))[0]
             if const is None:
@@ -162,7 +162,7 @@ def geopotential_height(cubelist, const=None, model=um):
             g_hgt.rename(model.ghgt)
             g_hgt.convert_units("m^2 s^-2")
             return g_hgt
-        except CME:
+        except ConMisErr:
             _msg = f"No cubes in \n{cubelist}\nwith {model.z} as a coordinate."
             raise MissingCubeError(_msg)
 
@@ -340,17 +340,17 @@ def sfc_water_balance(cubelist, const=None, model=um):
         const = cubelist[0].attributes["planet_conf"]
     try:
         evap = cubelist.extract_strict("surface_upward_water_flux")  # FIXME
-    except CME:
+    except ConMisErr:
         try:
             lhf = cubelist.extract_strict(model.sfc_lhf)
             evap = lhf / const.condensible_heat_vaporization.asc
             evap /= const.condensible_density.asc
-        except (KeyError, CME):
+        except (KeyError, ConMisErr):
             raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
     try:
         precip = cubelist.extract_strict(model.ppn)
         precip /= const.condensible_density.asc
-    except CME:
+    except ConMisErr:
         precip = precip_sum(cubelist, ptype="total", const=const, model=model)
     precip.convert_units("mm h^-1")
     evap.convert_units("mm h^-1")
@@ -395,7 +395,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
             if const is None:
                 const = cube.attributes.get("planet_conf", None)
             precip += cube
-        except CME:
+        except ConMisErr:
             pass
     if const is not None:
         precip /= const.condensible_density.asc
