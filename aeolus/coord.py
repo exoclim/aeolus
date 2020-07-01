@@ -133,7 +133,8 @@ def area_weights_cube(cube, r_planet=None, normalize=False, model=um):
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates
     r_planet: float, optional
-        Radius of the planet.
+        Radius of the planet (m). If not given, an attempt is made
+        to get it from the cube metadata.
     normalize: bool, optional
         Normalize areas.
     model: aeolus.model.Model, optional

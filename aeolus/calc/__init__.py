@@ -1,5 +1,5 @@
 """Science calculations."""
-from .calculus import d_dx, d_dy, d_dz, deriv, integrate
+from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
     bond_albedo,
     dry_lapse_rate,
@@ -32,6 +32,7 @@ __all__ = (
     "d_dy",
     "d_dz",
     "deriv",
+    "div_h",
     "integrate",
     "bond_albedo",
     "dry_lapse_rate",

@@ -7,6 +7,7 @@ Calculus
 .. autofunction:: aeolus.calc.d_dy
 .. autofunction:: aeolus.calc.d_dz
 .. autofunction:: aeolus.calc.deriv
+.. autofunction:: aeolus.calc.div_h
 .. autofunction:: aeolus.calc.integrate
 
 Statistics

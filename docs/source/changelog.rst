@@ -9,10 +9,15 @@ Changelog
 :Date: TBA
 
 * New `calc` functions:
+
   - Add convenience functions to `calculus` for doing simple derivatives
+  - Add a function to calculate horizontal divergence in spherical coordinates
   - Add `dry_lapse_rate()` and `flux()` functions
+
 * Other changes:
+
   - Append names to `model.um`
+  - Override `__repr__` of `model.base.Model`
 
 0.4.5
 -----
@@ -20,10 +25,12 @@ Changelog
 :Date: 08 June 2020
 
 * API changes:
+
   - add `model` submodule for model-specific variable and coordinate names
   - replace all `UM_*` variables with the `model` reference
   - replace all `DIM_CONSTR_*` by a class `DimConstr` with each of the constraints as an attribute
   - replace `coord.add_binned_lon_lat()` by a generic `coord.add_binned_coord()` function
+
 * Minor bug fixes and clean-up 
 
 0.4.4
