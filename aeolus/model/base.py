@@ -68,3 +68,8 @@ class Model:
     ls_snow: str = None
     cv_rain: str = None
     cv_snow: str = None
+
+    def __repr__(self):
+        """Override the repr method of the dataclass."""
+        size = len([_ for _, v in self.__dataclass_fields__.items() if v.name is not None])
+        return f"{self.__class__}({size} fields)"
