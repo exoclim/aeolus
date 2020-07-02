@@ -12,6 +12,7 @@ Calculus
 
 Statistics
 ----------
+.. autofunction:: aeolus.calc.cumsum
 .. autofunction:: aeolus.calc.spatial
 .. autofunction:: aeolus.calc.spatial_quartiles
 .. autofunction:: aeolus.calc.minmaxdiff
@@ -20,7 +21,6 @@ Statistics
 .. autofunction:: aeolus.calc.zonal_mean
 .. autofunction:: aeolus.calc.last_year_mean
 .. autofunction:: aeolus.calc.vertical_mean
-.. autofunction:: aeolus.calc.vertical_cumsum
 
 Diagnostics
 -----------

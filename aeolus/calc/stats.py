@@ -14,6 +14,7 @@ from ..subset import extract_last_year
 
 
 __all__ = (
+    "cumsum",
     "spatial",
     "spatial_quartiles",
     "meridional_mean",
@@ -21,7 +22,6 @@ __all__ = (
     "region_mean_diff",
     "zonal_mean",
     "last_year_mean",
-    "vertical_cumsum",
     "vertical_mean",
 )
 
@@ -207,14 +207,18 @@ def vertical_mean(cube, model=um, weight_by=None):
     return vmean
 
 
-def vertical_cumsum(cube, model=um):
+def cumsum(cube, axis, axis_weights=False, model=um):
     """
-    Vertical cumulative sum of a cube.
+    Cumulative sum of a cube.
 
     Parameters
     ----------
     cube: iris.cube.Cube
         Input cube.
+    axis: str
+        Coordinate axis of operation (t|z|y|x).
+    axis_weights: bool, optional
+        If True, multiply data by the coordinate spacings.
     model: aeolus.model.Model, optional
         Model class with a relevant coordinate name.
 
@@ -223,12 +227,22 @@ def vertical_cumsum(cube, model=um):
     iris.cube.Cube
         Collapsed cube.
     """
-    c = cube.coord(model.z).copy()
+    try:
+        c = cube.coord(getattr(model, axis)).copy()
+    except (AttributeError, iris.exceptions.CoordinateNotFoundError):
+        c = cube.coord(axis=axis).copy()
     dim = cube.coord_dims(c)
-    c.guess_bounds()
-    z_weights = broadcast_to_shape(c.bounds[:, 1] - c.bounds[:, 0], cube.shape, dim)
-    data = np.nancumsum(cube.data * z_weights, axis=dim[0])
+    if axis_weights:
+        if not c.has_bounds():
+            c.guess_bounds()
+        weights = broadcast_to_shape(c.bounds[:, 1] - c.bounds[:, 0], cube.shape, dim)
+        data = cube.data * weights
+        units = cube.units * c.units
+    else:
+        data = cube.data
+        units = cube.units
+    data = np.nancumsum(data, axis=dim[0])
     res = cube.copy(data=data)
-    res.rename(f"vertical_cumulative_sum_of_{cube.name()}")
-    res.units = cube.units * c.units
+    res.rename(f"cumulative_sum_of_{cube.name()}_along_{axis}")
+    res.units = units
     return res

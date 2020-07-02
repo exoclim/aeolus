@@ -19,13 +19,13 @@ from .diag import (
 )
 from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
+    cumsum,
     last_year_mean,
     meridional_mean,
     minmaxdiff,
     region_mean_diff,
     spatial,
     spatial_quartiles,
-    vertical_cumsum,
     vertical_mean,
     zonal_mean,
 )
@@ -58,9 +58,9 @@ __all__ = (
     "last_year_mean",
     "meridional_mean",
     "zonal_mean",
+    "cumsum",
     "spatial",
     "spatial_quartiles",
-    "vertical_cumsum",
     "vertical_mean",
     "water_path",
 )
