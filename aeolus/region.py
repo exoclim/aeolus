@@ -170,14 +170,18 @@ class Region:
     @property
     def constraint(self):
         """Constraint to select data within the region."""
-        cnstr = iris.Constraint(latitude=lambda x: self.bounds.south <= x <= self.bounds.north)
+        cnstr = iris.Constraint(
+            latitude=lambda x: self.bounds.south <= x.point <= self.bounds.north
+        )
         if self.bounds.west < self.bounds.east:
             # Western boundary is to the west
-            cnstr &= iris.Constraint(longitude=lambda x: self.bounds.west <= x <= self.bounds.east)
+            cnstr &= iris.Constraint(
+                longitude=lambda x: self.bounds.west <= x.point <= self.bounds.east
+            )
         else:
             # Region wrapping around dateline (180deg)
             cnstr &= iris.Constraint(
-                longitude=lambda x: (self.bounds.west <= x) or (x <= self.bounds.east)
+                longitude=lambda x: (self.bounds.west <= x.point) or (x.point <= self.bounds.east)
             )
         return cnstr
 
