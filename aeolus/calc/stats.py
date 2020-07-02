@@ -225,7 +225,7 @@ def cumsum(cube, axis, axis_weights=False, model=um):
     Returns
     -------
     iris.cube.Cube
-        Collapsed cube.
+        Cube of cumulative sums with the same dimensions as the input cube.
     """
     try:
         c = cube.coord(getattr(model, axis)).copy()
