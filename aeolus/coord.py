@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Functionality related to coordinates of cubes."""
+from datetime import timedelta
 from warnings import warn
 
 from cartopy.util import add_cyclic_point
@@ -25,6 +26,7 @@ __all__ = (
     "coord_to_cube",
     "ensure_bounds",
     "get_cube_datetimes",
+    "get_cube_rel_days",
     "get_dim_coord",
     "isel",
     "nearest_coord_value",
@@ -348,9 +350,44 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
     return cube_out
 
 
-def get_cube_datetimes(cube):
-    """Get a list of cube time points as python datetimes."""
-    return cube.coord("time").units.num2date(cube.coord("time").points)
+def get_cube_datetimes(cube, model=um):
+    """
+    Convert points of a cube's time coordinate to datetimes.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube containing a time coordinate.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
+
+    Returns
+    -------
+    numpy.array
+        Array of datetime-like objects.
+    """
+    return cube.coord(model.t).units.num2date(cube.coord(model.t).points)
+
+
+def get_cube_rel_days(cube, model=um):
+    """
+    Convert points of a cube's time coordinate to relative number of days.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube containing a time coordinate.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
+
+    Returns
+    -------
+    numpy.array
+        Array of relative days.
+    """
+    dts = get_cube_datetimes(cube, model=model)
+    days = (dts - dts[0]) / timedelta(days=1)
+    return days
 
 
 def nearest_coord_value(cube, coord_name, val):
@@ -369,7 +406,7 @@ def nearest_coord_value(cube, coord_name, val):
     Returns
     -------
     int or float
-        element of the coordinate array closest to the given `val`
+        Element of the coordinate array closest to the given `val`.
     """
     coord = cube.coord(coord_name)
     i = coord.nearest_neighbour_index(val)
@@ -385,12 +422,12 @@ def coord_to_cube(cube, coord):
     cube: iris.cube.Cube
         Cube containing the coordinate to be broadcast.
     coord: str or iris.coords.Coord
-        Coordinate to be broadcast
+        Coordinate to be broadcast.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of broadcast coordinate
+        Cube of broadcast coordinate.
     """
     if isinstance(coord, str):
         _coord = cube.coord(coord)

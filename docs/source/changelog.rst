@@ -18,6 +18,7 @@ Changelog
 * New `coord` functions:
 
   - Add a function to emulate `xarray`'s `isel()` method.
+  - Update `get_cube_datetimes()` and add a new function, `get_cube_rel_days()`
 
 * Other changes:
 

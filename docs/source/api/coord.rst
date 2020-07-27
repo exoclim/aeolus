@@ -8,6 +8,7 @@ Cube coordinate functionality
 .. autofunction:: aeolus.coord.coord_to_cube
 .. autofunction:: aeolus.coord.ensure_bounds
 .. autofunction:: aeolus.coord.get_cube_datetimes
+.. autofunction:: aeolus.coord.get_cube_rel_days
 .. autofunction:: aeolus.coord.get_dim_coord
 .. autofunction:: aeolus.coord.isel
 .. autofunction:: aeolus.coord.nearest_coord_value
