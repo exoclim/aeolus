@@ -386,7 +386,7 @@ def get_cube_rel_days(cube, model=um):
         Array of relative days.
     """
     dts = get_cube_datetimes(cube, model=model)
-    days = (dts - dts[0]) / timedelta(days=1)
+    days = ((dts - dts[0]) / timedelta(days=1)).astype(np.float64)
     return days
 
 
