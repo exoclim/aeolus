@@ -7,6 +7,7 @@ from cartopy.util import add_cyclic_point
 import iris
 from iris.analysis.cartography import wrap_lons
 from iris.coord_categorisation import _months_in_season, add_categorised_coord
+from iris.exceptions import CoordinateNotFoundError as CoNotFound
 from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 
 import numpy as np
@@ -552,7 +553,7 @@ def replace_z_coord(cube, model=um):
         # By default, model levels and sigma coordinates are removed.
         try:
             new_cube.remove_coord(coord)
-        except iris.exceptions.CoordinateNotFoundError:
+        except CoNotFound:
             pass
     return new_cube
 
@@ -675,13 +676,47 @@ def add_planet_calendar(
         add_categorised_coord(cube, f"{planet}_{key}", coord, op)
 
 
-def isel(cube, coord, idx):
-    """Emulate `xarray.DataArray.isel()` for iris cubes."""
-    _coord = cube.coord(coord)
-    val = _coord.points[idx]
-    try:
-        val = _coord.units.num2date(val)
-    except ValueError:
-        pass
-    constr = iris.Constraint(**{_coord.name(): lambda x: x.point == val})
-    return cube.extract(constr)
+def isel(obj, coord, idx, skip_not_found=None):
+    """
+    Emulate `xarray.DataArray.isel()` for iris cubes and cubelists.
+
+    Parameters
+    ----------
+    obj: iris.cube.Cube or iris.cube.CubeList
+        Cube or list of cubes.
+    coord: str or iris.coords.Coord
+        Coordinate for selection.
+    idx: int
+        Index along the given coordinate.
+    skip_not_found: bool or str, optional
+        Skip if coordinate not found. By default it is active when dealing with
+        a cube list and inactive if dealing with a single cube.
+
+    Returns
+    -------
+    iris.cube.Cube or iris.cube.CubeList
+        Slice along the coordinate.
+    """
+    if isinstance(obj, iris.cube.Cube):
+        try:
+            _coord = obj.coord(coord)
+            val = _coord.points[idx]
+            try:
+                val = _coord.units.num2date(val)
+            except ValueError:
+                pass
+            constr = iris.Constraint(**{_coord.name(): lambda x: x.point == val})
+            out = obj.extract(constr)
+        except CoNotFound as e:
+            if skip_not_found:
+                out = obj
+            else:
+                raise e
+    elif isinstance(obj, (list, set, tuple)):
+        out = []
+        for cube in obj:
+            out.append(
+                isel(cube, coord, idx, skip_not_found=((skip_not_found is None) or skip_not_found))
+            )
+        out = obj.__class__(out)
+    return out
