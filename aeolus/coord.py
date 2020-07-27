@@ -715,7 +715,7 @@ def add_planet_calendar(
 
 def isel(obj, coord, idx, skip_not_found=None):
     """
-    Emulate `xarray.DataArray.isel()` for iris cubes and cubelists.
+    Slice cubes by an index of a coordinate (index-selector).
 
     Parameters
     ----------
