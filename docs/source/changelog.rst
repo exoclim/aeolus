@@ -12,7 +12,12 @@ Changelog
 
   - Add convenience functions to `calculus` for doing simple derivatives
   - Add a function to calculate horizontal divergence in spherical coordinates
-  - Add `air_density`, `air_temperature`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
+  - Add `air_density()`, `air_temperature()`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
+  - Add `horiz_wind_cmpnts()` helper function
+
+* New `coord` functions:
+
+  - Add a function to emulate `xarray`'s `isel()` method.
 
 * Other changes:
 

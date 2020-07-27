@@ -7,7 +7,7 @@ import numpy as np
 from .calculus import d_dz, integrate
 from .stats import spatial
 from ..const import init_const
-from ..coord import coord_to_cube, ensure_bounds
+from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
 from ..model import um
 from ..subset import _dim_constr
@@ -22,6 +22,7 @@ __all__ = (
     "geopotential_height",
     "ghe_norm",
     "heat_redist_eff",
+    "horiz_wind_cmpnts",
     "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",
@@ -579,3 +580,27 @@ def dry_lapse_rate(cubelist, model=um):
     """
     temp = cubelist.extract_strict(model.temp)
     return d_dz(temp, model=model)
+
+
+def horiz_wind_cmpnts(cubelist, model=um):
+    """
+    Extract u and v wind components from a cube list and interpolate v on u's grid if necessary.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        List of cubes with horizontal wind components
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    u, v: iris.cube.Cube
+        Cubes of wind components.
+    """
+    # use relaxed extracting
+    u = cubelist.extract(model.u)[0]
+    v = cubelist.extract(model.v)[0]
+    # interpolate v on u's grid if coordinates are different
+    v = regrid_3d(v, u, model=model)
+    return u, v
