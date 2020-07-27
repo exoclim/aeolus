@@ -25,6 +25,7 @@ __all__ = (
     "ensure_bounds",
     "get_cube_datetimes",
     "get_dim_coord",
+    "isel",
     "nearest_coord_value",
     "not_equal_coord_axes",
     "regrid_3d",
@@ -672,3 +673,15 @@ def add_planet_calendar(
         else:
             coord = time_coord
         add_categorised_coord(cube, f"{planet}_{key}", coord, op)
+
+
+def isel(cube, coord, idx):
+    """Emulate `xarray.DataArray.isel()` for iris cubes."""
+    _coord = cube.coord(coord)
+    val = _coord.points[idx]
+    try:
+        val = _coord.units.num2date(val)
+    except ValueError:
+        pass
+    constr = iris.Constraint(**{_coord.name(): lambda x: x.point == val})
+    return cube.extract(constr)
