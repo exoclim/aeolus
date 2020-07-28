@@ -191,9 +191,10 @@ def vertical_mean(cube, model=um, weight_by=None):
         vmean = cube.collapsed(coord, iris.analysis.MEAN)
     else:
         if isinstance(weight_by, (str, iris.coords.Coord)):
-            vmean = cube.collapsed(
-                coord, iris.analysis.MEAN, weights=cube.coord(weight_by).points.squeeze()
+            weights = broadcast_to_shape(
+                cube.coord(weight_by).points.squeeze(), cube.shape, cube.coord_dims(weight_by)
             )
+            vmean = cube.collapsed(coord, iris.analysis.MEAN, weights=weights)
         elif isinstance(weight_by, iris.cube.Cube):
             a_copy = cube.copy()
             b_copy = weight_by.copy()
