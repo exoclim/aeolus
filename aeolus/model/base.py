@@ -46,6 +46,7 @@ class Model:
     # BL
     sfc_shf: str = None
     sfc_lhf: str = None
+    sfc_evap: str = None
     # Extra physics
     temp: str = None
     dens: str = None
