@@ -23,6 +23,7 @@ Changelog
 * Other changes:
 
   - Append names to `model.um`
+  - Refactor surface and TOA energy balance calculation, and do notapply spatial averaging to P-E
   - Override `__repr__` of `model.base.Model`
 
 0.4.5

@@ -39,6 +39,7 @@ um = Model(
     sw_up="upwelling_shortwave_flux_in_air",
     sfc_shf="surface_upward_sensible_heat_flux",
     sfc_lhf="surface_upward_latent_heat_flux",
+    sfc_evap="surface_upward_water_flux",
     temp="air_temperature",
     dens="air_density",
     ghgt="geopotential_height",

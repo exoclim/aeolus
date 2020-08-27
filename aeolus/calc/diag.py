@@ -39,7 +39,7 @@ def _precip_name_mapping(model=um):
         "total": [model.ls_rain, model.ls_snow, model.cv_rain, model.cv_snow],
         "conv": [model.cv_rain, model.cv_snow],
         "stra": [model.ls_rain, model.ls_snow],
-        "rain": [model.ls_rain, model.cv.rain],
+        "rain": [model.ls_rain, model.cv_rain],
         "snow": [model.ls_snow, model.cv_snow],
     }
 
@@ -249,7 +249,7 @@ def toa_cloud_radiative_effect(cubelist, kind):
     return cre
 
 
-def toa_net_energy(cubelist):
+def toa_net_energy(cubelist, model=um):
     """
     Calculate domain-average TOA energy flux.
 
@@ -257,16 +257,18 @@ def toa_net_energy(cubelist):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of TOA energy balance with collapsed spatial dimensions.
+        Cube of total TOA downward energy flux.
     """
     varnames = [
-        "toa_incoming_shortwave_flux",
-        "toa_outgoing_shortwave_flux",
-        "toa_outgoing_longwave_flux",
+        model.toa_isr,
+        model.toa_osr,
+        model.toa_olr,
     ]
     terms = cubelist.extract(varnames)
     if len(terms) != 3:
@@ -275,46 +277,34 @@ def toa_net_energy(cubelist):
         )
     terms_ave = []
     for cube in terms:
-        terms_ave.append(spatial(cube, "mean"))
+        terms_ave.append(cube)
     toa_net = terms_ave[0] - terms_ave[1] - terms_ave[2]
-    toa_net.rename("toa_net_radiative_flux")
+    toa_net.rename("toa_net_downward_energy_flux")
     return toa_net
 
 
-def sfc_net_energy(cubelist):
+def sfc_net_energy(cubelist, model=um):
     """
     Calculate domain-average surface energy flux.
 
     Parameters
     ----------
     cubelist: iris.cube.CubeList
-        Input list of cubes.
+        Input list of cubes with net LW and SW radiation, sensible and latent surface fluxes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of surface energy balance with collapsed spatial dimensions.
+        Cube of total surface downward energy flux.
     """
-    varnames = [
-        "surface_downwelling_shortwave_flux_in_air",
-        "upwelling_shortwave_flux_in_air",
-        "surface_downwelling_longwave_flux_in_air",
-        "upwelling_longwave_flux_in_air",
-        "surface_upward_sensible_heat_flux",
-        "surface_upward_latent_heat_flux",
-    ]
-    terms = cubelist.extract(varnames)
-    if len(terms) != 6:
-        raise MissingCubeError(
-            f"{varnames} required for SFC energy balance are missing from cubelist:\n{cubelist}"
-        )
-    terms_ave = []
-    for cube in terms:
-        terms_ave.append(spatial(cube, "mean"))
-    sfc_net = (
-        terms_ave[0] - terms_ave[1] + terms_ave[2] - terms_ave[3] - terms_ave[4] - terms_ave[5]
-    )
-    sfc_net.rename("surface_net_energy_flux")
+    net_down_lw = cubelist.extract_strict(model.sfc_net_down_lw)
+    net_down_sw = cubelist.extract_strict(model.sfc_net_down_sw)
+    shf = cubelist.extract_strict(model.shf)
+    lhf = cubelist.extract_strict(model.shf)
+    sfc_net = net_down_lw + net_down_sw - shf - lhf
+    sfc_net.rename("surface_net_downward_energy_flux")
     return sfc_net
 
 
@@ -335,12 +325,12 @@ def sfc_water_balance(cubelist, const=None, model=um):
     Returns
     -------
     iris.cube.Cube
-        Cube of P-E with collapsed spatial dimensions.
+        Cube of total surface downward water flux (P-E).
     """
     if const is None:
         const = cubelist[0].attributes["planet_conf"]
     try:
-        evap = cubelist.extract_strict("surface_upward_water_flux")  # FIXME
+        evap = cubelist.extract_strict(model.sfc_evap)
     except ConMisErr:
         try:
             lhf = cubelist.extract_strict(model.sfc_lhf)
@@ -355,7 +345,7 @@ def sfc_water_balance(cubelist, const=None, model=um):
         precip = precip_sum(cubelist, ptype="total", const=const, model=model)
     precip.convert_units("mm h^-1")
     evap.convert_units("mm h^-1")
-    net = spatial(precip - evap, "mean")
+    net = precip - evap
     net.rename("surface_net_downward_water_flux")  # FIXME
     return net
 
