@@ -1,6 +1,8 @@
 """Generic calculus functions."""
 from cf_units import Unit
 
+import dask.array as da
+
 import iris
 from iris.analysis.calculus import _coord_cos, _curl_differentiate, _curl_regrid, differentiate
 
@@ -174,7 +176,7 @@ def integrate(cube, coord):
     c = cube.coord(coord)
     others = [dc.name() for dc in cube.dim_coords if cube.coord_dims(dc) != cube.coord_dims(c)]
     dim = cube.coord_dims(c)[0]
-    data = np.trapz(cube.core_data(), c.points, axis=dim)
+    data = da.map_blocks(np.trapz, cube.core_data(), dtype=cube.dtype, x=c.points, axis=dim)
     res = next(cube.slices(others)).copy(data=data)
     res.units = cube.units * c.units
     res.remove_coord(c)
