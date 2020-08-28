@@ -301,8 +301,8 @@ def sfc_net_energy(cubelist, model=um):
     """
     net_down_lw = cubelist.extract_strict(model.sfc_net_down_lw)
     net_down_sw = cubelist.extract_strict(model.sfc_net_down_sw)
-    shf = cubelist.extract_strict(model.shf)
-    lhf = cubelist.extract_strict(model.shf)
+    shf = cubelist.extract_strict(model.sfc_shf)
+    lhf = cubelist.extract_strict(model.sfc_lhf)
     sfc_net = net_down_lw + net_down_sw - shf - lhf
     sfc_net.rename("surface_net_downward_energy_flux")
     return sfc_net

@@ -168,7 +168,7 @@ def last_year_mean(cube, model=um):
     return last_year.collapsed(model.t, iris.analysis.MEAN)
 
 
-def vertical_mean(cube, model=um, weight_by=None):
+def vertical_mean(cube, weight_by=None, model=um):
     """
     Vertical mean of a cube with optional weighting.
 
@@ -176,10 +176,10 @@ def vertical_mean(cube, model=um, weight_by=None):
     ----------
     cube: iris.cube.Cube
         Cube to average.
-    model: aeolus.model.Model, optional
-        Model class with a relevant coordinate name.
     weight_by: str or iris.coords.Coord or iris.cube.Cube, optional
         Coordinate of the given cube or another cube used for weighting.
+    model: aeolus.model.Model, optional
+        Model class with a relevant coordinate name.
 
     Returns
     -------
