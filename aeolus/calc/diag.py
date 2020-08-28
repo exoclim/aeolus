@@ -1,5 +1,4 @@
 """Some commonly used diagnostics in atmospheric science."""
-import iris
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 import numpy as np
@@ -209,7 +208,7 @@ def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
     return fl
 
 
-def toa_cloud_radiative_effect(cubelist, kind):
+def toa_cloud_radiative_effect(cubelist, kind, model=um):
     r"""
     Calculate domain-average TOA cloud radiative effect (CRE).
 
@@ -226,15 +225,15 @@ def toa_cloud_radiative_effect(cubelist, kind):
     Returns
     -------
     iris.cube.Cube
-        Cube of CRE with collapsed spatial dimensions.
+        Cube of CRE.
     """
     name = f"toa_cloud_radiative_effect_{kind}"
     if kind == "sw":
-        all_sky = "m01s01i208"
-        clr_sky = "m01s01i209"
+        all_sky = model.toa_osr
+        clr_sky = model.toa_osr_cs
     elif kind == "lw":
-        all_sky = "m01s02i205"
-        clr_sky = "m01s02i206"
+        all_sky = model.toa_olr
+        clr_sky = model.toa_olr_cs
     elif kind == "total":
         sw = toa_cloud_radiative_effect(cubelist, "sw")
         lw = toa_cloud_radiative_effect(cubelist, "lw")
@@ -242,8 +241,8 @@ def toa_cloud_radiative_effect(cubelist, kind):
         cre.rename(name)
         return cre
 
-    cube_clr = spatial(cubelist.extract_strict(iris.AttributeConstraint(STASH=clr_sky)), "mean")
-    cube_all = spatial(cubelist.extract_strict(iris.AttributeConstraint(STASH=all_sky)), "mean")
+    cube_clr = cubelist.extract_strict(clr_sky)
+    cube_all = cubelist.extract_strict(all_sky)
     cre = cube_clr - cube_all
     cre.rename(name)
     return cre
@@ -395,7 +394,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     return precip
 
 
-def heat_redist_eff(cubelist, region_a, region_b):
+def heat_redist_eff(cubelist, region_a, region_b, model=um):
     r"""
     Heat redistribution efficiency (Leconte et al. 2013).
 
@@ -410,13 +409,15 @@ def heat_redist_eff(cubelist, region_a, region_b):
         First region (usually nightside).
     region_b: aeolus.region.Region
         Second region (usually dayside).
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
         Cube of eta parameter with collapsed spatial dimensions.
     """
-    toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
+    toa_olr = cubelist.extract_strict(model.toa_olr)
     toa_olr_a = spatial(toa_olr.extract(region_a.constraint), "mean")
     toa_olr_b = spatial(toa_olr.extract(region_b.constraint), "mean")
     eta = toa_olr_a / toa_olr_b
@@ -424,7 +425,7 @@ def heat_redist_eff(cubelist, region_a, region_b):
     return eta
 
 
-def toa_eff_temp(cubelist):
+def toa_eff_temp(cubelist, model=um):
     r"""
     Calculate effective temperature from TOA OLR.
 
@@ -432,23 +433,25 @@ def toa_eff_temp(cubelist):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of :math:`T_{eff}` with collapsed spatial dimensions.
+        Cube of :math:`T_{eff}`.
     """
-    toa_olr = cubelist.extract_strict("toa_outgoing_longwave_flux")
+    toa_olr = cubelist.extract_strict(model.toa_olr)
     sbc = init_const().stefan_boltzmann
     try:
-        t_eff = (spatial(toa_olr, "mean") / sbc) ** 0.25
+        t_eff = (toa_olr / sbc) ** 0.25
     except ValueError:
-        t_eff = (spatial(toa_olr, "mean") / sbc.asc) ** 0.25
+        t_eff = (toa_olr / sbc.asc) ** 0.25
     t_eff.rename("toa_effective_temperature")
     return t_eff
 
 
-def ghe_norm(cubelist):
+def ghe_norm(cubelist, model=um):
     r"""
     Normalised greenhouse effect parameter.
 
@@ -459,18 +462,16 @@ def ghe_norm(cubelist):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
         Cube of greenhouse effect parameter with collapsed spatial dimensions.
     """
-    t_sfc = spatial(cubelist.extract_strict("surface_temperature"), "mean")
-    # t_sfc = spatial(
-    #     cubelist.extract_strict("air_temperature").extract(iris.Constraint(level_height=0)),
-    #     "mean",
-    # )
-    t_eff = toa_eff_temp(cubelist)
+    t_sfc = spatial(cubelist.extract_strict(um.t_sfc), "mean")
+    t_eff = toa_eff_temp(cubelist, model=model)
     one = t_eff.copy(data=np.ones(t_eff.shape))
     one.units = "1"
     gh_norm = one - (t_eff / t_sfc) ** 4
@@ -478,7 +479,7 @@ def ghe_norm(cubelist):
     return gh_norm
 
 
-def bond_albedo(cubelist, const=None):
+def bond_albedo(cubelist, const=None, model=um):
     r"""
     Bold albedo.
 
@@ -492,13 +493,15 @@ def bond_albedo(cubelist, const=None):
     const: aeolus.const.const.ConstContainer, optional
         Must have a `ScalarCube` of `condensible_density` as an attribute.
         If not given, attempt to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
     iris.cube.Cube
-        Cube of bond albedo with collapsed spatial dimensions.
+        Cube of bond albedo.
     """
-    toa_osr = spatial(cubelist.extract_strict("toa_outgoing_shortwave_flux"), "mean")
+    toa_osr = cubelist.extract_strict(model.toa_osr)
     if const is None:
         const = toa_osr.attributes["planet_conf"]
     sc = const.solar_constant
