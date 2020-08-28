@@ -586,7 +586,7 @@ def replace_z_coord(cube, model=um):
     new_cube.coord(model.z).bounds = None
     iris.util.promote_aux_coord_to_dim_coord(new_cube, model.z)
     ensure_bounds(new_cube, coords=[model.z])
-    for coord in [model.s, model.l]:
+    for coord in [model.s, model.lev]:
         # By default, model levels and sigma coordinates are removed.
         try:
             new_cube.remove_coord(coord)

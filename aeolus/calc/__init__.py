@@ -21,7 +21,7 @@ from .diag import (
 from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
     cumsum,
-    last_year_mean,
+    last_n_day_mean,
     meridional_mean,
     minmaxdiff,
     region_mean_diff,
@@ -57,7 +57,7 @@ __all__ = (
     "toa_cloud_radiative_effect",
     "toa_eff_temp",
     "toa_net_energy",
-    "last_year_mean",
+    "last_n_day_mean",
     "meridional_mean",
     "zonal_mean",
     "cumsum",

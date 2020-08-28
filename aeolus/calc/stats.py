@@ -10,7 +10,7 @@ from .calculus import integrate
 from ..coord import area_weights_cube, ensure_bounds
 from ..exceptions import AeolusWarning
 from ..model import um
-from ..subset import extract_last_year
+from ..subset import extract_last_n_days
 
 
 __all__ = (
@@ -21,7 +21,7 @@ __all__ = (
     "minmaxdiff",
     "region_mean_diff",
     "zonal_mean",
-    "last_year_mean",
+    "last_n_day_mean",
     "vertical_mean",
 )
 
@@ -162,10 +162,12 @@ def zonal_mean(cube, model=um):
     return cube_mean
 
 
-def last_year_mean(cube, model=um):
-    """Get the time mean of over the last year."""
-    last_year = extract_last_year(cube)
-    return last_year.collapsed(model.t, iris.analysis.MEAN)
+def last_n_day_mean(cube, days=365, model=um):
+    """Average the cube over the last `n` days of its time dimension."""
+    cube_sub = extract_last_n_days(cube, days=days, model=model).collapsed(
+        model.t, iris.analysis.MEAN
+    )
+    return cube_sub
 
 
 def vertical_mean(cube, weight_by=None, model=um):

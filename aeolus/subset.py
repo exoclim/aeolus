@@ -12,7 +12,7 @@ __all__ = (
     "CM_MEAN_CONSTR",
     "DimConstr",
     "extract_last_month",
-    "extract_last_year",
+    "extract_last_n_days",
     "l_range_constr",
 )
 
@@ -65,11 +65,12 @@ def extract_last_month(cube, model=um):
     )
 
 
-def extract_last_year(cube, model=um):
-    """Extract time slices within the last year of a cube."""
+def extract_last_n_days(cube, days=365, model=um):
+    """Extract time slices within the last `n` days of its time dimension."""
     dt = get_cube_datetimes(cube)[-1]
-    yr_before = dt - timedelta(days=365)
-    return cube.extract(iris.Constraint(**{model.t: lambda t: t.point > yr_before}))
+    ndays_before = dt - timedelta(days=days)
+    cube_sub = cube.extract(iris.Constraint(**{model.t: lambda t: t.point > ndays_before}))
+    return cube_sub
 
 
 CM_INST_CONSTR = iris.Constraint(cube_func=_select_inst)
@@ -88,10 +89,10 @@ class DimConstr:
         model: aeolus.model.Model, optional
             Model class with relevant coordinate names.
         """
-        self.tmyx = _dim_constr(model.t, model.l, model.y, model.x)
+        self.tmyx = _dim_constr(model.t, model.lev, model.y, model.x)
         self.tzyx = _dim_constr(model.t, model.z, model.y, model.x)
         self.tyx = _dim_constr(model.t, model.y, model.x)
-        self.myx = _dim_constr(model.l, model.y, model.x)
+        self.myx = _dim_constr(model.lev, model.y, model.x)
         self.zyx = _dim_constr(model.z, model.y, model.x)
         self.yx = _dim_constr(model.y, model.x)
         self.yx_r = _dim_constr(model.y, model.x, strict=False)

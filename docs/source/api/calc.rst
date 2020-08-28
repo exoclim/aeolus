@@ -19,7 +19,7 @@ Statistics
 .. autofunction:: aeolus.calc.region_mean_diff
 .. autofunction:: aeolus.calc.meridional_mean
 .. autofunction:: aeolus.calc.zonal_mean
-.. autofunction:: aeolus.calc.last_year_mean
+.. autofunction:: aeolus.calc.last_n_day_mean
 .. autofunction:: aeolus.calc.vertical_mean
 
 Diagnostics
