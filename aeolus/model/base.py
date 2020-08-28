@@ -14,7 +14,7 @@ class Model:
     fcst_ref: str = None  # forecast reference
     fcst_prd: str = None  # forecast period
     z: str = None  # height
-    l: str = None  # level number
+    lev: str = None  # level number
     s: str = None  # sigma
     y: str = None  # latitude
     x: str = None  # longitude
