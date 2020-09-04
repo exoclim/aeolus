@@ -538,15 +538,15 @@ def water_path(cubelist, kind="water_vapour", model=um):
         Cube of water path with collapsed vertical dimension.
     """
     if kind == "water_vapour":
-        q = cubelist.extract_strict("specific_humidity")
+        q = cubelist.extract_strict(model.sh)
     elif kind == "liquid_water":
-        q = cubelist.extract_strict("mass_fraction_of_cloud_liquid_water_in_air")
+        q = cubelist.extract_strict(model.cld_liq_mf)
     elif kind == "ice_water":
-        q = cubelist.extract_strict("mass_fraction_of_cloud_ice_in_air")
+        q = cubelist.extract_strict(model.cld_ice_mf)
     elif kind == "cloud_water":
-        q = cubelist.extract_strict("mass_fraction_of_cloud_liquid_water_in_air")
-        q += cubelist.extract_strict("mass_fraction_of_cloud_ice_in_air")
-    rho = cubelist.extract_strict("air_density")
+        q = cubelist.extract_strict(model.cld_liq_mf).copy()
+        q += cubelist.extract_strict(model.cld_ice_mf)
+    rho = cubelist.extract_strict(model.dens)
     wp = integrate(q * rho, model.z)
     wp.rename(f"{kind}_path")
     return wp
