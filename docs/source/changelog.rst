@@ -14,11 +14,14 @@ Changelog
   - Add a function to calculate horizontal divergence in spherical coordinates
   - Add `air_density()`, `air_temperature()`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
   - Add `horiz_wind_cmpnts()` helper function
+  - Add `normalize_cube()`
 
 * New `coord` functions:
 
   - Add a function to emulate `xarray`'s `isel()` method.
   - Update `get_cube_datetimes()` and add a new function, `get_cube_rel_days()`
+  - Add a function to broadcast coordinate deltas to a cube.
+  - Add a function to calculate volume from a cube's grid.
 
 * Other changes:
 

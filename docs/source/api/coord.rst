@@ -6,6 +6,7 @@ Cube coordinate functionality
 .. autofunction:: aeolus.coord.area_weights_cube
 .. autofunction:: aeolus.coord.coarsen_cube
 .. autofunction:: aeolus.coord.coord_to_cube
+.. autofunction:: aeolus.coord.coord_delta_to_cube
 .. autofunction:: aeolus.coord.ensure_bounds
 .. autofunction:: aeolus.coord.get_cube_datetimes
 .. autofunction:: aeolus.coord.get_cube_rel_days
@@ -18,3 +19,4 @@ Cube coordinate functionality
 .. autofunction:: aeolus.coord.roll_cube_0_360
 .. autofunction:: aeolus.coord.roll_cube_pm180
 .. autofunction:: aeolus.coord.vertical_cross_section_area 
+.. autofunction:: aeolus.coord.volume_weights_cube 

@@ -23,6 +23,7 @@ __all__ = (
     "add_cyclic_point_to_cube",
     "area_weights_cube",
     "coarsen_cube",
+    "coord_delta_to_cube",
     "coord_to_cube",
     "ensure_bounds",
     "get_cube_datetimes",
@@ -36,6 +37,7 @@ __all__ = (
     "roll_cube_0_360",
     "roll_cube_pm180",
     "vertical_cross_section_area",
+    "volume_weights_cube",
 )
 
 
@@ -413,6 +415,59 @@ def nearest_coord_value(cube, coord_name, val):
     return coord.points[i]
 
 
+def coord_delta_to_cube(cube, coord, normalize=False):
+    """
+    Convert 1D coordinate spacings to a cube of the same dimension as the given cube.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube containing the coordinate to be broadcast.
+    coord: str or iris.coords.Coord
+        Coordinate to be broadcast.
+    normalize: bool, optional
+        Normalize the data.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of broadcast coordinate deltas.
+    """
+    # Extract the coordinate and its dimension number
+    if isinstance(coord, str):
+        _coord = cube.coord(coord).copy()
+    else:
+        _coord = coord.copy()
+    dim_map = cube.coord_dims(_coord.name())
+    # Ensure the coordinate has bounds
+    if not _coord.has_bounds():
+        _coord.guess_bounds()
+
+    _data = _coord.bounds[:, 1] - _coord.bounds[:, 0]
+    if normalize:
+        _data_max = np.nanmax(np.abs(_data))
+        _data /= _data_max
+        units = "1"
+        prefix = "normalized_"
+    else:
+        units = _coord.units
+        prefix = ""
+    if len(dim_map) > 0:
+        _data = broadcast_to_shape(_data, cube.shape, dim_map)
+        dc = [(c.copy(), cube.coord_dims(c)) for c in cube.dim_coords]
+        ac = [(c.copy(), cube.coord_dims(c)) for c in cube.aux_coords]
+        new_cube = iris.cube.Cube(
+            data=_data,
+            units=units,
+            dim_coords_and_dims=dc,
+            aux_coords_and_dims=ac,
+        )
+    else:
+        new_cube = iris.cube.Cube(data=_data, units=units)
+    new_cube.rename(f"{prefix}delta_{_coord.name()}")
+    return new_cube
+
+
 def coord_to_cube(cube, coord):
     """
     Convert coordinate points to a cube of the same dimension as the given cube.
@@ -757,3 +812,38 @@ def isel(obj, coord, idx, skip_not_found=None):
             )
         out = obj.__class__(out)
     return out
+
+
+def volume_weights_cube(cube, r_planet=None, normalize=False, model=um):
+    """
+    Create a cube of volume weights from a grid of a given cube.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with longitude, latitude and height coordinates
+    r_planet: float, optional
+        Radius of the planet (m). If not given, an attempt is made
+        to get it from the cube metadata.
+    normalize: bool, optional
+        Normalize the data.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of area weights with the same metadata as the input cube
+    """
+    area_cube = area_weights_cube(
+        cube, r_planet=r_planet, normalize=normalize, model=model
+    )
+    height_deltas = coord_delta_to_cube(cube, model.z, normalize=normalize)
+    volume = area_cube * height_deltas
+    if normalize:
+        volume.rename("normalized_volume_weights")
+        volume.convert_units("1")
+    else:
+        volume.rename("volume_weights")
+        volume.convert_units("m**3")
+    return volume

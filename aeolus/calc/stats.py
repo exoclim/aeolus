@@ -19,6 +19,7 @@ __all__ = (
     "spatial_quartiles",
     "meridional_mean",
     "minmaxdiff",
+    "normalize_cube",
     "region_mean_diff",
     "zonal_mean",
     "last_n_day_mean",
@@ -139,6 +140,25 @@ def meridional_mean(cube, model=um):
     coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
     cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
     return cube_mean
+
+
+def normalize_cube(cube):
+    """
+    Normalize cube data, i.e. make the values range from 0 to 1.
+
+    .. math::
+        z_i = (x_i - min(x)) / (max(x) - min(x))
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        The input cube.
+    """
+    cube_min = cube.collapsed(cube.dim_coords, iris.analysis.MIN)
+    cube_max = cube.collapsed(cube.dim_coords, iris.analysis.MAX)
+    norm = (cube - cube_min) / (cube_max - cube_min)
+    norm.rename(f"normalized_{cube.name()}")
+    return norm
 
 
 def zonal_mean(cube, model=um):
