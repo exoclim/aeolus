@@ -31,7 +31,7 @@
     },
     {
         "name": "avogadro",
-        "units": "1",
+        "units": "mol-1",
         "value": 6.02214076e23
     }
 ]
