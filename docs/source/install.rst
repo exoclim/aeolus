@@ -46,6 +46,10 @@ Then install aeolus ::
 
   conda install -c dennissergeev aeolus
 
+To get the latest "nightly" build ::
+
+  conda install -c dennissergeev/label/nightly aeolus
+
 Alternative method: PyPI
 ========================
 Install aeolus from the Python Package Index ::
