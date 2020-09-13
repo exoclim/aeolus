@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Core hierarchy &mdash; aeolus 0.4.4 documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
 
   
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,16 +33,12 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Physical constants" href="const.html" />
@@ -55,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> aeolus
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
           
 
           
@@ -65,7 +66,7 @@
             
             
               <div class="version">
-                0.4.4
+                0.4.4+43.gea8fba0
               </div>
             
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -98,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
@@ -110,6 +113,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -148,7 +152,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">API reference</a> &raquo;</li>
         
@@ -200,7 +204,7 @@
 <p>The core API is built on top of <cite>iris</cite> package.</p>
 <dl class="py class">
 <dt id="aeolus.core.Run">
-<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">Run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">planet</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">const_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">model_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">children</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">processed</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">Run</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A single model ‘run’, i.e. simulation.</p>
 <dl class="py attribute">
@@ -236,9 +240,20 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="aeolus.core.Run.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#aeolus.core.Run.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model class with relevant coordinate names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>aeolus.model.Model, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="aeolus.core.Run.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">planet</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">const_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">model_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">children</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">processed</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate a <cite>Run</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -250,6 +265,7 @@ aeolus; it is solely for the user’s information.</p></li>
 <li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
 If not given, Earth physical constants are initialised.</p></li>
 <li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.8)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 <li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
 <li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
 <li><p><strong>parent</strong> (<a class="reference internal" href="#aeolus.core.Run" title="aeolus.core.Run"><em>aeolus.core.Run</em></a><em>, </em><em>optional</em>) – Pointer to this run’s driving model if this is a LAM-type simulation.</p></li>
@@ -334,11 +350,19 @@ and appends new cubes to it (and does not return anything).</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -349,7 +373,6 @@ and appends new cubes to it (and does not return anything).</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

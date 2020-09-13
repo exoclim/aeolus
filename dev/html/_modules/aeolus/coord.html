@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.coord &mdash; aeolus 0.4.4 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,16 +33,12 @@
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -53,7 +54,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> aeolus
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                0.4.4
+                0.4.4+43.gea8fba0
               </div>
             
           
@@ -80,6 +81,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -98,6 +100,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -136,7 +139,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
@@ -158,6 +161,7 @@
   <h1>Source code for aeolus.coord</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Functionality related to coordinates of cubes.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">from</span> <span class="nn">cartopy.util</span> <span class="kn">import</span> <span class="n">add_cyclic_point</span>
@@ -165,29 +169,28 @@
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.analysis.cartography</span> <span class="kn">import</span> <span class="n">wrap_lons</span>
 <span class="kn">from</span> <span class="nn">iris.coord_categorisation</span> <span class="kn">import</span> <span class="n">_months_in_season</span><span class="p">,</span> <span class="n">add_categorised_coord</span>
+<span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateNotFoundError</span> <span class="k">as</span> <span class="n">CoNotFound</span>
 <span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">broadcast_to_shape</span><span class="p">,</span> <span class="n">guess_coord_axis</span><span class="p">,</span> <span class="n">is_regular</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">NotFoundError</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;UM_TIME&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UM_HGT&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UM_LEV&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UM_LATLON&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UM_Z_COORDS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UM_TIME_COORDS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;add_binned_lon_lat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;add_binned_coord&quot;</span><span class="p">,</span>
     <span class="s2">&quot;add_cyclic_point_to_cube&quot;</span><span class="p">,</span>
     <span class="s2">&quot;area_weights_cube&quot;</span><span class="p">,</span>
     <span class="s2">&quot;coarsen_cube&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;coord_delta_to_cube&quot;</span><span class="p">,</span>
     <span class="s2">&quot;coord_to_cube&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ensure_bounds&quot;</span><span class="p">,</span>
     <span class="s2">&quot;get_cube_datetimes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_cube_rel_days&quot;</span><span class="p">,</span>
     <span class="s2">&quot;get_dim_coord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;isel&quot;</span><span class="p">,</span>
     <span class="s2">&quot;nearest_coord_value&quot;</span><span class="p">,</span>
     <span class="s2">&quot;not_equal_coord_axes&quot;</span><span class="p">,</span>
     <span class="s2">&quot;regrid_3d&quot;</span><span class="p">,</span>
@@ -195,15 +198,8 @@
     <span class="s2">&quot;roll_cube_0_360&quot;</span><span class="p">,</span>
     <span class="s2">&quot;roll_cube_pm180&quot;</span><span class="p">,</span>
     <span class="s2">&quot;vertical_cross_section_area&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;volume_weights_cube&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="n">UM_TIME</span> <span class="o">=</span> <span class="s2">&quot;time&quot;</span>
-<span class="n">UM_HGT</span> <span class="o">=</span> <span class="s2">&quot;level_height&quot;</span>
-<span class="n">UM_LATLON</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]</span>
-<span class="n">UM_SIGMA</span> <span class="o">=</span> <span class="s2">&quot;sigma&quot;</span>
-<span class="n">UM_LEV</span> <span class="o">=</span> <span class="s2">&quot;model_level_number&quot;</span>
-<span class="n">UM_Z_COORDS</span> <span class="o">=</span> <span class="p">[</span><span class="n">UM_SIGMA</span><span class="p">,</span> <span class="n">UM_LEV</span><span class="p">]</span>
-<span class="n">UM_TIME_COORDS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;forecast_reference_time&quot;</span><span class="p">,</span> <span class="s2">&quot;forecast_period&quot;</span><span class="p">,</span> <span class="n">UM_TIME</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_is_longitude_global</span><span class="p">(</span><span class="n">lon_points</span><span class="p">):</span>
@@ -214,7 +210,7 @@
     <span class="k">return</span> <span class="n">case_0_360</span> <span class="ow">or</span> <span class="n">case_pm180</span>
 
 
-<div class="viewcode-block" id="roll_cube_pm180"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.roll_cube_pm180">[docs]</a><span class="k">def</span> <span class="nf">roll_cube_pm180</span><span class="p">(</span><span class="n">cube_in</span><span class="p">,</span> <span class="n">coord_name</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="roll_cube_pm180"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.roll_cube_pm180">[docs]</a><span class="k">def</span> <span class="nf">roll_cube_pm180</span><span class="p">(</span><span class="n">cube_in</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take a cube spanning 0...360 degrees in longitude and roll it to -180...180 degrees.</span>
 
@@ -224,10 +220,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    cube: iris.cube.Cube</span>
 <span class="sd">        Cube with longitude and latitude coordinates.</span>
-<span class="sd">    coord_name: str, optional</span>
-<span class="sd">        Name of the longitude coordinate.</span>
-<span class="sd">    inplace: bool, optional</span>
-<span class="sd">        Do this in-place or copy the cube.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with a relevant longitude coordinate name.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -237,10 +231,8 @@
 <span class="sd">    --------</span>
 <span class="sd">    aeolus.coord.roll_cube_0_360</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">coord_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># get the name of the longitude coordinate</span>
     <span class="n">xcoord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
         <span class="k">assert</span> <span class="n">is_regular</span><span class="p">(</span><span class="n">xcoord</span><span class="p">),</span> <span class="s2">&quot;Operation is only valid for a regularly spaced coordinate.&quot;</span>
@@ -261,11 +253,10 @@
         <span class="c1"># unless there is something wrong with longitude</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Incorrect </span><span class="si">{</span><span class="n">coord_name</span><span class="si">}</span><span class="s2"> values: from </span><span class="si">{</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">assert</span> <span class="p">((</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">180.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="mf">180.0</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">msg</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cube</span></div>
+    <span class="k">return</span> <span class="n">cube</span></div>
 
 
-<div class="viewcode-block" id="roll_cube_0_360"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.roll_cube_0_360">[docs]</a><span class="k">def</span> <span class="nf">roll_cube_0_360</span><span class="p">(</span><span class="n">cube_in</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="roll_cube_0_360"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.roll_cube_0_360">[docs]</a><span class="k">def</span> <span class="nf">roll_cube_0_360</span><span class="p">(</span><span class="n">cube_in</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take a cube spanning -180...180 degrees in longitude and roll it to 0...360 degrees.</span>
 
@@ -275,10 +266,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    cube: iris.cube.Cube</span>
 <span class="sd">        Cube with longitude and latitude coordinates.</span>
-<span class="sd">    coord_name: str, optional</span>
-<span class="sd">        Name of the longitude coordinate.</span>
-<span class="sd">    inplace: bool, optional</span>
-<span class="sd">        Do this in-place or copy the cube.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with a relevant longitude coordinate name.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -288,11 +277,9 @@
 <span class="sd">    --------</span>
 <span class="sd">    aeolus.coord.roll_cube_pm180</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">lon</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span>
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">cube_in</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">coord_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># get the name of the longitude coordinate</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">lon</span><span class="o">.</span><span class="n">points</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
         <span class="n">add</span> <span class="o">=</span> <span class="mi">180</span>
         <span class="n">cube</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lon</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
@@ -301,11 +288,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">cube</span><span class="o">.</span><span class="n">replace_coord</span><span class="p">(</span><span class="n">lon</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">lon</span><span class="o">.</span><span class="n">points</span> <span class="o">+</span> <span class="n">add</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">))</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cube</span></div>
+    <span class="k">return</span> <span class="n">cube</span></div>
 
 
-<div class="viewcode-block" id="area_weights_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.area_weights_cube">[docs]</a><span class="k">def</span> <span class="nf">area_weights_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="area_weights_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.area_weights_cube">[docs]</a><span class="k">def</span> <span class="nf">area_weights_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a cube of area weights for an arbitrary planet.</span>
 
@@ -314,9 +300,12 @@
 <span class="sd">    cube: iris.cube.Cube</span>
 <span class="sd">        Cube with longitude and latitude coordinates</span>
 <span class="sd">    r_planet: float, optional</span>
-<span class="sd">        Radius of the planet.</span>
+<span class="sd">        Radius of the planet (m). If not given, an attempt is made</span>
+<span class="sd">        to get it from the cube metadata.</span>
 <span class="sd">    normalize: bool, optional</span>
 <span class="sd">        Normalize areas.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -324,7 +313,7 @@
 <span class="sd">        Cube of area weights with the same metadata as the input cube</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+    <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="n">aw</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">cartography</span><span class="o">.</span><span class="n">area_weights</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
         <span class="n">aw</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">aw</span><span class="p">)</span>
@@ -447,40 +436,32 @@
     <span class="k">return</span> <span class="n">centres</span>
 
 
-<div class="viewcode-block" id="add_binned_lon_lat"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.add_binned_lon_lat">[docs]</a><span class="k">def</span> <span class="nf">add_binned_lon_lat</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">,</span> <span class="n">lat_bins</span><span class="p">,</span> <span class="n">coord_names</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="add_binned_coord"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.add_binned_coord">[docs]</a><span class="k">def</span> <span class="nf">add_binned_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord_name</span><span class="p">,</span> <span class="n">bins</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add binned longitude and latitude as auxiliary coordinates to a cube.</span>
+<span class="sd">    Bin coordinate points and add them as an auxiliary coordinate to a cube.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cube: iris.cube.Cube</span>
-<span class="sd">        Cube with longitude and latitude coordinates.</span>
-<span class="sd">    lon_bins: array-like</span>
-<span class="sd">        Longitude bins.</span>
-<span class="sd">    lat_bins: array-like</span>
-<span class="sd">        Latitude bins.</span>
-<span class="sd">    coord_names: list, optional</span>
-<span class="sd">        List of latitude and longitude labels.</span>
-<span class="sd">    inplace: bool, optional</span>
-<span class="sd">        Do this in-place or copy the cube.</span>
+<span class="sd">        Cube with the given coordinate.</span>
+<span class="sd">    coord_name: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate name.</span>
+<span class="sd">    bins: array-like</span>
+<span class="sd">        Coordinate bins.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">target_points</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coord_names</span><span class="p">,</span> <span class="p">(</span><span class="n">lat_bins</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">)):</span>
-        <span class="n">binned_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">cube_out</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">target_points</span><span class="p">)</span>
-        <span class="n">binned_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">binned_points</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">new_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span><span class="n">binned_points</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_binned&quot;</span><span class="p">)</span>
-        <span class="n">cube_out</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">new_coord</span><span class="p">,</span> <span class="n">cube_out</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">binned_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">cube_out</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+    <span class="n">binned_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">binned_points</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">new_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span><span class="n">binned_points</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coord_name</span><span class="si">}</span><span class="s2">_binned&quot;</span><span class="p">)</span>
+    <span class="n">cube_out</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">new_coord</span><span class="p">,</span> <span class="n">cube_out</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">coord_name</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">cube_out</span></div>
 
 
-<div class="viewcode-block" id="coarsen_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coarsen_cube">[docs]</a><span class="k">def</span> <span class="nf">coarsen_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">,</span> <span class="n">lat_bins</span><span class="p">,</span> <span class="n">coord_names</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="coarsen_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coarsen_cube">[docs]</a><span class="k">def</span> <span class="nf">coarsen_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">,</span> <span class="n">lat_bins</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Block-average cube in longitude and latitude.</span>
 
@@ -494,20 +475,17 @@
 <span class="sd">        Longitude bins.</span>
 <span class="sd">    lat_bins: array-like</span>
 <span class="sd">        Latitude bins.</span>
-<span class="sd">    coord_names: list, optional</span>
-<span class="sd">        List of latitude and longitude labels.</span>
-<span class="sd">    inplace: bool, optional</span>
-<span class="sd">        Do this in-place or copy the cube.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
-        <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">add_binned_lon_lat</span><span class="p">(</span><span class="n">cube_out</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">,</span> <span class="n">lat_bins</span><span class="p">,</span> <span class="n">coord_names</span><span class="o">=</span><span class="n">coord_names</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cube_out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">coord_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
+    <span class="n">cube_out</span> <span class="o">=</span> <span class="n">add_binned_coord</span><span class="p">(</span><span class="n">cube_out</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">)</span>
+    <span class="n">cube_out</span> <span class="o">=</span> <span class="n">add_binned_coord</span><span class="p">(</span><span class="n">cube_out</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">lat_bins</span><span class="p">)</span>
 
     <span class="c1"># To avoid oversampling on the edges, extract subset within the boundaries of target coords</span>
     <span class="k">for</span> <span class="n">coord</span><span class="p">,</span> <span class="n">target_points</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coord_names</span><span class="p">,</span> <span class="p">(</span><span class="n">lat_bins</span><span class="p">,</span> <span class="n">lon_bins</span><span class="p">)):</span>
@@ -535,9 +513,44 @@
     <span class="k">return</span> <span class="n">cube_out</span></div>
 
 
-<div class="viewcode-block" id="get_cube_datetimes"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.get_cube_datetimes">[docs]</a><span class="k">def</span> <span class="nf">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get a list of `iris.cube.Cube`&#39;s time points as `datetime.datetime`s.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span></div>
+<div class="viewcode-block" id="get_cube_datetimes"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.get_cube_datetimes">[docs]</a><span class="k">def</span> <span class="nf">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert points of a cube&#39;s time coordinate to datetimes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube containing a time coordinate.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.array</span>
+<span class="sd">        Array of datetime-like objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_cube_rel_days"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.get_cube_rel_days">[docs]</a><span class="k">def</span> <span class="nf">get_cube_rel_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert points of a cube&#39;s time coordinate to relative number of days.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube containing a time coordinate.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.array</span>
+<span class="sd">        Array of relative days.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dts</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="p">((</span><span class="n">dts</span> <span class="o">-</span> <span class="n">dts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">days</span></div>
 
 
 <div class="viewcode-block" id="nearest_coord_value"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.nearest_coord_value">[docs]</a><span class="k">def</span> <span class="nf">nearest_coord_value</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord_name</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
@@ -556,11 +569,64 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    int or float</span>
-<span class="sd">        element of the coordinate array closest to the given `val`</span>
+<span class="sd">        Element of the coordinate array closest to the given `val`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">nearest_neighbour_index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">coord</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="coord_delta_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coord_delta_to_cube">[docs]</a><span class="k">def</span> <span class="nf">coord_delta_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert 1D coordinate spacings to a cube of the same dimension as the given cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube containing the coordinate to be broadcast.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate to be broadcast.</span>
+<span class="sd">    normalize: bool, optional</span>
+<span class="sd">        Normalize the data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube of broadcast coordinate deltas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract the coordinate and its dimension number</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_coord</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dim_map</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    <span class="c1"># Ensure the coordinate has bounds</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_coord</span><span class="o">.</span><span class="n">has_bounds</span><span class="p">():</span>
+        <span class="n">_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+
+    <span class="n">_data</span> <span class="o">=</span> <span class="n">_coord</span><span class="o">.</span><span class="n">bounds</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">_coord</span><span class="o">.</span><span class="n">bounds</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">_data_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_data</span><span class="p">))</span>
+        <span class="n">_data</span> <span class="o">/=</span> <span class="n">_data_max</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;normalized_&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">_coord</span><span class="o">.</span><span class="n">units</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dim_map</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">_data</span> <span class="o">=</span> <span class="n">broadcast_to_shape</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim_map</span><span class="p">)</span>
+        <span class="n">dc</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span><span class="p">]</span>
+        <span class="n">ac</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">aux_coords</span><span class="p">]</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+            <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="n">dc</span><span class="p">,</span>
+            <span class="n">aux_coords_and_dims</span><span class="o">=</span><span class="n">ac</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">)</span>
+    <span class="n">new_cube</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">delta_</span><span class="si">{</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_cube</span></div>
 
 
 <div class="viewcode-block" id="coord_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coord_to_cube">[docs]</a><span class="k">def</span> <span class="nf">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
@@ -572,12 +638,12 @@
 <span class="sd">    cube: iris.cube.Cube</span>
 <span class="sd">        Cube containing the coordinate to be broadcast.</span>
 <span class="sd">    coord: str or iris.coords.Coord</span>
-<span class="sd">        Coordinate to be broadcast</span>
+<span class="sd">        Coordinate to be broadcast.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
-<span class="sd">        Cube of broadcast coordinate</span>
+<span class="sd">        Cube of broadcast coordinate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
@@ -601,10 +667,14 @@
     <span class="k">return</span> <span class="n">new_cube</span></div>
 
 
-<div class="viewcode-block" id="ensure_bounds"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.ensure_bounds">[docs]</a><span class="k">def</span> <span class="nf">ensure_bounds</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">):</span>
+<div class="viewcode-block" id="ensure_bounds"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.ensure_bounds">[docs]</a><span class="k">def</span> <span class="nf">ensure_bounds</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Auto-generate bounds for cube coordinates.&quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">coord_name</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">c_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">c_name</span> <span class="o">=</span> <span class="n">coord</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">c_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">has_bounds</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">c</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span></div>
@@ -621,7 +691,7 @@
     <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">dims</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="regrid_3d"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.regrid_3d">[docs]</a><span class="k">def</span> <span class="nf">regrid_3d</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">vert_coord</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="regrid_3d"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.regrid_3d">[docs]</a><span class="k">def</span> <span class="nf">regrid_3d</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Regrid a cube in the horizontal and in the vertical on to coordinates of the target cube.</span>
 
@@ -633,9 +703,8 @@
 <span class="sd">        The cube to be regridded.</span>
 <span class="sd">    target: iris.cube.Cube</span>
 <span class="sd">        The cube to regrid to.</span>
-<span class="sd">    vert_coord: str or iris.coords.Coord, optional</span>
-<span class="sd">        The coordinate for the vertical interpolation.</span>
-<span class="sd">        If not given, the target&#39;s z-axis `iris.coord.DimCoord` is used.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -647,8 +716,9 @@
 
     <span class="c1"># Interpolate in the vertical if needed</span>
     <span class="k">if</span> <span class="s2">&quot;Z&quot;</span> <span class="ow">in</span> <span class="n">neq_axes</span><span class="p">:</span>
+        <span class="n">vert_coord</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span>
         <span class="k">if</span> <span class="n">vert_coord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="n">get_dim_coord</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">get_dim_coord</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">z</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">vert_coord</span><span class="p">)</span>
         <span class="n">cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">interpolate</span><span class="p">([(</span><span class="n">z</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">points</span><span class="p">)],</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">())</span>
@@ -712,7 +782,7 @@
     <span class="k">raise</span> <span class="n">NotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cube has no coordinate for axis </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="replace_z_coord"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.replace_z_coord">[docs]</a><span class="k">def</span> <span class="nf">replace_z_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">promote_coord</span><span class="o">=</span><span class="n">UM_HGT</span><span class="p">,</span> <span class="n">remove_coord</span><span class="o">=</span><span class="n">UM_Z_COORDS</span><span class="p">):</span>
+<div class="viewcode-block" id="replace_z_coord"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.replace_z_coord">[docs]</a><span class="k">def</span> <span class="nf">replace_z_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Replace dimensional vertical coordinate.</span>
 
@@ -720,11 +790,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    cube: iris.cube.Cube</span>
 <span class="sd">        Input cube.</span>
-<span class="sd">    promote_coord: str or iris.coords.Coord</span>
-<span class="sd">        Coordinate to become a dimensional z-coordinate.</span>
-<span class="sd">    remove_coord: list-like</span>
-<span class="sd">        List of coordinates to remove.</span>
-<span class="sd">        By default, model levels and sigma coordinates are removed.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -732,18 +799,19 @@
 <span class="sd">        Copy of the input cube with a new vertical coordinate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">new_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">promote_coord</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">promote_coord</span><span class="p">)</span>
-    <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">promote_coord</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">remove_coord</span><span class="p">:</span>
+    <span class="n">new_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">lev</span><span class="p">]:</span>
+        <span class="c1"># By default, model levels and sigma coordinates are removed.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_cube</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">iris</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">CoordinateNotFoundError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">CoNotFound</span><span class="p">:</span>
             <span class="k">pass</span>
     <span class="k">return</span> <span class="n">new_cube</span></div>
 
 
-<div class="viewcode-block" id="add_cyclic_point_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.add_cyclic_point_to_cube">[docs]</a><span class="k">def</span> <span class="nf">add_cyclic_point_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">UM_LATLON</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<div class="viewcode-block" id="add_cyclic_point_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.add_cyclic_point_to_cube">[docs]</a><span class="k">def</span> <span class="nf">add_cyclic_point_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a cyclic point to a cube and a corresponding coordinate.</span>
 
@@ -756,7 +824,7 @@
 <span class="sd">    coord: iris.coords.Coord or str</span>
 <span class="sd">        A 1-dimensional coordinate which specifies the coordinate values for</span>
 <span class="sd">        the dimension the cyclic point is to be added to. The coordinate</span>
-<span class="sd">        values must be regularly spaced. Defaults to &quot;longitude&quot;.</span>
+<span class="sd">        values must be regularly spaced. Defaults to the &quot;x&quot;-coordinate.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -859,6 +927,87 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">coord</span> <span class="o">=</span> <span class="n">time_coord</span>
         <span class="n">add_categorised_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">planet</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="isel"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.isel">[docs]</a><span class="k">def</span> <span class="nf">isel</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">skip_not_found</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slice cubes by an index of a coordinate (index-selector).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj: iris.cube.Cube or iris.cube.CubeList</span>
+<span class="sd">        Cube or list of cubes.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate for selection.</span>
+<span class="sd">    idx: int</span>
+<span class="sd">        Index along the given coordinate.</span>
+<span class="sd">    skip_not_found: bool or str, optional</span>
+<span class="sd">        Skip if coordinate not found. By default it is active when dealing with</span>
+<span class="sd">        a cube list and inactive if dealing with a single cube.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube or iris.cube.CubeList</span>
+<span class="sd">        Slice along the coordinate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_coord</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">_coord</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">_coord</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">constr</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">():</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">point</span> <span class="o">==</span> <span class="n">val</span><span class="p">})</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">constr</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">CoNotFound</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">skip_not_found</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">obj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">isel</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">skip_not_found</span><span class="o">=</span><span class="p">((</span><span class="n">skip_not_found</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">skip_not_found</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="volume_weights_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.volume_weights_cube">[docs]</a><span class="k">def</span> <span class="nf">volume_weights_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a cube of volume weights from a grid of a given cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube with longitude, latitude and height coordinates</span>
+<span class="sd">    r_planet: float, optional</span>
+<span class="sd">        Radius of the planet (m). If not given, an attempt is made</span>
+<span class="sd">        to get it from the cube metadata.</span>
+<span class="sd">    normalize: bool, optional</span>
+<span class="sd">        Normalize the data.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube of area weights with the same metadata as the input cube</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">area_cube</span> <span class="o">=</span> <span class="n">area_weights_cube</span><span class="p">(</span>
+        <span class="n">cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="n">r_planet</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+    <span class="p">)</span>
+    <span class="n">height_deltas</span> <span class="o">=</span> <span class="n">coord_delta_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">area_cube</span> <span class="o">*</span> <span class="n">height_deltas</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">volume</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;normalized_volume_weights&quot;</span><span class="p">)</span>
+        <span class="n">volume</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">volume</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;volume_weights&quot;</span><span class="p">)</span>
+        <span class="n">volume</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m**3&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">volume</span></div>
 </pre></div>
 
            </div>
@@ -871,11 +1020,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -886,7 +1043,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

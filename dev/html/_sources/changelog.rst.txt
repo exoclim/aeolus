@@ -3,7 +3,48 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.6
+-----
+
+:Date: TBA
+
+* New `calc` functions:
+
+  - Add convenience functions to `calculus` for doing simple derivatives
+  - Add a function to calculate horizontal divergence in spherical coordinates
+  - Add `air_density()`, `air_temperature()`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
+  - Add `horiz_wind_cmpnts()` helper function
+  - Add `normalize_cube()`
+  - Add `superrotation_index()`
+
+* New `coord` functions:
+
+  - Add a function to emulate `xarray`'s `isel()` method.
+  - Update `get_cube_datetimes()` and add a new function, `get_cube_rel_days()`
+  - Add a function to broadcast coordinate deltas to a cube.
+  - Add a function to calculate volume from a cube's grid.
+
+* Other changes:
+
+  - Append names to `model.um`
+  - Refactor surface and TOA energy balance calculation, and do notapply spatial averaging to P-E
+  - Override `__repr__` of `model.base.Model`
+
 0.4.5
+-----
+
+:Date: 08 June 2020
+
+* API changes:
+
+  - add `model` submodule for model-specific variable and coordinate names
+  - replace all `UM_*` variables with the `model` reference
+  - replace all `DIM_CONSTR_*` by a class `DimConstr` with each of the constraints as an attribute
+  - replace `coord.add_binned_lon_lat()` by a generic `coord.add_binned_coord()` function
+
+* Minor bug fixes and clean-up 
+
+0.4.4
 -----
 
 :Date: 04 May 2020 

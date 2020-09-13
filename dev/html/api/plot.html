@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Plotting functions &mdash; aeolus 0.4.4 documentation</title>
+  <title>Plotting functions &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
 
   
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,20 +33,16 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Regions" href="region.html" />
-    <link rel="prev" title="I/O" href="io.html" /> 
+    <link rel="prev" title="Model-specific dictionaries of variable and coordinate names" href="model.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -55,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> aeolus
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
           
 
           
@@ -65,7 +66,7 @@
             
             
               <div class="version">
-                0.4.4
+                0.4.4+43.gea8fba0
               </div>
             
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -98,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Plotting functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pyvista-interface">PyVista interface</a></li>
 </ul>
@@ -113,6 +116,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -151,7 +155,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">API reference</a> &raquo;</li>
         
@@ -234,7 +238,7 @@
 <li><p><strong>ax</strong> (<em>matplotlib axes object</em>) – Axes where to create the plot in</p></li>
 <li><p><strong>xy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a><em>, </em><em>optional</em>) – Sequence of X and Y coordinate arrays (passed to pcolormesh)</p></li>
 <li><p><strong>nsteps</strong> (<em>integer</em><em>, </em><em>optional</em>) – Number of colour steps for each of cloud category</p></li>
-<li><p><strong>cmap</strong> (<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.colors.ListedColormap.html#matplotlib.colors.ListedColormap" title="(in Matplotlib v3.2.1)"><em>matplotlib.colors.ListedColormap</em></a><em>, </em><em>optional</em>) – Colormap instance. If not given, custom cloud colormap is used.</p></li>
+<li><p><strong>cmap</strong> (<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.colors.ListedColormap.html#matplotlib.colors.ListedColormap" title="(in Matplotlib v3.3.1)"><em>matplotlib.colors.ListedColormap</em></a><em>, </em><em>optional</em>) – Colormap instance. If not given, custom cloud colormap is used.</p></li>
 <li><p><strong>cb_kwags</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary of kwargs passed to colorbar</p></li>
 <li><p><strong>**pc_kwargs</strong> (<em>optional</em>) – additional pcolormesh arguments</p></li>
 </ul>
@@ -254,7 +258,7 @@
 <dl class="py class">
 <dt id="aeolus.plot.GeoAxesGrid">
 <em class="property">class </em><code class="sig-prename descclassname">aeolus.plot.</code><code class="sig-name descname">GeoAxesGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fig</span></em>, <em class="sig-param"><span class="n">rect</span></em>, <em class="sig-param"><span class="n">nrows_ncols</span></em>, <em class="sig-param"><span class="n">projection</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">axesgrid_kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/cart.html#GeoAxesGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.plot.GeoAxesGrid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://matplotlib.org/api/_as_gen/mpl_toolkits.axes_grid1.axes_grid.ImageGrid.html#mpl_toolkits.axes_grid1.axes_grid.ImageGrid" title="(in Matplotlib v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpl_toolkits.axes_grid1.axes_grid.ImageGrid</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://matplotlib.org/api/_as_gen/mpl_toolkits.axes_grid1.axes_grid.ImageGrid.html#mpl_toolkits.axes_grid1.axes_grid.ImageGrid" title="(in Matplotlib v3.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpl_toolkits.axes_grid1.axes_grid.ImageGrid</span></code></a></p>
 <p>Grid of cartopy axes.</p>
 <p>A subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">mpl_toolkits.axes_grid1.AxesGrid</span></code> representing
 a grid of maps with the same projection <a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/crs/index.html#cartopy.crs.Projection" title="(in cartopy v0.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Projection</span></code></a>.</p>
@@ -270,9 +274,9 @@ grid lines and labels should be used.</p></li>
 <dd><p>Initialise GeoAxesGrid.</p>
 <p>Build a <a class="reference internal" href="#aeolus.plot.GeoAxesGrid" title="aeolus.plot.GeoAxesGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeoAxesGrid</span></code></a> instance with a grid nrows*ncols
 <code class="xref py py-class docutils literal notranslate"><span class="pre">GeoAxes</span></code> with a projection <a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/crs/index.html#cartopy.crs.Projection" title="(in cartopy v0.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Projection</span></code></a>
-in <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> <em>fig</em> with
+in <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> <em>fig</em> with
 <em>rect=[left, bottom, width, height]</em> (in
-<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> coordinates) or
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> coordinates) or
 the subplot position code (e.g., “121”).</p>
 </dd></dl>
 
@@ -285,7 +289,7 @@ the subplot position code (e.g., “121”).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.2.1)"><em>matplotlib.figure.Figure</em></a>) – Figure object.</p></li>
+<li><p><strong>fig</strong> (<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.3.1)"><em>matplotlib.figure.Figure</em></a>) – Figure object.</p></li>
 <li><p><strong>ax</strong> (<a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/matplotlib/geoaxes.html#cartopy.mpl.geoaxes.GeoAxesSubplot" title="(in cartopy v0.18.0)"><em>cartopy.mpl.geoaxes.GeoAxesSubplot</em></a>) – Cartopy axes.</p></li>
 <li><p><strong>xticks</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Sequence of longitude ticks.</p></li>
 <li><p><strong>yticks</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Sequence of latitude ticks.</p></li>
@@ -338,7 +342,7 @@ keywords as values.</p></li>
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube with (longitude, latitude, [level_height]) coordinates.</p></li>
 <li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
 <li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.24.2)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.26.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 </ul>
@@ -347,7 +351,7 @@ the input cube’s coordinates.</p></li>
 <dd class="field-even"><p>PyVista grid with data in cell_arrays.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.24.2)">pyvista.StructuredGrid</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.26.0)">pyvista.StructuredGrid</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,7 +372,7 @@ the input cube’s coordinates.</p></li>
 <li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
 <li><p><strong>xstride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the longitude axis.</p></li>
 <li><p><strong>ystride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the latitude axis.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.24.2)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.26.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 </ul>
@@ -377,7 +381,7 @@ the input cube’s coordinates.</p></li>
 <dd class="field-even"><p>PyVista grid with vector data in point_arrays.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.24.2)">pyvista.StructuredGrid</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.26.0)">pyvista.StructuredGrid</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -396,7 +400,7 @@ the input cube’s coordinates.</p></li>
         <a href="region.html" class="btn btn-neutral float-right" title="Regions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="io.html" class="btn btn-neutral float-left" title="I/O" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-left" title="Model-specific dictionaries of variable and coordinate names" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -405,11 +409,19 @@ the input cube’s coordinates.</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -420,7 +432,6 @@ the input cube’s coordinates.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.calc.calculus &mdash; aeolus 0.4.4 documentation</title>
+  <title>aeolus.calc.calculus &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
 
   
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -28,16 +33,12 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -53,7 +54,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> aeolus
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                0.4.4
+                0.4.4+43.gea8fba0
               </div>
             
           
@@ -80,6 +81,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -98,6 +100,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -136,7 +139,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -157,10 +160,157 @@
             
   <h1>Source code for aeolus.calc.calculus</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic calculus functions.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">cf_units</span> <span class="kn">import</span> <span class="n">Unit</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.analysis.calculus</span> <span class="kn">import</span> <span class="n">_coord_cos</span><span class="p">,</span> <span class="n">_curl_differentiate</span><span class="p">,</span> <span class="n">_curl_regrid</span><span class="p">,</span> <span class="n">differentiate</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">NotYetImplementedError</span>
+<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;integrate&quot;</span><span class="p">,)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;d_dx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;d_dy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;d_dz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deriv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;div_h&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;integrate&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="d_dx"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.d_dx">[docs]</a><span class="k">def</span> <span class="nf">d_dx</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. x-coordinate.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="d_dy"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.d_dy">[docs]</a><span class="k">def</span> <span class="nf">d_dy</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. y-coordinate.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="d_dz"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.d_dz">[docs]</a><span class="k">def</span> <span class="nf">d_dz</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. z-coordinate.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deriv"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.deriv">[docs]</a><span class="k">def</span> <span class="nf">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate a derivative w.r.t. the given coordinate.</span>
+
+<span class="sd">    Uses `iris.analysis.calculus.differentiate` and then</span>
+<span class="sd">    interpolates the result to the grid points of the original cube.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Input cube containing the given coordinate.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate for differentiation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        d(cube)/d(coord).</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    aeolus.calc.calculus.d_dx, aeolus.calc.calculus.d_dy, aeolus.calc.calculus.d_dz</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pnts</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">differentiate</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">interpolate</span><span class="p">([(</span><span class="n">coord</span><span class="p">,</span> <span class="n">pnts</span><span class="p">)],</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="div_h"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.div_h">[docs]</a><span class="k">def</span> <span class="nf">div_h</span><span class="p">(</span><span class="n">i_cube</span><span class="p">,</span> <span class="n">j_cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate horizontal divergence.</span>
+
+<span class="sd">    Note: currently works only in spherical coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    i_cube:</span>
+<span class="sd">        i-component (e.g. u-wind)</span>
+<span class="sd">    j_cube:</span>
+<span class="sd">        j-component (e.g. v-wind)</span>
+<span class="sd">    r_planet: float, optional</span>
+<span class="sd">        Radius of the planet (m). If not given, an attempt is made</span>
+<span class="sd">        to get it from the cube metadata.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube of horizontal divergence.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Divergence in spherical coordinates is defined as</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \nabla\cdot \vec A = \frac{1}{r cos \theta} (</span>
+<span class="sd">        \frac{\partial \vec A_\lambda}{\partial \lambda}</span>
+<span class="sd">        + \frac{\partial}{\partial \theta}</span>
+<span class="sd">        (\vec A_\theta cos \theta))</span>
+
+<span class="sd">    where \lambda is longitude, \theta is latitude.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_coord</span> <span class="o">=</span> <span class="n">i_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_coord</span> <span class="o">=</span> <span class="n">i_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">y_dim</span> <span class="o">=</span> <span class="n">i_cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">y_coord</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">horiz_cs</span> <span class="o">=</span> <span class="n">i_cube</span><span class="o">.</span><span class="n">coord_system</span><span class="p">(</span><span class="s2">&quot;CoordSystem&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check for spherical coords</span>
+    <span class="n">spherical_coords</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">horiz_cs</span><span class="p">,</span> <span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">coord_systems</span><span class="o">.</span><span class="n">GeogCS</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">coord_systems</span><span class="o">.</span><span class="n">RotatedGeogCS</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">spherical_coords</span><span class="p">:</span>
+        <span class="c1"># Get the radius of the planet</span>
+        <span class="k">if</span> <span class="n">r_planet</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">get_planet_radius</span><span class="p">(</span><span class="n">i_cube</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">r_planet</span>
+        <span class="n">r_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
+
+        <span class="n">lon_coord</span> <span class="o">=</span> <span class="n">x_coord</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">lat_coord</span> <span class="o">=</span> <span class="n">y_coord</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">lon_coord</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;radians&quot;</span><span class="p">)</span>
+        <span class="n">lat_coord</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;radians&quot;</span><span class="p">)</span>
+        <span class="n">lat_cos_coord</span> <span class="o">=</span> <span class="n">_coord_cos</span><span class="p">(</span><span class="n">lat_coord</span><span class="p">)</span>
+
+        <span class="c1"># j-component: \frac{\partial}{\partial \theta} (\vec A_\theta cos \theta))</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">j_cube</span><span class="p">,</span> <span class="n">lat_cos_coord</span><span class="p">,</span> <span class="n">y_dim</span><span class="p">)</span>
+        <span class="n">djcos_dtheta</span> <span class="o">=</span> <span class="n">_curl_differentiate</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">lat_coord</span><span class="p">)</span>
+        <span class="n">prototype_diff</span> <span class="o">=</span> <span class="n">djcos_dtheta</span>
+
+        <span class="c1"># i-component: \frac{\partial \vec A_\lambda}{\partial \lambda}</span>
+        <span class="n">d_i_cube_dlambda</span> <span class="o">=</span> <span class="n">_curl_differentiate</span><span class="p">(</span><span class="n">i_cube</span><span class="p">,</span> <span class="n">lon_coord</span><span class="p">)</span>
+        <span class="n">d_i_cube_dlambda</span> <span class="o">=</span> <span class="n">_curl_regrid</span><span class="p">(</span><span class="n">d_i_cube_dlambda</span><span class="p">,</span> <span class="n">prototype_diff</span><span class="p">)</span>
+        <span class="n">new_lat_coord</span> <span class="o">=</span> <span class="n">d_i_cube_dlambda</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">new_lat_cos_coord</span> <span class="o">=</span> <span class="n">_coord_cos</span><span class="p">(</span><span class="n">new_lat_coord</span><span class="p">)</span>
+        <span class="n">lat_dim</span> <span class="o">=</span> <span class="n">d_i_cube_dlambda</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">new_lat_coord</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Sum and divide</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+            <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">d_i_cube_dlambda</span><span class="p">,</span> <span class="n">djcos_dtheta</span><span class="p">),</span>
+            <span class="n">r</span> <span class="o">*</span> <span class="n">new_lat_cos_coord</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="n">lat_dim</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">div</span><span class="o">.</span><span class="n">units</span> <span class="o">/=</span> <span class="n">r_unit</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">regrid</span><span class="p">(</span><span class="n">i_cube</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">NotYetImplementedError</span><span class="p">(</span><span class="s2">&quot;Non-spherical coordinates are not implemented yet.&quot;</span><span class="p">)</span>
+    <span class="n">div</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;horizontal_divergence&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">div</span></div>
 
 
 <div class="viewcode-block" id="integrate"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.integrate">[docs]</a><span class="k">def</span> <span class="nf">integrate</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
@@ -179,7 +329,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
-<span class="sd">        integrated cube.</span>
+<span class="sd">        Integrated cube.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: allow non-dim coordinates</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
@@ -206,11 +356,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, the aeolus developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -221,7 +379,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
