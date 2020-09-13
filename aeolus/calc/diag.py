@@ -1,9 +1,9 @@
 """Some commonly used diagnostics in atmospheric science."""
 from cf_units import Unit
 
+from iris.analysis.calculus import _coord_cos
 from iris.analysis.maths import add, multiply
 from iris.exceptions import ConstraintMismatchError as ConMisErr
-from iris.analysis.calculus import _coord_cos
 
 import numpy as np
 
