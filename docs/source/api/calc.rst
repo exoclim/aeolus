@@ -37,6 +37,7 @@ Diagnostics
 .. autofunction:: aeolus.calc.precip_sum
 .. autofunction:: aeolus.calc.sfc_net_energy
 .. autofunction:: aeolus.calc.sfc_water_balance
+.. autofunction:: aeolus.calc.superrotation_index
 .. autofunction:: aeolus.calc.toa_cloud_radiative_effect
 .. autofunction:: aeolus.calc.toa_eff_temp
 .. autofunction:: aeolus.calc.toa_net_energy

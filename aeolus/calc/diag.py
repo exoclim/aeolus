@@ -1,11 +1,16 @@
 """Some commonly used diagnostics in atmospheric science."""
+from cf_units import Unit
+
+from iris.analysis.maths import add, multiply
 from iris.exceptions import ConstraintMismatchError as ConMisErr
+from iris.analysis.calculus import _coord_cos
 
 import numpy as np
 
 from .calculus import d_dz, integrate
 from .stats import spatial
 from ..const import init_const
+from ..const.const import ScalarCube
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
 from ..model import um
@@ -597,3 +602,62 @@ def horiz_wind_cmpnts(cubelist, model=um):
     # interpolate v on u's grid if coordinates are different
     v = regrid_3d(v, u, model=model)
     return u, v
+
+
+def superrotation_index(cubelist, const=None, model=um):
+    r"""
+    Local superrotation index.
+
+    .. math::
+        s = \frac{m}{\Omega a^2} - 1,
+
+        m = a cos\phi(\Omega a cos\phi + u)
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        List of cubes containing a cube of zonal velocity (u).
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    s_idx: iris.cube.Cube
+        Cubes of superrotation index.
+
+    References
+    ----------
+    Read (1986), https://doi.org/10.1002/qj.49711247114
+    """
+    # Zonal velocity
+    u = cubelist.extract_strict(model.u)
+    if const is None:
+        const = u.attributes["planet_conf"]
+    # Radius of the planet
+    r = const.radius
+    r.convert_units("m")
+    # Rotation rate
+    omega = ScalarCube.from_cube((const.day / (2 * np.pi)) ** (-1))
+    omega.convert_units("s-1")
+
+    lat_coord = u.coord(model.y).copy()
+    lat_dim = u.coord_dims(model.y)[0]
+    lat_coord.convert_units("radians")
+    lat_cos_coord = _coord_cos(lat_coord)
+
+    # Calculate intermediate terms
+    omega_r_coslat = omega.data * r.data * lat_cos_coord
+    omega_r_coslat.units = Unit("m s-1")
+    r_coslat = r.data * lat_cos_coord
+    r_coslat.units = Unit("m")
+    inner_sum = add(u, omega_r_coslat, dim=lat_dim)
+
+    # Calculate axial component of specific absolute angular momentum
+    ang_mom = multiply(inner_sum, r_coslat, dim=lat_dim)
+
+    # Final index
+    s_idx = ang_mom / omega.asc / r.asc / r.asc
+    s_idx.convert_units("1")
+    s_idx = s_idx.copy(data=s_idx.data - 1)
+    s_idx.rename("local_superrotation_index")
+    return s_idx

@@ -15,6 +15,7 @@ Changelog
   - Add `air_density()`, `air_temperature()`, `dry_lapse_rate()`, `flux()` and `geopotential_height` functions
   - Add `horiz_wind_cmpnts()` helper function
   - Add `normalize_cube()`
+  - Add `superrotation_index()`
 
 * New `coord` functions:
 

@@ -13,6 +13,7 @@ from .diag import (
     precip_sum,
     sfc_net_energy,
     sfc_water_balance,
+    superrotation_index,
     toa_cloud_radiative_effect,
     toa_eff_temp,
     toa_net_energy,
@@ -65,6 +66,7 @@ __all__ = (
     "cumsum",
     "spatial",
     "spatial_quartiles",
+    "superrotation_index",
     "vertical_mean",
     "water_path",
 )
