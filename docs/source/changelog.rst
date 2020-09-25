@@ -8,6 +8,10 @@ Changelog
 
 :Date: TBA
 
+* New `calc` functions:
+
+  - Add shortcut functions `spatial_mean()` and `time_mean()`
+
 * New `coord` functions:
 
   - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)

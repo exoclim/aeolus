@@ -13,15 +13,17 @@ Calculus
 Statistics
 ----------
 .. autofunction:: aeolus.calc.cumsum
-.. autofunction:: aeolus.calc.spatial
-.. autofunction:: aeolus.calc.spatial_quartiles
-.. autofunction:: aeolus.calc.minmaxdiff
-.. autofunction:: aeolus.calc.region_mean_diff
-.. autofunction:: aeolus.calc.meridional_mean
-.. autofunction:: aeolus.calc.normalize_cube
-.. autofunction:: aeolus.calc.zonal_mean
 .. autofunction:: aeolus.calc.last_n_day_mean
+.. autofunction:: aeolus.calc.meridional_mean
+.. autofunction:: aeolus.calc.minmaxdiff
+.. autofunction:: aeolus.calc.normalize_cube
+.. autofunction:: aeolus.calc.region_mean_diff
+.. autofunction:: aeolus.calc.spatial
+.. autofunction:: aeolus.calc.spatial_mean
+.. autofunction:: aeolus.calc.spatial_quartiles
+.. autofunction:: aeolus.calc.time_mean
 .. autofunction:: aeolus.calc.vertical_mean
+.. autofunction:: aeolus.calc.zonal_mean
 
 Diagnostics
 -----------

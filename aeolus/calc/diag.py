@@ -8,7 +8,7 @@ from iris.exceptions import ConstraintMismatchError as ConMisErr
 import numpy as np
 
 from .calculus import d_dz, integrate
-from .stats import spatial
+from .stats import spatial_mean
 from ..const import init_const
 from ..const.const import ScalarCube
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
@@ -423,8 +423,8 @@ def heat_redist_eff(cubelist, region_a, region_b, model=um):
         Cube of eta parameter with collapsed spatial dimensions.
     """
     toa_olr = cubelist.extract_strict(model.toa_olr)
-    toa_olr_a = spatial(toa_olr.extract(region_a.constraint), "mean")
-    toa_olr_b = spatial(toa_olr.extract(region_b.constraint), "mean")
+    toa_olr_a = spatial_mean(toa_olr.extract(region_a.constraint))
+    toa_olr_b = spatial_mean(toa_olr.extract(region_b.constraint))
     eta = toa_olr_a / toa_olr_b
     eta.rename("heat_redistribution_efficiency")
     return eta
@@ -475,7 +475,7 @@ def ghe_norm(cubelist, model=um):
     iris.cube.Cube
         Cube of greenhouse effect parameter with collapsed spatial dimensions.
     """
-    t_sfc = spatial(cubelist.extract_strict(um.t_sfc), "mean")
+    t_sfc = spatial_mean(cubelist.extract_strict(um.t_sfc))
     t_eff = toa_eff_temp(cubelist, model=model)
     one = t_eff.copy(data=np.ones(t_eff.shape))
     one.units = "1"
