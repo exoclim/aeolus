@@ -3,10 +3,20 @@ Changelog
 
 .. default-role:: py:obj
 
-0.4.6
+0.4.7
 -----
 
 :Date: TBA
+
+* New `coord` functions:
+
+  - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
+
+
+0.4.6
+-----
+
+:Date: 17 September 2020
 
 * New `calc` functions:
 

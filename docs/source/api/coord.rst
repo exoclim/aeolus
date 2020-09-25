@@ -12,6 +12,9 @@ Cube coordinate functionality
 .. autofunction:: aeolus.coord.get_cube_rel_days
 .. autofunction:: aeolus.coord.get_dim_coord
 .. autofunction:: aeolus.coord.isel
+.. autofunction:: aeolus.coord.interp_all_to_pres_lev
+.. autofunction:: aeolus.coord.interp_to_pres_lev
+.. autofunction:: aeolus.coord.interp_to_single_pres_lev
 .. autofunction:: aeolus.coord.nearest_coord_value
 .. autofunction:: aeolus.coord.not_equal_coord_axes
 .. autofunction:: aeolus.coord.regrid_3d

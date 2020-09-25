@@ -9,6 +9,7 @@ import iris
 from iris.analysis.cartography import wrap_lons
 from iris.coord_categorisation import _months_in_season, add_categorised_coord
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
+from iris.experimental import stratify
 from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 
 import numpy as np
@@ -31,6 +32,9 @@ __all__ = (
     "get_cube_rel_days",
     "get_dim_coord",
     "isel",
+    "interp_all_to_pres_lev",
+    "interp_to_pres_lev",
+    "interp_to_single_pres_lev",
     "nearest_coord_value",
     "not_equal_coord_axes",
     "regrid_3d",
@@ -545,6 +549,99 @@ def get_dim_coord(cube, axis):
 
     # If no coordinate matches raise an error
     raise NotFoundError(f"Cube has no coordinate for axis {axis}")
+
+
+def interp_all_to_pres_lev(cubelist, levels, model=um):
+    """
+    Interpolate all cubes within a cubelist to the given set of pressure levels.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        List of cubes, including a cube of pressure.
+    levels: array-like
+        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.CubeList
+        List of cubes interpolated to pressure level(s).
+    """
+    pres = cubelist.extract_strict(model.pres)
+    cl_out = iris.cube.CubeList()
+    for cube in cubelist:
+        if cube != pres:
+            cube_plev = interp_to_pres_lev(cubelist, cube.name(), levels, model)
+            cube_plev.coord(model.pres).attributes = {}
+        cl_out.append(cube_plev)
+    return cl_out
+
+
+def interp_to_pres_lev(cubelist, constraint, levels, model=um):
+    """
+    Interpolate a cube to pressure level(s) using stratify relevel() function.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        List of cubes containing a cube extractable by `constraint` and a cube of pressure.
+    constraint: str or iris.Constraint
+        Variable name or constraint to extract a cube from `cubelist`.
+    levels: array-like
+        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of `varname` interpolated to pressure level(s).
+    """
+    cube = cubelist.extract_strict(constraint)
+    pres = cubelist.extract_strict(model.pres)
+    cube_plev = stratify.relevel(cube, pres, levels, axis=model.z)
+    cube_plev.coord(model.pres).attributes = {}
+    return iris.util.squeeze(cube_plev)
+
+
+def interp_to_single_pres_lev(
+    cubelist, constraint, p_ref_frac=0.5, const=None, model=um
+):
+    """
+    Interpolate the field defined by `constraint` to a single pressure level.
+
+    The level is found from the given fraction of the reference surface pressure.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input cubelist.
+    constraint: str or iris.Constraint
+        Variable name or constraint to extract a cube from `cubelist`.
+    p_ref_frac: float, optional
+        Fraction of reference surface pressure at which the estimate is made.
+        The default value is 0.1, which for an Earth-like atmosphere means 100 hPa.
+    const: aeolus.const.const.ConstContainer, optional
+        If not given, constants are attempted to be retrieved from
+        attributes of a cube in the cube list.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube with collapsed spatial dimensions.
+    """
+    if const is None:
+        const = cubelist[0].attributes["planet_conf"]
+    p_ref = const.reference_surface_pressure
+    p_tgt = p_ref_frac * p_ref
+    pres = cubelist.extract_strict(model.pres)
+    p_tgt.convert_units(pres.units)
+    out = interp_to_pres_lev(cubelist, constraint, [p_tgt.data], model=model)
+    return out
 
 
 def isel(obj, coord, idx, skip_not_found=None):
