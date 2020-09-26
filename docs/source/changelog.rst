@@ -16,6 +16,10 @@ Changelog
 
   - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
 
+* Other changes:
+
+  - Append names to `model.um`
+
 
 0.4.6
 -----
@@ -41,7 +45,7 @@ Changelog
 * Other changes:
 
   - Append names to `model.um`
-  - Refactor surface and TOA energy balance calculation, and do notapply spatial averaging to P-E
+  - Refactor surface and TOA energy balance calculation, and do not apply spatial averaging to P-E
   - Override `__repr__` of `model.base.Model`
 
 0.4.5

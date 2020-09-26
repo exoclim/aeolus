@@ -69,6 +69,24 @@ class Model:
     ls_snow: str = None
     cv_rain: str = None
     cv_snow: str = None
+    # Increments of temperature
+    dt_sw: str = None
+    dt_sw_cs: str = None
+    dt_lw: str = None
+    dt_lw_cs: str = None
+    dt_lsppn: str = None
+    dt_bl: str = None
+    dt_cv: str = None
+    dt_lscld: str = None
+    dt_adv: str = None
+    # Increments of specific humidity
+    dq_sw: str = None
+    dq_lw: str = None
+    dq_lsppn: str = None
+    dq_bl: str = None
+    dq_cv: str = None
+    dq_lscld: str = None
+    dq_adv: str = None
 
     def __repr__(self):
         """Override the repr method of the dataclass."""
