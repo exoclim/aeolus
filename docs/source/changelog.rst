@@ -19,6 +19,7 @@ Changelog
 * Other changes:
 
   - Append names to `model.um`
+  - Add a function to load vertical levels data.
 
 
 0.4.6
