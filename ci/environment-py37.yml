@@ -5,6 +5,7 @@ dependencies:
 - python=3.7
 - cartopy
 - dask
+- f90nml
 - flake8-builtins!=1.4.0
 - flake8-comprehensions
 - flake8-copyright

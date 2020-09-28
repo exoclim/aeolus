@@ -3,13 +3,15 @@ channels:
 - conda-forge
 dependencies:
 - python=3.8
-- iris>=2.3
-- matplotlib
-- metpy>=0.11
+- f90nml
+- iris>=2.4
+- matplotlib>=3.3
+- metpy>=0.12
 - nbsphinx
 - numpy
 - pip
-- pyvista>=0.23
+- python-stratify
+- pyvista>=0.25
 - sphinx
 - sphinx_rtd_theme
 - xarray
