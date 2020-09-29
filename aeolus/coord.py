@@ -551,7 +551,7 @@ def get_dim_coord(cube, axis):
     raise NotFoundError(f"Cube has no coordinate for axis {axis}")
 
 
-def interp_all_to_pres_lev(cubelist, levels, model=um):
+def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):
     """
     Interpolate all cubes within a cubelist to the given set of pressure levels.
 
@@ -561,6 +561,8 @@ def interp_all_to_pres_lev(cubelist, levels, model=um):
         List of cubes, including a cube of pressure.
     levels: array-like
         Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    interpolator: callable or None
+        The interpolator to use when computing the interpolation. See relevel() docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -573,13 +575,15 @@ def interp_all_to_pres_lev(cubelist, levels, model=um):
     cl_out = iris.cube.CubeList()
     for cube in cubelist:
         if cube != pres:
-            cube_plev = interp_to_pres_lev(cubelist, cube.name(), levels, model)
+            cube_plev = interp_to_pres_lev(
+                cubelist, cube.name(), levels, interpolator=interpolator, model=model
+            )
             cube_plev.coord(model.pres).attributes = {}
-        cl_out.append(cube_plev)
+            cl_out.append(cube_plev)
     return cl_out
 
 
-def interp_to_pres_lev(cubelist, constraint, levels, model=um):
+def interp_to_pres_lev(cubelist, constraint, levels, interpolator=None, model=um):
     """
     Interpolate a cube to pressure level(s) using stratify relevel() function.
 
@@ -591,6 +595,8 @@ def interp_to_pres_lev(cubelist, constraint, levels, model=um):
         Variable name or constraint to extract a cube from `cubelist`.
     levels: array-like
         Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    interpolator: callable or None
+        The interpolator to use when computing the interpolation. See relevel() docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -601,13 +607,13 @@ def interp_to_pres_lev(cubelist, constraint, levels, model=um):
     """
     cube = cubelist.extract_strict(constraint)
     pres = cubelist.extract_strict(model.pres)
-    cube_plev = stratify.relevel(cube, pres, levels, axis=model.z)
+    cube_plev = stratify.relevel(cube, pres, levels, axis=model.z, interpolator=interpolator)
     cube_plev.coord(model.pres).attributes = {}
     return iris.util.squeeze(cube_plev)
 
 
 def interp_to_single_pres_lev(
-    cubelist, constraint, p_ref_frac=0.5, const=None, model=um
+    cubelist, constraint, p_ref_frac=0.5, const=None, interpolator=None, model=um
 ):
     """
     Interpolate the field defined by `constraint` to a single pressure level.
@@ -626,6 +632,8 @@ def interp_to_single_pres_lev(
     const: aeolus.const.const.ConstContainer, optional
         If not given, constants are attempted to be retrieved from
         attributes of a cube in the cube list.
+    interpolator: callable or None
+        The interpolator to use when computing the interpolation. See relevel() docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -640,7 +648,9 @@ def interp_to_single_pres_lev(
     p_tgt = p_ref_frac * p_ref
     pres = cubelist.extract_strict(model.pres)
     p_tgt.convert_units(pres.units)
-    out = interp_to_pres_lev(cubelist, constraint, [p_tgt.data], model=model)
+    out = interp_to_pres_lev(
+        cubelist, constraint, [p_tgt.data], interpolator=interpolator, model=model
+    )
     return out
 
 
@@ -932,9 +942,7 @@ def volume_weights_cube(cube, r_planet=None, normalize=False, model=um):
     iris.cube.Cube
         Cube of area weights with the same metadata as the input cube
     """
-    area_cube = area_weights_cube(
-        cube, r_planet=r_planet, normalize=normalize, model=model
-    )
+    area_cube = area_weights_cube(cube, r_planet=r_planet, normalize=normalize, model=model)
     height_deltas = coord_delta_to_cube(cube, model.z, normalize=normalize)
     volume = area_cube * height_deltas
     if normalize:

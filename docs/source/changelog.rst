@@ -19,7 +19,8 @@ Changelog
 * Other changes:
 
   - Append names to `model.um`
-  - Add a function to load vertical levels data.
+  - Add a function to load vertical levels data
+  - Improve `interp_to_pres_lev()`
 
 
 0.4.6
