@@ -8,6 +8,11 @@ Changelog
 
 :Date: TBA
 
+* Restructure the package:
+  
+  - the library is now in `src/aeolus`
+  - tests are now in `tests/`
+
 * New `calc` functions:
 
   - Add shortcut functions `spatial_mean()` and `time_mean()`

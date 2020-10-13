@@ -39,7 +39,7 @@ script:
   - if [[ "$CONDA_ENV" == "docs" ]]; then
       sphinx-build -n -b html -d docs/_build/doctrees docs/source docs/_build/html;
     else
-      pytest aeolus -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v;
+      pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v;
     fi;
 
 after_success:

@@ -1,8 +1,8 @@
 [report]
-include = aeolus/*
+include = src/aeolus/*
 omit =
     */setup.py
     */_version.py
     docs/*
-    aeolus/tests/*
+    tests/*
     *__init__*
