@@ -26,6 +26,7 @@ Changelog
   - Append names to `model.um`
   - Add a function to load vertical levels data
   - Improve `interp_to_pres_lev()`
+  - Add `model` keyword to `plot.pv` functions
 
 
 0.4.6

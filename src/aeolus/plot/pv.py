@@ -7,12 +7,13 @@ from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 
 from ..coord import _cell_bounds
 from ..exceptions import AeolusWarning
+from ..model import um
 
 
 __all__ = ("grid_for_scalar_cube_sph", "grid_for_vector_cubes_sph")
 
 
-def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scalar3d"):
+def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scalar3d", model=um):
     """
     Create a `pyvista` grid for an `iris` cube (2D or 3D) in spherical coordinates.
 
@@ -29,6 +30,8 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
         the input cube's coordinates.
     label: str, optional
         Label for the data within the grid.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
@@ -36,11 +39,11 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
        PyVista grid with data in cell_arrays.
     """
     if grid is None:
-        lons = _cell_bounds(cube.coord("longitude").points)
-        lats = 90.0 - _cell_bounds(cube.coord("latitude").points)
+        lons = _cell_bounds(cube.coord(model.x).points)
+        lats = 90.0 - _cell_bounds(cube.coord(model.y).points)
         if cube.ndim == 3:
             # TODO check if _cell_bounds should be here
-            levels = _cell_bounds(cube.coord("level_height").points)
+            levels = _cell_bounds(cube.coord(model.z).points)
         else:
             levels = np.array([0])
         levels = z_scale * levels + z_offset
@@ -66,6 +69,7 @@ def grid_for_vector_cubes_sph(
     ystride=1,
     grid=None,
     label="vector3d",
+    model=um,
 ):
     """
     Take wind vectors in spherical coordinates and create a `pyvista` grid for them.
@@ -95,6 +99,8 @@ def grid_for_vector_cubes_sph(
         the input cube's coordinates.
     label: str, optional
         Label for the data within the grid.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
@@ -105,9 +111,9 @@ def grid_for_vector_cubes_sph(
         u.shape == w.shape
     ), "Wind components should have the same array size!"
 
-    lons = u.coord("longitude").points
-    lats = 90.0 - u.coord("latitude").points
-    levels = z_scale * u.coord("level_height").points + z_offset
+    lons = u.coord(model.x).points
+    lats = 90.0 - u.coord(model.y).points
+    levels = z_scale * u.coord(model.z).points + z_offset
 
     # Stride vectors
     lons_s = lons[::xstride]
