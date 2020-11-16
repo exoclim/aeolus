@@ -3,7 +3,7 @@ package:
   version: {{ environ['VERSION'] }}
 
 source:
-  git_url: https://github.com/exoclim/aeolus.git
+  path: ../src
 
 requirements:
   build:
@@ -32,6 +32,6 @@ about:
   home: https://exoclim.github.io/aeolus
   license: LGPL-3.0 
   license_file: LICENSE
-  summary: "Python library for object-oriented analysis of atmospheric model output built on top of iris."
+  summary: "Python library for object-oriented analysis of atmospheric model output."
   dev_url: https://github.com/exoclim/aeolus
   doc_url: https://exoclim.github.io/aeolus
