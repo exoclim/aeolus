@@ -100,9 +100,9 @@ class Run:
             self.load_data(files)
             try:
                 if self.processed:
-                    cube_yx = self.proc.extract(self.dim_constr.yx_r)[0]
+                    cube_yx = self.proc.extract(self.dim_constr.relax.yx)[0]
                 else:
-                    cube_yx = self.raw.extract(self.dim_constr.yx_r)[0]
+                    cube_yx = self.raw.extract(self.dim_constr.relax.yx)[0]
                 self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
             except IndexError:
                 warn("Run initialised without a domain.")

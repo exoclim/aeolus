@@ -1,5 +1,6 @@
 """Subset cubes using iris constraints."""
 from datetime import timedelta
+from itertools import combinations
 
 import iris
 
@@ -77,8 +78,28 @@ CM_INST_CONSTR = iris.Constraint(cube_func=_select_inst)
 CM_MEAN_CONSTR = iris.Constraint(cube_func=_select_mean)
 
 
+class _ModeDimConstr:
+    """Class for storing constraints in `DimConstr` grouped by their mode."""
+
+    def __init__(self, **kwargs):
+        """Assign all keyword arguments to attributes of this class."""
+        self.__dict__.update(**kwargs)
+
+
 class DimConstr:
-    """Container for some useful dimensional constraints."""
+    """
+    Container for strict or relaxed dimensional constraints.
+
+    Examples
+    --------
+    Extract cubes that have y and x dimensional coordinates (among others):
+    >>> dc = DimConstr()
+    >>> cubelist.extract(dc.relax.yx)
+
+    Extract cubes that only have model levels, y and x dimensions:
+    >>> dc = DimConstr()
+    >>> cubelist.extract(dc.strict.myx)
+    """
 
     def __init__(self, model=um):
         """
@@ -89,10 +110,15 @@ class DimConstr:
         model: aeolus.model.Model, optional
             Model class with relevant coordinate names.
         """
-        self.tmyx = _dim_constr(model.t, model.lev, model.y, model.x)
-        self.tzyx = _dim_constr(model.t, model.z, model.y, model.x)
-        self.tyx = _dim_constr(model.t, model.y, model.x)
-        self.myx = _dim_constr(model.lev, model.y, model.x)
-        self.zyx = _dim_constr(model.z, model.y, model.x)
-        self.yx = _dim_constr(model.y, model.x)
-        self.yx_r = _dim_constr(model.y, model.x, strict=False)
+        abbr_aliases = {"t": "t", "z": "z", "m": "lev", "y": "y", "x": "x"}
+        for mode in ["strict", "relax"]:
+            attrs = {}
+            for key in ("z", "m"):
+                for n in range(1, 5):
+                    for seq in combinations(["t", key, "y", "x"], n):
+                        model_seq = [abbr_aliases[letter] for letter in seq]
+                        attrs["".join(seq)] = _dim_constr(
+                            *[getattr(model, i) for i in model_seq],
+                            strict=(mode == "strict")
+                        )
+            setattr(self, mode, _ModeDimConstr(**attrs))
