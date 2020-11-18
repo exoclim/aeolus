@@ -10,8 +10,6 @@ env:
 matrix:
   fast_finish: true
   include:
-  - env: CONDA_ENV=py37
-  - env: CONDA_ENV=py38
   - env: CONDA_ENV=docs
 
 before_install:
