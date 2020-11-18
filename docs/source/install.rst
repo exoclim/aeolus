@@ -7,6 +7,7 @@ Installation
 Supported language:
 
 - Python: 3.7
+- Python: 3.8
 
 .. note::
 
@@ -17,17 +18,17 @@ Supported language:
    works on Mac, Linux, and Windows, both on normal computers and
    institutional clusters and doesn't require root permissions.
 
-Aeolus depends on the following Python packages
+The main dependency of aeolus is `iris <https://scitools.org.uk/iris/docs/latest/>`, but various
+minor parts also depend on the following Python packages
 
 - cartopy
-- iris
 - matplotlib
 - numpy
 - latlon23
 - metpy
+- python-stratify
+- pyvista
 - xarray
-
-Additionally, a :ref:`submodule <pyvista_ref>` that provides an interface to `PyVista <https://docs.pyvista.org/>`_ obviously requires it to be installed.
 
 After the required packages are installed, aeolus can be installed either from Anaconda, PyPI, or from source.
 
@@ -37,18 +38,13 @@ Recommended installation method: conda
 
 The recommended installation method is via `conda <https://conda.io/docs/>`_
 
-First, prepare the environment by conda-installing all the dependencies from the conda-forge channel ::
+To install aeolus and its primary dependencies ::
 
-  conda install -c conda-forge cartopy iris matplotlib numpy metpy xarray
-  pip install latlon23
-
-Then install aeolus ::
-
-  conda install -c dennissergeev aeolus
+  conda install -c conda-forge aeolus
 
 To get the latest "nightly" build ::
 
-  conda install -c dennissergeev/label/nightly aeolus
+  conda install -c conda-forge/label/nightly aeolus
 
 Alternative method: PyPI
 ========================
@@ -64,7 +60,15 @@ You can also directly clone the `Github repo <https://github.com/exoclim/aeolus>
 
   git clone https://www.github.com/exoclim/aeolus.git
   cd aeolus
+
+and install aeolus in the standard mode ::
+
   python setup.py install
+
+and install aeolus in the developer mode ::
+
+  python setup.py develop
+
 
 Verifying proper installation
 =============================

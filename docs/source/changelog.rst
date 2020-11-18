@@ -8,6 +8,8 @@ Changelog
 
 :Date: TBA
 
+* Move to conda-forge for building the package
+
 * Restructure the package:
   
   - the library is now in `src/aeolus`
