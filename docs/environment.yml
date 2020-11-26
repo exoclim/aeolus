@@ -5,6 +5,7 @@ dependencies:
 - python=3.8
 - f90nml
 - iris>=2.4
+- latlon23
 - matplotlib>=3.3
 - metpy>=0.12
 - nbsphinx
@@ -15,5 +16,3 @@ dependencies:
 - sphinx
 - sphinx_rtd_theme
 - xarray
-- pip:
-  - latlon23
