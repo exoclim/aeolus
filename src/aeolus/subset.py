@@ -118,7 +118,6 @@ class DimConstr:
                     for seq in combinations(["t", key, "y", "x"], n):
                         model_seq = [abbr_aliases[letter] for letter in seq]
                         attrs["".join(seq)] = _dim_constr(
-                            *[getattr(model, i) for i in model_seq],
-                            strict=(mode == "strict")
+                            *[getattr(model, i) for i in model_seq], strict=(mode == "strict")
                         )
             setattr(self, mode, _ModeDimConstr(**attrs))
