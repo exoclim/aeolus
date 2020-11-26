@@ -32,7 +32,7 @@ jobs:
         conda config --set channel_priority strict
         conda update -q conda
         conda info -a
-        conda env create -n test_env -f ci/environment-${{ matrix.python-version }}.yml
+        conda create -n test_env -f ci/environment-${{ matrix.python-version }}.yml
         source activate test_env
         conda list
         python setup.py develop
