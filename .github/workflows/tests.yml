@@ -38,6 +38,7 @@ jobs:
         python setup.py develop
     - name: Check formatting with black
       run: |
+        pip install black
         black --check .
     - name: Install the package 
       run: |

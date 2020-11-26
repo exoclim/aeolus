@@ -1,9 +1,8 @@
-name: aeolus_py38
+name: aeolus_py39
 channels:
 - conda-forge
 dependencies:
-- python=3.8
-- black
+- python=3.9
 - cartopy
 - dask
 - f90nml
