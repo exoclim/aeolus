@@ -38,6 +38,7 @@ jobs:
         which python
         which conda
         python setup.py develop
+        python -m pip install --upgrade black
         black --check .
         pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
     - name: Check formatting with black
