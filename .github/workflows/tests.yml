@@ -41,7 +41,8 @@ jobs:
         black --check .
     - name: Test with pytest
       run: |
-        python -m pip install --upgrade pytest flake8
-        python -m pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
         which python
         which conda
+        python -m pip install --upgrade pytest flake8
+        which pytest
+        pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
