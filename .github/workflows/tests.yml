@@ -35,19 +35,16 @@ jobs:
         conda env create -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate test_env
-        which python
-        which conda
         python setup.py develop
-        python -m pip install --upgrade black
         black --check .
-        pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
     - name: Check formatting with black
       run: |
+        source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+        conda activate test_env
         python -m pip install --upgrade black
         black --check .
     - name: Test with pytest
       run: |
-        which python
-        which conda
-        python -m pip install --upgrade pytest flake8
-        which pytest
+        source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+        conda activate test_env
+        pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
