@@ -1,10 +1,13 @@
 #!/bin/bash
-set -e # exit with nonzero exit code if anything fails
+set -euo pipefail
+GH_PAGES_DIR=$HOME/gh-pages
+
+cd $HOME
 
 # Clone *this* git repo, but only the gh-pages branch.
 echo Cloning gh-pages...
 if [[ ! -d $GH_PAGES_DIR ]]; then
-    git clone -q -b gh-pages --single-branch https://$GITHUB_API_KEY@github.com/${TRAVIS_REPO_SLUG}.git $GH_PAGES_DIR
+    git clone -q -b gh-pages --single-branch https://@github.com/${{ secrets.repository }}.git $GH_PAGES_DIR
 fi
 cd $GH_PAGES_DIR
 
