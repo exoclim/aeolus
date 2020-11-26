@@ -34,15 +34,12 @@ jobs:
         conda info -a
         conda env create -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
         source activate test_env
-        conda list
         python setup.py develop
     - name: Check formatting with black
       run: |
-        pip install black
+        python -m pip install --upgrade black
         black --check .
-    - name: Install the package 
-      run: |
-        python -m pip install --upgrade pip
     - name: Test with pytest
       run: |
-        pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
+        conda list
+        python -m pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
