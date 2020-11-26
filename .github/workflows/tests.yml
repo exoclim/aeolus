@@ -33,7 +33,7 @@ jobs:
         conda update -q conda
         conda info -a
         conda env create -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
-        conda activate test_env
+        source activate test_env
         python setup.py develop
     - name: Check formatting with black
       run: |
@@ -41,6 +41,6 @@ jobs:
         black --check .
     - name: Test with pytest
       run: |
-        conda activate test_env
+        source activate test_env
         conda list
         python -m pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
