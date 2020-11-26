@@ -6,7 +6,7 @@ dependencies:
 - cartopy
 - dask
 - f90nml
-- flake8-builtins!=1.4.0
+- flake8-builtins
 - flake8-comprehensions
 - flake8-copyright
 - flake8-docstrings
@@ -15,18 +15,12 @@ dependencies:
 - flake8-pep3101
 - flake8-print
 - flake8-quotes
-- iris>=2.3
+- iris>=2.4
+- latlon23
 - matplotlib
-# - metpy>=0.11
-- mo_pack
 - numpy
 - pep8-naming
-- pip
 - pytest>=2.4
 - pytest-cov
 - pytest-flake8
 - python-stratify
-# - pyvista>=0.23
-# - xarray
-- pip:
-  - latlon23
