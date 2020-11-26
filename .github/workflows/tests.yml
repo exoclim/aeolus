@@ -36,7 +36,6 @@ jobs:
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate test_env
         python setup.py develop
-        black --check .
     - name: Check formatting with black
       run: |
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
