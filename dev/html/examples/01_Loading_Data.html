@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Loading Unified Model output &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>Loading Unified Model output &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -462,7 +462,7 @@ from aeolus.core import Run
     files=sample_file,
     name=&quot;t1e_example&quot;,
     description=&quot;This is some sample data from a UM simulation of tidally-locked Trappist-1e planet.&quot;,
-    planet=&quot;trap1e&quot;  # this reads constants from a JSON file
+    planet=&quot;trap1e&quot;,  # this reads constants from a JSON file
 )
 </pre></div>
 </div>
@@ -482,7 +482,7 @@ from aeolus.core import Run
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;aeolus.core.Run at 0x7f3c39042400&gt;
+&lt;aeolus.core.Run at 0x7f3b36b31430&gt;
 </pre></div></div>
 </div>
 <p>Constants that have been used in the model:</p>
@@ -501,7 +501,7 @@ from aeolus.core import Run
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant [J K-1 mol-1], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], gravity [m s-2], radius [m], day [s], solar_constant [W m-2], semi_major_axis [au], eccentricity [1], obliquity [degree], dry_air_spec_heat_press [m2 s-2 K-1], dry_air_molecular_weight [kg mol-1])
+Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], molar_gas_constant [J K-1 mol-1], boltzmann [m^2 kg s^-2 K^-1], avogadro [mol-1], gravity [m s-2], radius [m], day [s], solar_constant [W m-2], reference_surface_pressure [Pa], semi_major_axis [au], eccentricity [1], obliquity [degree], dry_air_spec_heat_press [m2 s-2 K-1], dry_air_molecular_weight [kg mol-1], condensible_density [kg m-3], condensible_heat_vaporization [m2 s-2])
 </pre></div></div>
 </div>
 <p>The loaded data are stored as a <code class="docutils literal notranslate"><span class="pre">CubeList</span></code> under <code class="docutils literal notranslate"><span class="pre">raw</span></code> attribute.</p>
@@ -510,23 +510,22 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run.raw
+<span></span>print(my_run.raw)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&lt;iris &#39;Cube&#39; of convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of low_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;]
+0: convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+1: convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+2: high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+3: low_type_cloud_area_fraction / (1)  (latitude: 90; longitude: 144)
+4: medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+5: stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+6: stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
 </pre></div></div>
 </div>
 <div class="section" id="Minimal-processing-of-loaded-data">
@@ -539,7 +538,7 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.grid import roll_cube_pm180, ensure_bounds
+<span></span>from aeolus.coord import ensure_bounds, roll_cube_pm180
 </pre></div>
 </div>
 </div>
@@ -576,32 +575,7 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run.proc
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&lt;iris &#39;Cube&#39; of convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of low_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
-&lt;iris &#39;Cube&#39; of stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;]
-</pre></div></div>
-</div>
-<p>Check that it did what expected.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.raw.extract_strict(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;))
+<span></span>print(my_run.proc)
 </pre></div>
 </div>
 </div>
@@ -610,25 +584,32 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCoord(array([  1.25,   3.75,   6.25,   8.75,  11.25,  13.75,  16.25,  18.75,
-        21.25,  23.75,  26.25,  28.75,  31.25,  33.75,  36.25,  38.75,
-        41.25,  43.75,  46.25,  48.75,  51.25,  53.75,  56.25,  58.75,
-        61.25,  63.75,  66.25,  68.75,  71.25,  73.75,  76.25,  78.75,
-        81.25,  83.75,  86.25,  88.75,  91.25,  93.75,  96.25,  98.75,
-       101.25, 103.75, 106.25, 108.75, 111.25, 113.75, 116.25, 118.75,
-       121.25, 123.75, 126.25, 128.75, 131.25, 133.75, 136.25, 138.75,
-       141.25, 143.75, 146.25, 148.75, 151.25, 153.75, 156.25, 158.75,
-       161.25, 163.75, 166.25, 168.75, 171.25, 173.75, 176.25, 178.75,
-       181.25, 183.75, 186.25, 188.75, 191.25, 193.75, 196.25, 198.75,
-       201.25, 203.75, 206.25, 208.75, 211.25, 213.75, 216.25, 218.75,
-       221.25, 223.75, 226.25, 228.75, 231.25, 233.75, 236.25, 238.75,
-       241.25, 243.75, 246.25, 248.75, 251.25, 253.75, 256.25, 258.75,
-       261.25, 263.75, 266.25, 268.75, 271.25, 273.75, 276.25, 278.75,
-       281.25, 283.75, 286.25, 288.75, 291.25, 293.75, 296.25, 298.75,
-       301.25, 303.75, 306.25, 308.75, 311.25, 313.75, 316.25, 318.75,
-       321.25, 323.75, 326.25, 328.75, 331.25, 333.75, 336.25, 338.75,
-       341.25, 343.75, 346.25, 348.75, 351.25, 353.75, 356.25, 358.75],
-      dtype=float32), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(6371229.0), circular=True)
+0: convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+1: convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+2: high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+3: low_type_cloud_area_fraction / (1)  (latitude: 90; longitude: 144)
+4: medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+5: stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+6: stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+</pre></div></div>
+</div>
+<p>Check that it did what expected.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>print(my_run.raw.extract_cube(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;)[:10])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCoord(array([ 1.25,  3.75,  6.25,  8.75, 11.25, 13.75, 16.25, 18.75, 21.25,
+       23.75], dtype=float32), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(6371229.0))
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -636,7 +617,7 @@ DimCoord(array([  1.25,   3.75,   6.25,   8.75,  11.25,  13.75,  16.25,  18.75,
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.proc.extract_strict(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;))
+<span></span>print(my_run.proc.extract_cube(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;)[:10])
 </pre></div>
 </div>
 </div>
@@ -646,26 +627,7 @@ DimCoord(array([  1.25,   3.75,   6.25,   8.75,  11.25,  13.75,  16.25,  18.75,
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 DimCoord(array([-178.75, -176.25, -173.75, -171.25, -168.75, -166.25, -163.75,
-       -161.25, -158.75, -156.25, -153.75, -151.25, -148.75, -146.25,
-       -143.75, -141.25, -138.75, -136.25, -133.75, -131.25, -128.75,
-       -126.25, -123.75, -121.25, -118.75, -116.25, -113.75, -111.25,
-       -108.75, -106.25, -103.75, -101.25,  -98.75,  -96.25,  -93.75,
-        -91.25,  -88.75,  -86.25,  -83.75,  -81.25,  -78.75,  -76.25,
-        -73.75,  -71.25,  -68.75,  -66.25,  -63.75,  -61.25,  -58.75,
-        -56.25,  -53.75,  -51.25,  -48.75,  -46.25,  -43.75,  -41.25,
-        -38.75,  -36.25,  -33.75,  -31.25,  -28.75,  -26.25,  -23.75,
-        -21.25,  -18.75,  -16.25,  -13.75,  -11.25,   -8.75,   -6.25,
-         -3.75,   -1.25,    1.25,    3.75,    6.25,    8.75,   11.25,
-         13.75,   16.25,   18.75,   21.25,   23.75,   26.25,   28.75,
-         31.25,   33.75,   36.25,   38.75,   41.25,   43.75,   46.25,
-         48.75,   51.25,   53.75,   56.25,   58.75,   61.25,   63.75,
-         66.25,   68.75,   71.25,   73.75,   76.25,   78.75,   81.25,
-         83.75,   86.25,   88.75,   91.25,   93.75,   96.25,   98.75,
-        101.25,  103.75,  106.25,  108.75,  111.25,  113.75,  116.25,
-        118.75,  121.25,  123.75,  126.25,  128.75,  131.25,  133.75,
-        136.25,  138.75,  141.25,  143.75,  146.25,  148.75,  151.25,
-        153.75,  156.25,  158.75,  161.25,  163.75,  166.25,  168.75,
-        171.25,  173.75,  176.25,  178.75]), bounds=array([[-180. , -177.5],
+       -161.25, -158.75, -156.25]), bounds=array([[-180. , -177.5],
        [-177.5, -175. ],
        [-175. , -172.5],
        [-172.5, -170. ],
@@ -674,141 +636,7 @@ DimCoord(array([-178.75, -176.25, -173.75, -171.25, -168.75, -166.25, -163.75,
        [-165. , -162.5],
        [-162.5, -160. ],
        [-160. , -157.5],
-       [-157.5, -155. ],
-       [-155. , -152.5],
-       [-152.5, -150. ],
-       [-150. , -147.5],
-       [-147.5, -145. ],
-       [-145. , -142.5],
-       [-142.5, -140. ],
-       [-140. , -137.5],
-       [-137.5, -135. ],
-       [-135. , -132.5],
-       [-132.5, -130. ],
-       [-130. , -127.5],
-       [-127.5, -125. ],
-       [-125. , -122.5],
-       [-122.5, -120. ],
-       [-120. , -117.5],
-       [-117.5, -115. ],
-       [-115. , -112.5],
-       [-112.5, -110. ],
-       [-110. , -107.5],
-       [-107.5, -105. ],
-       [-105. , -102.5],
-       [-102.5, -100. ],
-       [-100. ,  -97.5],
-       [ -97.5,  -95. ],
-       [ -95. ,  -92.5],
-       [ -92.5,  -90. ],
-       [ -90. ,  -87.5],
-       [ -87.5,  -85. ],
-       [ -85. ,  -82.5],
-       [ -82.5,  -80. ],
-       [ -80. ,  -77.5],
-       [ -77.5,  -75. ],
-       [ -75. ,  -72.5],
-       [ -72.5,  -70. ],
-       [ -70. ,  -67.5],
-       [ -67.5,  -65. ],
-       [ -65. ,  -62.5],
-       [ -62.5,  -60. ],
-       [ -60. ,  -57.5],
-       [ -57.5,  -55. ],
-       [ -55. ,  -52.5],
-       [ -52.5,  -50. ],
-       [ -50. ,  -47.5],
-       [ -47.5,  -45. ],
-       [ -45. ,  -42.5],
-       [ -42.5,  -40. ],
-       [ -40. ,  -37.5],
-       [ -37.5,  -35. ],
-       [ -35. ,  -32.5],
-       [ -32.5,  -30. ],
-       [ -30. ,  -27.5],
-       [ -27.5,  -25. ],
-       [ -25. ,  -22.5],
-       [ -22.5,  -20. ],
-       [ -20. ,  -17.5],
-       [ -17.5,  -15. ],
-       [ -15. ,  -12.5],
-       [ -12.5,  -10. ],
-       [ -10. ,   -7.5],
-       [  -7.5,   -5. ],
-       [  -5. ,   -2.5],
-       [  -2.5,    0. ],
-       [   0. ,    2.5],
-       [   2.5,    5. ],
-       [   5. ,    7.5],
-       [   7.5,   10. ],
-       [  10. ,   12.5],
-       [  12.5,   15. ],
-       [  15. ,   17.5],
-       [  17.5,   20. ],
-       [  20. ,   22.5],
-       [  22.5,   25. ],
-       [  25. ,   27.5],
-       [  27.5,   30. ],
-       [  30. ,   32.5],
-       [  32.5,   35. ],
-       [  35. ,   37.5],
-       [  37.5,   40. ],
-       [  40. ,   42.5],
-       [  42.5,   45. ],
-       [  45. ,   47.5],
-       [  47.5,   50. ],
-       [  50. ,   52.5],
-       [  52.5,   55. ],
-       [  55. ,   57.5],
-       [  57.5,   60. ],
-       [  60. ,   62.5],
-       [  62.5,   65. ],
-       [  65. ,   67.5],
-       [  67.5,   70. ],
-       [  70. ,   72.5],
-       [  72.5,   75. ],
-       [  75. ,   77.5],
-       [  77.5,   80. ],
-       [  80. ,   82.5],
-       [  82.5,   85. ],
-       [  85. ,   87.5],
-       [  87.5,   90. ],
-       [  90. ,   92.5],
-       [  92.5,   95. ],
-       [  95. ,   97.5],
-       [  97.5,  100. ],
-       [ 100. ,  102.5],
-       [ 102.5,  105. ],
-       [ 105. ,  107.5],
-       [ 107.5,  110. ],
-       [ 110. ,  112.5],
-       [ 112.5,  115. ],
-       [ 115. ,  117.5],
-       [ 117.5,  120. ],
-       [ 120. ,  122.5],
-       [ 122.5,  125. ],
-       [ 125. ,  127.5],
-       [ 127.5,  130. ],
-       [ 130. ,  132.5],
-       [ 132.5,  135. ],
-       [ 135. ,  137.5],
-       [ 137.5,  140. ],
-       [ 140. ,  142.5],
-       [ 142.5,  145. ],
-       [ 145. ,  147.5],
-       [ 147.5,  150. ],
-       [ 150. ,  152.5],
-       [ 152.5,  155. ],
-       [ 155. ,  157.5],
-       [ 157.5,  160. ],
-       [ 160. ,  162.5],
-       [ 162.5,  165. ],
-       [ 165. ,  167.5],
-       [ 167.5,  170. ],
-       [ 170. ,  172.5],
-       [ 172.5,  175. ],
-       [ 175. ,  177.5],
-       [ 177.5,  180. ]]), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(5804071.0), circular=True)
+       [-157.5, -155. ]]), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(5804071.0))
 </pre></div></div>
 </div>
 <p>Note that the longitude coordinate is not only shifted by 180 degrees, but has automatically calculated <code class="docutils literal notranslate"><span class="pre">bounds</span></code>.</p>

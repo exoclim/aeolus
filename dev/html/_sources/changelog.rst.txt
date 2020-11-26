@@ -3,10 +3,39 @@ Changelog
 
 .. default-role:: py:obj
 
-0.4.6
+0.4.7
 -----
 
 :Date: TBA
+
+* Move to conda-forge for building the package
+
+* Restructure the package:
+  
+  - the library is now in `src/aeolus`
+  - tests are now in `tests/`
+
+* New `calc` functions:
+
+  - Add shortcut functions `spatial_mean()` and `time_mean()`
+
+* New `coord` functions:
+
+  - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
+
+* Other changes:
+
+  - Append names to `model.um`
+  - Add a function to load vertical levels data
+  - Improve `interp_to_pres_lev()`
+  - Add `model` keyword to `plot.pv` functions
+  - Rewrite `DimConstr` API
+
+
+0.4.6
+-----
+
+:Date: 17 September 2020
 
 * New `calc` functions:
 
@@ -27,7 +56,7 @@ Changelog
 * Other changes:
 
   - Append names to `model.um`
-  - Refactor surface and TOA energy balance calculation, and do notapply spatial averaging to P-E
+  - Refactor surface and TOA energy balance calculation, and do not apply spatial averaging to P-E
   - Override `__repr__` of `model.base.Model`
 
 0.4.5

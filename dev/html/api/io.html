@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>I/O &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>I/O &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -201,10 +201,31 @@
 </style>
 <div class="section" id="i-o">
 <h1>I/O<a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h1>
+<p>Input and output utilities.</p>
 <dl class="py function">
 <dt id="aeolus.io.load_multidir">
 <code class="sig-prename descclassname">aeolus.io.</code><code class="sig-name descname">load_multidir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_mask</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">label_name</span><span class="o">=</span><span class="default_value">'run'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load cubelists from multiple directories and merge.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.io.load_vert_lev">
+<code class="sig-prename descclassname">aeolus.io.</code><code class="sig-name descname">load_vert_lev</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_to_file</span></em>, <em class="sig-param"><span class="n">lev_type</span><span class="o">=</span><span class="default_value">'theta'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_vert_lev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.io.load_vert_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from the UM vertical levels file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_to_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Full path to the vertical levels file.</p></li>
+<li><p><strong>lev_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – What levels to return: “theta” or “rho”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>levs</strong> – Array of height levels.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

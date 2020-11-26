@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.plot.pv &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>aeolus.plot.pv &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -168,12 +168,13 @@
 
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">_cell_bounds</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span>
+<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;grid_for_scalar_cube_sph&quot;</span><span class="p">,</span> <span class="s2">&quot;grid_for_vector_cubes_sph&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="grid_for_scalar_cube_sph"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.pv.grid_for_scalar_cube_sph">[docs]</a><span class="k">def</span> <span class="nf">grid_for_scalar_cube_sph</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;scalar3d&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="grid_for_scalar_cube_sph"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.pv.grid_for_scalar_cube_sph">[docs]</a><span class="k">def</span> <span class="nf">grid_for_scalar_cube_sph</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;scalar3d&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a `pyvista` grid for an `iris` cube (2D or 3D) in spherical coordinates.</span>
 
@@ -190,6 +191,8 @@
 <span class="sd">        the input cube&#39;s coordinates.</span>
 <span class="sd">    label: str, optional</span>
 <span class="sd">        Label for the data within the grid.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -197,11 +200,11 @@
 <span class="sd">       PyVista grid with data in cell_arrays.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">lons</span> <span class="o">=</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
-        <span class="n">lats</span> <span class="o">=</span> <span class="mf">90.0</span> <span class="o">-</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="n">lons</span> <span class="o">=</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="n">lats</span> <span class="o">=</span> <span class="mf">90.0</span> <span class="o">-</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cube</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="c1"># TODO check if _cell_bounds should be here</span>
-            <span class="n">levels</span> <span class="o">=</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;level_height&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+            <span class="n">levels</span> <span class="o">=</span> <span class="n">_cell_bounds</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">levels</span> <span class="o">=</span> <span class="n">z_scale</span> <span class="o">*</span> <span class="n">levels</span> <span class="o">+</span> <span class="n">z_offset</span>
@@ -227,6 +230,7 @@
     <span class="n">ystride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;vector3d&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take wind vectors in spherical coordinates and create a `pyvista` grid for them.</span>
@@ -256,6 +260,8 @@
 <span class="sd">        the input cube&#39;s coordinates.</span>
 <span class="sd">    label: str, optional</span>
 <span class="sd">        Label for the data within the grid.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -266,9 +272,9 @@
         <span class="n">u</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span>
     <span class="p">),</span> <span class="s2">&quot;Wind components should have the same array size!&quot;</span>
 
-    <span class="n">lons</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
-    <span class="n">lats</span> <span class="o">=</span> <span class="mf">90.0</span> <span class="o">-</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
-    <span class="n">levels</span> <span class="o">=</span> <span class="n">z_scale</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;level_height&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">+</span> <span class="n">z_offset</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="mf">90.0</span> <span class="o">-</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="n">z_scale</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">+</span> <span class="n">z_offset</span>
 
     <span class="c1"># Stride vectors</span>
     <span class="n">lons_s</span> <span class="o">=</span> <span class="n">lons</span><span class="p">[::</span><span class="n">xstride</span><span class="p">]</span>

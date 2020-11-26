@@ -1,0 +1,875 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Loading Unified Model output &mdash; aeolus 0.4.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API reference" href="../api/index.html" />
+    <link rel="prev" title="Physical constants" href="00_Constants.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_Constants.html">Physical constants</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Loading Unified Model output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Minimal-processing-of-loaded-data">Minimal processing of loaded data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">aeolus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>Loading Unified Model output</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/01_Loading_Data.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Loading-Unified-Model-output">
+<h1>Loading Unified Model output<a class="headerlink" href="#Loading-Unified-Model-output" title="Permalink to this headline">¶</a></h1>
+<p>For convenience, <code class="docutils literal notranslate"><span class="pre">aeolus</span></code> provides a way of keeping loaded and processed data within one object along with extra metadata. The object is called <code class="docutils literal notranslate"><span class="pre">Run</span></code> (as in “simulation run”). The code below provides an example of basic usage of <code class="docutils literal notranslate"><span class="pre">Run</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>from pathlib import Path
+
+import iris
+
+from aeolus.core import Run
+</pre></div>
+</div>
+</div>
+<p>Note that you can use either a single filename or a list of filenames, each of which is either a <code class="docutils literal notranslate"><span class="pre">str</span></code> or (recommended) <code class="docutils literal notranslate"><span class="pre">pathlib.Path</span></code> object.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>sample_file = Path.cwd() / &quot;sample_data&quot; / &quot;sample_t1e_2d_mean.pp&quot;
+</pre></div>
+</div>
+</div>
+<p>While instantiating <code class="docutils literal notranslate"><span class="pre">Run</span></code>, it is possible to add a short name, a long description of the experiment; and to specify a planet configuration with relevant constants (see “Physical constants” example for more info).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run = Run(
+    files=sample_file,
+    name=&quot;t1e_example&quot;,
+    description=&quot;This is some sample data from a UM simulation of tidally-locked Trappist-1e planet.&quot;,
+    planet=&quot;trap1e&quot;  # this reads constants from a JSON file
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;aeolus.core.Run at 0x7f3c39042400&gt;
+</pre></div></div>
+</div>
+<p>Constants that have been used in the model:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run.const
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], molar_gas_constant [J K-1 mol-1], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], gravity [m s-2], radius [m], day [s], solar_constant [W m-2], semi_major_axis [au], eccentricity [1], obliquity [degree], dry_air_spec_heat_press [m2 s-2 K-1], dry_air_molecular_weight [kg mol-1])
+</pre></div></div>
+</div>
+<p>The loaded data are stored as a <code class="docutils literal notranslate"><span class="pre">CubeList</span></code> under <code class="docutils literal notranslate"><span class="pre">raw</span></code> attribute.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run.raw
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;iris &#39;Cube&#39; of convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of low_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;]
+</pre></div></div>
+</div>
+<div class="section" id="Minimal-processing-of-loaded-data">
+<h2>Minimal processing of loaded data<a class="headerlink" href="#Minimal-processing-of-loaded-data" title="Permalink to this headline">¶</a></h2>
+<p>The next step might involve some clean-up and post-processing of raw data.</p>
+<p>This is done by creating a function that takes <code class="docutils literal notranslate"><span class="pre">iris.cube.CubeList</span></code> as its 1st argument and returns another <code class="docutils literal notranslate"><span class="pre">iris.cube.CubeList</span></code> as output. The function is then passed to <code class="docutils literal notranslate"><span class="pre">Run.proc_data()</span></code> and its output stored as <code class="docutils literal notranslate"><span class="pre">Run.proc</span></code> attribute.</p>
+<p>For example, the function <code class="docutils literal notranslate"><span class="pre">roll_cube_pm180()</span></code> imported below takes a <code class="docutils literal notranslate"><span class="pre">Cube</span></code> and rolls its longitudes from 0…360 to -180…180.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>from aeolus.grid import roll_cube_pm180, ensure_bounds
+</pre></div>
+</div>
+</div>
+<p>It can then be applied to all <code class="docutils literal notranslate"><span class="pre">raw</span></code> cubes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>def _prepare_cubes(cubelist):
+    &quot;&quot;&quot;Post-process data for easier analysis.&quot;&quot;&quot;
+    # Roll cubes
+    r_cubes = iris.cube.CubeList()
+    for cube in cubelist:
+        r_c = roll_cube_pm180(cube)
+        ensure_bounds(r_c)  # also, ensure that longitudes and latitudes have bounds
+        r_cubes.append(r_c)
+
+    return r_cubes
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run.proc_data(_prepare_cubes)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run.proc
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;iris &#39;Cube&#39; of convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of low_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;,
+&lt;iris &#39;Cube&#39; of stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)&gt;]
+</pre></div></div>
+</div>
+<p>Check that it did what expected.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>print(my_run.raw.extract_strict(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCoord(array([  1.25,   3.75,   6.25,   8.75,  11.25,  13.75,  16.25,  18.75,
+        21.25,  23.75,  26.25,  28.75,  31.25,  33.75,  36.25,  38.75,
+        41.25,  43.75,  46.25,  48.75,  51.25,  53.75,  56.25,  58.75,
+        61.25,  63.75,  66.25,  68.75,  71.25,  73.75,  76.25,  78.75,
+        81.25,  83.75,  86.25,  88.75,  91.25,  93.75,  96.25,  98.75,
+       101.25, 103.75, 106.25, 108.75, 111.25, 113.75, 116.25, 118.75,
+       121.25, 123.75, 126.25, 128.75, 131.25, 133.75, 136.25, 138.75,
+       141.25, 143.75, 146.25, 148.75, 151.25, 153.75, 156.25, 158.75,
+       161.25, 163.75, 166.25, 168.75, 171.25, 173.75, 176.25, 178.75,
+       181.25, 183.75, 186.25, 188.75, 191.25, 193.75, 196.25, 198.75,
+       201.25, 203.75, 206.25, 208.75, 211.25, 213.75, 216.25, 218.75,
+       221.25, 223.75, 226.25, 228.75, 231.25, 233.75, 236.25, 238.75,
+       241.25, 243.75, 246.25, 248.75, 251.25, 253.75, 256.25, 258.75,
+       261.25, 263.75, 266.25, 268.75, 271.25, 273.75, 276.25, 278.75,
+       281.25, 283.75, 286.25, 288.75, 291.25, 293.75, 296.25, 298.75,
+       301.25, 303.75, 306.25, 308.75, 311.25, 313.75, 316.25, 318.75,
+       321.25, 323.75, 326.25, 328.75, 331.25, 333.75, 336.25, 338.75,
+       341.25, 343.75, 346.25, 348.75, 351.25, 353.75, 356.25, 358.75],
+      dtype=float32), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(6371229.0), circular=True)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>print(my_run.proc.extract_strict(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DimCoord(array([-178.75, -176.25, -173.75, -171.25, -168.75, -166.25, -163.75,
+       -161.25, -158.75, -156.25, -153.75, -151.25, -148.75, -146.25,
+       -143.75, -141.25, -138.75, -136.25, -133.75, -131.25, -128.75,
+       -126.25, -123.75, -121.25, -118.75, -116.25, -113.75, -111.25,
+       -108.75, -106.25, -103.75, -101.25,  -98.75,  -96.25,  -93.75,
+        -91.25,  -88.75,  -86.25,  -83.75,  -81.25,  -78.75,  -76.25,
+        -73.75,  -71.25,  -68.75,  -66.25,  -63.75,  -61.25,  -58.75,
+        -56.25,  -53.75,  -51.25,  -48.75,  -46.25,  -43.75,  -41.25,
+        -38.75,  -36.25,  -33.75,  -31.25,  -28.75,  -26.25,  -23.75,
+        -21.25,  -18.75,  -16.25,  -13.75,  -11.25,   -8.75,   -6.25,
+         -3.75,   -1.25,    1.25,    3.75,    6.25,    8.75,   11.25,
+         13.75,   16.25,   18.75,   21.25,   23.75,   26.25,   28.75,
+         31.25,   33.75,   36.25,   38.75,   41.25,   43.75,   46.25,
+         48.75,   51.25,   53.75,   56.25,   58.75,   61.25,   63.75,
+         66.25,   68.75,   71.25,   73.75,   76.25,   78.75,   81.25,
+         83.75,   86.25,   88.75,   91.25,   93.75,   96.25,   98.75,
+        101.25,  103.75,  106.25,  108.75,  111.25,  113.75,  116.25,
+        118.75,  121.25,  123.75,  126.25,  128.75,  131.25,  133.75,
+        136.25,  138.75,  141.25,  143.75,  146.25,  148.75,  151.25,
+        153.75,  156.25,  158.75,  161.25,  163.75,  166.25,  168.75,
+        171.25,  173.75,  176.25,  178.75]), bounds=array([[-180. , -177.5],
+       [-177.5, -175. ],
+       [-175. , -172.5],
+       [-172.5, -170. ],
+       [-170. , -167.5],
+       [-167.5, -165. ],
+       [-165. , -162.5],
+       [-162.5, -160. ],
+       [-160. , -157.5],
+       [-157.5, -155. ],
+       [-155. , -152.5],
+       [-152.5, -150. ],
+       [-150. , -147.5],
+       [-147.5, -145. ],
+       [-145. , -142.5],
+       [-142.5, -140. ],
+       [-140. , -137.5],
+       [-137.5, -135. ],
+       [-135. , -132.5],
+       [-132.5, -130. ],
+       [-130. , -127.5],
+       [-127.5, -125. ],
+       [-125. , -122.5],
+       [-122.5, -120. ],
+       [-120. , -117.5],
+       [-117.5, -115. ],
+       [-115. , -112.5],
+       [-112.5, -110. ],
+       [-110. , -107.5],
+       [-107.5, -105. ],
+       [-105. , -102.5],
+       [-102.5, -100. ],
+       [-100. ,  -97.5],
+       [ -97.5,  -95. ],
+       [ -95. ,  -92.5],
+       [ -92.5,  -90. ],
+       [ -90. ,  -87.5],
+       [ -87.5,  -85. ],
+       [ -85. ,  -82.5],
+       [ -82.5,  -80. ],
+       [ -80. ,  -77.5],
+       [ -77.5,  -75. ],
+       [ -75. ,  -72.5],
+       [ -72.5,  -70. ],
+       [ -70. ,  -67.5],
+       [ -67.5,  -65. ],
+       [ -65. ,  -62.5],
+       [ -62.5,  -60. ],
+       [ -60. ,  -57.5],
+       [ -57.5,  -55. ],
+       [ -55. ,  -52.5],
+       [ -52.5,  -50. ],
+       [ -50. ,  -47.5],
+       [ -47.5,  -45. ],
+       [ -45. ,  -42.5],
+       [ -42.5,  -40. ],
+       [ -40. ,  -37.5],
+       [ -37.5,  -35. ],
+       [ -35. ,  -32.5],
+       [ -32.5,  -30. ],
+       [ -30. ,  -27.5],
+       [ -27.5,  -25. ],
+       [ -25. ,  -22.5],
+       [ -22.5,  -20. ],
+       [ -20. ,  -17.5],
+       [ -17.5,  -15. ],
+       [ -15. ,  -12.5],
+       [ -12.5,  -10. ],
+       [ -10. ,   -7.5],
+       [  -7.5,   -5. ],
+       [  -5. ,   -2.5],
+       [  -2.5,    0. ],
+       [   0. ,    2.5],
+       [   2.5,    5. ],
+       [   5. ,    7.5],
+       [   7.5,   10. ],
+       [  10. ,   12.5],
+       [  12.5,   15. ],
+       [  15. ,   17.5],
+       [  17.5,   20. ],
+       [  20. ,   22.5],
+       [  22.5,   25. ],
+       [  25. ,   27.5],
+       [  27.5,   30. ],
+       [  30. ,   32.5],
+       [  32.5,   35. ],
+       [  35. ,   37.5],
+       [  37.5,   40. ],
+       [  40. ,   42.5],
+       [  42.5,   45. ],
+       [  45. ,   47.5],
+       [  47.5,   50. ],
+       [  50. ,   52.5],
+       [  52.5,   55. ],
+       [  55. ,   57.5],
+       [  57.5,   60. ],
+       [  60. ,   62.5],
+       [  62.5,   65. ],
+       [  65. ,   67.5],
+       [  67.5,   70. ],
+       [  70. ,   72.5],
+       [  72.5,   75. ],
+       [  75. ,   77.5],
+       [  77.5,   80. ],
+       [  80. ,   82.5],
+       [  82.5,   85. ],
+       [  85. ,   87.5],
+       [  87.5,   90. ],
+       [  90. ,   92.5],
+       [  92.5,   95. ],
+       [  95. ,   97.5],
+       [  97.5,  100. ],
+       [ 100. ,  102.5],
+       [ 102.5,  105. ],
+       [ 105. ,  107.5],
+       [ 107.5,  110. ],
+       [ 110. ,  112.5],
+       [ 112.5,  115. ],
+       [ 115. ,  117.5],
+       [ 117.5,  120. ],
+       [ 120. ,  122.5],
+       [ 122.5,  125. ],
+       [ 125. ,  127.5],
+       [ 127.5,  130. ],
+       [ 130. ,  132.5],
+       [ 132.5,  135. ],
+       [ 135. ,  137.5],
+       [ 137.5,  140. ],
+       [ 140. ,  142.5],
+       [ 142.5,  145. ],
+       [ 145. ,  147.5],
+       [ 147.5,  150. ],
+       [ 150. ,  152.5],
+       [ 152.5,  155. ],
+       [ 155. ,  157.5],
+       [ 157.5,  160. ],
+       [ 160. ,  162.5],
+       [ 162.5,  165. ],
+       [ 165. ,  167.5],
+       [ 167.5,  170. ],
+       [ 170. ,  172.5],
+       [ 172.5,  175. ],
+       [ 175. ,  177.5],
+       [ 177.5,  180. ]]), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(5804071.0), circular=True)
+</pre></div></div>
+</div>
+<p>Note that the longitude coordinate is not only shifted by 180 degrees, but has automatically calculated <code class="docutils literal notranslate"><span class="pre">bounds</span></code>.</p>
+<p>In addition, note that <code class="docutils literal notranslate"><span class="pre">coord_system</span></code> in <code class="docutils literal notranslate"><span class="pre">proc</span></code> cubes is different, because it used <code class="docutils literal notranslate"><span class="pre">Run.const</span></code> attribute to redefine the planet radius correctly. By default the loaded raw data has Earth radius in its <code class="docutils literal notranslate"><span class="pre">coord_system</span></code>, so certain calculations (e.g. grid cell areas) might be incorrect.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/index.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="00_Constants.html" class="btn btn-neutral float-left" title="Physical constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, the aeolus developers
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

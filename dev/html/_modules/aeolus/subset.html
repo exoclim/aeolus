@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.subset &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>aeolus.subset &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -161,6 +161,7 @@
   <h1>Source code for aeolus.subset</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Subset cubes using iris constraints.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
 
@@ -238,8 +239,28 @@
 <span class="n">CM_MEAN_CONSTR</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="n">_select_mean</span><span class="p">)</span>
 
 
+<span class="k">class</span> <span class="nc">_ModeDimConstr</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class for storing constraints in `DimConstr` grouped by their mode.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assign all keyword arguments to attributes of this class.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="DimConstr"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr">[docs]</a><span class="k">class</span> <span class="nc">DimConstr</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Container for some useful dimensional constraints.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Container for strict or relaxed dimensional constraints.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Extract cubes that have y and x dimensional coordinates (among others):</span>
+<span class="sd">    &gt;&gt;&gt; dc = DimConstr()</span>
+<span class="sd">    &gt;&gt;&gt; cubelist.extract(dc.relax.yx)</span>
+
+<span class="sd">    Extract cubes that only have model levels, y and x dimensions:</span>
+<span class="sd">    &gt;&gt;&gt; dc = DimConstr()</span>
+<span class="sd">    &gt;&gt;&gt; cubelist.extract(dc.strict.myx)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DimConstr.__init__"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -250,13 +271,17 @@
 <span class="sd">        model: aeolus.model.Model, optional</span>
 <span class="sd">            Model class with relevant coordinate names.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tmyx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">lev</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tzyx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tyx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">myx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">lev</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zyx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">yx</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">yx_r</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
+        <span class="n">abbr_aliases</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;lev&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="s2">&quot;relax&quot;</span><span class="p">]:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">([</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">n</span><span class="p">):</span>
+                        <span class="n">model_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">abbr_aliases</span><span class="p">[</span><span class="n">letter</span><span class="p">]</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">]</span>
+                        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span>
+                            <span class="o">*</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model_seq</span><span class="p">],</span> <span class="n">strict</span><span class="o">=</span><span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;strict&quot;</span><span class="p">)</span>
+                        <span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">_ModeDimConstr</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

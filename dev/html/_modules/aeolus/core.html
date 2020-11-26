@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aeolus.core &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -261,9 +261,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">processed</span><span class="p">:</span>
-                    <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">yx_r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">yx_r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">Region</span><span class="o">.</span><span class="n">from_cube</span><span class="p">(</span><span class="n">cube_yx</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_domain&quot;</span><span class="p">,</span> <span class="n">shift_lons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Run initialised without a domain.&quot;</span><span class="p">)</span>

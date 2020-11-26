@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Science calculations &mdash; aeolus 0.4.4+43.gea8fba0 documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.6+36.gd70d01e documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.4.4+43.gea8fba0
+                0.4.6+36.gd70d01e
               </div>
             
           
@@ -211,19 +211,19 @@
 <h2>Calculus<a class="headerlink" href="#calculus" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="aeolus.calc.d_dx">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dx</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dx</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a derivative w.r.t. x-coordinate.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="aeolus.calc.d_dy">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dy</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dy</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a derivative w.r.t. y-coordinate.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="aeolus.calc.d_dz">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dz</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dz" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">d_dz</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#d_dz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.d_dz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a derivative w.r.t. z-coordinate.</p>
 </dd></dl>
 
@@ -237,7 +237,7 @@ interpolates the result to the grid points of the original cube.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate for differentiation.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate for differentiation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -249,13 +249,13 @@ interpolates the result to the grid points of the original cube.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dx()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dy()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dz()</span></code></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dx</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dy</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.calc.calculus.d_dz</span></code></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="aeolus.calc.div_h">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">div_h</code><span class="sig-paren">(</span><em class="sig-param">i_cube</em>, <em class="sig-param">j_cube</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#div_h"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.div_h" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">div_h</code><span class="sig-paren">(</span><em class="sig-param">i_cube</em>, <em class="sig-param">j_cube</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/calculus.html#div_h"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.div_h" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate horizontal divergence.</p>
 <p>Note: currently works only in spherical coordinates.</p>
 <dl class="field-list simple">
@@ -263,7 +263,7 @@ interpolates the result to the grid points of the original cube.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>i_cube</strong> – i-component (e.g. u-wind)</p></li>
 <li><p><strong>j_cube</strong> – j-component (e.g. v-wind)</p></li>
-<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
+<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
@@ -294,7 +294,7 @@ to get it from the cube metadata.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate for integration.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate for integration.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -311,14 +311,14 @@ to get it from the cube metadata.</p></li>
 <h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="aeolus.calc.cumsum">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">cumsum</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">axis</em>, <em class="sig-param">axis_weights=False</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#cumsum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.cumsum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">cumsum</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">axis</em>, <em class="sig-param">axis_weights=False</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#cumsum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.cumsum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cumulative sum of a cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Coordinate axis of operation (t|z|y|x).</p></li>
-<li><p><strong>axis_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, multiply data by the coordinate spacings.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Coordinate axis of operation (t|z|y|x).</p></li>
+<li><p><strong>axis_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, multiply data by the coordinate spacings.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
 </ul>
 </dd>
@@ -332,81 +332,14 @@ to get it from the cube metadata.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="aeolus.calc.spatial">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">spatial</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">aggr</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#spatial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.spatial" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate spatial statistic with geographic grid weights.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
-<li><p><strong>aggr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Statistical aggregator (see iris.analysis for available aggregators).</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Collapsed cube.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spatial</span><span class="p">(</span><span class="n">my_data_cube</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aeolus.calc.spatial_quartiles">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">spatial_quartiles</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#spatial_quartiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.spatial_quartiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate quartiles over horizontal coordinates.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aeolus.calc.minmaxdiff">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">minmaxdiff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cubelist</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#minmaxdiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.minmaxdiff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Spatial maximum minus spatial minimum for a given cube.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Cube name.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Difference between the extrema with collapsed spatial dimensions.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aeolus.calc.region_mean_diff">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">region_mean_diff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cubelist</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">region_a</span></em>, <em class="sig-param"><span class="n">region_b</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#region_mean_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.region_mean_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Difference between averages over two regions for a given cube.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Cube name.</p></li>
-<li><p><strong>region_a</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – First region.</p></li>
-<li><p><strong>region_b</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – Second region.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Difference between the region averages with collapsed spatial dimensions.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
-</dd>
-</dl>
+<dt id="aeolus.calc.last_n_day_mean">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">last_n_day_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">days=365</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#last_n_day_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.last_n_day_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average the cube over the last <cite>n</cite> days of its time dimension.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="aeolus.calc.meridional_mean">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">meridional_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#meridional_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.meridional_mean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">meridional_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#meridional_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.meridional_mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate cube’s meridional average.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -417,6 +350,26 @@ to get it from the cube metadata.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Collapsed cube.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.minmaxdiff">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">minmaxdiff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cubelist</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#minmaxdiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.minmaxdiff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatial maximum minus spatial minimum for a given cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Cube name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Difference between the extrema with collapsed spatial dimensions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
@@ -438,8 +391,94 @@ to get it from the cube metadata.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="aeolus.calc.region_mean_diff">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">region_mean_diff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cubelist</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">region_a</span></em>, <em class="sig-param"><span class="n">region_b</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#region_mean_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.region_mean_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Difference between averages over two regions for a given cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Cube name.</p></li>
+<li><p><strong>region_a</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – First region.</p></li>
+<li><p><strong>region_b</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – Second region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Difference between the region averages with collapsed spatial dimensions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.spatial">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">spatial</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">aggr</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#spatial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.spatial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate spatial statistic with geographic grid weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>aggr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Statistical aggregator (see iris.analysis for available aggregators).</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Collapsed cube.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spatial</span><span class="p">(</span><span class="n">my_data_cube</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.spatial_mean">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">spatial_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#spatial_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.spatial_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for spatial(cube, “mean”).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.spatial_quartiles">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">spatial_quartiles</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#spatial_quartiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.spatial_quartiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate quartiles over horizontal coordinates.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.time_mean">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">time_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#time_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.time_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time average of a cube.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.vertical_mean">
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">vertical_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">weight_by=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#vertical_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.vertical_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vertical mean of a cube with optional weighting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube to average.</p></li>
+<li><p><strong>weight_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a><em>, </em><em>optional</em>) – Coordinate of the given cube or another cube used for weighting.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Collapsed cube.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="aeolus.calc.zonal_mean">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">zonal_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#zonal_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.zonal_mean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">zonal_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#zonal_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.zonal_mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate cube’s zonal average.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -457,39 +496,12 @@ to get it from the cube metadata.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="aeolus.calc.last_n_day_mean">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">last_n_day_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">days=365</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#last_n_day_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.last_n_day_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Average the cube over the last <cite>n</cite> days of its time dimension.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aeolus.calc.vertical_mean">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">vertical_mean</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">weight_by=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#vertical_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.vertical_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Vertical mean of a cube with optional weighting.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube to average.</p></li>
-<li><p><strong>weight_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a><em>, </em><em>optional</em>) – Coordinate of the given cube or another cube used for weighting.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Collapsed cube.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="section" id="diagnostics">
 <h2>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="aeolus.calc.air_density">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">air_density</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#air_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.air_density" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">air_density</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#air_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.air_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get air density from the given cube list.</p>
 <p>If not present, it is attempted to calculate it from pressure and temperature.</p>
 <dl class="field-list simple">
@@ -512,7 +524,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.air_temperature">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">air_temperature</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#air_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.air_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">air_temperature</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#air_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.air_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the real temperature from the given cube list.</p>
 <p>If not present, it is attempted to calculate it from other variables,
 Exner pressure or air pressure, and potential temperature.</p>
@@ -536,7 +548,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.bond_albedo">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">bond_albedo</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#bond_albedo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.bond_albedo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">bond_albedo</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#bond_albedo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.bond_albedo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bold albedo.</p>
 <div class="math notranslate nohighlight">
 \[4 \frac{OSR_{TOA}}{S_{0}}\]</div>
@@ -560,7 +572,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.dry_lapse_rate">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">dry_lapse_rate</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#dry_lapse_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.dry_lapse_rate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">dry_lapse_rate</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#dry_lapse_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.dry_lapse_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dry lapse rate, or the change of air temperature with altitude.</p>
 <div class="math notranslate nohighlight">
 \[\gamma = \partial T_{air} / \partial z\]</div>
@@ -582,7 +594,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.flux">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">flux</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">quantity</em>, <em class="sig-param">axis</em>, <em class="sig-param">weight_by_density=True</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.flux" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">flux</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">quantity</em>, <em class="sig-param">axis</em>, <em class="sig-param">weight_by_density=True</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.flux" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate horizontal or vertical flux of some quantity.</p>
 <div class="math notranslate nohighlight">
 \[F_{x} = u (\rho q),
@@ -592,9 +604,9 @@ F_{z} = w (\rho q)\]</div>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>quantity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris.html#iris.Constraint" title="(in Iris v2.2)"><em>iris.Constraint</em></a>) – Quantity (present in the cube list).</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Axis of the flux component (x|y|z)</p></li>
-<li><p><strong>weight_by_density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Multiply by a cube of air density (must be present in the input cube list).</p></li>
+<li><p><strong>quantity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris.html#iris.Constraint" title="(in Iris v2.2)"><em>iris.Constraint</em></a>) – Quantity (present in the cube list).</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Axis of the flux component (x|y|z)</p></li>
+<li><p><strong>weight_by_density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Multiply by a cube of air density (must be present in the input cube list).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -609,7 +621,7 @@ F_{z} = w (\rho q)\]</div>
 
 <dl class="py function">
 <dt id="aeolus.calc.geopotential_height">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">geopotential_height</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#geopotential_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.geopotential_height" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">geopotential_height</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#geopotential_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.geopotential_height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get geopotential height from the given cube list.</p>
 <p>If not present, the altitude coordinate is transformed into a cube.</p>
 <dl class="field-list simple">
@@ -632,7 +644,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.ghe_norm">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">ghe_norm</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#ghe_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.ghe_norm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">ghe_norm</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#ghe_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.ghe_norm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalised greenhouse effect parameter.</p>
 <div class="math notranslate nohighlight">
 \[GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^{1/4}\]</div>
@@ -654,7 +666,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.heat_redist_eff">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">heat_redist_eff</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">region_a</em>, <em class="sig-param">region_b</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#heat_redist_eff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.heat_redist_eff" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">heat_redist_eff</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">region_a</em>, <em class="sig-param">region_b</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#heat_redist_eff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.heat_redist_eff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Heat redistribution efficiency (Leconte et al. 2013).</p>
 <div class="math notranslate nohighlight">
 \[\eta=\frac{OLR_{TOA,night}}{OLR_{TOA,day}}\]</div>
@@ -678,7 +690,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.horiz_wind_cmpnts">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">horiz_wind_cmpnts</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#horiz_wind_cmpnts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.horiz_wind_cmpnts" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">horiz_wind_cmpnts</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#horiz_wind_cmpnts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.horiz_wind_cmpnts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract u and v wind components from a cube list and interpolate v on u’s grid if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -698,13 +710,13 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.precip_sum">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">precip_sum</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">ptype='total'</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#precip_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.precip_sum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">precip_sum</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">ptype='total'</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#precip_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.precip_sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a sum of different types of precipitation [<span class="math notranslate nohighlight">\(mm~day^{-1}\)</span>].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
+<li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
 <li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a <cite>ScalarCube</cite> of <cite>condensible_density</cite> as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -721,7 +733,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.sfc_net_energy">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">sfc_net_energy</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sfc_net_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.sfc_net_energy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">sfc_net_energy</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sfc_net_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.sfc_net_energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate domain-average surface energy flux.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -741,7 +753,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.sfc_water_balance">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">sfc_water_balance</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sfc_water_balance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.sfc_water_balance" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">sfc_water_balance</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sfc_water_balance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.sfc_water_balance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate domain-average precipitation minus evaporation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -763,7 +775,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.superrotation_index">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">superrotation_index</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#superrotation_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.superrotation_index" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">superrotation_index</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">const=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#superrotation_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.superrotation_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Local superrotation index.</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}s = \frac{m}{\Omega a^2} - 1,\\m = a cos\phi(\Omega a cos\phi + u)\end{aligned}\end{align} \]</div>
@@ -787,7 +799,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.toa_cloud_radiative_effect">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_cloud_radiative_effect</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">kind</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_cloud_radiative_effect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_cloud_radiative_effect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_cloud_radiative_effect</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">kind</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_cloud_radiative_effect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_cloud_radiative_effect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate domain-average TOA cloud radiative effect (CRE).</p>
 <div class="math notranslate nohighlight">
 \[CRE_{TOA} = F_{up,clear-sky} - F_{up,all-sky}\]</div>
@@ -795,7 +807,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes</p></li>
-<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Shortwave (‘sw’), longwave (‘lw’), or ‘total’ CRE</p></li>
+<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Shortwave (‘sw’), longwave (‘lw’), or ‘total’ CRE</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -809,7 +821,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.toa_eff_temp">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_eff_temp</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_eff_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_eff_temp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_eff_temp</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_eff_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_eff_temp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate effective temperature from TOA OLR.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -829,7 +841,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.toa_net_energy">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_net_energy</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_net_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_net_energy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">toa_net_energy</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#toa_net_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.toa_net_energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate domain-average TOA energy flux.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -849,7 +861,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.calc.water_path">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">water_path</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">kind='water_vapour'</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#water_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.water_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">water_path</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">kind='water_vapour'</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#water_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.water_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Water vapour or condensate path, i.e. a vertical integral of a water phase.</p>
 <div class="math notranslate nohighlight">
 \[WP = \int_{z_{sfc}}^{z_{top}} \rho q dz\]</div>
@@ -857,7 +869,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing appropriate mixing ratio and air density.</p></li>
-<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Short name of the water phase to be integrated.
+<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Short name of the water phase to be integrated.
 Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <cite>cloud_water</cite> is the sum of liquid and ice phases.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.
@@ -878,7 +890,7 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <h2>Horizontal fluxes<a class="headerlink" href="#horizontal-fluxes" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="aeolus.calc.net_horizontal_flux_to_region">
-<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">net_horizontal_flux_to_region</code><span class="sig-paren">(</span><em class="sig-param">scalar_cube</em>, <em class="sig-param">region</em>, <em class="sig-param">u</em>, <em class="sig-param">v</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">vertical_constraint=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(53 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/flux_h.html#net_horizontal_flux_to_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.net_horizontal_flux_to_region" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aeolus.calc.</code><code class="sig-name descname">net_horizontal_flux_to_region</code><span class="sig-paren">(</span><em class="sig-param">scalar_cube</em>, <em class="sig-param">region</em>, <em class="sig-param">u</em>, <em class="sig-param">v</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">vertical_constraint=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/flux_h.html#net_horizontal_flux_to_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.calc.net_horizontal_flux_to_region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate horizontal fluxes of <cite>scalar_cube</cite> quantity and add them to get the net result.</p>
 </dd></dl>
 
