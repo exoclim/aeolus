@@ -33,6 +33,7 @@ __all__ = (
     "get_dim_coord",
     "isel",
     "interp_all_to_pres_lev",
+    "interp_to_cube_time",
     "interp_to_pres_lev",
     "interp_to_single_pres_lev",
     "nearest_coord_value",
@@ -640,7 +641,7 @@ def interp_to_single_pres_lev(
     Returns
     -------
     iris.cube.Cube
-        Cube with collapsed spatial dimensions.
+        Cube on a single pressure level.
     """
     if const is None:
         const = cubelist[0].attributes["planet_conf"]
@@ -651,6 +652,37 @@ def interp_to_single_pres_lev(
     out = interp_to_pres_lev(
         cubelist, constraint, [p_tgt.data], interpolator=interpolator, model=model
     )
+    return out
+
+
+def interp_to_cube_time(cube_src, cube_tgt, model=um):
+    """
+    Linearly interpolate `cube_src` to `cube_tgt` along the time dimension (`model.t`).
+
+    Forecast period is copied from `cube_tgt`.
+
+    Parameters
+    ----------
+    cube_src: iris.cube.Cube
+        Cube to interpolate.
+    cube_tgt: iris.cube.Cube
+        Cube with time dimension to interpolate to.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube with the time dimension equal to `cube_tgt`.
+    """
+    target = [(model.t, cube_tgt.coord(model.t).points)]
+    out = cube_src.interpolate(target, iris.analysis.Linear())
+    # Replace time coordinates, because interpolation removes bounds.
+    for coord in ["t", "fct_prd", "fcst_ref"]:
+        try:
+            out.replace_coord(cube_tgt.coord(getattr(model, coord)))
+        except (AttributeError, CoNotFound):
+            pass
     return out
 
 

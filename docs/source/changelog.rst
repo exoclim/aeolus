@@ -10,6 +10,8 @@ Changelog
 
 * Move to conda-forge for building the package
 
+* Replace TravisCI with GitHub Actions
+
 * Restructure the package:
   
   - the library is now in `src/aeolus`
@@ -22,6 +24,7 @@ Changelog
 * New `coord` functions:
 
   - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
+  - Add a function to interpolate one cube to another along the time dimension (`interp_to_cube_time`)
 
 * Other changes:
 
