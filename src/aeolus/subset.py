@@ -125,7 +125,7 @@ class DimConstr:
 
 
 def unique_cubes(cubelist):
-    """Remove duplicate cubes from `iris.cube.CubeList`"""
+    """Remove duplicate cubes from `iris.cube.CubeList`."""
     if len(cubelist) > 1:
         out = iris.cube.CubeList([cubelist[0]])
         for src_cube in cubelist[1:]:
