@@ -15,6 +15,7 @@ __all__ = (
     "extract_last_month",
     "extract_last_n_days",
     "l_range_constr",
+    "unique_cubes",
 )
 
 
@@ -121,3 +122,19 @@ class DimConstr:
                             *[getattr(model, i) for i in model_seq], strict=(mode == "strict")
                         )
             setattr(self, mode, _ModeDimConstr(**attrs))
+
+
+def unique_cubes(cubelist):
+    """Remove duplicate cubes from `iris.cube.CubeList`"""
+    if len(cubelist) > 1:
+        out = iris.cube.CubeList([cubelist[0]])
+        for src_cube in cubelist[1:]:
+            exists = False
+            for dest_cube in out:
+                if src_cube == dest_cube:
+                    exists = True
+            if not exists:
+                out.append(src_cube)
+        return out
+    else:
+        return cubelist

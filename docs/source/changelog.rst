@@ -26,6 +26,10 @@ Changelog
   - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
   - Add a function to interpolate one cube to another along the time dimension (`interp_to_cube_time`)
 
+* New `subset` functions:
+
+  - Add a function to filter out duplicated cubes from a cubelist: `unique_cubes()`
+
 * Other changes:
 
   - Append names to `model.um`
