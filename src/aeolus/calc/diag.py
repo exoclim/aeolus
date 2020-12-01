@@ -19,6 +19,7 @@ from ..subset import _dim_constr
 
 __all__ = (
     "air_density",
+    "air_potential_temperature",
     "air_temperature",
     "bond_albedo",
     "dry_lapse_rate",
@@ -93,6 +94,53 @@ def air_temperature(cubelist, const=None, model=um):
         temp.rename(model.temp)
         temp.convert_units("K")
         return temp
+
+
+def air_potential_temperature(cubelist, const=None, model=um):
+    """
+    Get the potential temperature from the given cube list.
+
+    If not present, it is attempted to calculate it from other variables,
+    Exner pressure or air pressure, and real temperature.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing temperature.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        If not given, an attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of air potential temperature.
+    """
+    try:
+        return cubelist.extract_strict(model.thta)
+    except ConMisErr:
+        try:
+            temp = cubelist.extract_strict(model.temp)
+        except ConMisErr:
+            raise MissingCubeError(f"Unable to get air potential temperature from {cubelist}")
+
+        if len(cubelist.extract(model.exner)) == 1:
+            exner = cubelist.extract_strict(model.exner)
+        elif len(cubelist.extract(model.pres)) == 1:
+            if const is None:
+                const = temp.attributes["planet_conf"]
+            pres = cubelist.extract(model.pres, strict=True)
+            exner = (pres / const.reference_surface_pressure.asc) ** (
+                const.dry_air_gas_constant / const.dry_air_spec_heat_press
+            ).data
+        else:
+            raise MissingCubeError(f"Unable to get air potential temperature from {cubelist}")
+        thta = temp / exner
+        thta.rename(model.thta)
+        thta.convert_units("K")
+        return thta
 
 
 def air_density(cubelist, const=None, model=um):

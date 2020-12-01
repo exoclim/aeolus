@@ -20,6 +20,7 @@ Changelog
 * New `calc` functions:
 
   - Add shortcut functions `spatial_mean()` and `time_mean()`
+  - Add `air_potential_temperature()`
 
 * New `coord` functions:
 

@@ -2,6 +2,7 @@
 from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
     air_density,
+    air_potential_temperature,
     air_temperature,
     bond_albedo,
     dry_lapse_rate,
@@ -37,6 +38,7 @@ from .stats import (
 
 __all__ = (
     "air_density",
+    "air_potential_temperature",
     "air_temperature",
     "bond_albedo",
     "cumsum",
