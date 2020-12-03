@@ -19,6 +19,7 @@ Changelog
 
 * New `calc` functions:
 
+  - Add a decorator to update cube metadata, `update_metadata()`
   - Add shortcut functions `spatial_mean()` and `time_mean()`
   - Add `air_potential_temperature()`
 

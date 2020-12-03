@@ -1,4 +1,8 @@
 """Science calculations."""
+import functools
+
+import iris
+
 from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
     air_density,
@@ -77,3 +81,27 @@ __all__ = (
     "water_path",
     "zonal_mean",
 )
+
+
+def update_metadata(name=None, units=None):
+    """Update metadata of a cube returned by a function."""
+
+    def update_name_units(cube):
+        """Update name and convert units."""
+        cube.rename(name)
+        cube.convert_units(units)
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            # Call the decorated function
+            out = func(*args, **kwargs)
+            if isinstance(out, iris.cube.Cube):
+                update_name_units(out)
+            elif isinstance(out, iris.cube.CubeList):
+                [update_name_units(cube) for cube in out]
+            return out
+
+        return wrapper
+
+    return decorator
