@@ -26,6 +26,8 @@ Changelog
 
   - Add functions to interpolate cubes to pressure levels (depend on python-stratify package)
   - Add a function to interpolate one cube to another along the time dimension (`interp_to_cube_time`)
+  - Add a container to store common coordinates
+  - Add `check_coords()`, `get_xy_coords()`
 
 * New `subset` functions:
 

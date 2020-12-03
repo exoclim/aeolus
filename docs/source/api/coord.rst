@@ -1,9 +1,11 @@
 Cube coordinate functionality
 =============================
+.. autoclass:: aeolus.coord.CoordContainer
 .. autofunction:: aeolus.coord.add_binned_coord
 .. autofunction:: aeolus.coord.add_cyclic_point_to_cube
 .. autofunction:: aeolus.coord.add_planet_calendar 
 .. autofunction:: aeolus.coord.area_weights_cube
+.. autofunction:: aeolus.coord.check_coords
 .. autofunction:: aeolus.coord.coarsen_cube
 .. autofunction:: aeolus.coord.coord_to_cube
 .. autofunction:: aeolus.coord.coord_delta_to_cube
@@ -11,6 +13,7 @@ Cube coordinate functionality
 .. autofunction:: aeolus.coord.get_cube_datetimes
 .. autofunction:: aeolus.coord.get_cube_rel_days
 .. autofunction:: aeolus.coord.get_dim_coord
+.. autofunction:: aeolus.coord.get_xy_coords
 .. autofunction:: aeolus.coord.isel
 .. autofunction:: aeolus.coord.interp_all_to_pres_lev
 .. autofunction:: aeolus.coord.interp_to_cube_time

@@ -15,15 +15,17 @@ from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 import numpy as np
 
 from .const import get_planet_radius
-from .exceptions import AeolusWarning, ArgumentError, NotFoundError
+from .exceptions import AeolusWarning, ArgumentError, BadCoordinateError, NotFoundError
 from .model import um
 
 
 __all__ = (
+    "CoordContainer",
     "add_binned_coord",
     "add_cyclic_point_to_cube",
     "add_planet_calendar",
     "area_weights_cube",
+    "check_coords",
     "coarsen_cube",
     "coord_delta_to_cube",
     "coord_to_cube",
@@ -31,6 +33,7 @@ __all__ = (
     "get_cube_datetimes",
     "get_cube_rel_days",
     "get_dim_coord",
+    "get_xy_coords",
     "isel",
     "interp_all_to_pres_lev",
     "interp_to_cube_time",
@@ -130,6 +133,37 @@ def _is_longitude_global(lon_points):
     case_0_360 = ((lon_points[0] - dx) <= 0) and ((lon_points[-1] + dx) >= 360)
     case_pm180 = ((lon_points[0] - dx) <= -180) and ((lon_points[-1] + dx) >= 180)
     return case_0_360 or case_pm180
+
+
+class CoordContainer:
+    """
+    Coordinate container.
+
+    Attributes
+    ----------
+    {x,y,z,t}: iris.coord.Coord
+        Coordinates in the respective dimensions
+    """
+
+    def __init__(self, cubes, model=um):
+        """
+        Instantiate an `AtmosFlow` object.
+
+        Parameters
+        ----------
+        cubes: iris.cube.CubeList
+            Atmospheric fields with necessary coordinates.
+        model: aeolus.model.Model, optional
+            Model class with relevant coordinate and variable names.
+        """
+        check_coords(cubes)
+        # self.x = cubes[0].coord(model.x)
+        self.model = model
+        for axis in ["x", "y", "z", "t"]:
+            try:
+                setattr(self, axis, cubes[0].coord(axis=axis, dim_coords=True))
+            except CoNotFound:
+                pass
 
 
 def add_binned_coord(cube, coord_name, bins):
@@ -314,6 +348,29 @@ def area_weights_cube(cube, r_planet=None, normalize=False, model=um):
         aw.rename("grid_cell_area")
         aw.units = "m**2"
     return aw
+
+
+def check_coords(cubes):
+    """Check the cubes coordinates for consistency."""
+    # get the names of all coords binned into useful comparison groups
+    coord_comparison = iris.analysis.coord_comparison(*cubes)
+
+    bad_coords = coord_comparison["ungroupable_and_dimensioned"]
+    if bad_coords:
+        raise BadCoordinateError(
+            "Coordinates found in one cube that describe "
+            "a data dimension which weren't in the other "
+            "cube ({}), try removing this coordinate.".format(
+                ", ".join(group.name() for group in bad_coords)
+            )
+        )
+
+    bad_coords = coord_comparison["resamplable"]
+    if bad_coords:
+        raise BadCoordinateError(
+            "Some coordinates are different ({}), "
+            "consider resampling.".format(", ".join(group.name() for group in bad_coords))
+        )
 
 
 def coarsen_cube(cube, lon_bins, lat_bins, model=um):
@@ -550,6 +607,22 @@ def get_dim_coord(cube, axis):
 
     # If no coordinate matches raise an error
     raise NotFoundError(f"Cube has no coordinate for axis {axis}")
+
+
+def get_xy_coords(cube, model=um):
+    """
+    Return X and Y coordinate tuple for a given `cube` using names from a given `model` container.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Input cube.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate and variable names.
+    """
+    y_coord = cube.coord(model.y)
+    x_coord = cube.coord(model.x)
+    return (x_coord, y_coord)
 
 
 def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):

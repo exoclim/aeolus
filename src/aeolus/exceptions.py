@@ -64,3 +64,9 @@ class MissingCubeError(AeolusError):
     """Raised when cubes required for a calculation are missing."""
 
     pass
+
+
+class BadCoordinateError(AeolusError):
+    """Raised when coordinates are inconsistent."""
+
+    pass
