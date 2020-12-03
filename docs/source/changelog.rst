@@ -6,7 +6,7 @@ Changelog
 0.4.7
 -----
 
-:Date: TBA
+:Date: 03 December 2020
 
 * Move to conda-forge for building the package
 
