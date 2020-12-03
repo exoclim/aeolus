@@ -6,6 +6,7 @@ import iris
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 from .calc import diag
+from .calc.meta import copy_doc
 from .const import init_const
 from .coord import CoordContainer
 from .exceptions import AeolusWarning, ArgumentError
@@ -110,6 +111,7 @@ class AtmosFlow:
         del kwargs, key
 
     def __getitem__(self, key):
+        """Redirect self[key] to self.key."""
         return self.__getattribute__(key)
 
     def _update_planet(self, planet="", const_dir=None):
@@ -134,6 +136,7 @@ class AtmosFlow:
                     coord.coord_system = self._coord_system
 
     @property
+    @copy_doc(diag.wind_speed)
     def wind_speed(self):
         cmpnts = []
         for cmpnt_key in ["u", "v", "w"]:
