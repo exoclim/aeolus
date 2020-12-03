@@ -1,6 +1,5 @@
 """Operations in tidally-locked coordinates."""
 import iris
-
 from iris.analysis.cartography import _meshgrid, rotate_pole, rotate_winds
 from iris.coord_systems import RotatedGeogCS
 
