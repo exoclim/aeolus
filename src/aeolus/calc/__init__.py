@@ -39,6 +39,11 @@ from .stats import (
     vertical_mean,
     zonal_mean,
 )
+from .tl import (
+    regrid_to_rotated_pole_coordinates,
+    regrid_to_tidally_locked_coordinates,
+    rotate_winds_to_tidally_locked_coordinates,
+)
 
 __all__ = (
     "air_density",
@@ -67,6 +72,9 @@ __all__ = (
     "precip_sum",
     "region_mean_diff",
     "region_mean_diff",
+    "regrid_to_rotated_pole_coordinates",
+    "regrid_to_tidally_locked_coordinates",
+    "rotate_winds_to_tidally_locked_coordinates",
     "sfc_net_energy",
     "sfc_water_balance",
     "spatial",

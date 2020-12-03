@@ -49,3 +49,9 @@ Diagnostics
 Horizontal fluxes
 -----------------
 .. autofunction:: aeolus.calc.net_horizontal_flux_to_region 
+
+Tidally-locked coordinates
+--------------------------
+.. autofunction:: aeolus.calc.regrid_to_rotated_pole_coordinates
+.. autofunction:: aeolus.calc.regrid_to_tidally_locked_coordinates
+.. autofunction:: aeolus.calc.rotate_winds_to_tidally_locked_coordinates

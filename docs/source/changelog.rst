@@ -22,6 +22,7 @@ Changelog
   - Add a decorator to update cube metadata, `update_metadata()`
   - Add shortcut functions `spatial_mean()` and `time_mean()`
   - Add `air_potential_temperature()`
+  - Add functions to rotate and regrid variables to "tidally-locked" coordinates
 
 * New `coord` functions:
 
