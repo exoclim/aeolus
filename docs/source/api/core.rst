@@ -1,5 +1,6 @@
 Core hierarchy
 ==============
-The core API is built on top of `iris` package.
+Core classes to store and process model output.
 
+.. autoclass:: aeolus.core.AtmosFlow
 .. autoclass:: aeolus.core.Run

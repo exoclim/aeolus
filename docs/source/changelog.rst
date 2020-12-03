@@ -17,6 +17,10 @@ Changelog
   - the library is now in `src/aeolus`
   - tests are now in `tests/`
 
+* Core classes:
+
+  - Add `AtmosFlow`
+
 * New `calc` functions:
 
   - Add a decorator to update cube metadata, `update_metadata()`

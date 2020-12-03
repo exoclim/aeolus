@@ -3,14 +3,145 @@ from pathlib import Path
 from warnings import warn
 
 import iris
+from iris.exceptions import ConstraintMismatchError as ConMisErr
 
+from .calc import diag
 from .const import init_const
+from .coord import CoordContainer
 from .exceptions import AeolusWarning, ArgumentError
 from .model import um
 from .region import Region
 from .subset import DimConstr
 
-__all__ = ("Run",)
+__all__ = (
+    "AtmosFlow",
+    "Run",
+)
+
+
+class AtmosFlow:
+    """
+    Atmospheric Flow.
+
+    Used to store and calculate atmospheric fields from gridded model output.
+    Derived quantities are stored as cached properties to save computational
+    time.
+
+    Uses spherical coordinates.
+
+    Attributes
+    ----------
+    name: str
+        The run's name.
+    description: str
+        A description of the run.
+    const: aeolus.const.ConstContainer
+        Physical constants used in calculations for this run.
+    model: aeolus.model.Model, optional
+        Model class with relevant coordinate and variable names.
+    """
+
+    def __init__(
+        self,
+        cubes=None,
+        name="",
+        description="",
+        planet="",
+        const_dir=None,
+        model=um,
+        model_type=None,
+        timestep=None,
+        processed=False,
+    ):
+        """
+        Instantiate an `AtmosFlow` object.
+
+        Parameters
+        ----------
+        cubes: iris.cube.CubeList
+            Atmospheric fields.
+        name: str, optional
+            The name of this `AtmosFlow`.
+        description: str, optional
+            This is not used internally; it is solely for the user's information.
+        planet: str, optional
+            Planet configuration. This is used to get appropriate physical constants.
+            If not given, Earth physical constants are initialised.
+        const_dir: pathlib.Path, optional
+            Path to a folder with files containing constants for a specific planet.
+        model: aeolus.model.Model, optional
+            Model class with relevant coordinate and variable names.
+        model_type: str, optional
+            Type of the model run, global or LAM.
+        timestep: int, optional
+            Model time step in s.
+
+        See also
+        --------
+        aeolus.const.init_const, aeolus.core.Run
+        """
+        self._cubes = cubes
+        self.name = name
+        self.description = description
+
+        # Planetary constants
+        self._update_planet(planet=planet, const_dir=const_dir)
+        self._add_planet_conf_to_cubes()  # TODO: remove?
+
+        # Model-specific names of variables and coordinates
+        self.model = model
+        self.dim_constr = DimConstr(model=self.model)
+
+        # If the model is global or LAM (nested) and what its driving model is
+        self.model_type = model_type
+        self.timestep = timestep
+
+        # Common coordinates
+        self.coord = CoordContainer(self._cubes)
+
+        # Variables
+        kwargs = {}
+        for key in model.__dataclass_fields__:
+            try:
+                kwargs[key] = self._cubes.extract_strict(getattr(model, key))
+            except ConMisErr:
+                pass
+        self.__dict__.update(**kwargs)
+        del kwargs, key
+
+    def __getitem__(self, key):
+        return self.__getattribute__(key)
+
+    def _update_planet(self, planet="", const_dir=None):
+        """Add or update planetary constants."""
+        self.planet = planet
+        self.const = init_const(planet, directory=const_dir)
+        try:
+            self.const.radius.convert_units("m")
+            self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
+        except AttributeError:
+            self._coord_system = None
+            warn("Run initialised without a coordinate system.", AeolusWarning)
+
+    def _add_planet_conf_to_cubes(self):
+        """Add or update planetary constants container to cube attributes within `self.proc`."""
+        for cube in self._cubes:
+            # add constants to cube attributes
+            cube.attributes["planet_conf"] = self.const
+            for coord in cube.coords():
+                if coord.coord_system:
+                    # Replace coordinate system with the planet radius given in `self.const`
+                    coord.coord_system = self._coord_system
+
+    @property
+    def wind_speed(self):
+        cmpnts = []
+        for cmpnt_key in ["u", "v", "w"]:
+            try:
+                cmpnts.append(self[cmpnt_key])
+            except AttributeError:
+                pass
+        return diag.wind_speed(*cmpnts)
 
 
 class Run:

@@ -729,5 +729,5 @@ def wind_speed(*components):
     .. math::
         \sqrt{u^2 + v^2 + w^2}
     """
-    out = sum([cube**2 for cube in components]) ** 0.5
+    out = sum([cube ** 2 for cube in components]) ** 0.5
     return out
