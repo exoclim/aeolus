@@ -35,6 +35,7 @@ def update_metadata(name=None, units=None):
 
 def copy_doc(original):
     """Copy docstring from another function."""
+
     def wrapper(func):
         func.__doc__ = original.__doc__
         return func
