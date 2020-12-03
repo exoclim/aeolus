@@ -6,6 +6,7 @@ from iris.analysis.calculus import _coord_cos, _curl_differentiate, _curl_regrid
 
 import numpy as np
 
+from .meta import update_metadata
 from ..const import get_planet_radius
 from ..exceptions import NotYetImplementedError
 from ..model import um
@@ -65,6 +66,7 @@ def deriv(cube, coord):
     return res
 
 
+@update_metadata(name="horizontal_divergence")
 def div_h(i_cube, j_cube, r_planet=None, model=um):
     r"""
     Calculate horizontal divergence.
@@ -148,7 +150,6 @@ def div_h(i_cube, j_cube, r_planet=None, model=um):
         div = div.regrid(i_cube, iris.analysis.Linear())
     else:
         raise NotYetImplementedError("Non-spherical coordinates are not implemented yet.")
-    div.rename("horizontal_divergence")
     return div
 
 

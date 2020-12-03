@@ -8,6 +8,7 @@ from iris.exceptions import ConstraintMismatchError as ConMisErr
 import numpy as np
 
 from .calculus import d_dz, integrate
+from .meta import update_metadata
 from .stats import spatial_mean
 from ..const import init_const
 from ..const.const import ScalarCube
@@ -49,6 +50,7 @@ def _precip_name_mapping(model=um):
     }
 
 
+@update_metadata(units="K")
 def air_temperature(cubelist, const=None, model=um):
     """
     Get the real temperature from the given cube list.
@@ -92,10 +94,10 @@ def air_temperature(cubelist, const=None, model=um):
             raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
         temp = thta * exner
         temp.rename(model.temp)
-        temp.convert_units("K")
         return temp
 
 
+@update_metadata(units="K")
 def air_potential_temperature(cubelist, const=None, model=um):
     """
     Get the potential temperature from the given cube list.
@@ -143,6 +145,7 @@ def air_potential_temperature(cubelist, const=None, model=um):
         return thta
 
 
+@update_metadata(units="kg m-3")
 def air_density(cubelist, const=None, model=um):
     """
     Get air density from the given cube list.
@@ -174,13 +177,13 @@ def air_density(cubelist, const=None, model=um):
                 const = pres.attributes["planet_conf"]
             rho = pres / (const.dry_air_gas_constant.asc * temp)
             rho.rename(model.dens)
-            rho.convert_units("kg m^-3")
             return rho
         except ConMisErr:
             _msg = f"Unable to get variables from\n{cubelist}\nto calculate air density"
             raise MissingCubeError(_msg)
 
 
+@update_metadata(units="m2 s-2")
 def geopotential_height(cubelist, const=None, model=um):
     """
     Get geopotential height from the given cube list.
@@ -213,7 +216,6 @@ def geopotential_height(cubelist, const=None, model=um):
             g_hgt.attributes = {k: v for k, v in cube_w_height.attributes.items() if k != "STASH"}
             ensure_bounds(g_hgt, [model.z])
             g_hgt.rename(model.ghgt)
-            g_hgt.convert_units("m^2 s^-2")
             return g_hgt
         except ConMisErr:
             _msg = f"No cubes in \n{cubelist}\nwith {model.z} as a coordinate."
@@ -261,6 +263,7 @@ def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
     return fl
 
 
+@update_metadata(units="W m-2")
 def toa_cloud_radiative_effect(cubelist, kind, model=um):
     r"""
     Calculate domain-average TOA cloud radiative effect (CRE).
@@ -301,6 +304,7 @@ def toa_cloud_radiative_effect(cubelist, kind, model=um):
     return cre
 
 
+@update_metadata(name="toa_net_downward_energy_flux", units="W m-2")
 def toa_net_energy(cubelist, model=um):
     """
     Calculate domain-average TOA energy flux.
@@ -331,10 +335,10 @@ def toa_net_energy(cubelist, model=um):
     for cube in terms:
         terms_ave.append(cube)
     toa_net = terms_ave[0] - terms_ave[1] - terms_ave[2]
-    toa_net.rename("toa_net_downward_energy_flux")
     return toa_net
 
 
+@update_metadata(name="surface_net_downward_energy_flux", units="W m-2")
 def sfc_net_energy(cubelist, model=um):
     """
     Calculate domain-average surface energy flux.
@@ -356,10 +360,10 @@ def sfc_net_energy(cubelist, model=um):
     shf = cubelist.extract_strict(model.sfc_shf)
     lhf = cubelist.extract_strict(model.sfc_lhf)
     sfc_net = net_down_lw + net_down_sw - shf - lhf
-    sfc_net.rename("surface_net_downward_energy_flux")
     return sfc_net
 
 
+@update_metadata(name="surface_net_downward_water_flux", units="mm h-1")
 def sfc_water_balance(cubelist, const=None, model=um):
     """
     Calculate domain-average precipitation minus evaporation.
@@ -395,10 +399,9 @@ def sfc_water_balance(cubelist, const=None, model=um):
         precip /= const.condensible_density.asc
     except ConMisErr:
         precip = precip_sum(cubelist, ptype="total", const=const, model=model)
-    precip.convert_units("mm h^-1")
-    evap.convert_units("mm h^-1")
+    precip.convert_units("mm h-1")
+    evap.convert_units("mm h-1")
     net = precip - evap
-    net.rename("surface_net_downward_water_flux")  # FIXME
     return net
 
 
@@ -447,6 +450,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     return precip
 
 
+@update_metadata(name="heat_redistribution_efficiency", units="1")
 def heat_redist_eff(cubelist, region_a, region_b, model=um):
     r"""
     Heat redistribution efficiency (Leconte et al. 2013).
@@ -474,10 +478,10 @@ def heat_redist_eff(cubelist, region_a, region_b, model=um):
     toa_olr_a = spatial_mean(toa_olr.extract(region_a.constraint))
     toa_olr_b = spatial_mean(toa_olr.extract(region_b.constraint))
     eta = toa_olr_a / toa_olr_b
-    eta.rename("heat_redistribution_efficiency")
     return eta
 
 
+@update_metadata(name="toa_effective_temperature", units="K")
 def toa_eff_temp(cubelist, model=um):
     r"""
     Calculate effective temperature from TOA OLR.
@@ -500,10 +504,10 @@ def toa_eff_temp(cubelist, model=um):
         t_eff = (toa_olr / sbc) ** 0.25
     except ValueError:
         t_eff = (toa_olr / sbc.asc) ** 0.25
-    t_eff.rename("toa_effective_temperature")
     return t_eff
 
 
+@update_metadata(name="normalised_greenhouse_effect_parameter", units="1")
 def ghe_norm(cubelist, model=um):
     r"""
     Normalised greenhouse effect parameter.
@@ -528,10 +532,10 @@ def ghe_norm(cubelist, model=um):
     one = t_eff.copy(data=np.ones(t_eff.shape))
     one.units = "1"
     gh_norm = one - (t_eff / t_sfc) ** 4
-    gh_norm.rename("normalised_greenhouse_effect_parameter")
     return gh_norm
 
 
+@update_metadata(name="bond_albedo", units="1")
 def bond_albedo(cubelist, const=None, model=um):
     r"""
     Bold albedo.
@@ -562,10 +566,10 @@ def bond_albedo(cubelist, const=None, model=um):
         b_alb = 4 * toa_osr / sc
     except ValueError:
         b_alb = 4 * toa_osr / sc.asc
-    b_alb.rename("bond_albedo")
     return b_alb
 
 
+@update_metadata(units="kg m-2")
 def water_path(cubelist, kind="water_vapour", model=um):
     r"""
     Water vapour or condensate path, i.e. a vertical integral of a water phase.
@@ -652,6 +656,7 @@ def horiz_wind_cmpnts(cubelist, model=um):
     return u, v
 
 
+@update_metadata(name="local_superrotation_index", units="1")
 def superrotation_index(cubelist, const=None, model=um):
     r"""
     Local superrotation index.
@@ -707,5 +712,4 @@ def superrotation_index(cubelist, const=None, model=um):
     s_idx = ang_mom / omega.asc / r.asc / r.asc
     s_idx.convert_units("1")
     s_idx = s_idx.copy(data=s_idx.data - 1)
-    s_idx.rename("local_superrotation_index")
     return s_idx
