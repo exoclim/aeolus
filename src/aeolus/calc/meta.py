@@ -1,6 +1,6 @@
 """Metadata-related functionality."""
-from collections.abc import Iterable
 import functools
+from collections.abc import Iterable
 
 import cf_units
 

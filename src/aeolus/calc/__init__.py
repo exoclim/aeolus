@@ -19,6 +19,7 @@ from .diag import (
     toa_eff_temp,
     toa_net_energy,
     water_path,
+    wind_speed,
 )
 from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
@@ -83,5 +84,6 @@ __all__ = (
     "toa_net_energy",
     "vertical_mean",
     "water_path",
+    "wind_speed",
     "zonal_mean",
 )

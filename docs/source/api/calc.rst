@@ -45,6 +45,7 @@ Diagnostics
 .. autofunction:: aeolus.calc.toa_eff_temp
 .. autofunction:: aeolus.calc.toa_net_energy
 .. autofunction:: aeolus.calc.water_path
+.. autofunction:: aeolus.calc.wind_speed
 
 Horizontal fluxes
 -----------------

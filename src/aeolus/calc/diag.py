@@ -36,6 +36,7 @@ __all__ = (
     "toa_eff_temp",
     "toa_net_energy",
     "water_path",
+    "wind_speed",
 )
 
 
@@ -713,3 +714,20 @@ def superrotation_index(cubelist, const=None, model=um):
     s_idx.convert_units("1")
     s_idx = s_idx.copy(data=s_idx.data - 1)
     return s_idx
+
+
+@update_metadata(name="wind_speed", units="m s-1")
+def wind_speed(*components):
+    r"""
+    Calculate the wind speed (magnitude of the wind vector).
+
+    Parameters
+    ----------
+    args: iris.cube.Cube
+        Cubes of u, v, w wind components.
+
+    .. math::
+        \sqrt{u^2 + v^2 + w^2}
+    """
+    out = sum([cube**2 for cube in components]) ** 0.5
+    return out
