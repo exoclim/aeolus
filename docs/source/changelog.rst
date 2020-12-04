@@ -3,6 +3,14 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.8
+-----
+
+:Date: TBA
+
+* Fix typos
+
+
 0.4.7
 -----
 

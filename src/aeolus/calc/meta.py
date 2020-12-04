@@ -7,15 +7,17 @@ import cf_units
 import iris
 
 
-def update_metadata(name=None, units=None):
+def update_metadata(name=None, units=None, attrs=None):
     """Update metadata of a cube returned by a function."""
 
-    def update_name_units(cube):
-        """Update name and convert units."""
+    def _update(cube):
+        """Update name, convert units and update attributes."""
         if isinstance(name, str):
             cube.rename(name)
         if isinstance(units, (str, cf_units.Unit)):
             cube.convert_units(units)
+        if isinstance(attrs, dict):
+            cube.attributes.update(attrs)
 
     def decorator(func):
         @functools.wraps(func)
@@ -23,9 +25,9 @@ def update_metadata(name=None, units=None):
             # Call the decorated function
             out = func(*args, **kwargs)
             if isinstance(out, iris.cube.Cube):
-                update_name_units(out)
+                _update(out)
             elif isinstance(out, Iterable):
-                [update_name_units(cube) for cube in out]
+                [_update(cube) for cube in out]
             return out
 
         return wrapper
