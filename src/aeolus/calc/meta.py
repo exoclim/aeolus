@@ -1,10 +1,51 @@
 """Metadata-related functionality."""
 import functools
 from collections.abc import Iterable
+from dataclasses import is_dataclass
 
 import cf_units
 
 import iris
+
+from ..exceptions import ArgumentError
+
+
+def const_from_attrs(func):
+    """Get constants container from the input cube attributes if not passed explicitly."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        const = kwargs.pop("const", None)
+        if const is None:
+            for arg in args:
+                if isinstance(arg, iris.cube.Cube):
+                    const = arg.attributes.get("planet_conf")
+                elif isinstance(arg, iris.cube.CubeList):
+                    try:
+                        const = arg[0].attributes.get("planet_conf")
+                    except IndexError:
+                        const = None
+        if is_dataclass(const):
+            kwargs.update(const=const)
+        else:
+            raise ArgumentError(
+                "Constants dataclass has to be an argument or in the cube attributes"
+            )
+        # Call the decorated function
+        out = func(*args, **kwargs)
+        return out
+
+    return wrapper
+
+
+def copy_doc(original):
+    """Copy docstring from another function."""
+
+    def wrapper(func):
+        func.__doc__ = original.__doc__
+        return func
+
+    return wrapper
 
 
 def update_metadata(name=None, units=None, attrs=None):
@@ -33,13 +74,3 @@ def update_metadata(name=None, units=None, attrs=None):
         return wrapper
 
     return decorator
-
-
-def copy_doc(original):
-    """Copy docstring from another function."""
-
-    def wrapper(func):
-        func.__doc__ = original.__doc__
-        return func
-
-    return wrapper

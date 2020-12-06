@@ -8,7 +8,7 @@ from iris.exceptions import ConstraintMismatchError as ConMisErr
 import numpy as np
 
 from .calculus import d_dz, integrate
-from .meta import update_metadata
+from .meta import const_from_attrs, update_metadata
 from .stats import spatial_mean
 from ..const import init_const
 from ..const.const import ScalarCube
@@ -364,6 +364,7 @@ def sfc_net_energy(cubelist, model=um):
     return sfc_net
 
 
+@const_from_attrs
 @update_metadata(name="surface_net_downward_water_flux", units="mm h-1")
 def sfc_water_balance(cubelist, const=None, model=um):
     """
@@ -384,8 +385,6 @@ def sfc_water_balance(cubelist, const=None, model=um):
     iris.cube.Cube
         Cube of total surface downward water flux (P-E).
     """
-    if const is None:
-        const = cubelist[0].attributes["planet_conf"]
     try:
         evap = cubelist.extract_strict(model.sfc_evap)
     except ConMisErr:
@@ -406,6 +405,7 @@ def sfc_water_balance(cubelist, const=None, model=um):
     return net
 
 
+@const_from_attrs
 def precip_sum(cubelist, ptype="total", const=None, model=um):
     """
     Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].
@@ -439,14 +439,11 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     for varname in varnames:
         try:
             cube = cubelist.extract_strict(varname)
-            if const is None:
-                const = cube.attributes.get("planet_conf", None)
             precip += cube
         except ConMisErr:
             pass
-    if const is not None:
-        precip /= const.condensible_density.asc
-        precip.convert_units("mm day^-1")
+    precip /= const.condensible_density.asc
+    precip.convert_units("mm day^-1")
     precip.rename(f"{ptype}_precip_rate")
     return precip
 
@@ -536,6 +533,7 @@ def ghe_norm(cubelist, model=um):
     return gh_norm
 
 
+@const_from_attrs
 @update_metadata(name="bond_albedo", units="1")
 def bond_albedo(cubelist, const=None, model=um):
     r"""
@@ -560,8 +558,6 @@ def bond_albedo(cubelist, const=None, model=um):
         Cube of bond albedo.
     """
     toa_osr = cubelist.extract_strict(model.toa_osr)
-    if const is None:
-        const = toa_osr.attributes["planet_conf"]
     sc = const.solar_constant
     try:
         b_alb = 4 * toa_osr / sc
@@ -657,6 +653,7 @@ def horiz_wind_cmpnts(cubelist, model=um):
     return u, v
 
 
+@const_from_attrs
 @update_metadata(name="local_superrotation_index", units="1")
 def superrotation_index(cubelist, const=None, model=um):
     r"""
@@ -685,8 +682,6 @@ def superrotation_index(cubelist, const=None, model=um):
     """
     # Zonal velocity
     u = cubelist.extract_strict(model.u)
-    if const is None:
-        const = u.attributes["planet_conf"]
     # Radius of the planet
     r = const.radius
     r.convert_units("m")

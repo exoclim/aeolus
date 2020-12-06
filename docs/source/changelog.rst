@@ -8,6 +8,7 @@ Changelog
 
 :Date: TBA
 
+* Add new meta decorators
 * Fix typos
 
 
