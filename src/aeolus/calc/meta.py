@@ -6,6 +6,8 @@ from dataclasses import is_dataclass
 import cf_units
 
 import iris
+from iris.analysis import coord_comparison
+from iris.util import broadcast_to_shape
 
 from ..exceptions import ArgumentError
 
@@ -44,6 +46,37 @@ def copy_doc(original):
     def wrapper(func):
         func.__doc__ = original.__doc__
         return func
+
+    return wrapper
+
+
+def preserve_shape(func):
+    """Preserve shape of the output array."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        cube_in = args[0]
+        if isinstance(cube_in, iris.cube.Cube):
+            orig_shape = cube_in.shape
+        else:
+            raise ArgumentError(
+                "`preserve_shape` decorator requires the first argument"
+                "of the function and its output to be a cube."
+            )
+        # Call the decorated function
+        cube_out = func(*args, **kwargs)
+        out_name = cube_out.name()
+        cell_methods = cube_out.cell_methods
+        dim_map = []
+        for ndim, _ in enumerate(orig_shape):
+            for pair in coord_comparison(cube_out, cube_in)["not_equal"]:
+                if ndim not in cube_in.coord_dims(pair[0]):
+                    dim_map.append(ndim)
+        bc_data = broadcast_to_shape(cube_out.data, orig_shape, sorted(set(dim_map)))
+        cube_out = cube_in.copy(data=bc_data)
+        cube_out.rename(out_name)
+        cube_out.cell_methods = cell_methods
+        return cube_out
 
     return wrapper
 
