@@ -11,5 +11,6 @@ dependencies:
 - nbsphinx
 - numpy
 - pip
+- python-stratify
 - sphinx
 - sphinx_rtd_theme
