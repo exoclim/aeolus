@@ -10,6 +10,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9']
 
     steps:
     - uses: actions/checkout@v2
@@ -29,14 +32,14 @@ jobs:
         conda config --set channel_priority strict
         conda update -q conda
         conda info -a
-        conda env create -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
+        conda env create -n docs_env -f=docs/environment.yml
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
-        conda activate test_env
+        conda activate docs_env
         python setup.py develop
     - name: Build docs
       run: |
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
-        conda activate test_env
+        conda activate docs_env
         cd docs/
         make html -e
     - name: Commit documentation changes
