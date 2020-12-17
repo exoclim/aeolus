@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aeolus.calc.tl &mdash; aeolus 0+untagged.1.g22ee1df documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.1.g22ee1df
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aeolus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>aeolus.calc.tl</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aeolus.calc.tl</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Operations in tidally-locked coordinates.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.analysis.cartography</span> <span class="kn">import</span> <span class="n">_meshgrid</span><span class="p">,</span> <span class="n">rotate_pole</span><span class="p">,</span> <span class="n">rotate_winds</span>
+<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">RotatedGeogCS</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">get_xy_coords</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">BadCoordinateError</span>
+<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;regrid_to_rotated_pole_coordinates&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;regrid_to_tidally_locked_coordinates&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rotate_winds_to_tidally_locked_coordinates&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="regrid_to_rotated_pole_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.regrid_to_rotated_pole_coordinates">[docs]</a><span class="k">def</span> <span class="nf">regrid_to_rotated_pole_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Regrid a cube to rotated-pole coordinates.</span>
+
+<span class="sd">    Note: non-dimensional coordinates are lost.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Input cube.</span>
+<span class="sd">    pole_lon: float</span>
+<span class="sd">        New North Pole longitude.</span>
+<span class="sd">    pole_lat: float</span>
+<span class="sd">        New North Pole latitude.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate and variable names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_cs</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_system</span><span class="p">()</span>
+    <span class="n">xcoord</span><span class="p">,</span> <span class="n">ycoord</span> <span class="o">=</span> <span class="n">get_xy_coords</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">lon2d</span><span class="p">,</span> <span class="n">lat2d</span> <span class="o">=</span> <span class="n">_meshgrid</span><span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">ycoord</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+    <span class="n">r_lons</span><span class="p">,</span> <span class="n">r_lats</span> <span class="o">=</span> <span class="n">rotate_pole</span><span class="p">(</span><span class="n">lon2d</span><span class="p">,</span> <span class="n">lat2d</span><span class="p">,</span> <span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">)</span>
+
+    <span class="n">r_lon_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span>
+        <span class="n">r_lons</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+        <span class="n">units</span><span class="o">=</span><span class="n">xcoord</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+        <span class="n">standard_name</span><span class="o">=</span><span class="n">xcoord</span><span class="o">.</span><span class="n">standard_name</span><span class="p">,</span>
+        <span class="n">var_name</span><span class="o">=</span><span class="n">xcoord</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span>
+        <span class="n">coord_system</span><span class="o">=</span><span class="n">_cs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">r_lat_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span>
+        <span class="n">r_lats</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+        <span class="n">units</span><span class="o">=</span><span class="n">ycoord</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+        <span class="n">standard_name</span><span class="o">=</span><span class="n">ycoord</span><span class="o">.</span><span class="n">standard_name</span><span class="p">,</span>
+        <span class="n">var_name</span><span class="o">=</span><span class="n">ycoord</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span>
+        <span class="n">coord_system</span><span class="o">=</span><span class="n">_cs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">non_xy_coords</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">xcoord</span><span class="p">,</span> <span class="n">ycoord</span><span class="p">]]</span>
+    <span class="c1"># assume latitude and longitude are the rightmost dimensions</span>
+    <span class="n">lat_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">non_xy_coords</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lat_dim</span> <span class="o">!=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">ycoord</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">BadCoordinateError</span><span class="p">(</span><span class="s2">&quot;Ensure latitude and longitude are the rightmost dimensions.&quot;</span><span class="p">)</span>
+    <span class="n">cube_flat</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">core_data</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">*</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">lat_dim</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">lat_dim</span><span class="p">:]))),</span>
+        <span class="n">aux_coords_and_dims</span><span class="o">=</span><span class="p">[</span>
+            <span class="o">*</span><span class="n">non_xy_coords</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">r_lat_coord</span><span class="p">,</span> <span class="n">lat_dim</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">r_lon_coord</span><span class="p">,</span> <span class="n">lat_dim</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">units</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">coord</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">non_xy_coords</span><span class="p">:</span>
+        <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube_flat</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">cube_flat</span><span class="o">.</span><span class="n">regrid</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">UnstructuredNearest</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="regrid_to_tidally_locked_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.regrid_to_tidally_locked_coordinates">[docs]</a><span class="k">def</span> <span class="nf">regrid_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Regrid a cube to tidally locked coordinates.</span>
+
+<span class="sd">    The substellar and antistellar point become the north and south pole, respectively.</span>
+<span class="sd">    By default, the substellar point is assumed to be at (0, 0).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Input cube.</span>
+<span class="sd">    pole_lon: float, optional</span>
+<span class="sd">        New North Pole longitude.</span>
+<span class="sd">    pole_lat: float, optional</span>
+<span class="sd">        New North Pole latitude.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant coordinate and variable names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">regrid_to_rotated_pole_coordinates</span><span class="p">(</span>
+        <span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="n">pole_lat</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rotate_winds_to_tidally_locked_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.rotate_winds_to_tidally_locked_coordinates">[docs]</a><span class="k">def</span> <span class="nf">rotate_winds_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotate the horizontal wind components to tidally locked coordinates.</span>
+
+<span class="sd">    The substellar and antistellar point become the north and south pole, respectively.</span>
+<span class="sd">    By default, the substellar point is assumed to be at (0, 0).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    u: iris.cube.Cube</span>
+<span class="sd">        An instance of :class:`iris.cube.Cube` that contains the x-component of the vector.</span>
+<span class="sd">    v: iris.cube.Cube</span>
+<span class="sd">        An instance of :class:`iris.cube.Cube` that contains the y-component of the vector.</span>
+<span class="sd">    pole_lon: float, optional</span>
+<span class="sd">        New North Pole longitude.</span>
+<span class="sd">    pole_lat: float, optional</span>
+<span class="sd">        New North Pole latitude.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tl_cs</span> <span class="o">=</span> <span class="n">RotatedGeogCS</span><span class="p">(</span><span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">,</span> <span class="n">ellipsoid</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">coord_system</span><span class="p">())</span>
+    <span class="n">tl_u</span><span class="p">,</span> <span class="n">tl_v</span> <span class="o">=</span> <span class="n">rotate_winds</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">tl_cs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tl_u</span><span class="p">,</span> <span class="n">tl_v</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, the aeolus developers
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

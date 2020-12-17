@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.gec219a3 documentation</title>
+  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.g22ee1df documentation</title>
   
 
   
@@ -33,6 +33,8 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -64,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.gec219a3
+                0+untagged.1.g22ee1df
               </div>
             
           
@@ -199,6 +201,549 @@
 </style>
 <div class="section" id="cube-coordinate-functionality">
 <h1>Cube coordinate functionality<a class="headerlink" href="#cube-coordinate-functionality" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="aeolus.coord.CoordContainer">
+<em class="property">class </em><code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">CoordContainer</code><span class="sig-paren">(</span><em class="sig-param">cubes</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Coordinate container.</p>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">{x,y,z,t}</code></dt>
+<dd><p>Coordinates in the respective dimensions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>iris.coord.Coord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aeolus.coord.CoordContainer.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">cubes</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate an <cite>AtmosFlow</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.add_binned_coord">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">add_binned_coord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">coord_name</span></em>, <em class="sig-param"><span class="n">bins</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_binned_coord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.add_binned_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bin coordinate points and add them as an auxiliary coordinate to a cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with the given coordinate.</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate name.</p></li>
+<li><p><strong>bins</strong> (<em>array-like</em>) – Coordinate bins.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.add_cyclic_point_to_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">add_cyclic_point_to_cube</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">coord</span><span class="o">=</span><span class="default_value">'longitude'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_cyclic_point_to_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.add_cyclic_point_to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a cyclic point to a cube and a corresponding coordinate.</p>
+<p>A wrapper for <cite>cartopy.util.add_cyclic_point()</cite>, generalising it for iris cubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – An n-dimensional cube of data to add a cyclic point to.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A 1-dimensional coordinate which specifies the coordinate values for
+the dimension the cyclic point is to be added to. The coordinate
+values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The cube with a cyclic point added.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>cyclic_cube</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.add_planet_calendar">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">add_planet_calendar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">time_coord</span></em>, <em class="sig-param"><span class="n">days_in_year</span></em>, <em class="sig-param"><span class="n">days_in_month</span></em>, <em class="sig-param"><span class="n">days_in_day</span></em>, <em class="sig-param"><span class="n">run_start_day</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seasons</span><span class="o">=</span><span class="default_value">('djf', 'mam', 'jja', 'son')</span></em>, <em class="sig-param"><span class="n">planet</span><span class="o">=</span><span class="default_value">'planet'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_planet_calendar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.add_planet_calendar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an auxiliary time axis with the non-Earth period lengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>time_coord</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Original time coordinate of the cube.</p></li>
+<li><p><strong>days_in_year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Number of Earth days in one year on the given planet.</p></li>
+<li><p><strong>days_in_month</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Number of Earth days in one month on the given planet.</p></li>
+<li><p><strong>days_in_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Number of Earth days in one day on the given planet (e.g. ~16 for Titan).</p></li>
+<li><p><strong>run_start_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Earth day of the start of the simulation.</p></li>
+<li><p><strong>seasons</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a><em>, </em><em>optional</em>) – Sequences of letters corresponding to month names.</p></li>
+<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the planet to be used to name the new coordinate.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.area_weights_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">area_weights_cube</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#area_weights_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.area_weights_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a cube of area weights for an arbitrary planet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates</p></li>
+<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
+to get it from the cube metadata.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize areas.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.check_coords">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">check_coords</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cubes</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#check_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.check_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the cubes coordinates for consistency.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.coarsen_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">coarsen_cube</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">lon_bins</em>, <em class="sig-param">lat_bins</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coarsen_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.coarsen_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block-average cube in longitude and latitude.</p>
+<p>Note: no weighting is applied!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>lon_bins</strong> (<em>array-like</em>) – Longitude bins.</p></li>
+<li><p><strong>lat_bins</strong> (<em>array-like</em>) – Latitude bins.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.coord_to_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">coord_to_cube</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">coord</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_to_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.coord_to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert coordinate points to a cube of the same dimension as the given cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of broadcast coordinate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.coord_delta_to_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">coord_delta_to_cube</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">coord</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_delta_to_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.coord_delta_to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert 1D coordinate spacings to a cube of the same dimension as the given cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of broadcast coordinate deltas.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.ensure_bounds">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">ensure_bounds</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">coords=('x'</em>, <em class="sig-param">'y')</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#ensure_bounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.ensure_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto-generate bounds for cube coordinates.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.get_cube_datetimes">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">get_cube_datetimes</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_datetimes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.get_cube_datetimes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert points of a cube’s time coordinate to datetimes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array of datetime-like objects.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.get_cube_rel_days">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">get_cube_rel_days</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_rel_days"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.get_cube_rel_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert points of a cube’s time coordinate to relative number of days.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array of relative days.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.get_dim_coord">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">get_dim_coord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">axis</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_dim_coord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.get_dim_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a coordinate from a cube based on the axis it represents.</p>
+<p>Uses <a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/util.html#iris.util.guess_coord_axis" title="(in Iris v2.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">iris.util.guess_coord_axis()</span></code></a> to heuristically match a dimensional coordinate
+with the requested axis.</p>
+<p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with the desired coordinate.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The co-ordinate axis to take from the cube. Must be one of X, Y, Z, T.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The dimensional coordinate matching the requested axis on the given cube.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.DimCoord" title="(in Iris v2.2)">iris.coords.DimCoord</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ArgumentError</strong> – If axis is not one of {X, Y, Z, T}.:</p></li>
+<li><p><strong>NotFoundError</strong> – If the cube does not contain a coord with the requested axis.:</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.get_xy_coords">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">get_xy_coords</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_xy_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.get_xy_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return X and Y coordinate tuple for a given <cite>cube</cite> using names from a given <cite>model</cite> container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.isel">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">isel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">coord</span></em>, <em class="sig-param"><span class="n">idx</span></em>, <em class="sig-param"><span class="n">skip_not_found</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#isel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.isel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slice cubes by an index of a coordinate (index-selector).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Cube or list of cubes.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate for selection.</p></li>
+<li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Index along the given coordinate.</p></li>
+<li><p><strong>skip_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Skip if coordinate not found. By default it is active when dealing with
+a cube list and inactive if dealing with a single cube.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Slice along the coordinate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a> or <a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)">iris.cube.CubeList</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.interp_all_to_pres_lev">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">interp_all_to_pres_lev</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">levels</em>, <em class="sig-param">interpolator=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_all_to_pres_lev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.interp_all_to_pres_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate all cubes within a cubelist to the given set of pressure levels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – List of cubes, including a cube of pressure.</p></li>
+<li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
+<li><p><strong>interpolator</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – The interpolator to use when computing the interpolation. See relevel() docs for more.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of cubes interpolated to pressure level(s).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)">iris.cube.CubeList</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.interp_to_cube_time">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">interp_to_cube_time</code><span class="sig-paren">(</span><em class="sig-param">cube_src</em>, <em class="sig-param">cube_tgt</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_cube_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.interp_to_cube_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linearly interpolate <cite>cube_src</cite> to <cite>cube_tgt</cite> along the time dimension (<cite>model.t</cite>).</p>
+<p>Forecast period is copied from <cite>cube_tgt</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube_src</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube to interpolate.</p></li>
+<li><p><strong>cube_tgt</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with time dimension to interpolate to.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube with the time dimension equal to <cite>cube_tgt</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.interp_to_pres_lev">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">interp_to_pres_lev</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">constraint</em>, <em class="sig-param">levels</em>, <em class="sig-param">interpolator=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_pres_lev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.interp_to_pres_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate a cube to pressure level(s) using stratify relevel() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube extractable by <cite>constraint</cite> and a cube of pressure.</p></li>
+<li><p><strong>constraint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris.html#iris.Constraint" title="(in Iris v2.2)"><em>iris.Constraint</em></a>) – Variable name or constraint to extract a cube from <cite>cubelist</cite>.</p></li>
+<li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
+<li><p><strong>interpolator</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – The interpolator to use when computing the interpolation. See relevel() docs for more.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of <cite>varname</cite> interpolated to pressure level(s).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.interp_to_single_pres_lev">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">interp_to_single_pres_lev</code><span class="sig-paren">(</span><em class="sig-param">cubelist</em>, <em class="sig-param">constraint</em>, <em class="sig-param">p_ref_frac=0.5</em>, <em class="sig-param">const=None</em>, <em class="sig-param">interpolator=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_single_pres_lev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.interp_to_single_pres_lev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate the field defined by <cite>constraint</cite> to a single pressure level.</p>
+<p>The level is found from the given fraction of the reference surface pressure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.CubeList" title="(in Iris v2.2)"><em>iris.cube.CubeList</em></a>) – Input cubelist.</p></li>
+<li><p><strong>constraint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris.html#iris.Constraint" title="(in Iris v2.2)"><em>iris.Constraint</em></a>) – Variable name or constraint to extract a cube from <cite>cubelist</cite>.</p></li>
+<li><p><strong>p_ref_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Fraction of reference surface pressure at which the estimate is made.
+The default value is 0.1, which for an Earth-like atmosphere means 100 hPa.</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
+attributes of a cube in the cube list.</p></li>
+<li><p><strong>interpolator</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – The interpolator to use when computing the interpolation. See relevel() docs for more.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube on a single pressure level.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.nearest_coord_value">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">nearest_coord_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube</span></em>, <em class="sig-param"><span class="n">coord_name</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#nearest_coord_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.nearest_coord_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nearest value of a coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with the coordinate</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/coords.html#iris.coords.Coord" title="(in Iris v2.2)"><em>iris.coords.Coord</em></a>) – Coordinate where to look the nearest point up</p></li>
+<li><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The value to find</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Element of the coordinate array closest to the given <cite>val</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.not_equal_coord_axes">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">not_equal_coord_axes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube1</span></em>, <em class="sig-param"><span class="n">cube2</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#not_equal_coord_axes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.not_equal_coord_axes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given 2 cubes, return axes of unequal dimensional coordinates.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.regrid_3d">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">regrid_3d</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">target</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#regrid_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.regrid_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regrid a cube in the horizontal and in the vertical on to coordinates of the target cube.</p>
+<p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – The cube to be regridded.</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – The cube to regrid to.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.replace_z_coord">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">replace_z_coord</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace dimensional vertical coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Copy of the input cube with a new vertical coordinate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.roll_cube_0_360">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">roll_cube_0_360</code><span class="sig-paren">(</span><em class="sig-param">cube_in</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_0_360"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.roll_cube_0_360" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a cube spanning -180…180 degrees in longitude and roll it to 0…360 degrees.</p>
+<p>Works with global model output, and in some cases for regional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#aeolus.coord.roll_cube_pm180" title="aeolus.coord.roll_cube_pm180"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.coord.roll_cube_pm180</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.roll_cube_pm180">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">roll_cube_pm180</code><span class="sig-paren">(</span><em class="sig-param">cube_in</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_pm180"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.roll_cube_pm180" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a cube spanning 0…360 degrees in longitude and roll it to -180…180 degrees.</p>
+<p>Works with global model output, and in some cases for regional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#aeolus.coord.roll_cube_0_360" title="aeolus.coord.roll_cube_0_360"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.coord.roll_cube_0_360</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.vertical_cross_section_area">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">vertical_cross_section_area</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cube2d</span></em>, <em class="sig-param"><span class="n">r_planet</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#vertical_cross_section_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.vertical_cross_section_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a cube of vertical cross-section areas in metres.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.coord.volume_weights_cube">
+<code class="sig-prename descclassname">aeolus.coord.</code><code class="sig-name descname">volume_weights_cube</code><span class="sig-paren">(</span><em class="sig-param">cube</em>, <em class="sig-param">r_planet=None</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#volume_weights_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.coord.volume_weights_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a cube of volume weights from a grid of a given cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)"><em>iris.cube.Cube</em></a>) – Cube with longitude, latitude and height coordinates</p></li>
+<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
+to get it from the cube metadata.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools.org.uk/iris/docs/latest/iris/iris/cube.html#iris.cube.Cube" title="(in Iris v2.2)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
