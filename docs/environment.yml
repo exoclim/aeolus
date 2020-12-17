@@ -2,17 +2,14 @@ name: aeolus_docs
 channels:
 - conda-forge
 dependencies:
-- python=3.8
+- python=3.9
+- cartopy
 - f90nml
 - iris>=2.4
 - latlon23
 - matplotlib>=3.3
-- metpy>=0.12
 - nbsphinx
 - numpy
 - pip
-- python-stratify
-- pyvista>=0.25
 - sphinx
 - sphinx_rtd_theme
-- xarray

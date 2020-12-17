@@ -12,14 +12,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+        bash miniconda.sh -b -p $HOME/miniconda
+        export PATH="$HOME/miniconda/bin:$PATH"
+        hash -r
+        conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
+        conda config --add channels conda-forge
+        conda config --set channel_priority strict
+        conda update -q conda
+        conda info -a
+        conda env create -n docs_env -f=docs/environment.yml
+        source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+        conda activate docs_env
+        python setup.py develop
 
     - name: Build docs
       uses: ammaraskar/sphinx-action@master
       with:
         pre-build-command: |
-          python -m pip install --upgrade pip
-          python -m pip install nbsphinx sphinx_rtd_theme
-          python -m pip install .
+          source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+          conda activate docs_env
         docs-folder: "docs/"
     - name: Commit documentation changes
       run: |
