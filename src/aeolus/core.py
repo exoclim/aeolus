@@ -100,19 +100,23 @@ class AtmosFlow:
         # Common coordinates
         self.coord = CoordContainer(self._cubes)
 
-        # Variables
-        kwargs = {}
-        for key in model.__dataclass_fields__:
-            try:
-                kwargs[key] = self._cubes.extract_strict(getattr(model, key))
-            except ConMisErr:
-                pass
-        self.__dict__.update(**kwargs)
-        del kwargs, key
+        # Variables as attributes
+        self.assign_fields()
 
     def __getitem__(self, key):
         """Redirect self[key] to self.key."""
         return self.__getattribute__(key)
+
+    def _assign_fields(self):
+        """Assign input cubelist items as attributes of this class."""
+        kwargs = {}
+        for key in self.model.__dataclass_fields__:
+            try:
+                kwargs[key] = self._cubes.extract_strict(getattr(self.model, key))
+            except ConMisErr:
+                pass
+        self.__dict__.update(**kwargs)
+        del kwargs, key
 
     def _update_planet(self, planet="", const_dir=None):
         """Add or update planetary constants."""
