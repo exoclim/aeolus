@@ -115,8 +115,8 @@ def minmaxdiff(cubelist, name):
     iris.cube.Cube
         Difference between the extrema with collapsed spatial dimensions.
     """
-    _min = spatial(cubelist.extract_strict(name), "min")
-    _max = spatial(cubelist.extract_strict(name), "max")
+    _min = spatial(cubelist.extract_cube(name), "min")
+    _max = spatial(cubelist.extract_cube(name), "max")
     diff = _max - _min
     diff.rename(f"{name}_difference")
     return diff
@@ -161,8 +161,8 @@ def region_mean_diff(cubelist, name, region_a, region_b):
     iris.cube.Cube
         Difference between the region averages with collapsed spatial dimensions.
     """
-    mean_a = spatial_mean(cubelist.extract_strict(name).extract(region_a.constraint))
-    mean_b = spatial_mean(cubelist.extract_strict(name).extract(region_b.constraint))
+    mean_a = spatial_mean(cubelist.extract_cube(name).extract(region_a.constraint))
+    mean_b = spatial_mean(cubelist.extract_cube(name).extract(region_b.constraint))
     diff = mean_a - mean_b
     diff.rename(f"{name}_mean_diff_{region_a}_{region_b}")
     return diff

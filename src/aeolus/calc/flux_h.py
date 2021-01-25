@@ -77,16 +77,16 @@ def net_horizontal_flux_to_region(
         model=model,
     )
     net_flux = (
-        total_h_fluxes.extract_strict(
+        total_h_fluxes.extract_cube(
             iris.Constraint(cube_func=lambda x: "through_west" in x.name())
         )
-        - total_h_fluxes.extract_strict(
+        - total_h_fluxes.extract_cube(
             iris.Constraint(cube_func=lambda x: "through_east" in x.name())
         )
-        + total_h_fluxes.extract_strict(
+        + total_h_fluxes.extract_cube(
             iris.Constraint(cube_func=lambda x: "through_south" in x.name())
         )
-        - total_h_fluxes.extract_strict(
+        - total_h_fluxes.extract_cube(
             iris.Constraint(cube_func=lambda x: "through_north" in x.name())
         )
     )

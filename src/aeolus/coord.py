@@ -353,7 +353,7 @@ def area_weights_cube(cube, r_planet=None, normalize=False, model=um):
 def check_coords(cubes):
     """Check the cubes coordinates for consistency."""
     # get the names of all coords binned into useful comparison groups
-    coord_comparison = iris.analysis.coord_comparison(*cubes)
+    coord_comparison = iris.analysis._dimensional_metadata_comparison(*cubes)
 
     bad_coords = coord_comparison["ungroupable_and_dimensioned"]
     if bad_coords:
@@ -645,7 +645,7 @@ def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):
     iris.cube.CubeList
         List of cubes interpolated to pressure level(s).
     """
-    pres = cubelist.extract_strict(model.pres)
+    pres = cubelist.extract_cube(model.pres)
     cl_out = iris.cube.CubeList()
     for cube in cubelist:
         if cube != pres:
@@ -710,8 +710,8 @@ def interp_to_pres_lev(cubelist, constraint, levels, interpolator=None, model=um
     iris.cube.Cube
         Cube of `varname` interpolated to pressure level(s).
     """
-    cube = cubelist.extract_strict(constraint)
-    pres = cubelist.extract_strict(model.pres)
+    cube = cubelist.extract_cube(constraint)
+    pres = cubelist.extract_cube(model.pres)
     cube_plev = stratify.relevel(cube, pres, levels, axis=model.z, interpolator=interpolator)
     cube_plev.coord(model.pres).attributes = {}
     return iris.util.squeeze(cube_plev)
@@ -751,7 +751,7 @@ def interp_to_single_pres_lev(
         const = cubelist[0].attributes["planet_conf"]
     p_ref = const.reference_surface_pressure
     p_tgt = p_ref_frac * p_ref
-    pres = cubelist.extract_strict(model.pres)
+    pres = cubelist.extract_cube(model.pres)
     p_tgt.convert_units(pres.units)
     out = interp_to_pres_lev(
         cubelist, constraint, [p_tgt.data], interpolator=interpolator, model=model

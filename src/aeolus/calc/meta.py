@@ -6,7 +6,7 @@ from dataclasses import is_dataclass
 import cf_units
 
 import iris
-from iris.analysis import coord_comparison
+from iris.analysis import _dimensional_metadata_comparison
 from iris.util import broadcast_to_shape
 
 from ..exceptions import ArgumentError
@@ -69,7 +69,7 @@ def preserve_shape(func):
         cell_methods = cube_out.cell_methods
         dim_map = []
         for ndim, _ in enumerate(orig_shape):
-            for pair in coord_comparison(cube_out, cube_in)["not_equal"]:
+            for pair in _dimensional_metadata_comparison(cube_out, cube_in)["not_equal"]:
                 if ndim not in cube_in.coord_dims(pair[0]):
                     dim_map.append(ndim)
         bc_data = broadcast_to_shape(cube_out.data, orig_shape, sorted(set(dim_map)))

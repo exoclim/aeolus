@@ -75,19 +75,19 @@ def air_temperature(cubelist, const=None, model=um):
         Cube of air temperature.
     """
     try:
-        return cubelist.extract_strict(model.temp)
+        return cubelist.extract_cube(model.temp)
     except ConMisErr:
         try:
-            thta = cubelist.extract_strict(model.thta)
+            thta = cubelist.extract_cube(model.thta)
         except ConMisErr:
             raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
 
         if len(cubelist.extract(model.exner)) == 1:
-            exner = cubelist.extract_strict(model.exner)
+            exner = cubelist.extract_cube(model.exner)
         elif len(cubelist.extract(model.pres)) == 1:
             if const is None:
                 const = thta.attributes["planet_conf"]
-            pres = cubelist.extract(model.pres, strict=True)
+            pres = cubelist.extract_cube(model.pres)
             exner = (pres / const.reference_surface_pressure.asc) ** (
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
@@ -122,19 +122,19 @@ def air_potential_temperature(cubelist, const=None, model=um):
         Cube of air potential temperature.
     """
     try:
-        return cubelist.extract_strict(model.thta)
+        return cubelist.extract_cube(model.thta)
     except ConMisErr:
         try:
-            temp = cubelist.extract_strict(model.temp)
+            temp = cubelist.extract_cube(model.temp)
         except ConMisErr:
             raise MissingCubeError(f"Unable to get air potential temperature from {cubelist}")
 
         if len(cubelist.extract(model.exner)) == 1:
-            exner = cubelist.extract_strict(model.exner)
+            exner = cubelist.extract_cube(model.exner)
         elif len(cubelist.extract(model.pres)) == 1:
             if const is None:
                 const = temp.attributes["planet_conf"]
-            pres = cubelist.extract(model.pres, strict=True)
+            pres = cubelist.extract_cube(model.pres)
             exner = (pres / const.reference_surface_pressure.asc) ** (
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
@@ -169,11 +169,11 @@ def air_density(cubelist, const=None, model=um):
         Cube of air density.
     """
     try:
-        return cubelist.extract_strict(model.dens)
+        return cubelist.extract_cube(model.dens)
     except ConMisErr:
         try:
-            temp = cubelist.extract(model.temp, strict=True)
-            pres = cubelist.extract(model.pres, strict=True)
+            temp = cubelist.extract_cube(model.temp)
+            pres = cubelist.extract_cube(model.pres)
             if const is None:
                 const = pres.attributes["planet_conf"]
             rho = pres / (const.dry_air_gas_constant.asc * temp)
@@ -207,7 +207,7 @@ def geopotential_height(cubelist, const=None, model=um):
         Cube of geopotential height.
     """
     try:
-        return cubelist.extract_strict(model.ghgt)
+        return cubelist.extract_cube(model.ghgt)
     except ConMisErr:
         try:
             cube_w_height = cubelist.extract(_dim_constr(model.z, strict=False))[0]
@@ -251,15 +251,15 @@ def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
         Cube of a flux component with the same dimensions as input cubes.
     """
     if axis.lower() == "x":
-        u = cubelist.extract_strict(model.u)
+        u = cubelist.extract_cube(model.u)
     elif axis.lower() == "y":
-        u = cubelist.extract_strict(model.v)
+        u = cubelist.extract_cube(model.v)
     elif axis.lower() == "z":
-        u = cubelist.extract_strict(model.w)
-    q = cubelist.extract_strict(quantity)
+        u = cubelist.extract_cube(model.w)
+    q = cubelist.extract_cube(quantity)
     fl = u * q
     if weight_by_density:
-        fl *= cubelist.extract_strict(model.dens)
+        fl *= cubelist.extract_cube(model.dens)
     fl.rename(f"flux_of_{quantity}_along_{axis.lower()}_axis")
     return fl
 
@@ -298,8 +298,8 @@ def toa_cloud_radiative_effect(cubelist, kind, model=um):
         cre.rename(name)
         return cre
 
-    cube_clr = cubelist.extract_strict(clr_sky)
-    cube_all = cubelist.extract_strict(all_sky)
+    cube_clr = cubelist.extract_cube(clr_sky)
+    cube_all = cubelist.extract_cube(all_sky)
     cre = cube_clr - cube_all
     cre.rename(name)
     return cre
@@ -356,10 +356,10 @@ def sfc_net_energy(cubelist, model=um):
     iris.cube.Cube
         Cube of total surface downward energy flux.
     """
-    net_down_lw = cubelist.extract_strict(model.sfc_net_down_lw)
-    net_down_sw = cubelist.extract_strict(model.sfc_net_down_sw)
-    shf = cubelist.extract_strict(model.sfc_shf)
-    lhf = cubelist.extract_strict(model.sfc_lhf)
+    net_down_lw = cubelist.extract_cube(model.sfc_net_down_lw)
+    net_down_sw = cubelist.extract_cube(model.sfc_net_down_sw)
+    shf = cubelist.extract_cube(model.sfc_shf)
+    lhf = cubelist.extract_cube(model.sfc_lhf)
     sfc_net = net_down_lw + net_down_sw - shf - lhf
     return sfc_net
 
@@ -386,16 +386,16 @@ def sfc_water_balance(cubelist, const=None, model=um):
         Cube of total surface downward water flux (P-E).
     """
     try:
-        evap = cubelist.extract_strict(model.sfc_evap)
+        evap = cubelist.extract_cube(model.sfc_evap)
     except ConMisErr:
         try:
-            lhf = cubelist.extract_strict(model.sfc_lhf)
+            lhf = cubelist.extract_cube(model.sfc_lhf)
             evap = lhf / const.condensible_heat_vaporization.asc
             evap /= const.condensible_density.asc
         except (KeyError, ConMisErr):
             raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
     try:
-        precip = cubelist.extract_strict(model.ppn)
+        precip = cubelist.extract_cube(model.ppn)
         precip /= const.condensible_density.asc
     except ConMisErr:
         precip = precip_sum(cubelist, ptype="total", const=const, model=model)
@@ -438,7 +438,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     precip = 0.0
     for varname in varnames:
         try:
-            cube = cubelist.extract_strict(varname)
+            cube = cubelist.extract_cube(varname)
             precip += cube
         except ConMisErr:
             pass
@@ -472,7 +472,7 @@ def heat_redist_eff(cubelist, region_a, region_b, model=um):
     iris.cube.Cube
         Cube of eta parameter with collapsed spatial dimensions.
     """
-    toa_olr = cubelist.extract_strict(model.toa_olr)
+    toa_olr = cubelist.extract_cube(model.toa_olr)
     toa_olr_a = spatial_mean(toa_olr.extract(region_a.constraint))
     toa_olr_b = spatial_mean(toa_olr.extract(region_b.constraint))
     eta = toa_olr_a / toa_olr_b
@@ -496,7 +496,7 @@ def toa_eff_temp(cubelist, model=um):
     iris.cube.Cube
         Cube of :math:`T_{eff}`.
     """
-    toa_olr = cubelist.extract_strict(model.toa_olr)
+    toa_olr = cubelist.extract_cube(model.toa_olr)
     sbc = init_const().stefan_boltzmann
     try:
         t_eff = (toa_olr / sbc) ** 0.25
@@ -525,7 +525,7 @@ def ghe_norm(cubelist, model=um):
     iris.cube.Cube
         Cube of greenhouse effect parameter with collapsed spatial dimensions.
     """
-    t_sfc = spatial_mean(cubelist.extract_strict(um.t_sfc))
+    t_sfc = spatial_mean(cubelist.extract_cube(um.t_sfc))
     t_eff = toa_eff_temp(cubelist, model=model)
     one = t_eff.copy(data=np.ones(t_eff.shape))
     one.units = "1"
@@ -557,7 +557,7 @@ def bond_albedo(cubelist, const=None, model=um):
     iris.cube.Cube
         Cube of bond albedo.
     """
-    toa_osr = cubelist.extract_strict(model.toa_osr)
+    toa_osr = cubelist.extract_cube(model.toa_osr)
     sc = const.solar_constant
     try:
         b_alb = 4 * toa_osr / sc
@@ -592,15 +592,15 @@ def water_path(cubelist, kind="water_vapour", model=um):
         Cube of water path with collapsed vertical dimension.
     """
     if kind == "water_vapour":
-        q = cubelist.extract_strict(model.sh)
+        q = cubelist.extract_cube(model.sh)
     elif kind == "liquid_water":
-        q = cubelist.extract_strict(model.cld_liq_mf)
+        q = cubelist.extract_cube(model.cld_liq_mf)
     elif kind == "ice_water":
-        q = cubelist.extract_strict(model.cld_ice_mf)
+        q = cubelist.extract_cube(model.cld_ice_mf)
     elif kind == "cloud_water":
-        q = cubelist.extract_strict(model.cld_liq_mf).copy()
-        q += cubelist.extract_strict(model.cld_ice_mf)
-    rho = cubelist.extract_strict(model.dens)
+        q = cubelist.extract_cube(model.cld_liq_mf).copy()
+        q += cubelist.extract_cube(model.cld_ice_mf)
+    rho = cubelist.extract_cube(model.dens)
     wp = integrate(q * rho, model.z)
     wp.rename(f"{kind}_path")
     return wp
@@ -625,7 +625,7 @@ def dry_lapse_rate(cubelist, model=um):
     iris.cube.Cube
         Cube of dT/dz.
     """
-    temp = cubelist.extract_strict(model.temp)
+    temp = cubelist.extract_cube(model.temp)
     return d_dz(temp, model=model)
 
 
@@ -681,7 +681,7 @@ def superrotation_index(cubelist, const=None, model=um):
     Read (1986), https://doi.org/10.1002/qj.49711247114
     """
     # Zonal velocity
-    u = cubelist.extract_strict(model.u)
+    u = cubelist.extract_cube(model.u)
     # Radius of the planet
     r = const.radius
     r.convert_units("m")

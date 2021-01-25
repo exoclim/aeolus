@@ -112,7 +112,7 @@ class AtmosFlow:
         kwargs = {}
         for key in self.model.__dataclass_fields__:
             try:
-                kwargs[key] = self._cubes.extract_strict(getattr(self.model, key))
+                kwargs[key] = self._cubes.extract_cube(getattr(self.model, key))
             except ConMisErr:
                 pass
         self.__dict__.update(**kwargs)

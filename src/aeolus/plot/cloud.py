@@ -35,7 +35,7 @@ class CloudPlotter:
         self.cubes = {}
         for key, stash in self._stash_items.items():
             try:
-                self.cubes[key] = cubelist.extract_strict(iris.AttributeConstraint(STASH=stash))
+                self.cubes[key] = cubelist.extract_cube(iris.AttributeConstraint(STASH=stash))
             except iris.exceptions.ConstraintMismatchError:
                 warnings.warn(f"Warning!\n{key} ({stash}) is not found in\n\n{cubelist}")
 
