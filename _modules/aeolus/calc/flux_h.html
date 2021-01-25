@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.flux_h &mdash; aeolus 0+untagged.1.g18e597d documentation</title>
+  <title>aeolus.calc.flux_h &mdash; aeolus 0+untagged.1.g772007e documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g18e597d
+                0+untagged.1.g772007e
               </div>
             
           
@@ -242,9 +242,7 @@
         <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">net_flux</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">total_h_fluxes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span>
-            <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;through_west&quot;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
-        <span class="p">)</span>
+        <span class="n">total_h_fluxes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;through_west&quot;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span>
         <span class="o">-</span> <span class="n">total_h_fluxes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span>
             <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;through_east&quot;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="p">)</span>
