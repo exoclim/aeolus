@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g22ee1df documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g18e597d documentation</title>
   
 
   
@@ -18,7 +18,10 @@
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -54,7 +56,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aeolus
+            <a href="../../../index.html" class="icon icon-home"> aeolus
           
 
           
@@ -64,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g22ee1df
+                0+untagged.1.g18e597d
               </div>
             
           
@@ -120,6 +122,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -236,19 +240,19 @@
 <span class="sd">        Cube of air temperature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">thta</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
+            <span class="n">thta</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
+            <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">const</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">const</span> <span class="o">=</span> <span class="n">thta</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span>
-            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
             <span class="n">exner</span> <span class="o">=</span> <span class="p">(</span><span class="n">pres</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span><span class="o">.</span><span class="n">asc</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span>
                 <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
             <span class="p">)</span><span class="o">.</span><span class="n">data</span>
@@ -283,19 +287,19 @@
 <span class="sd">        Cube of air potential temperature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air potential temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
+            <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">const</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">const</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span>
-            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
             <span class="n">exner</span> <span class="o">=</span> <span class="p">(</span><span class="n">pres</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span><span class="o">.</span><span class="n">asc</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span>
                 <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
             <span class="p">)</span><span class="o">.</span><span class="n">data</span>
@@ -330,11 +334,11 @@
 <span class="sd">        Cube of air density.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
+            <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">const</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">const</span> <span class="o">=</span> <span class="n">pres</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span>
             <span class="n">rho</span> <span class="o">=</span> <span class="n">pres</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span><span class="o">.</span><span class="n">asc</span> <span class="o">*</span> <span class="n">temp</span><span class="p">)</span>
@@ -368,7 +372,7 @@
 <span class="sd">        Cube of geopotential height.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">cube_w_height</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
@@ -412,15 +416,15 @@
 <span class="sd">        Cube of a flux component with the same dimensions as input cubes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">axis</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">axis</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">quantity</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">quantity</span><span class="p">)</span>
     <span class="n">fl</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">q</span>
     <span class="k">if</span> <span class="n">weight_by_density</span><span class="p">:</span>
-        <span class="n">fl</span> <span class="o">*=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
+        <span class="n">fl</span> <span class="o">*=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
     <span class="n">fl</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;flux_of_</span><span class="si">{</span><span class="n">quantity</span><span class="si">}</span><span class="s2">_along_</span><span class="si">{</span><span class="n">axis</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_axis&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fl</span></div>
 
@@ -459,8 +463,8 @@
         <span class="n">cre</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cre</span>
 
-    <span class="n">cube_clr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">clr_sky</span><span class="p">)</span>
-    <span class="n">cube_all</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">all_sky</span><span class="p">)</span>
+    <span class="n">cube_clr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">clr_sky</span><span class="p">)</span>
+    <span class="n">cube_all</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">all_sky</span><span class="p">)</span>
     <span class="n">cre</span> <span class="o">=</span> <span class="n">cube_clr</span> <span class="o">-</span> <span class="n">cube_all</span>
     <span class="n">cre</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cre</span></div>
@@ -517,10 +521,10 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of total surface downward energy flux.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">net_down_lw</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_net_down_lw</span><span class="p">)</span>
-    <span class="n">net_down_sw</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_net_down_sw</span><span class="p">)</span>
-    <span class="n">shf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_shf</span><span class="p">)</span>
-    <span class="n">lhf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_lhf</span><span class="p">)</span>
+    <span class="n">net_down_lw</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_net_down_lw</span><span class="p">)</span>
+    <span class="n">net_down_sw</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_net_down_sw</span><span class="p">)</span>
+    <span class="n">shf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_shf</span><span class="p">)</span>
+    <span class="n">lhf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_lhf</span><span class="p">)</span>
     <span class="n">sfc_net</span> <span class="o">=</span> <span class="n">net_down_lw</span> <span class="o">+</span> <span class="n">net_down_sw</span> <span class="o">-</span> <span class="n">shf</span> <span class="o">-</span> <span class="n">lhf</span>
     <span class="k">return</span> <span class="n">sfc_net</span></div>
 
@@ -547,16 +551,16 @@
 <span class="sd">        Cube of total surface downward water flux (P-E).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">evap</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_evap</span><span class="p">)</span>
+        <span class="n">evap</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_evap</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">lhf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_lhf</span><span class="p">)</span>
+            <span class="n">lhf</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sfc_lhf</span><span class="p">)</span>
             <span class="n">evap</span> <span class="o">=</span> <span class="n">lhf</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_heat_vaporization</span><span class="o">.</span><span class="n">asc</span>
             <span class="n">evap</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span><span class="o">.</span><span class="n">asc</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">ConMisErr</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot retrieve evaporation from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">precip</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ppn</span><span class="p">)</span>
+        <span class="n">precip</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ppn</span><span class="p">)</span>
         <span class="n">precip</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span><span class="o">.</span><span class="n">asc</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="n">precip</span> <span class="o">=</span> <span class="n">precip_sum</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -599,7 +603,7 @@
     <span class="n">precip</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">varname</span> <span class="ow">in</span> <span class="n">varnames</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">cube</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">varname</span><span class="p">)</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">varname</span><span class="p">)</span>
             <span class="n">precip</span> <span class="o">+=</span> <span class="n">cube</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="k">pass</span>
@@ -633,7 +637,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of eta parameter with collapsed spatial dimensions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr</span><span class="p">)</span>
+    <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr</span><span class="p">)</span>
     <span class="n">toa_olr_a</span> <span class="o">=</span> <span class="n">spatial_mean</span><span class="p">(</span><span class="n">toa_olr</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">region_a</span><span class="o">.</span><span class="n">constraint</span><span class="p">))</span>
     <span class="n">toa_olr_b</span> <span class="o">=</span> <span class="n">spatial_mean</span><span class="p">(</span><span class="n">toa_olr</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">region_b</span><span class="o">.</span><span class="n">constraint</span><span class="p">))</span>
     <span class="n">eta</span> <span class="o">=</span> <span class="n">toa_olr_a</span> <span class="o">/</span> <span class="n">toa_olr_b</span>
@@ -657,7 +661,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of :math:`T_{eff}`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr</span><span class="p">)</span>
+    <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr</span><span class="p">)</span>
     <span class="n">sbc</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">()</span><span class="o">.</span><span class="n">stefan_boltzmann</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">t_eff</span> <span class="o">=</span> <span class="p">(</span><span class="n">toa_olr</span> <span class="o">/</span> <span class="n">sbc</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.25</span>
@@ -686,7 +690,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of greenhouse effect parameter with collapsed spatial dimensions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">t_sfc</span> <span class="o">=</span> <span class="n">spatial_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">t_sfc</span><span class="p">))</span>
+    <span class="n">t_sfc</span> <span class="o">=</span> <span class="n">spatial_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">t_sfc</span><span class="p">))</span>
     <span class="n">t_eff</span> <span class="o">=</span> <span class="n">toa_eff_temp</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="n">one</span> <span class="o">=</span> <span class="n">t_eff</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">t_eff</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
     <span class="n">one</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
@@ -718,7 +722,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of bond albedo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">toa_osr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_osr</span><span class="p">)</span>
+    <span class="n">toa_osr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_osr</span><span class="p">)</span>
     <span class="n">sc</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_constant</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">b_alb</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">toa_osr</span> <span class="o">/</span> <span class="n">sc</span>
@@ -753,15 +757,15 @@
 <span class="sd">        Cube of water path with collapsed vertical dimension.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;water_vapour&quot;</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sh</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">sh</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;liquid_water&quot;</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_liq_mf</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_liq_mf</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;ice_water&quot;</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_ice_mf</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_ice_mf</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;cloud_water&quot;</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_liq_mf</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">q</span> <span class="o">+=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_ice_mf</span><span class="p">)</span>
-    <span class="n">rho</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_liq_mf</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">q</span> <span class="o">+=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">cld_ice_mf</span><span class="p">)</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
     <span class="n">wp</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
     <span class="n">wp</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">_path&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wp</span></div>
@@ -786,7 +790,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube of dT/dz.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d_dz</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span></div>
 
 
@@ -842,7 +846,7 @@
 <span class="sd">    Read (1986), https://doi.org/10.1002/qj.49711247114</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Zonal velocity</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
     <span class="c1"># Radius of the planet</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span>
     <span class="n">r</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
@@ -893,28 +897,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, the aeolus developers
+        &#169; Copyright 2020, the aeolus developers.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

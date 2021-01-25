@@ -8,6 +8,7 @@ Changelog
 
 :Date: TBA
 
+* Adapt to iris v3.0
 * Add new meta decorators
 * Fix typos
 
