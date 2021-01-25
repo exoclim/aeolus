@@ -6,7 +6,7 @@ Changelog
 0.4.8
 -----
 
-:Date: TBA
+:Date: 25 January 2021
 
 * Adapt to iris v3.0
 * Add new meta decorators
