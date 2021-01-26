@@ -830,7 +830,7 @@ def nearest_coord_value(cube, coord_name, val):
 
 def not_equal_coord_axes(cube1, cube2):
     """Given 2 cubes, return axes of unequal dimensional coordinates."""
-    coord_comp = iris.analysis.coord_comparison(cube1, cube2)
+    coord_comp = iris.analysis._dimensional_metadata_comparison(cube1, cube2)
     neq_dim_coords = set(coord_comp["not_equal"]).intersection(set(coord_comp["dimensioned"]))
     dims = []
     for coord_pair in neq_dim_coords:
