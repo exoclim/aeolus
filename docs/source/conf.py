@@ -26,7 +26,7 @@ import aeolus
 # -- Project information -----------------------------------------------------
 
 project = "aeolus"
-copyright = "2020, the aeolus developers"  # noqa
+copyright = "2021, the aeolus developers"  # noqa
 author = "The aeolus developers"
 
 # The short X.Y version
