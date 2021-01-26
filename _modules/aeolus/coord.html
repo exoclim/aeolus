@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.gfe77bda documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.gd2fd48e documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.gfe77bda
+                0+untagged.1.gd2fd48e
               </div>
             
           
@@ -995,7 +995,7 @@
 
 <div class="viewcode-block" id="not_equal_coord_axes"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.not_equal_coord_axes">[docs]</a><span class="k">def</span> <span class="nf">not_equal_coord_axes</span><span class="p">(</span><span class="n">cube1</span><span class="p">,</span> <span class="n">cube2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given 2 cubes, return axes of unequal dimensional coordinates.&quot;&quot;&quot;</span>
-    <span class="n">coord_comp</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">coord_comparison</span><span class="p">(</span><span class="n">cube1</span><span class="p">,</span> <span class="n">cube2</span><span class="p">)</span>
+    <span class="n">coord_comp</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">_dimensional_metadata_comparison</span><span class="p">(</span><span class="n">cube1</span><span class="p">,</span> <span class="n">cube2</span><span class="p">)</span>
     <span class="n">neq_dim_coords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">coord_comp</span><span class="p">[</span><span class="s2">&quot;not_equal&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">coord_comp</span><span class="p">[</span><span class="s2">&quot;dimensioned&quot;</span><span class="p">]))</span>
     <span class="n">dims</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">coord_pair</span> <span class="ow">in</span> <span class="n">neq_dim_coords</span><span class="p">:</span>
