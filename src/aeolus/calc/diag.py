@@ -88,7 +88,7 @@ def air_temperature(cubelist, const=None, model=um):
             if const is None:
                 const = thta.attributes["planet_conf"]
             pres = cubelist.extract_cube(model.pres)
-            exner = (pres / const.reference_surface_pressure.asc) ** (
+            exner = (pres / const.reference_surface_pressure) ** (
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
         else:
@@ -135,7 +135,7 @@ def air_potential_temperature(cubelist, const=None, model=um):
             if const is None:
                 const = temp.attributes["planet_conf"]
             pres = cubelist.extract_cube(model.pres)
-            exner = (pres / const.reference_surface_pressure.asc) ** (
+            exner = (pres / const.reference_surface_pressure) ** (
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
         else:
@@ -176,7 +176,7 @@ def air_density(cubelist, const=None, model=um):
             pres = cubelist.extract_cube(model.pres)
             if const is None:
                 const = pres.attributes["planet_conf"]
-            rho = pres / (const.dry_air_gas_constant.asc * temp)
+            rho = pres / (const.dry_air_gas_constant * temp)
             rho.rename(model.dens)
             return rho
         except ConMisErr:
@@ -213,7 +213,7 @@ def geopotential_height(cubelist, const=None, model=um):
             cube_w_height = cubelist.extract(_dim_constr(model.z, strict=False))[0]
             if const is None:
                 const = cube_w_height.attributes["planet_conf"]
-            g_hgt = coord_to_cube(cube_w_height, model.z) * const.gravity.asc
+            g_hgt = coord_to_cube(cube_w_height, model.z) * const.gravity
             g_hgt.attributes = {k: v for k, v in cube_w_height.attributes.items() if k != "STASH"}
             ensure_bounds(g_hgt, [model.z])
             g_hgt.rename(model.ghgt)
@@ -390,13 +390,13 @@ def sfc_water_balance(cubelist, const=None, model=um):
     except ConMisErr:
         try:
             lhf = cubelist.extract_cube(model.sfc_lhf)
-            evap = lhf / const.condensible_heat_vaporization.asc
-            evap /= const.condensible_density.asc
+            evap = lhf / const.condensible_heat_vaporization
+            evap /= const.condensible_density
         except (KeyError, ConMisErr):
             raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
     try:
         precip = cubelist.extract_cube(model.ppn)
-        precip /= const.condensible_density.asc
+        precip /= const.condensible_density
     except ConMisErr:
         precip = precip_sum(cubelist, ptype="total", const=const, model=model)
     precip.convert_units("mm h-1")
@@ -442,7 +442,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
             precip += cube
         except ConMisErr:
             pass
-    precip /= const.condensible_density.asc
+    precip /= const.condensible_density
     precip.convert_units("mm day^-1")
     precip.rename(f"{ptype}_precip_rate")
     return precip
@@ -498,10 +498,7 @@ def toa_eff_temp(cubelist, model=um):
     """
     toa_olr = cubelist.extract_cube(model.toa_olr)
     sbc = init_const().stefan_boltzmann
-    try:
-        t_eff = (toa_olr / sbc) ** 0.25
-    except ValueError:
-        t_eff = (toa_olr / sbc.asc) ** 0.25
+    t_eff = (toa_olr / sbc) ** 0.25
     return t_eff
 
 
@@ -559,10 +556,7 @@ def bond_albedo(cubelist, const=None, model=um):
     """
     toa_osr = cubelist.extract_cube(model.toa_osr)
     sc = const.solar_constant
-    try:
-        b_alb = 4 * toa_osr / sc
-    except ValueError:
-        b_alb = 4 * toa_osr / sc.asc
+    b_alb = 4 * toa_osr / sc
     return b_alb
 
 
@@ -705,7 +699,7 @@ def superrotation_index(cubelist, const=None, model=um):
     ang_mom = multiply(inner_sum, r_coslat, dim=lat_dim)
 
     # Final index
-    s_idx = ang_mom / omega.asc / r.asc / r.asc
+    s_idx = ang_mom / omega / (r ** 2)
     s_idx.convert_units("1")
     s_idx = s_idx.copy(data=s_idx.data - 1)
     return s_idx

@@ -3,6 +3,14 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.9
+-----
+
+:Date: TBA
+
+* Drop `.asc` usage in `ScalarCube`
+
+
 0.4.8
 -----
 
