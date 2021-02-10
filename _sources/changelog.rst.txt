@@ -9,6 +9,7 @@ Changelog
 :Date: TBA
 
 * Drop `.asc` usage in `ScalarCube`
+* Add new variable names to `um`
 
 
 0.4.8

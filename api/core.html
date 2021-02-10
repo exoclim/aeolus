@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Core hierarchy &mdash; aeolus 0+untagged.1.g3f6564c documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0+untagged.1.g823914a documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0+untagged.1.g3f6564c
+                0+untagged.1.g823914a
               </div>
             
           
@@ -208,7 +208,7 @@
 <p>Core classes to store and process model output.</p>
 <dl class="py class">
 <dt id="aeolus.core.AtmosFlow">
-<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">AtmosFlow</code><span class="sig-paren">(</span><em class="sig-param">cubes=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmosFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.AtmosFlow" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">AtmosFlow</code><span class="sig-paren">(</span><em class="sig-param">cubes=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(77 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmosFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.AtmosFlow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Atmospheric Flow.</p>
 <p>Used to store and calculate atmospheric fields from gridded model output.
@@ -261,7 +261,7 @@ time.</p>
 
 <dl class="py method">
 <dt id="aeolus.core.AtmosFlow.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">cubes=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmosFlow.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.AtmosFlow.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">cubes=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(77 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmosFlow.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.AtmosFlow.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate an <cite>AtmosFlow</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,7 +302,7 @@ If not given, Earth physical constants are initialised.</p></li>
 
 <dl class="py class">
 <dt id="aeolus.core.Run">
-<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">Run</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">aeolus.core.</code><code class="sig-name descname">Run</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(77 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A single model ‘run’, i.e. simulation.</p>
 <dl class="py attribute">
@@ -351,7 +351,7 @@ If not given, Earth physical constants are initialised.</p></li>
 
 <dl class="py method">
 <dt id="aeolus.core.Run.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(75 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">files=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">description=''</em>, <em class="sig-param">planet=''</em>, <em class="sig-param">const_dir=None</em>, <em class="sig-param">model=&lt;class 'aeolus.model.base.Model'&gt;(77 fields)</em>, <em class="sig-param">model_type=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">children=None</em>, <em class="sig-param">processed=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aeolus.core.Run.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate a <cite>Run</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
