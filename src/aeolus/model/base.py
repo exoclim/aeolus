@@ -16,6 +16,7 @@ class Model:
     z: str = None  # height
     lev: str = None  # level number
     s: str = None  # sigma
+    d: str = None  # depth
     y: str = None  # latitude
     x: str = None  # longitude
     # Variables
@@ -93,6 +94,8 @@ class Model:
     dq_cv: str = None
     dq_lscld: str = None
     dq_adv: str = None
+    # Soil
+    soil_moist: str = None
 
     def __repr__(self):
         """Override the repr method of the dataclass."""

@@ -12,6 +12,7 @@ um = Model(
     z="level_height",
     lev="model_level_number",
     s="sigma",
+    d="depth",
     y="latitude",
     x="longitude",
     # Variables
@@ -82,6 +83,7 @@ um = Model(
     dq_cv="change_over_time_in_specific_humidity_due_to_convection",
     dq_lscld="m01s09i182",
     dq_adv="change_over_time_in_specific_humidity_due_to_advection",
+    soil_moist="moisture_content_of_soil_layer",
 )
 
 um_stash = Model(
@@ -92,6 +94,7 @@ um_stash = Model(
     z="level_height",
     lev="model_level_number",
     s="sigma",
+    d="depth",
     y="latitude",
     x="longitude",
     # Variables
@@ -159,4 +162,5 @@ um_stash = Model(
     dq_cv="m01s05i182",
     dq_lscld="m01s09i182",
     dq_adv="m01s12i182",
+    soil_moist="m01s08i223",
 )
