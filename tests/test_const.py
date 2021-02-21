@@ -22,7 +22,7 @@ def test_init_const_general():
     assert isinstance(cnsts, const.const.ConstContainer)
     for key in cnsts.__dataclass_fields__.keys():
         attr = getattr(cnsts, key)
-        assert isinstance(attr, const.const.ScalarCube)
+        assert isinstance(attr, iris.cube.Cube)
         assert attr.ndim == 0  # XXX could be relaxed
     key = "stefan_boltzmann"
     assert key in cnsts.__dataclass_fields__

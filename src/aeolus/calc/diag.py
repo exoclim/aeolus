@@ -11,7 +11,6 @@ from .calculus import d_dz, integrate
 from .meta import const_from_attrs, update_metadata
 from .stats import spatial_mean
 from ..const import init_const
-from ..const.const import ScalarCube
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
 from ..model import um
@@ -375,7 +374,7 @@ def sfc_water_balance(cubelist, const=None, model=um):
     cubelist: iris.cube.CubeList
         Input list of cubes.
     const: aeolus.const.const.ConstContainer, optional
-        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        Must have a scalar cube of `condensible_density` as an attribute.
         If not given, attempt is made to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -417,7 +416,7 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     ptype: str, optional
         Precipitation type (total|stra|conv|rain|snow).
     const: aeolus.const.const.ConstContainer, optional
-        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        Must have a scalar cube of `condensible_density` as an attribute.
         If not given, attempt to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -544,7 +543,7 @@ def bond_albedo(cubelist, const=None, model=um):
     cubelist: iris.cube.CubeList
         Input list of cubes.
     const: aeolus.const.const.ConstContainer, optional
-        Must have a `ScalarCube` of `condensible_density` as an attribute.
+        Must have a scalar cube of `solar_constant` as an attribute.
         If not given, attempt to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -662,6 +661,9 @@ def superrotation_index(cubelist, const=None, model=um):
     ----------
     cubelist: iris.cube.CubeList
         List of cubes containing a cube of zonal velocity (u).
+    const: aeolus.const.const.ConstContainer, optional
+        Constainer with the relevant planetary constants.
+        If not given, attempt is made to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -680,8 +682,7 @@ def superrotation_index(cubelist, const=None, model=um):
     r = const.radius
     r.convert_units("m")
     # Rotation rate
-    omega = ScalarCube.from_cube((const.day / (2 * np.pi)) ** (-1))
-    omega.convert_units("s-1")
+    omega = const.planet_rotation_rate
 
     lat_coord = u.coord(model.y).copy()
     lat_dim = u.coord_dims(model.y)[0]

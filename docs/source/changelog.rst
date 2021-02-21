@@ -8,8 +8,10 @@ Changelog
 
 :Date: TBA
 
-* Drop `.asc` usage in `ScalarCube`
+* Deprecate `ScalarCube`
 * Add new variable names to `um`
+* Refactor derived constants and add `planet_rotation_rate` to the recipes
+* Improve docstrings
 
 
 0.4.8

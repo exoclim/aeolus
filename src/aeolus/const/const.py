@@ -16,9 +16,31 @@ __all__ = ("init_const", "get_planet_radius")
 
 CONST_DIR = Path(__file__).parent / "store"
 
+DERIVED_CONST = {
+    "dry_air_gas_constant": (
+        lambda slf: slf.molar_gas_constant / slf.dry_air_molecular_weight,
+        "J kg-1 K-1",
+    ),
+    "molecular_weight_ratio": (
+        lambda slf: slf.condensible_molecular_weight / slf.dry_air_molecular_weight,
+        "1",
+    ),
+    "poisson_exponent": (lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press, "1"),
+    "planet_rotation_rate": (lambda slf: (slf.day / (2 * np.pi)) ** (-1), "s-1"),
+}
+
 
 class ScalarCube(iris.cube.Cube):
     """Cube without coordinates."""
+
+    def __init__(self, *args, **kw):
+        """Initialise aeolus.const.const.ScalarCube."""
+        warn(
+            "ScalarCube is deprecated and will be removed in the next release. "
+            "Use iris.cube.Cube instead.",
+            AeolusWarning,
+        )
+        super(ScalarCube, self).__init__(*args, **kw)
 
     def __repr__(self):
         """Repr of this class."""
@@ -63,23 +85,18 @@ class ConstContainer:
         """Loop through fields and convert each of them to `iris.cube.Cube`."""
         for name in self.__dataclass_fields__:
             _field = getattr(self, name)
-            cube = ScalarCube(
+            cube = iris.cube.Cube(
                 data=_field.get("value"), units=_field.get("units", 1), long_name=name
             )
             object.__setattr__(self, name, cube)
 
     def _derive_const(self):
         """Not fully implemented yet."""
-        derivatives = {
-            "dry_air_gas_constant": lambda slf: slf.molar_gas_constant
-            / slf.dry_air_molecular_weight,
-            "molecular_weight_ratio": lambda slf: slf.condensible_molecular_weight
-            / slf.dry_air_molecular_weight,
-            "poisson_exponent": lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press,
-        }
-        for name, func in derivatives.items():
+        for name, recipe in DERIVED_CONST.items():
+            func, units = recipe
             try:
-                cube = ScalarCube.from_cube(func(self))
+                cube = func(self)
+                cube.convert_units(units)
                 cube.rename(name)
                 object.__setattr__(self, name, cube)
             except AttributeError:
