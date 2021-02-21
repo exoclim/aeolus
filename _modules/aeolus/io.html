@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.io &mdash; aeolus 0+untagged.1.g5481158 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0+untagged.1.g9f29ee2 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5481158
+                0+untagged.1.g9f29ee2
               </div>
             
           
@@ -169,7 +169,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_multidir"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_multidir">[docs]</a><span class="k">def</span> <span class="nf">load_multidir</span><span class="p">(</span><span class="n">path_mask</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">label_name</span><span class="o">=</span><span class="s2">&quot;run&quot;</span><span class="p">):</span>
@@ -204,6 +204,37 @@
         <span class="n">nml</span> <span class="o">=</span> <span class="n">f90nml</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nml_file</span><span class="p">)</span>
         <span class="n">levs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;eta_</span><span class="si">{</span><span class="n">lev_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="s2">&quot;z_top_of_model&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">levs</span></div>
+
+
+<span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save a cubelist w/o the `planet_conf` container to a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cubelist: iris.cube.CubeList</span>
+<span class="sd">        Cube list to write to disk.</span>
+<span class="sd">    path: str or pathlib.Path</span>
+<span class="sd">        File path.</span>
+<span class="sd">    aux_attrs: dict, optional</span>
+<span class="sd">        Dictionary of additional attributes to save with the cubes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Remove planet_conf attribute before saving</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">()</span>
+    <span class="n">old_attrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cubelist</span><span class="p">:</span>
+        <span class="n">old_attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">new_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">new_attrs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">new_attrs</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+    <span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="c1"># Restore original attributes</span>
+    <span class="k">for</span> <span class="n">cube</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">old_attrs</span><span class="p">):</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attrs</span>
 </pre></div>
 
            </div>

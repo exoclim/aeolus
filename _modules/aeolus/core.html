@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.g5481158 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g9f29ee2 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5481158
+                0+untagged.1.g9f29ee2
               </div>
             
           
@@ -173,6 +173,7 @@
 <span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">init_const</span>
 <span class="kn">from</span> <span class="nn">.coord</span> <span class="kn">import</span> <span class="n">CoordContainer</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span>
+<span class="kn">from</span> <span class="nn">.io</span> <span class="kn">import</span> <span class="n">save_cubelist</span>
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">.region</span> <span class="kn">import</span> <span class="n">Region</span>
 <span class="kn">from</span> <span class="nn">.subset</span> <span class="kn">import</span> <span class="n">DimConstr</span>
@@ -480,9 +481,9 @@
         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
             <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">,</span> <span class="o">**</span><span class="n">func_args</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Run.to_netcdf"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.to_netcdf">[docs]</a>    <span class="k">def</span> <span class="nf">to_netcdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="Run.to_file"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Save `proc` cubelist to a netCDF file with appropriate metadata.</span>
+<span class="sd">        Save `proc` cubelist to a file with appropriate metadata.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -493,22 +494,7 @@
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
                 <span class="n">run_attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-        <span class="c1"># Remove planet_conf attribute before saving</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">()</span>
-        <span class="n">old_attrs</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">:</span>
-            <span class="n">old_attrs</span><span class="p">[</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">new_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">run_attrs</span><span class="p">}</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">new_attrs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">new_attrs</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
-        <span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-        <span class="c1"># Restore original attributes</span>
-        <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">:</span>
-            <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">old_attrs</span><span class="p">[</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span></div></div>
+        <span class="n">save_cubelist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">run_attrs</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
