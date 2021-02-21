@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.gfea0cc7 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g5481158 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gfea0cc7
+                0+untagged.1.g5481158
               </div>
             
           
@@ -174,7 +174,6 @@
 <span class="kn">from</span> <span class="nn">.meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span><span class="p">,</span> <span class="n">update_metadata</span>
 <span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">spatial_mean</span>
 <span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">init_const</span>
-<span class="kn">from</span> <span class="nn">..const.const</span> <span class="kn">import</span> <span class="n">ScalarCube</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span><span class="p">,</span> <span class="n">regrid_3d</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">MissingCubeError</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
@@ -538,7 +537,7 @@
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes.</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have a `ScalarCube` of `condensible_density` as an attribute.</span>
+<span class="sd">        Must have a scalar cube of `condensible_density` as an attribute.</span>
 <span class="sd">        If not given, attempt is made to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -580,7 +579,7 @@
 <span class="sd">    ptype: str, optional</span>
 <span class="sd">        Precipitation type (total|stra|conv|rain|snow).</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have a `ScalarCube` of `condensible_density` as an attribute.</span>
+<span class="sd">        Must have a scalar cube of `condensible_density` as an attribute.</span>
 <span class="sd">        If not given, attempt to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -707,7 +706,7 @@
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes.</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have a `ScalarCube` of `condensible_density` as an attribute.</span>
+<span class="sd">        Must have a scalar cube of `solar_constant` as an attribute.</span>
 <span class="sd">        If not given, attempt to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -825,6 +824,9 @@
 <span class="sd">    ----------</span>
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        List of cubes containing a cube of zonal velocity (u).</span>
+<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
+<span class="sd">        Constainer with the relevant planetary constants.</span>
+<span class="sd">        If not given, attempt is made to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
 
@@ -843,8 +845,7 @@
     <span class="n">r</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span>
     <span class="n">r</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
     <span class="c1"># Rotation rate</span>
-    <span class="n">omega</span> <span class="o">=</span> <span class="n">ScalarCube</span><span class="o">.</span><span class="n">from_cube</span><span class="p">((</span><span class="n">const</span><span class="o">.</span><span class="n">day</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">omega</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;s-1&quot;</span><span class="p">)</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">planet_rotation_rate</span>
 
     <span class="n">lat_coord</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">lat_dim</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.gfea0cc7 documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.g5481158 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0+untagged.1.gfea0cc7
+                0+untagged.1.g5481158
               </div>
             
           
@@ -585,7 +585,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
-<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a <cite>ScalarCube</cite> of <cite>condensible_density</cite> as an attribute.
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>solar_constant</cite> as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
@@ -746,7 +746,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
 <li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
-<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a <cite>ScalarCube</cite> of <cite>condensible_density</cite> as an attribute.
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
@@ -788,7 +788,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
-<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a <cite>ScalarCube</cite> of <cite>condensible_density</cite> as an attribute.
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
 If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
@@ -812,6 +812,8 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – List of cubes containing a cube of zonal velocity (u).</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Constainer with the relevant planetary constants.
+If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
