@@ -6,7 +6,7 @@ import iris
 import numpy as np
 
 
-__all__ = ("load_multidir", "load_vert_lev")
+__all__ = ("load_multidir", "load_vert_lev", "save_cubelist")
 
 
 def load_multidir(path_mask, labels, label_name="run"):
@@ -41,3 +41,34 @@ def load_vert_lev(path_to_file, lev_type="theta"):
         nml = f90nml.read(nml_file)
         levs = np.array(nml["vertlevs"][f"eta_{lev_type}"]) * nml["vertlevs"]["z_top_of_model"]
     return levs
+
+
+def save_cubelist(cubelist, path, **aux_attrs):
+    """
+    Save a cubelist w/o the `planet_conf` container to a file.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Cube list to write to disk.
+    path: str or pathlib.Path
+        File path.
+    aux_attrs: dict, optional
+        Dictionary of additional attributes to save with the cubes.
+    """
+    # Remove planet_conf attribute before saving
+    out = iris.cube.CubeList()
+    old_attrs = []
+    for cube in cubelist:
+        old_attrs.append(cube.attributes.copy())
+        new_attrs = {**cube.attributes, **aux_attrs}
+        try:
+            new_attrs.pop("planet_conf")
+        except KeyError:
+            pass
+        cube.attributes = new_attrs
+        out.append(cube)
+    iris.save(out, str(path))
+    # Restore original attributes
+    for cube, attrs in zip(cubelist, old_attrs):
+        cube.attributes = attrs

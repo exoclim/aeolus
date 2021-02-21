@@ -10,6 +10,7 @@ from .calc.meta import copy_doc
 from .const import init_const
 from .coord import CoordContainer
 from .exceptions import AeolusWarning, ArgumentError
+from .io import save_cubelist
 from .model import um
 from .region import Region
 from .subset import DimConstr
@@ -317,9 +318,9 @@ class Run:
         if callable(func):
             func(self.proc, **func_args)
 
-    def to_netcdf(self, path):
+    def to_file(self, path):
         """
-        Save `proc` cubelist to a netCDF file with appropriate metadata.
+        Save `proc` cubelist to a file with appropriate metadata.
 
         Parameters
         ----------
@@ -330,19 +331,4 @@ class Run:
         for key in self.attr_keys:
             if getattr(self, key):
                 run_attrs[key] = str(getattr(self, key))
-        # Remove planet_conf attribute before saving
-        out = iris.cube.CubeList()
-        old_attrs = {}
-        for cube in self.proc:
-            old_attrs[cube.name()] = cube.attributes.copy()
-            new_attrs = {**cube.attributes, **run_attrs}
-            try:
-                new_attrs.pop("planet_conf")
-            except KeyError:
-                pass
-            cube.attributes = new_attrs
-            out.append(cube)
-        iris.save(out, str(path))
-        # Restore original attributes
-        for cube in self.proc:
-            cube.attributes = old_attrs[cube.name()]
+        save_cubelist(self.proc, path, **run_attrs)
