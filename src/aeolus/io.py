@@ -1,12 +1,27 @@
 """Input and output functionality."""
+from pathlib import Path
+
 import f90nml
 
 import iris
 
 import numpy as np
 
+from .exceptions import ArgumentError
 
-__all__ = ("load_multidir", "load_vert_lev", "save_cubelist")
+
+__all__ = ("load_data", "load_multidir", "load_vert_lev", "save_cubelist")
+
+
+def load_data(files):
+    """Wrap `iris.load` to deal with `pathlib.Path` objects."""
+    if isinstance(files, (list, set, tuple)):
+        fnames = [str(i) for i in files]
+    elif isinstance(files, (str, Path)):
+        fnames = str(files)
+    else:
+        raise ArgumentError(f"Input type {type(files)} is not allowed.")
+    return iris.load(fnames)
 
 
 def load_multidir(path_mask, labels, label_name="run"):

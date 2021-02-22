@@ -12,7 +12,7 @@ import numpy as np
 from ..exceptions import AeolusWarning, ArgumentError, LoadError
 
 
-__all__ = ("init_const", "get_planet_radius")
+__all__ = ("add_planet_conf_to_cubes", "get_planet_radius", "init_const")
 
 CONST_DIR = Path(__file__).parent / "store"
 
@@ -25,7 +25,10 @@ DERIVED_CONST = {
         lambda slf: slf.condensible_molecular_weight / slf.dry_air_molecular_weight,
         "1",
     ),
-    "poisson_exponent": (lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press, "1"),
+    "poisson_exponent": (
+        lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press,
+        "1",
+    ),
     "planet_rotation_rate": (lambda slf: (slf.day / (2 * np.pi)) ** (-1), "s-1"),
 }
 
@@ -157,7 +160,11 @@ def init_const(name="general", directory=None):
     if name != "general":
         const_dict.update(_read_const_file(name, **kw))
     kls = make_dataclass(
-        cls_name, fields=[*const_dict.keys()], bases=(ConstContainer,), frozen=True, repr=False
+        cls_name,
+        fields=[*const_dict.keys()],
+        bases=(ConstContainer,),
+        frozen=True,
+        repr=False,
     )
     return kls(**const_dict)
 
@@ -176,3 +183,25 @@ def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
             warn("Using default radius", AeolusWarning)
             r = default
     return r
+
+
+def add_planet_conf_to_cubes(cubelist, const):
+    """
+    Add constants container to the cube attributes and replace its coordinate system.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        List of cubes containing a cube of zonal velocity (u).
+    const: aeolus.const.const.ConstContainer, optional
+        Constainer with the relevant planetary constants.
+    """
+    const.radius.convert_units("m")
+    _coord_system = iris.coord_systems.GeogCS(semi_major_axis=const.radius.data)
+    for cube in cubelist:
+        # add constants to cube attributes
+        cube.attributes["planet_conf"] = const
+        for coord in cube.coords():
+            if coord.coord_system:
+                # Replace coordinate system with the planet radius given in `self.const`
+                coord.coord_system = _coord_system

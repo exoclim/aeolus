@@ -8,7 +8,9 @@ Changelog
 
 :Date: TBA
 
-* Add a more generic `save_cubelist()` and rename `Run.to_netcdf()` to `Run.to_file()`
+* Refactor `Run` and prepare for its deprecation
+* Add `load_data()` to `io`
+* Move `add_planet_conf_to_cubes()` to the `const` module
 * Deprecate `ScalarCube`
 * Add new variable names to `um`
 * Refactor derived constants and add `planet_rotation_rate` to the recipes

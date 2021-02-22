@@ -1,5 +1,4 @@
 """Core submodule of aeolus package."""
-from pathlib import Path
 from warnings import warn
 
 import iris
@@ -7,10 +6,10 @@ from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 from .calc import diag
 from .calc.meta import copy_doc
-from .const import init_const
+from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
-from .exceptions import AeolusWarning, ArgumentError
-from .io import save_cubelist
+from .exceptions import AeolusWarning
+from .io import load_data, save_cubelist
 from .model import um
 from .region import Region
 from .subset import DimConstr
@@ -98,6 +97,13 @@ class AtmosFlow:
         self.model_type = model_type
         self.timestep = timestep
 
+        # Domain
+        try:
+            cube_yx = self._cubes.extract(self.dim_constr.relax.yx)[0]
+            self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
+        except IndexError:
+            warn("Initialised without a domain.", AeolusWarning)
+
         # Common coordinates
         self.coord = CoordContainer(self._cubes)
 
@@ -131,14 +137,8 @@ class AtmosFlow:
             warn("Run initialised without a coordinate system.", AeolusWarning)
 
     def _add_planet_conf_to_cubes(self):
-        """Add or update planetary constants container to cube attributes within `self.proc`."""
-        for cube in self._cubes:
-            # add constants to cube attributes
-            cube.attributes["planet_conf"] = self.const
-            for coord in cube.coords():
-                if coord.coord_system:
-                    # Replace coordinate system with the planet radius given in `self.const`
-                    coord.coord_system = self._coord_system
+        """Add or update planetary constants container to cube attributes."""
+        add_planet_conf_to_cubes(self._cubes, self.const)
 
     @property
     @copy_doc(diag.wind_speed)
@@ -160,28 +160,23 @@ class Run:
     ----------
     name: str
         The run's name.
-    description: str
-        A description of the run.
     const: aeolus.const.ConstContainer
         Physical constants used in calculations for this run.
     model: aeolus.model.Model, optional
         Model class with relevant coordinate names.
     """
 
-    attr_keys = ["name", "description", "planet", "model_type", "timestep", "parent", "children"]
+    attr_keys = ["name", "planet", "model_type", "timestep"]
 
     def __init__(
         self,
         files=None,
         name="",
-        description="",
         planet="",
         const_dir=None,
         model=um,
         model_type=None,
         timestep=None,
-        parent=None,
-        children=None,
         processed=False,
     ):
         """
@@ -193,9 +188,6 @@ class Run:
             Wildcard for loading files.
         name: str, optional
             The run's name.
-        description: str, optional
-            A description of the model. This is not used internally by
-            aeolus; it is solely for the user's information.
         planet: str, optional
             Planet configuration. This is used to get appropriate physical constants.
             If not given, Earth physical constants are initialised.
@@ -218,8 +210,12 @@ class Run:
         --------
         aeolus.const.init_const
         """
+        warn(
+            "Run is deprecated and will be removed in the next release. "
+            "Use iris.cube.CubeList or AtmosFlow instead.",
+            AeolusWarning,
+        )
         self.name = name
-        self.description = description
 
         # Planetary constants
         self._update_planet(planet=planet, const_dir=const_dir)
@@ -231,8 +227,6 @@ class Run:
         # If the model is global or LAM (nested) and what its driving model is
         self.model_type = model_type
         self.timestep = timestep
-        self.parent = parent
-        self.children = children
         self.processed = processed
 
         if files:
@@ -250,17 +244,11 @@ class Run:
 
     def load_data(self, files):
         """Load cubes."""
-        if isinstance(files, (list, set, tuple)):
-            fnames = [str(i) for i in files]
-        elif isinstance(files, (str, Path)):
-            fnames = str(files)
-        else:
-            raise ArgumentError(f"Input type {type(files)} is not allowed.")
         if self.processed:
-            self.proc = iris.load(fnames)
+            self.proc = load_data(files)
             self._add_planet_conf_to_cubes()
         else:
-            self.raw = iris.load(fnames)
+            self.raw = load_data(files)
 
     def _update_planet(self, planet="", const_dir=None):
         """Add or update planetary constants."""
@@ -274,14 +262,8 @@ class Run:
             warn("Run initialised without a coordinate system.", AeolusWarning)
 
     def _add_planet_conf_to_cubes(self):
-        """Add or update planetary constants container to cube attributes within `self.proc`."""
-        for cube in self.proc:
-            # add constants to cube attributes
-            cube.attributes["planet_conf"] = self.const
-            for coord in cube.coords():
-                if coord.coord_system:
-                    # Replace coordinate system with the planet radius given in `self.const`
-                    coord.coord_system = self._coord_system
+        """Add or update planetary constants container to cube attributes."""
+        add_planet_conf_to_cubes(self._cubes, self.const)
 
     def proc_data(self, func=None, **func_args):
         """
