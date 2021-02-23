@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.io &mdash; aeolus 0+untagged.1.g20e006c documentation</title>
+  <title>aeolus.io &mdash; aeolus 0+untagged.1.g1c12634 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g20e006c
+                0+untagged.1.g1c12634
               </div>
             
           
@@ -164,8 +164,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">f90nml</span>
-
 <span class="kn">import</span> <span class="nn">iris</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -215,6 +213,8 @@
 <span class="sd">    levs: numpy.array</span>
 <span class="sd">        Array of height levels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">f90nml</span>  <span class="c1"># noqa</span>
+
     <span class="k">with</span> <span class="n">path_to_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">nml_file</span><span class="p">:</span>
         <span class="n">nml</span> <span class="o">=</span> <span class="n">f90nml</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nml_file</span><span class="p">)</span>
         <span class="n">levs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;eta_</span><span class="si">{</span><span class="n">lev_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="s2">&quot;z_top_of_model&quot;</span><span class="p">]</span>
