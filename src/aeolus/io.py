@@ -1,8 +1,6 @@
 """Input and output functionality."""
 from pathlib import Path
 
-import f90nml
-
 import iris
 
 import numpy as np
@@ -52,6 +50,8 @@ def load_vert_lev(path_to_file, lev_type="theta"):
     levs: numpy.array
         Array of height levels.
     """
+    import f90nml  # noqa
+
     with path_to_file.open("r") as nml_file:
         nml = f90nml.read(nml_file)
         levs = np.array(nml["vertlevs"][f"eta_{lev_type}"]) * nml["vertlevs"]["z_top_of_model"]
