@@ -13,6 +13,7 @@ um = Model(
     lev="model_level_number",
     s="sigma",
     d="depth",
+    p="air_pressure",
     y="latitude",
     x="longitude",
     # Variables
@@ -95,6 +96,7 @@ um_stash = Model(
     lev="model_level_number",
     s="sigma",
     d="depth",
+    p="air_pressure",
     y="latitude",
     x="longitude",
     # Variables

@@ -111,10 +111,10 @@ class DimConstr:
         model: aeolus.model.Model, optional
             Model class with relevant coordinate names.
         """
-        abbr_aliases = {"t": "t", "z": "z", "m": "lev", "y": "y", "x": "x"}
+        abbr_aliases = {"t": "t", "z": "z", "m": "lev", "p": "p", "y": "y", "x": "x"}
         for mode in ["strict", "relax"]:
             attrs = {}
-            for key in ("z", "m"):
+            for key in ("z", "m", "p"):
                 for n in range(1, 5):
                     for seq in combinations(["t", key, "y", "x"], n):
                         model_seq = [abbr_aliases[letter] for letter in seq]

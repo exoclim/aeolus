@@ -15,14 +15,14 @@ from .region import Region
 from .subset import DimConstr
 
 __all__ = (
-    "AtmosFlow",
+    "AtmoSim",
     "Run",
 )
 
 
-class AtmosFlow:
+class AtmoSim:
     """
-    Atmospheric Flow.
+    Atmospheric model simulation.
 
     Used to store and calculate atmospheric fields from gridded model output.
     Derived quantities are stored as cached properties to save computational
@@ -52,17 +52,17 @@ class AtmosFlow:
         model=um,
         model_type=None,
         timestep=None,
-        processed=False,
+        vert_coord="z",
     ):
         """
-        Instantiate an `AtmosFlow` object.
+        Instantiate an `AtmoSim` object.
 
         Parameters
         ----------
         cubes: iris.cube.CubeList
             Atmospheric fields.
         name: str, optional
-            The name of this `AtmosFlow`.
+            The name or label of this `AtmoSim`.
         description: str, optional
             This is not used internally; it is solely for the user's information.
         planet: str, optional
@@ -76,6 +76,10 @@ class AtmosFlow:
             Type of the model run, global or LAM.
         timestep: int, optional
             Model time step in s.
+        vert_coord: str, optional
+            Character identificator for the type of the model's vertical coordinate.
+            "z" - data on "level_height"
+            "p" - data on pressure levels
 
         See also
         --------
@@ -105,7 +109,10 @@ class AtmosFlow:
             warn("Initialised without a domain.", AeolusWarning)
 
         # Common coordinates
-        self.coord = CoordContainer(self._cubes)
+        if vert_coord == "z":
+            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tzyx))
+        elif vert_coord == "p":
+            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tpyx))
 
         # Variables as attributes
         self._assign_fields()
@@ -212,7 +219,7 @@ class Run:
         """
         warn(
             "Run is deprecated and will be removed in the next release. "
-            "Use iris.cube.CubeList or AtmosFlow instead.",
+            "Use iris.cube.CubeList instead.",
             AeolusWarning,
         )
         self.name = name

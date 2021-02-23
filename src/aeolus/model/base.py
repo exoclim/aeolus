@@ -17,6 +17,7 @@ class Model:
     lev: str = None  # level number
     s: str = None  # sigma
     d: str = None  # depth
+    p: str = None  # pressure level
     y: str = None  # latitude
     x: str = None  # longitude
     # Variables
