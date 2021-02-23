@@ -8,6 +8,8 @@ Changelog
 
 :Date: TBA
 
+* Rename `AtmosFlow` to `AtmoSim`
+* Add pressure coordinate to `DimConstr`
 * Refactor `Run` and prepare for its deprecation
 * Add `load_data()` to `io`
 * Move `add_planet_conf_to_cubes()` to the `const` module

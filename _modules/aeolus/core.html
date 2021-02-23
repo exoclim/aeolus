@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.g813bf14 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g8b6eef6 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g813bf14
+                0+untagged.1.g8b6eef6
               </div>
             
           
@@ -178,14 +178,14 @@
 <span class="kn">from</span> <span class="nn">.subset</span> <span class="kn">import</span> <span class="n">DimConstr</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;AtmosFlow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AtmoSim&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Run&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="AtmosFlow"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmosFlow">[docs]</a><span class="k">class</span> <span class="nc">AtmosFlow</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Atmospheric Flow.</span>
+<span class="sd">    Atmospheric model simulation.</span>
 
 <span class="sd">    Used to store and calculate atmospheric fields from gridded model output.</span>
 <span class="sd">    Derived quantities are stored as cached properties to save computational</span>
@@ -205,7 +205,7 @@
 <span class="sd">        Model class with relevant coordinate and variable names.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AtmosFlow.__init__"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmosFlow.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cubes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -215,17 +215,17 @@
         <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
         <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">processed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">vert_coord</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Instantiate an `AtmosFlow` object.</span>
+<span class="sd">        Instantiate an `AtmoSim` object.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        cubes: iris.cube.CubeList</span>
 <span class="sd">            Atmospheric fields.</span>
 <span class="sd">        name: str, optional</span>
-<span class="sd">            The name of this `AtmosFlow`.</span>
+<span class="sd">            The name or label of this `AtmoSim`.</span>
 <span class="sd">        description: str, optional</span>
 <span class="sd">            This is not used internally; it is solely for the user&#39;s information.</span>
 <span class="sd">        planet: str, optional</span>
@@ -239,6 +239,10 @@
 <span class="sd">            Type of the model run, global or LAM.</span>
 <span class="sd">        timestep: int, optional</span>
 <span class="sd">            Model time step in s.</span>
+<span class="sd">        vert_coord: str, optional</span>
+<span class="sd">            Character identificator for the type of the model&#39;s vertical coordinate.</span>
+<span class="sd">            &quot;z&quot; - data on &quot;level_height&quot;</span>
+<span class="sd">            &quot;p&quot; - data on pressure levels</span>
 
 <span class="sd">        See also</span>
 <span class="sd">        --------</span>
@@ -268,10 +272,13 @@
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Initialised without a domain.&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
 
         <span class="c1"># Common coordinates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tzyx</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tpyx</span><span class="p">))</span>
 
         <span class="c1"># Variables as attributes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assign_fields</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assign_fields</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Redirect self[key] to self.key.&quot;&quot;&quot;</span>
@@ -312,7 +319,7 @@
                 <span class="n">cmpnts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">cmpnt_key</span><span class="p">])</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
-        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">(</span><span class="o">*</span><span class="n">cmpnts</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">(</span><span class="o">*</span><span class="n">cmpnts</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run">[docs]</a><span class="k">class</span> <span class="nc">Run</span><span class="p">:</span>
@@ -375,7 +382,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;Run is deprecated and will be removed in the next release. &quot;</span>
-            <span class="s2">&quot;Use iris.cube.CubeList or AtmosFlow instead.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Use iris.cube.CubeList instead.&quot;</span><span class="p">,</span>
             <span class="n">AeolusWarning</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
