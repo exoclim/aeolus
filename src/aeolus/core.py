@@ -108,7 +108,7 @@ class AtmosFlow:
         self.coord = CoordContainer(self._cubes)
 
         # Variables as attributes
-        self.assign_fields()
+        self._assign_fields()
 
     def __getitem__(self, key):
         """Redirect self[key] to self.key."""
