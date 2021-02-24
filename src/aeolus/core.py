@@ -8,7 +8,7 @@ from .calc import diag
 from .calc.meta import copy_doc
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
-from .exceptions import AeolusWarning
+from .exceptions import AeolusWarning, ArgumentError
 from .io import load_data, save_cubelist
 from .model import um
 from .region import Region
@@ -108,14 +108,27 @@ class AtmoSim:
         except IndexError:
             warn("Initialised without a domain.", AeolusWarning)
 
+        # Variables as attributes
+        self._assign_fields()
+
         # Common coordinates
         if vert_coord == "z":
             self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tzyx))
         elif vert_coord == "p":
             self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tpyx))
+        else:
+            raise ArgumentError(f"vert_coord={vert_coord} is not allowed.")
 
-        # Variables as attributes
-        self._assign_fields()
+        dim_seq = [f"t{vert_coord}yx", "tyx", f"{vert_coord}yx", "yx"]
+        for seq in dim_seq:
+            try:
+                setattr(
+                    self,
+                    f"_ref_{seq}",
+                    self._cubes.extract(getattr(self.dim_constr.strict, seq))[0],
+                )
+            except IndexError:
+                pass
 
     def __getitem__(self, key):
         """Redirect self[key] to self.key."""
