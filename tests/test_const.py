@@ -59,13 +59,3 @@ def test_init_const_custom():
     cube = getattr(cnsts, key)
     assert cube.units == "m s-1"
     npt.assert_allclose(cube.data, 123)
-
-
-def test_scalarcube():
-    """Test ScalarCube."""
-    name = "physical_constant"
-    cube = iris.cube.Cube(data=-123.456, units="m", long_name=name)
-    scube = const.const.ScalarCube.from_cube(cube)
-    assert isinstance(scube.asc, iris.coords.AuxCoord)
-    npt.assert_allclose(scube.data, scube.asc.points.squeeze())
-    assert scube.asc.long_name == name

@@ -476,9 +476,9 @@ def coord_delta_to_cube(cube, coord, normalize=False):
     return new_cube
 
 
-def coord_to_cube(cube, coord):
+def coord_to_cube(cube, coord, broadcast=True):
     """
-    Convert coordinate points to a cube of the same dimension as the given cube.
+    Convert coordinate points to a cube with the same dimensions.
 
     Parameters
     ----------
@@ -486,6 +486,8 @@ def coord_to_cube(cube, coord):
         Cube containing the coordinate to be broadcast.
     coord: str or iris.coords.Coord
         Coordinate to be broadcast.
+    broadcast: bool, optional
+        Broadcast the coordinate points to the shape of the cube.
 
     Returns
     -------
@@ -496,21 +498,21 @@ def coord_to_cube(cube, coord):
         _coord = cube.coord(coord)
     else:
         _coord = coord
+    kw = {
+        "units": _coord.units,
+        "long_name": _coord.long_name,
+        "standard_name": _coord.standard_name,
+        "var_name": _coord.var_name,
+    }
     dim_map = cube.coord_dims(_coord.name())
     _data = _coord.points
-    if len(dim_map) > 0:
+    if len(dim_map) > 0 and broadcast:
         _data = broadcast_to_shape(_data, cube.shape, dim_map)
         dc = [(c.copy(), cube.coord_dims(c)) for c in cube.dim_coords]
         ac = [(c.copy(), cube.coord_dims(c)) for c in cube.aux_coords]
-        new_cube = iris.cube.Cube(
-            data=_data,
-            units=_coord.units,
-            long_name=_coord.name(),
-            dim_coords_and_dims=dc,
-            aux_coords_and_dims=ac,
-        )
+        new_cube = iris.cube.Cube(data=_data, dim_coords_and_dims=dc, aux_coords_and_dims=ac, **kw)
     else:
-        new_cube = iris.cube.Cube(data=_data, standard_name=_coord.name(), units=_coord.units)
+        new_cube = iris.cube.Cube(data=_data, dim_coords_and_dims=[(_coord.copy(), 0)], **kw)
     return new_cube
 
 
