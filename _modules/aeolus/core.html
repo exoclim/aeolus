@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.g3f3c884 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g61379c5 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g3f3c884
+                0+untagged.1.g61379c5
               </div>
             
           
@@ -275,14 +275,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_assign_fields</span><span class="p">()</span>
 
         <span class="c1"># Common coordinates</span>
-        <span class="k">if</span> <span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">=</span> <span class="n">vert_coord</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tzyx</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tpyx</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vert_coord=</span><span class="si">{</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2"> is not allowed.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vert_coord=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2"> is not allowed.&quot;</span><span class="p">)</span>
 
-        <span class="n">dim_seq</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;t</span><span class="si">{</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;tyx&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;yx&quot;</span><span class="p">]</span>
+        <span class="n">dim_seq</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;t</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;tyx&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;yx&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">dim_seq</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="nb">setattr</span><span class="p">(</span>
@@ -292,6 +293,22 @@
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="k">pass</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parent_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dynamically inherit from a similar class.&quot;&quot;&quot;</span>
+        <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">cubes</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">planet</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span>
+            <span class="n">const_dir</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">const_dir</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">timestep</span><span class="p">,</span>
+            <span class="n">vert_coord</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">vert_coord</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_obj</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Redirect self[key] to self.key.&quot;&quot;&quot;</span>
@@ -311,7 +328,8 @@
     <span class="k">def</span> <span class="nf">_update_planet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planet</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">const_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add or update planetary constants.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">const</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="n">planet</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">const_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const_dir</span> <span class="o">=</span> <span class="n">const_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const_dir</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_coord_system</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coord_systems</span><span class="o">.</span><span class="n">GeogCS</span><span class="p">(</span><span class="n">semi_major_axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
