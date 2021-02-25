@@ -82,14 +82,22 @@ def preserve_shape(func):
 
 
 def update_metadata(name=None, units=None, attrs=None):
-    """Update metadata of a cube returned by a function."""
+    """
+    Update metadata of a cube returned by a function.
+
+    If units are "unknown", the units are reset to the given units,
+    otherwise `convert_units()` is used.
+    """
 
     def _update(cube):
         """Update name, convert units and update attributes."""
         if isinstance(name, str):
             cube.rename(name)
         if isinstance(units, (str, cf_units.Unit)):
-            cube.convert_units(units)
+            if cube.units == "unknown":
+                cube.units = units
+            else:
+                cube.convert_units(units)
         if isinstance(attrs, dict):
             cube.attributes.update(attrs)
 
