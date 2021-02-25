@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.g61379c5 documentation</title>
+  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.g8e7495f documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g61379c5
+                0+untagged.1.g8e7495f
               </div>
             
           
@@ -353,13 +353,14 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt id="aeolus.coord.coord_to_cube">
-<code class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></code><code class="sig-name descname"><span class="pre">coord_to_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_to_cube" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert coordinate points to a cube of the same dimension as the given cube.</p>
+<code class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></code><code class="sig-name descname"><span class="pre">coord_to_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">broadcast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert coordinate points to a cube with the same dimensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<em>iris.cube.Cube</em>) – Cube containing the coordinate to be broadcast.</p></li>
 <li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><em>iris.coords.Coord</em>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>broadcast</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Broadcast the coordinate points to the shape of the cube.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

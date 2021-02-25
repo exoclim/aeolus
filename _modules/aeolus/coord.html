@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g61379c5 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g8e7495f documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g61379c5
+                0+untagged.1.g8e7495f
               </div>
             
           
@@ -639,9 +639,9 @@
     <span class="k">return</span> <span class="n">new_cube</span></div>
 
 
-<div class="viewcode-block" id="coord_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coord_to_cube">[docs]</a><span class="k">def</span> <span class="nf">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<div class="viewcode-block" id="coord_to_cube"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.coord_to_cube">[docs]</a><span class="k">def</span> <span class="nf">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert coordinate points to a cube of the same dimension as the given cube.</span>
+<span class="sd">    Convert coordinate points to a cube with the same dimensions.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -649,6 +649,8 @@
 <span class="sd">        Cube containing the coordinate to be broadcast.</span>
 <span class="sd">    coord: str or iris.coords.Coord</span>
 <span class="sd">        Coordinate to be broadcast.</span>
+<span class="sd">    broadcast: bool, optional</span>
+<span class="sd">        Broadcast the coordinate points to the shape of the cube.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -659,21 +661,21 @@
         <span class="n">_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">_coord</span> <span class="o">=</span> <span class="n">coord</span>
+    <span class="n">kw</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">_coord</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
+        <span class="s2">&quot;long_name&quot;</span><span class="p">:</span> <span class="n">_coord</span><span class="o">.</span><span class="n">long_name</span><span class="p">,</span>
+        <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="n">_coord</span><span class="o">.</span><span class="n">standard_name</span><span class="p">,</span>
+        <span class="s2">&quot;var_name&quot;</span><span class="p">:</span> <span class="n">_coord</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span>
+    <span class="p">}</span>
     <span class="n">dim_map</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
     <span class="n">_data</span> <span class="o">=</span> <span class="n">_coord</span><span class="o">.</span><span class="n">points</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dim_map</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dim_map</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">broadcast</span><span class="p">:</span>
         <span class="n">_data</span> <span class="o">=</span> <span class="n">broadcast_to_shape</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dim_map</span><span class="p">)</span>
         <span class="n">dc</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span><span class="p">]</span>
         <span class="n">ac</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">aux_coords</span><span class="p">]</span>
-        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span>
-            <span class="n">units</span><span class="o">=</span><span class="n">_coord</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
-            <span class="n">long_name</span><span class="o">=</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span>
-            <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="n">dc</span><span class="p">,</span>
-            <span class="n">aux_coords_and_dims</span><span class="o">=</span><span class="n">ac</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="n">dc</span><span class="p">,</span> <span class="n">aux_coords_and_dims</span><span class="o">=</span><span class="n">ac</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">units</span><span class="o">=</span><span class="n">_coord</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="p">[(</span><span class="n">_coord</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_cube</span></div>
 
 

@@ -16,6 +16,7 @@ Changelog
 * Deprecate `ScalarCube`
 * Add new variable names to `um`
 * Refactor derived constants and add `planet_rotation_rate` to the recipes
+* Add an option not to broadcast the coordinate to the cube's shape in `coord_to_cube()`
 * Improve docstrings
 
 
