@@ -112,14 +112,15 @@ class AtmoSim:
         self._assign_fields()
 
         # Common coordinates
-        if vert_coord == "z":
+        self.vert_coord = vert_coord
+        if self.vert_coord == "z":
             self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tzyx))
-        elif vert_coord == "p":
+        elif self.vert_coord == "p":
             self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tpyx))
         else:
-            raise ArgumentError(f"vert_coord={vert_coord} is not allowed.")
+            raise ArgumentError(f"vert_coord={self.vert_coord} is not allowed.")
 
-        dim_seq = [f"t{vert_coord}yx", "tyx", f"{vert_coord}yx", "yx"]
+        dim_seq = [f"t{self.vert_coord}yx", "tyx", f"{self.vert_coord}yx", "yx"]
         for seq in dim_seq:
             try:
                 setattr(
@@ -129,6 +130,22 @@ class AtmoSim:
                 )
             except IndexError:
                 pass
+
+    @classmethod
+    def from_parent_class(cls, obj):
+        """Dynamically inherit from a similar class."""
+        new_obj = cls(
+            cubes=obj._cubes,
+            name=obj.name,
+            description=obj.description,
+            planet=obj.planet,
+            const_dir=obj.const_dir,
+            model=obj.model,
+            model_type=obj.model_type,
+            timestep=obj.timestep,
+            vert_coord=obj.vert_coord,
+        )
+        return new_obj
 
     def __getitem__(self, key):
         """Redirect self[key] to self.key."""
@@ -148,7 +165,8 @@ class AtmoSim:
     def _update_planet(self, planet="", const_dir=None):
         """Add or update planetary constants."""
         self.planet = planet
-        self.const = init_const(planet, directory=const_dir)
+        self.const_dir = const_dir
+        self.const = init_const(self.planet, directory=self.const_dir)
         try:
             self.const.radius.convert_units("m")
             self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
