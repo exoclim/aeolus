@@ -9,7 +9,7 @@ import numpy as np
 
 from .calculus import d_dz, integrate
 from .meta import const_from_attrs, update_metadata
-from .stats import spatial_mean
+from .stats import spatial_mean, time_mean
 from ..const import init_const
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
@@ -31,6 +31,7 @@ __all__ = (
     "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",
+    "sigma_p",
     "toa_cloud_radiative_effect",
     "toa_eff_temp",
     "toa_net_energy",
@@ -721,3 +722,27 @@ def wind_speed(*components):
     """
     out = sum(cube ** 2 for cube in components) ** 0.5
     return out
+
+
+@const_from_attrs
+@update_metadata(name="atmosphere_hybrid_sigma_pressure_coordinate", units="1")
+def sigma_p(cubelist, const=None, model=um):
+    r"""
+    Calculate sigma (normalised pressure coordinate) from a cube of pressure.
+
+    .. math::
+        \sigma = p / p_{sfc}
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have a cube of reference (surface) pressure as an attribute.
+        If not given, attempt to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+    """
+    pres_cube = time_mean(spatial_mean(cubelist.extract_cube(model.pres)))
+    pres_cube.convert_units("Pa")
+    return pres_cube / const.reference_surface_pressure

@@ -2,13 +2,15 @@
 from warnings import warn
 
 import iris
+from iris.exceptions import CoordinateCollapseError as CoColErr
+from iris.exceptions import CoordinateNotFoundError as CoNotFound
 from iris.util import broadcast_to_shape
 
 import numpy as np
 
 from .calculus import integrate
 from ..coord import area_weights_cube, ensure_bounds
-from ..exceptions import AeolusWarning
+from ..exceptions import AeolusWarning, ArgumentError
 from ..model import um
 from ..subset import extract_last_n_days
 
@@ -51,7 +53,7 @@ def cumsum(cube, axis, axis_weights=False, model=um):
     """
     try:
         c = cube.coord(getattr(model, axis)).copy()
-    except (AttributeError, iris.exceptions.CoordinateNotFoundError):
+    except (AttributeError, CoNotFound):
         c = cube.coord(axis=axis).copy()
     dim = cube.coord_dims(c)
     if axis_weights:
@@ -199,7 +201,13 @@ def spatial(cube, aggr, model=um):
         kw = {"weights": area_weights_cube(cube, normalize=True).data}
     else:
         kw = {}
-    return cube.collapsed(coords, aggregator, **kw)
+    try:
+        out = cube.collapsed(coords, aggregator, **kw)
+    except CoColErr as e:
+        warn(f"Caught exception in spatial():\n{e}", AeolusWarning)
+        # out = iris.util.squeeze(cube)
+        out = cube
+    return out
 
 
 def spatial_mean(cube, model=um):
@@ -217,7 +225,13 @@ def spatial_quartiles(cube, model=um):
 
 def time_mean(cube, model=um):
     """Time average of a cube."""
-    return cube.collapsed(model.t, iris.analysis.MEAN)
+    try:
+        out = cube.collapsed(model.t, iris.analysis.MEAN)
+    except CoColErr as e:
+        warn(f"Caught exception in time_mean():\n{e}", AeolusWarning)
+        # out = iris.util.squeeze(cube)
+        out = cube
+    return out
 
 
 def vertical_mean(cube, weight_by=None, model=um):
@@ -239,6 +253,9 @@ def vertical_mean(cube, weight_by=None, model=um):
         Collapsed cube.
     """
     coord = model.z
+    if len(cube.coord_dims(coord)) == 0:
+        warn(f"The {repr(coord)} does not describe any dimension in {repr(cube)}.", AeolusWarning)
+        return cube
     if weight_by is None:
         vmean = cube.collapsed(coord, iris.analysis.MEAN)
     else:
@@ -255,7 +272,7 @@ def vertical_mean(cube, weight_by=None, model=um):
             prod = b_copy * a_copy
             vmean = integrate(prod, coord) / integrate(weight_by, coord)
         else:
-            raise ValueError(f"unrecognised type of weight_by: {type(weight_by)}")
+            raise ArgumentError(f"Unrecognised type of weight_by: {type(weight_by)}")
     vmean.rename(f"vertical_mean_of_{cube.name()}")
     return vmean
 

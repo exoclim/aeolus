@@ -1,6 +1,8 @@
 """Core submodule of aeolus package."""
 from warnings import warn
 
+from cached_property import cached_property
+
 import iris
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
@@ -153,10 +155,12 @@ class AtmoSim:
 
     def _assign_fields(self):
         """Assign input cubelist items as attributes of this class."""
+        self.vars = []
         kwargs = {}
         for key in self.model.__dataclass_fields__:
             try:
                 kwargs[key] = self._cubes.extract_cube(getattr(self.model, key))
+                self.vars.append(key)
             except ConMisErr:
                 pass
         self.__dict__.update(**kwargs)
@@ -178,7 +182,13 @@ class AtmoSim:
         """Add or update planetary constants container to cube attributes."""
         add_planet_conf_to_cubes(self._cubes, self.const)
 
-    @property
+    @cached_property
+    @copy_doc(diag.wind_speed)
+    def sigma_p(self):
+        # TODO: pass the cube only?
+        return diag.sigma_p(self._cubes, const=self.const, model=self.model)
+
+    @cached_property
     @copy_doc(diag.wind_speed)
     def wind_speed(self):
         cmpnts = []
