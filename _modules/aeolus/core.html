@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.gd4ded65 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g5254835 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd4ded65
+                0+untagged.1.g5254835
               </div>
             
           
@@ -163,6 +163,8 @@
   <h1>Source code for aeolus.core</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Core submodule of aeolus package.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+
+<span class="kn">from</span> <span class="nn">cached_property</span> <span class="kn">import</span> <span class="n">cached_property</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">ConstraintMismatchError</span> <span class="k">as</span> <span class="n">ConMisErr</span>
@@ -316,10 +318,12 @@
 
     <span class="k">def</span> <span class="nf">_assign_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Assign input cubelist items as attributes of this class.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vars</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
                 <span class="k">pass</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -341,7 +345,13 @@
         <span class="sd">&quot;&quot;&quot;Add or update planetary constants container to cube attributes.&quot;&quot;&quot;</span>
         <span class="n">add_planet_conf_to_cubes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">)</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@cached_property</span>
+    <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">sigma_p</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: pass the cube only?</span>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sigma_p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
     <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">wind_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">cmpnts</span> <span class="o">=</span> <span class="p">[]</span>

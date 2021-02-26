@@ -8,6 +8,7 @@ Changelog
 
 :Date: TBA
 
+* Add cached-property as a dependency
 * Rename `AtmosFlow` to `AtmoSim`
 * Add pressure coordinate to `DimConstr`
 * Refactor `Run` and prepare for its deprecation
