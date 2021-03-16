@@ -11,6 +11,13 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "**Note: the `Run` object is deprecated and will be removed in a future release. Load data using `iris.load()` and then convert it to `aeolus.core.AtmoSim` instead.**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "For convenience, `aeolus` provides a way of keeping loaded and processed data within one object along with extra metadata.\n",
     "The object is called `Run` (as in \"simulation run\"). \n",
     "The code below provides an example of basic usage of `Run`."
@@ -298,9 +305,9 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python [conda env:aeolus_py38]",
+   "display_name": "Python [conda env:aeolus_py39]",
    "language": "python",
-   "name": "conda-env-aeolus_py38-py"
+   "name": "conda-env-aeolus_py39-py"
   },
   "language_info": {
    "codemirror_mode": {
@@ -312,7 +319,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.6"
+   "version": "3.9.2"
   }
  },
  "nbformat": 4,
