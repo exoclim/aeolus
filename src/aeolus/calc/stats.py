@@ -51,9 +51,7 @@ def abs_coord_mean(cube, coord):
     iris.cube.Cube
         Cube with a reduced dimension.
     """
-    sign_lat = iris.analysis.maths.apply_ufunc(
-        np.sign, coord_to_cube(cube, coord, broadcast=False)
-    )
+    sign_lat = iris.analysis.maths.apply_ufunc(np.sign, coord_to_cube(cube, coord, broadcast=False))
     sign_cube = sign_lat * cube
     _coord = sign_cube.coord(coord)
     _coord_dim = sign_cube.coord_dims(_coord)
