@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.g193e53e documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.ge57ad88 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g193e53e
+                0+untagged.1.ge57ad88
               </div>
             
           
@@ -214,9 +214,7 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Cube with a reduced dimension.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sign_lat</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">apply_ufunc</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">sign_lat</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">apply_ufunc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
     <span class="n">sign_cube</span> <span class="o">=</span> <span class="n">sign_lat</span> <span class="o">*</span> <span class="n">cube</span>
     <span class="n">_coord</span> <span class="o">=</span> <span class="n">sign_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
     <span class="n">_coord_dim</span> <span class="o">=</span> <span class="n">sign_cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">_coord</span><span class="p">)</span>
