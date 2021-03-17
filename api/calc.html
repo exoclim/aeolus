@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.g5f70d12 documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.g193e53e documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5f70d12
+                0+untagged.1.g193e53e
               </div>
             
           
@@ -314,6 +314,28 @@ to get it from the cube metadata.</p></li>
 </div>
 <div class="section" id="statistics">
 <h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="aeolus.calc.abs_coord_mean">
+<code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">abs_coord_mean</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#abs_coord_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.abs_coord_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate cube’s average over absolute values of a coordinate.</p>
+<p>For example, applying this to a cube with N latitudes ranging
+from SP to NP returns a cube with (N+1)//2 latitudes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube</strong> (<em>iris.cube.Cube</em>) – Cube with the specified coordinate.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><em>iris.coords.Coord</em>) – Coordinate to apply abs().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube with a reduced dimension.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iris.cube.Cube</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt id="aeolus.calc.cumsum">
 <code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">cumsum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">axis</span></em>, <em class="sig-param"><span class="pre">axis_weights=False</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#cumsum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.cumsum" title="Permalink to this definition">¶</a></dt>

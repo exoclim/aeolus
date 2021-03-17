@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.g5f70d12 documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.g193e53e documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5f70d12
+                0+untagged.1.g193e53e
               </div>
             
           
@@ -172,13 +172,14 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">area_weights_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span>
+<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">area_weights_cube</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">extract_last_n_days</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;abs_coord_mean&quot;</span><span class="p">,</span>
     <span class="s2">&quot;cumsum&quot;</span><span class="p">,</span>
     <span class="s2">&quot;last_n_day_mean&quot;</span><span class="p">,</span>
     <span class="s2">&quot;meridional_mean&quot;</span><span class="p">,</span>
@@ -192,6 +193,45 @@
     <span class="s2">&quot;vertical_mean&quot;</span><span class="p">,</span>
     <span class="s2">&quot;zonal_mean&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+
+
+<div class="viewcode-block" id="abs_coord_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.abs_coord_mean">[docs]</a><span class="k">def</span> <span class="nf">abs_coord_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate cube&#39;s average over absolute values of a coordinate.</span>
+
+<span class="sd">    For example, applying this to a cube with N latitudes ranging</span>
+<span class="sd">    from SP to NP returns a cube with (N+1)//2 latitudes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        Cube with the specified coordinate.</span>
+<span class="sd">    coord: str or iris.coords.Coord</span>
+<span class="sd">        Coordinate to apply abs().</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube with a reduced dimension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sign_lat</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">maths</span><span class="o">.</span><span class="n">apply_ufunc</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">sign_cube</span> <span class="o">=</span> <span class="n">sign_lat</span> <span class="o">*</span> <span class="n">cube</span>
+    <span class="n">_coord</span> <span class="o">=</span> <span class="n">sign_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+    <span class="n">_coord_dim</span> <span class="o">=</span> <span class="n">sign_cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">_coord</span><span class="p">)</span>
+    <span class="n">abs_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="o">.</span><span class="n">from_coord</span><span class="p">(</span><span class="n">_coord</span><span class="p">)</span>
+    <span class="n">abs_coord</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;abs_</span><span class="si">{</span><span class="n">abs_coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">abs_coord</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_coord</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+    <span class="n">abs_coord</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_coord</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+    <span class="n">sign_cube</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">abs_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="n">_coord_dim</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">sign_cube</span><span class="o">.</span><span class="n">aggregated_by</span><span class="p">(</span><span class="n">abs_coord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">_coord</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">units</span>
+    <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">abs_coord</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">abs_coord</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">_coord</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="cumsum"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.cumsum">[docs]</a><span class="k">def</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
