@@ -9,13 +9,14 @@ from iris.util import broadcast_to_shape
 import numpy as np
 
 from .calculus import integrate
-from ..coord import area_weights_cube, ensure_bounds
+from ..coord import area_weights_cube, coord_to_cube, ensure_bounds
 from ..exceptions import AeolusWarning, ArgumentError
 from ..model import um
 from ..subset import extract_last_n_days
 
 
 __all__ = (
+    "abs_coord_mean",
     "cumsum",
     "last_n_day_mean",
     "meridional_mean",
@@ -29,6 +30,45 @@ __all__ = (
     "vertical_mean",
     "zonal_mean",
 )
+
+
+def abs_coord_mean(cube, coord):
+    """
+    Calculate cube's average over absolute values of a coordinate.
+
+    For example, applying this to a cube with N latitudes ranging
+    from SP to NP returns a cube with (N+1)//2 latitudes.
+
+    Parameters
+    ----------
+    cube: iris.cube.Cube
+        Cube with the specified coordinate.
+    coord: str or iris.coords.Coord
+        Coordinate to apply abs().
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube with a reduced dimension.
+    """
+    sign_lat = iris.analysis.maths.apply_ufunc(
+        np.sign, coord_to_cube(cube, coord, broadcast=False)
+    )
+    sign_cube = sign_lat * cube
+    _coord = sign_cube.coord(coord)
+    _coord_dim = sign_cube.coord_dims(_coord)
+    abs_coord = iris.coords.AuxCoord.from_coord(_coord)
+    abs_coord.rename(f"abs_{abs_coord.name()}")
+    abs_coord.points = np.abs(_coord.points)
+    abs_coord.bounds = np.abs(_coord.bounds)
+    sign_cube.add_aux_coord(abs_coord, data_dims=_coord_dim)
+    out = sign_cube.aggregated_by(abs_coord, iris.analysis.MEAN)
+    out.remove_coord(_coord)
+    out.rename(cube.name())
+    out.units = cube.units
+    iris.util.promote_aux_coord_to_dim_coord(out, abs_coord.name())
+    out.coord(abs_coord).rename(_coord.name())
+    return out
 
 
 def cumsum(cube, axis, axis_weights=False, model=um):

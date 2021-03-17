@@ -12,6 +12,7 @@ Calculus
 
 Statistics
 ----------
+.. autofunction:: aeolus.calc.abs_coord_mean
 .. autofunction:: aeolus.calc.cumsum
 .. autofunction:: aeolus.calc.last_n_day_mean
 .. autofunction:: aeolus.calc.meridional_mean

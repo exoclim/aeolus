@@ -24,6 +24,7 @@ from .diag import (
 )
 from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
+    abs_coord_mean,
     cumsum,
     last_n_day_mean,
     meridional_mean,
@@ -44,6 +45,7 @@ from .tl import (
 )
 
 __all__ = (
+    "abs_coord_mean",
     "air_density",
     "air_potential_temperature",
     "air_temperature",
