@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.ge57ad88 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g28778d8 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.ge57ad88
+                0+untagged.1.g28778d8
               </div>
             
           
@@ -181,19 +181,19 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;AtmoSim&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AtmoSimBase&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Run&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">AtmoSimBase</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Atmospheric model simulation.</span>
+<span class="sd">    Base class for creating atmospheric model simulation classes in aeolus.</span>
 
 <span class="sd">    Used to store and calculate atmospheric fields from gridded model output.</span>
-<span class="sd">    Derived quantities are stored as cached properties to save computational</span>
-<span class="sd">    time.</span>
+<span class="sd">    Derived quantities are stored as cached properties to save computational time.</span>
 
-<span class="sd">    Uses spherical coordinates.</span>
+<span class="sd">    Assumes the data are in spherical coordinates on a regular longitude-latitude grid.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -220,7 +220,7 @@
         <span class="n">vert_coord</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Instantiate an `AtmoSim` object.</span>
+<span class="sd">        Instantiate an `AtmoSimBase` object.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -345,6 +345,37 @@
         <span class="sd">&quot;&quot;&quot;Add or update planetary constants container to cube attributes.&quot;&quot;&quot;</span>
         <span class="n">add_planet_conf_to_cubes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subset `AtmoSim` using iris constraints.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        constraints: iris.Constraint or iterable of constraints</span>
+<span class="sd">            A single constraint or an iterable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="n">cubes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">constraints</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">planet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span>
+            <span class="n">const_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const_dir</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timestep</span><span class="p">,</span>
+            <span class="n">vert_coord</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_obj</span>
+
+
+<span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">(</span><span class="n">AtmoSimBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main class for dealing with a atmospheric model simulation output in aeolus.</span>
+
+<span class="sd">    Used to store and calculate atmospheric fields from gridded model output.</span>
+<span class="sd">    Derived quantities are stored as cached properties to save computational time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="nd">@cached_property</span>
     <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">sigma_p</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -361,6 +392,16 @@
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
         <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">wind_speed</span><span class="p">(</span><span class="o">*</span><span class="n">cmpnts</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">toa_net_energy</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">toa_net_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">toa_net_energy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run">[docs]</a><span class="k">class</span> <span class="nc">Run</span><span class="p">:</span>
