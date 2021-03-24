@@ -28,8 +28,7 @@ class AtmoSimBase:
     Base class for creating atmospheric model simulation classes in aeolus.
 
     Used to store and calculate atmospheric fields from gridded model output.
-    Derived quantities are stored as cached properties to save computational
-    time.
+    Derived quantities are stored as cached properties to save computational time.
 
     Assumes the data are in spherical coordinates on a regular longitude-latitude grid.
 
@@ -207,6 +206,13 @@ class AtmoSimBase:
 
 
 class AtmoSim(AtmoSimBase):
+    """
+    Main class for dealing with a atmospheric model simulation output in aeolus.
+
+    Used to store and calculate atmospheric fields from gridded model output.
+    Derived quantities are stored as cached properties to save computational time.
+    """
+
     @cached_property
     @copy_doc(diag.wind_speed)
     def sigma_p(self):
@@ -223,6 +229,16 @@ class AtmoSim(AtmoSimBase):
             except AttributeError:
                 pass
         return diag.wind_speed(*cmpnts)
+
+    @cached_property
+    @copy_doc(diag.toa_net_energy)
+    def toa_net_energy(self):
+        return diag.toa_net_energy(self._cubes, model=self.model)
+
+    @cached_property
+    @copy_doc(diag.sfc_water_balance)
+    def sfc_water_balance(self):
+        return diag.sfc_water_balance(self._cubes, const=self.const, model=self.model)
 
 
 class Run:
