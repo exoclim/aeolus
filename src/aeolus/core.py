@@ -18,19 +18,20 @@ from .subset import DimConstr
 
 __all__ = (
     "AtmoSim",
+    "AtmoSimBase",
     "Run",
 )
 
 
-class AtmoSim:
+class AtmoSimBase:
     """
-    Atmospheric model simulation.
+    Base class for creating atmospheric model simulation classes in aeolus.
 
     Used to store and calculate atmospheric fields from gridded model output.
     Derived quantities are stored as cached properties to save computational
     time.
 
-    Uses spherical coordinates.
+    Assumes the data are in spherical coordinates on a regular longitude-latitude grid.
 
     Attributes
     ----------
@@ -57,7 +58,7 @@ class AtmoSim:
         vert_coord="z",
     ):
         """
-        Instantiate an `AtmoSim` object.
+        Instantiate an `AtmoSimBase` object.
 
         Parameters
         ----------
@@ -182,6 +183,30 @@ class AtmoSim:
         """Add or update planetary constants container to cube attributes."""
         add_planet_conf_to_cubes(self._cubes, self.const)
 
+    def extract(self, constraints):
+        """
+        Subset `AtmoSim` using iris constraints.
+
+        Parameters
+        ----------
+        constraints: iris.Constraint or iterable of constraints
+            A single constraint or an iterable.
+        """
+        new_obj = self.__class__(
+            cubes=self._cubes.extract(constraints),
+            name=self.name,
+            description=self.description,
+            planet=self.planet,
+            const_dir=self.const_dir,
+            model=self.model,
+            model_type=self.model_type,
+            timestep=self.timestep,
+            vert_coord=self.vert_coord,
+        )
+        return new_obj
+
+
+class AtmoSim(AtmoSimBase):
     @cached_property
     @copy_doc(diag.wind_speed)
     def sigma_p(self):

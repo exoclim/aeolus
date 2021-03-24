@@ -9,7 +9,8 @@ Changelog
 :Date: TBA
 
 * Add cached-property as a dependency
-* Rename `AtmosFlow` to `AtmoSim`
+* Rename `AtmosFlow` to `AtmoSim` and create a base class `AtmoSimBase`
+* Add `extract()` method to `AtmoSimBase`
 * Add pressure coordinate to `DimConstr`
 * Refactor `Run` and prepare for its deprecation
 * Add `load_data()` to `io`
