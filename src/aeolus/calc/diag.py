@@ -813,11 +813,13 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
     r"""
     Calculate the mean meridional mass streamfunction.
 
-    In height coordinates:
+    * In height coordinates
+
     .. math::
         \Psi_M = - 2\pi cos\phi a \int_{z_{sfc}}^{z_{top}}\overline{\rho v} dz
 
-    In pressure coordinates:
+    * In pressure coordinates
+
     .. math::
         \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g
 
@@ -840,6 +842,15 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
     ----------
     Haqq-Misra & Kopparapu (2015), eq. 4;
     Vallis (2017)
+
+    Examples
+    --------
+    >>> from aeolus.calc import meridional_mass_streamfunction, time_mean
+    >>> from aeolus.const import init_const
+    >>> from aeolus.model import um
+    >>> earth_constants = init_const("earth")
+    >>> cubes = iris.cube.CubeList([time_mean(cube) for cube in input_cubes])
+    >>> mmsf = meridional_mass_streamfunction(cubes, const=earth_constants, model=um)
     """
     v = cubelist.extract_cube(model.v)
     v = zonal_mean(v, model=model)
