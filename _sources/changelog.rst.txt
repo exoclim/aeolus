@@ -21,6 +21,7 @@ Changelog
 * Add an option not to broadcast the coordinate to the cube's shape in `coord_to_cube()`
 * Make `spatial()`, `time_mean()` and `vertical_mean()` return the input cube in case of `CoordinateCollapseError`
 * Add `abs_coord_mean()` to average data over latitudes symmetric around the equator
+* Add functions to calculate meridional and zonal streamfunctions
 * Improve docstrings
 
 

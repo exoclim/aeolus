@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g28778d8 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g963ef59 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g28778d8
+                0+untagged.1.g963ef59
               </div>
             
           
@@ -165,14 +165,15 @@
 <span class="kn">from</span> <span class="nn">cf_units</span> <span class="kn">import</span> <span class="n">Unit</span>
 
 <span class="kn">from</span> <span class="nn">iris.analysis.calculus</span> <span class="kn">import</span> <span class="n">_coord_cos</span>
-<span class="kn">from</span> <span class="nn">iris.analysis.maths</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">multiply</span>
+<span class="kn">from</span> <span class="nn">iris.analysis.maths</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">apply_ufunc</span><span class="p">,</span> <span class="n">multiply</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">ConstraintMismatchError</span> <span class="k">as</span> <span class="n">ConMisErr</span>
+<span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">reverse</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">d_dz</span><span class="p">,</span> <span class="n">integrate</span>
 <span class="kn">from</span> <span class="nn">.meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span><span class="p">,</span> <span class="n">update_metadata</span>
-<span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">spatial_mean</span><span class="p">,</span> <span class="n">time_mean</span>
+<span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">cumsum</span><span class="p">,</span> <span class="n">spatial_mean</span><span class="p">,</span> <span class="n">time_mean</span><span class="p">,</span> <span class="n">zonal_mean</span>
 <span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">init_const</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span><span class="p">,</span> <span class="n">regrid_3d</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">MissingCubeError</span>
@@ -191,6 +192,7 @@
     <span class="s2">&quot;ghe_norm&quot;</span><span class="p">,</span>
     <span class="s2">&quot;heat_redist_eff&quot;</span><span class="p">,</span>
     <span class="s2">&quot;horiz_wind_cmpnts&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;meridional_mass_streamfunction&quot;</span><span class="p">,</span>
     <span class="s2">&quot;precip_sum&quot;</span><span class="p">,</span>
     <span class="s2">&quot;sfc_net_energy&quot;</span><span class="p">,</span>
     <span class="s2">&quot;sfc_water_balance&quot;</span><span class="p">,</span>
@@ -200,6 +202,7 @@
     <span class="s2">&quot;toa_net_energy&quot;</span><span class="p">,</span>
     <span class="s2">&quot;water_path&quot;</span><span class="p">,</span>
     <span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;zonal_mass_streamfunction&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 
@@ -212,6 +215,14 @@
         <span class="s2">&quot;rain&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">ls_rain</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_rain</span><span class="p">],</span>
         <span class="s2">&quot;snow&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">ls_snow</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_snow</span><span class="p">],</span>
     <span class="p">}</span>
+
+
+<span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cos_lat&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">lat_cos</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert the latitude coordinate to a cube and apply cosine to it.&quot;&quot;&quot;</span>
+    <span class="n">lat_cube</span> <span class="o">=</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">lat_cos_cube</span> <span class="o">=</span> <span class="n">apply_ufunc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span> <span class="n">apply_ufunc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">,</span> <span class="n">lat_cube</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">lat_cos_cube</span>
 
 
 <div class="viewcode-block" id="air_temperature"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.air_temperature">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
@@ -909,6 +920,109 @@
     <span class="n">pres_cube</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">spatial_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)))</span>
     <span class="n">pres_cube</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pres_cube</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span>
+
+
+<div class="viewcode-block" id="zonal_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.zonal_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;zonal_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">zonal_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate mean zonal mass streamfunction.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Haqq-Misra &amp; Kopparapu (2015), eq. 5;</span>
+<span class="sd">    Hartmann (1994), Global Physical Climatology, eq. 6.21</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; lat_band_constr = iris.Constraint(</span>
+<span class="sd">        latitude=lambda x: -30 &lt;= x.point &lt;= 30, longitude=lambda x: True</span>
+<span class="sd">    )</span>
+<span class="sd">    &gt;&gt;&gt; mzsf = zonal_mass_streamfunction(cubes.extract(lat_band_constr))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">streamf_const</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span>
+
+    <span class="n">u</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">u_tm</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">u_tm</span> <span class="o">-</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">u_tm</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">is_convertible</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">):</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">rho</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">rho</span>
+        <span class="c1"># integrand = reverse(integrand, model.z)</span>
+        <span class="c1"># print(integrand.coord(um.z))</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="c1"># res = cumsum(integrand, &quot;z&quot;, axis_weights=True, model=model)</span>
+        <span class="c1"># res = reverse(res, model.z)</span>
+
+    <span class="k">elif</span> <span class="n">u</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">is_convertible</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">):</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="n">u</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">gravity</span>
+
+    <span class="n">res</span> <span class="o">*=</span> <span class="n">streamf_const</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="meridional_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.meridional_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;meridional_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">meridional_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the mean meridional mass streamfunction.</span>
+
+<span class="sd">    In height coordinates:</span>
+<span class="sd">    .. math::</span>
+<span class="sd">        \Psi_M = - 2\pi cos\phi a \int_{z_{sfc}}^{z_{top}}\overline{\rho v} dz</span>
+
+<span class="sd">    In pressure coordinates:</span>
+<span class="sd">    .. math::</span>
+<span class="sd">        \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cubelist: iris.cube.CubeList</span>
+<span class="sd">        Input cubelist.</span>
+<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
+<span class="sd">        If not given, constants are attempted to be retrieved from</span>
+<span class="sd">        attributes of a cube in the cube list.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube with collapsed spatial dimensions.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Haqq-Misra &amp; Kopparapu (2015), eq. 4;</span>
+<span class="sd">    Vallis (2017)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">is_convertible</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">):</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">rho</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Reverse the coordinate to start from the model top (where p=0 or z=z_top)</span>
+        <span class="c1"># TODO: check if the coordinate is ascending or descending</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="c1"># Reverse the result back</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">is_convertible</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">gravity</span>
+    <span class="c1"># Calculate the constant: 2 pi cos\phi a</span>
+    <span class="n">streamf_const</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">lat_cos</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">*=</span> <span class="n">streamf_const</span>
+    <span class="k">return</span> <span class="n">res</span></div>
 </pre></div>
 
            </div>

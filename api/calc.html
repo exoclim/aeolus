@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.g28778d8 documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.g963ef59 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0+untagged.1.g28778d8
+                0+untagged.1.g963ef59
               </div>
             
           
@@ -760,6 +760,41 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="aeolus.calc.meridional_mass_streamfunction">
+<code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">meridional_mass_streamfunction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#meridional_mass_streamfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.meridional_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean meridional mass streamfunction.</p>
+<p>In height coordinates:
+.. math:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>\<span class="n">Psi_M</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">2</span>\<span class="n">pi</span> <span class="n">cos</span>\<span class="n">phi</span> <span class="n">a</span> \<span class="n">int_</span><span class="p">{</span><span class="n">z_</span><span class="p">{</span><span class="n">sfc</span><span class="p">}}</span><span class="o">^</span><span class="p">{</span><span class="n">z_</span><span class="p">{</span><span class="n">top</span><span class="p">}}</span>\<span class="n">overline</span><span class="p">{</span>\<span class="n">rho</span> <span class="n">v</span><span class="p">}</span> <span class="n">dz</span>
+</pre></div>
+</div>
+<p>In pressure coordinates:
+.. math:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>\<span class="n">Psi_M</span> <span class="o">=</span> <span class="mi">2</span>\<span class="n">pi</span> <span class="n">cos</span>\<span class="n">phi</span> <span class="n">a</span> \<span class="n">int_</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span><span class="o">^</span><span class="p">{</span><span class="n">p_</span><span class="p">{</span><span class="n">sfc</span><span class="p">}}</span>\<span class="n">overline</span><span class="p">{</span>\<span class="n">rho</span> <span class="n">v</span><span class="p">}</span> <span class="n">dp</span> <span class="o">/</span> <span class="n">g</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input cubelist.</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
+attributes of a cube in the cube list.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube with collapsed spatial dimensions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iris.cube.Cube</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Haqq-Misra &amp; Kopparapu (2015), eq. 4;
+Vallis (2017)</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="aeolus.calc.precip_sum">
 <code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">precip_sum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">ptype='total'</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#precip_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.precip_sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a sum of different types of precipitation [<span class="math notranslate nohighlight">\(mm~day^{-1}\)</span>].</p>
@@ -950,6 +985,24 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="aeolus.calc.zonal_mass_streamfunction">
+<code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">zonal_mass_streamfunction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#zonal_mass_streamfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.zonal_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate mean zonal mass streamfunction.</p>
+<div class="math notranslate nohighlight">
+\[\Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz\]</div>
+<p class="rubric">References</p>
+<p>Haqq-Misra &amp; Kopparapu (2015), eq. 5;
+Hartmann (1994), Global Physical Climatology, eq. 6.21</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lat_band_constr</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span>
+<span class="go">    latitude=lambda x: -30 &lt;= x.point &lt;= 30, longitude=lambda x: True</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mzsf</span> <span class="o">=</span> <span class="n">zonal_mass_streamfunction</span><span class="p">(</span><span class="n">cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">lat_band_constr</span><span class="p">))</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -38,6 +38,7 @@ Diagnostics
 .. autofunction:: aeolus.calc.ghe_norm
 .. autofunction:: aeolus.calc.heat_redist_eff
 .. autofunction:: aeolus.calc.horiz_wind_cmpnts
+.. autofunction:: aeolus.calc.meridional_mass_streamfunction
 .. autofunction:: aeolus.calc.precip_sum
 .. autofunction:: aeolus.calc.sfc_net_energy
 .. autofunction:: aeolus.calc.sfc_water_balance
@@ -47,6 +48,7 @@ Diagnostics
 .. autofunction:: aeolus.calc.toa_net_energy
 .. autofunction:: aeolus.calc.water_path
 .. autofunction:: aeolus.calc.wind_speed
+.. autofunction:: aeolus.calc.zonal_mass_streamfunction
 
 Horizontal fluxes
 -----------------
