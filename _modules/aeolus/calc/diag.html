@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g963ef59 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.gbe6bf4e documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g963ef59
+                0+untagged.1.gbe6bf4e
               </div>
             
           
@@ -976,11 +976,13 @@
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the mean meridional mass streamfunction.</span>
 
-<span class="sd">    In height coordinates:</span>
+<span class="sd">    * In height coordinates</span>
+
 <span class="sd">    .. math::</span>
 <span class="sd">        \Psi_M = - 2\pi cos\phi a \int_{z_{sfc}}^{z_{top}}\overline{\rho v} dz</span>
 
-<span class="sd">    In pressure coordinates:</span>
+<span class="sd">    * In pressure coordinates</span>
+
 <span class="sd">    .. math::</span>
 <span class="sd">        \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g</span>
 
@@ -1003,6 +1005,15 @@
 <span class="sd">    ----------</span>
 <span class="sd">    Haqq-Misra &amp; Kopparapu (2015), eq. 4;</span>
 <span class="sd">    Vallis (2017)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from aeolus.calc import meridional_mass_streamfunction, time_mean</span>
+<span class="sd">    &gt;&gt;&gt; from aeolus.const import init_const</span>
+<span class="sd">    &gt;&gt;&gt; from aeolus.model import um</span>
+<span class="sd">    &gt;&gt;&gt; earth_constants = init_const(&quot;earth&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; cubes = iris.cube.CubeList([time_mean(cube) for cube in input_cubes])</span>
+<span class="sd">    &gt;&gt;&gt; mmsf = meridional_mass_streamfunction(cubes, const=earth_constants, model=um)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
