@@ -2,14 +2,15 @@
 from cf_units import Unit
 
 from iris.analysis.calculus import _coord_cos
-from iris.analysis.maths import add, multiply
+from iris.analysis.maths import add, apply_ufunc, multiply
 from iris.exceptions import ConstraintMismatchError as ConMisErr
+from iris.util import reverse
 
 import numpy as np
 
 from .calculus import d_dz, integrate
 from .meta import const_from_attrs, update_metadata
-from .stats import spatial_mean, time_mean
+from .stats import cumsum, spatial_mean, time_mean, zonal_mean
 from ..const import init_const
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
@@ -28,6 +29,7 @@ __all__ = (
     "ghe_norm",
     "heat_redist_eff",
     "horiz_wind_cmpnts",
+    "meridional_mass_streamfunction",
     "precip_sum",
     "sfc_net_energy",
     "sfc_water_balance",
@@ -37,6 +39,7 @@ __all__ = (
     "toa_net_energy",
     "water_path",
     "wind_speed",
+    "zonal_mass_streamfunction",
 )
 
 
@@ -49,6 +52,14 @@ def _precip_name_mapping(model=um):
         "rain": [model.ls_rain, model.cv_rain],
         "snow": [model.ls_snow, model.cv_snow],
     }
+
+
+@update_metadata(name="cos_lat", units="1")
+def lat_cos(cube, model=um):
+    """Convert the latitude coordinate to a cube and apply cosine to it."""
+    lat_cube = coord_to_cube(cube, model.y, broadcast=False)
+    lat_cos_cube = apply_ufunc(np.cos, apply_ufunc(np.deg2rad, lat_cube))
+    return lat_cos_cube
 
 
 @update_metadata(units="K")
@@ -746,3 +757,106 @@ def sigma_p(cubelist, const=None, model=um):
     pres_cube = time_mean(spatial_mean(cubelist.extract_cube(model.pres)))
     pres_cube.convert_units("Pa")
     return pres_cube / const.reference_surface_pressure
+
+
+@const_from_attrs
+@update_metadata(name="zonal_mass_streamfunction", units="kg s^-1")
+def zonal_mass_streamfunction(cubelist, const=None, model=um):
+    r"""
+    Calculate mean zonal mass streamfunction.
+
+    .. math::
+        \Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz
+
+    References
+    ----------
+    Haqq-Misra & Kopparapu (2015), eq. 5;
+    Hartmann (1994), Global Physical Climatology, eq. 6.21
+
+    Examples
+    --------
+    >>> lat_band_constr = iris.Constraint(
+        latitude=lambda x: -30 <= x.point <= 30, longitude=lambda x: True
+    )
+    >>> mzsf = zonal_mass_streamfunction(cubes.extract(lat_band_constr))
+    """
+    streamf_const = 2 * np.pi * const.radius
+
+    u = cubelist.extract_cube(model.u)
+    u_tm = time_mean(u, model=model)
+    u = -1 * (u_tm - zonal_mean(u_tm, model=model))
+
+    if u.coord(axis="z").units.is_convertible("m"):
+        rho = cubelist.extract_cube(model.dens).copy()
+        rho = time_mean(rho, model=model)
+        rho.coord(model.z).bounds = None
+        u.coord(model.z).bounds = None
+        integrand = u * rho
+        # integrand = reverse(integrand, model.z)
+        # print(integrand.coord(um.z))
+        res = cumsum(integrand, "z", axis_weights=True, model=model)
+        # res = cumsum(integrand, "z", axis_weights=True, model=model)
+        # res = reverse(res, model.z)
+
+    elif u.coord(axis="z").units.is_convertible("Pa"):
+        integrand = u
+        res = cumsum(integrand, "z", axis_weights=True, model=model)
+        res /= const.gravity
+
+    res *= streamf_const
+    return res
+
+
+@const_from_attrs
+@update_metadata(name="meridional_mass_streamfunction", units="kg s^-1")
+def meridional_mass_streamfunction(cubelist, const=None, model=um):
+    r"""
+    Calculate the mean meridional mass streamfunction.
+
+    In height coordinates:
+    .. math::
+        \Psi_M = - 2\pi cos\phi a \int_{z_{sfc}}^{z_{top}}\overline{\rho v} dz
+
+    In pressure coordinates:
+    .. math::
+        \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input cubelist.
+    const: aeolus.const.const.ConstContainer, optional
+        If not given, constants are attempted to be retrieved from
+        attributes of a cube in the cube list.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube with collapsed spatial dimensions.
+
+    References
+    ----------
+    Haqq-Misra & Kopparapu (2015), eq. 4;
+    Vallis (2017)
+    """
+    v = cubelist.extract_cube(model.v)
+    v = zonal_mean(v, model=model)
+    if v.coord(model.z).units.is_convertible("m"):
+        rho = zonal_mean(cubelist.extract_cube(model.dens), model=model)
+        rho.coord(model.z).bounds = None
+        v.coord(model.z).bounds = None
+        # Reverse the coordinate to start from the model top (where p=0 or z=z_top)
+        # TODO: check if the coordinate is ascending or descending
+        integrand = reverse(v * rho, model.z)
+        res = -1 * cumsum(integrand, "z", axis_weights=True, model=model)
+        # Reverse the result back
+        res = reverse(res, model.z)
+    elif v.coord(model.z).units.is_convertible("Pa"):
+        res = cumsum(v, "z", axis_weights=True, model=model)
+        res /= const.gravity
+    # Calculate the constant: 2 pi cos\phi a
+    streamf_const = 2 * np.pi * const.radius * lat_cos(res, model=model)
+    res *= streamf_const
+    return res

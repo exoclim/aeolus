@@ -11,6 +11,7 @@ from .diag import (
     ghe_norm,
     heat_redist_eff,
     horiz_wind_cmpnts,
+    meridional_mass_streamfunction,
     precip_sum,
     sfc_net_energy,
     sfc_water_balance,
@@ -21,6 +22,7 @@ from .diag import (
     toa_net_energy,
     water_path,
     wind_speed,
+    zonal_mass_streamfunction,
 )
 from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
 from .stats import (
@@ -65,6 +67,7 @@ __all__ = (
     "horizontal_fluxes_through_region_boundaries",
     "integrate",
     "last_n_day_mean",
+    "meridional_mass_streamfunction",
     "meridional_mean",
     "minmaxdiff",
     "net_horizontal_flux_to_region",
@@ -89,5 +92,6 @@ __all__ = (
     "vertical_mean",
     "water_path",
     "wind_speed",
+    "zonal_mass_streamfunction",
     "zonal_mean",
 )
