@@ -519,7 +519,7 @@ def ghe_norm(cubelist, model=um):
     Normalised greenhouse effect parameter.
 
     .. math::
-        GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^{1/4}
+        GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^4
 
     Parameters
     ----------
@@ -531,14 +531,13 @@ def ghe_norm(cubelist, model=um):
     Returns
     -------
     iris.cube.Cube
-        Cube of greenhouse effect parameter with collapsed spatial dimensions.
+        Cube of greenhouse effect parameter.
     """
-    t_sfc = spatial_mean(cubelist.extract_cube(um.t_sfc))
+    t_sfc = cubelist.extract_cube(model.t_sfc)
     t_eff = toa_eff_temp(cubelist, model=model)
-    one = t_eff.copy(data=np.ones(t_eff.shape))
-    one.units = "1"
-    gh_norm = one - (t_eff / t_sfc) ** 4
-    return gh_norm
+    out = (t_eff / t_sfc) ** 4
+    out = out.copy(data=1 - out.data)
+    return out
 
 
 @const_from_attrs
