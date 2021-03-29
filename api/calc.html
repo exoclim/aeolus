@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.gbe6bf4e documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.g65f4bac documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0+untagged.1.gbe6bf4e
+                0+untagged.1.g65f4bac
               </div>
             
           
@@ -698,7 +698,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <code class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></code><code class="sig-name descname"><span class="pre">ghe_norm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#ghe_norm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.ghe_norm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalised greenhouse effect parameter.</p>
 <div class="math notranslate nohighlight">
-\[GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^{1/4}\]</div>
+\[GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^4\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -707,7 +707,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Cube of greenhouse effect parameter with collapsed spatial dimensions.</p>
+<dd class="field-even"><p>Cube of greenhouse effect parameter.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>iris.cube.Cube</p>

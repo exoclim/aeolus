@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.gbe6bf4e documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g65f4bac documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gbe6bf4e
+                0+untagged.1.g65f4bac
               </div>
             
           
@@ -682,7 +682,7 @@
 <span class="sd">    Normalised greenhouse effect parameter.</span>
 
 <span class="sd">    .. math::</span>
-<span class="sd">        GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^{1/4}</span>
+<span class="sd">        GHE = 1 - \left(\frac{T_{eff}}{T_{sfc}}\right)^4</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -694,14 +694,13 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
-<span class="sd">        Cube of greenhouse effect parameter with collapsed spatial dimensions.</span>
+<span class="sd">        Cube of greenhouse effect parameter.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">t_sfc</span> <span class="o">=</span> <span class="n">spatial_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">t_sfc</span><span class="p">))</span>
+    <span class="n">t_sfc</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t_sfc</span><span class="p">)</span>
     <span class="n">t_eff</span> <span class="o">=</span> <span class="n">toa_eff_temp</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">one</span> <span class="o">=</span> <span class="n">t_eff</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">t_eff</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-    <span class="n">one</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-    <span class="n">gh_norm</span> <span class="o">=</span> <span class="n">one</span> <span class="o">-</span> <span class="p">(</span><span class="n">t_eff</span> <span class="o">/</span> <span class="n">t_sfc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span>
-    <span class="k">return</span> <span class="n">gh_norm</span></div>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_eff</span> <span class="o">/</span> <span class="n">t_sfc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span> <span class="n">out</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="bond_albedo"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.bond_albedo">[docs]</a><span class="nd">@const_from_attrs</span>
