@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Subset cubes using constraints &mdash; aeolus 0+untagged.1.g65f4bac documentation</title>
+  <title>Subset cubes using constraints &mdash; aeolus 0+untagged.1.g65e1ffb documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g65f4bac
+                0+untagged.1.g65e1ffb
               </div>
             
           
@@ -209,12 +209,16 @@
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Container for strict or relaxed dimensional constraints.</p>
 <p class="rubric">Examples</p>
-<p>Extract cubes that have y and x dimensional coordinates (among others):
-&gt;&gt;&gt; dc = DimConstr()
-&gt;&gt;&gt; cubelist.extract(dc.relax.yx)</p>
-<p>Extract cubes that only have model levels, y and x dimensions:
-&gt;&gt;&gt; dc = DimConstr()
-&gt;&gt;&gt; cubelist.extract(dc.strict.myx)</p>
+<p>Extract cubes that have y and x dimensional coordinates (among others):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dc</span> <span class="o">=</span> <span class="n">DimConstr</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Extract cubes that only have model levels, y and x dimensions:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dc</span> <span class="o">=</span> <span class="n">DimConstr</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">strict</span><span class="o">.</span><span class="n">myx</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt id="aeolus.subset.DimConstr.__init__">
 <code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#DimConstr.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.DimConstr.__init__" title="Permalink to this definition">¶</a></dt>
