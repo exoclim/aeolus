@@ -5,12 +5,13 @@ dependencies:
 - python=3.9
 - cartopy
 - f90nml
-- iris>=2.4
+- iris>=3.0
 - latlon23
 - matplotlib>=3.3
 - nbsphinx
 - numpy
 - pip
 - python-stratify
+- pyvista
 - sphinx
 - sphinx_rtd_theme

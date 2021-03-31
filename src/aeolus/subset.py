@@ -94,10 +94,12 @@ class DimConstr:
     Examples
     --------
     Extract cubes that have y and x dimensional coordinates (among others):
+
     >>> dc = DimConstr()
     >>> cubelist.extract(dc.relax.yx)
 
     Extract cubes that only have model levels, y and x dimensions:
+
     >>> dc = DimConstr()
     >>> cubelist.extract(dc.strict.myx)
     """
