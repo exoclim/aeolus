@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.flux_h &mdash; aeolus 0+untagged.1.gd2b24c8 documentation</title>
+  <title>aeolus.calc.flux_h &mdash; aeolus 0+untagged.1.gdb56c2c documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd2b24c8
+                0+untagged.1.gdb56c2c
               </div>
             
           
@@ -163,15 +163,13 @@
   <h1>Source code for aeolus.calc.flux_h</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Integrated fluxes.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-
 <span class="kn">import</span> <span class="nn">iris</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">nearest_coord_value</span><span class="p">,</span> <span class="n">vertical_cross_section_area</span>
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">_warn</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 
 
@@ -195,10 +193,9 @@
         <span class="n">other_coord</span><span class="p">,</span> <span class="p">(</span><span class="n">other_min</span><span class="p">,</span> <span class="n">other_max</span><span class="p">)</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">_perpendicular_side_limits</span><span class="p">(</span><span class="n">bound</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
         <span class="n">nearest</span> <span class="o">=</span> <span class="n">nearest_coord_value</span><span class="p">(</span><span class="n">scalar_cube</span><span class="p">,</span> <span class="n">this_coord</span><span class="p">,</span> <span class="n">bound</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nearest</span> <span class="o">-</span> <span class="n">bound</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">warn_thresh</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">_warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Nearest value is </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">nearest</span> <span class="o">-</span> <span class="n">bound</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> deg away&quot;</span>
                 <span class="sa">f</span><span class="s2">&quot; from the given value of </span><span class="si">{</span><span class="n">this_coord</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">AeolusWarning</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="n">vcross_cnstr</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">this_coord</span><span class="p">:</span> <span class="n">nearest</span><span class="p">})</span>
         <span class="n">vcross_cnstr</span> <span class="o">&amp;=</span> <span class="n">vertical_constraint</span>

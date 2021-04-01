@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.gd2b24c8 documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0+untagged.1.gdb56c2c documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd2b24c8
+                0+untagged.1.gdb56c2c
               </div>
             
           
@@ -162,8 +162,6 @@
             
   <h1>Source code for aeolus.calc.stats</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Statistical functions.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
-
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateCollapseError</span> <span class="k">as</span> <span class="n">CoColErr</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateNotFoundError</span> <span class="k">as</span> <span class="n">CoNotFound</span>
@@ -173,7 +171,7 @@
 
 <span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">integrate</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">area_weights_cube</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span>
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">_warn</span><span class="p">,</span> <span class="n">ArgumentError</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">extract_last_n_days</span>
 
@@ -405,7 +403,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">aggregator</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">CoColErr</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caught exception in spatial():</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+        <span class="n">_warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caught exception in spatial():</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># out = iris.util.squeeze(cube)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">cube</span>
     <span class="k">return</span> <span class="n">out</span></div>
@@ -418,7 +416,7 @@
 
 <div class="viewcode-block" id="spatial_quartiles"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.spatial_quartiles">[docs]</a><span class="k">def</span> <span class="nf">spatial_quartiles</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate quartiles over horizontal coordinates.&quot;&quot;&quot;</span>
-    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No weights are applied!&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+    <span class="n">_warn</span><span class="p">(</span><span class="s2">&quot;No weights are applied!&quot;</span><span class="p">)</span>
     <span class="n">q25</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PERCENTILE</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="n">q75</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PERCENTILE</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">q25</span><span class="p">,</span> <span class="n">q75</span></div>
@@ -429,7 +427,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">CoColErr</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caught exception in time_mean():</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+        <span class="n">_warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caught exception in time_mean():</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># out = iris.util.squeeze(cube)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">cube</span>
     <span class="k">return</span> <span class="n">out</span></div>
@@ -455,7 +453,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">coord</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">coord</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="si">}</span><span class="s2"> does not describe any dimension in </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+        <span class="n">_warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span><span class="si">}</span><span class="s2"> does not describe any dimension in </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cube</span>
     <span class="k">if</span> <span class="n">weight_by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">vmean</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>

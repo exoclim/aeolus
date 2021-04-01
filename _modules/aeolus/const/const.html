@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.const.const &mdash; aeolus 0+untagged.1.gd2b24c8 documentation</title>
+  <title>aeolus.const.const &mdash; aeolus 0+untagged.1.gdb56c2c documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd2b24c8
+                0+untagged.1.gdb56c2c
               </div>
             
           
@@ -166,13 +166,12 @@
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">make_dataclass</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">LoadError</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">_warn</span><span class="p">,</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">LoadError</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;add_planet_conf_to_cubes&quot;</span><span class="p">,</span> <span class="s2">&quot;get_planet_radius&quot;</span><span class="p">,</span> <span class="s2">&quot;init_const&quot;</span><span class="p">)</span>
@@ -201,10 +200,9 @@
 
 <div class="viewcode-block" id="ScalarCube.__init__"><a class="viewcode-back" href="../../../api/const.html#aeolus.const.ScalarCube.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialise aeolus.const.const.ScalarCube.&quot;&quot;&quot;</span>
-        <span class="n">warn</span><span class="p">(</span>
+        <span class="n">_warn</span><span class="p">(</span>
             <span class="s2">&quot;ScalarCube is deprecated and will be removed in the next release. &quot;</span>
             <span class="s2">&quot;Use iris.cube.Cube instead.&quot;</span><span class="p">,</span>
-            <span class="n">AeolusWarning</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScalarCube</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
@@ -343,7 +341,7 @@
             <span class="n">r</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span>
             <span class="n">r</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">LoadError</span><span class="p">):</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Using default radius&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+            <span class="n">_warn</span><span class="p">(</span><span class="s2">&quot;Using default radius&quot;</span><span class="p">)</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">default</span>
     <span class="k">return</span> <span class="n">r</span>
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.gd2b24c8 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.gdb56c2c documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd2b24c8
+                0+untagged.1.gdb56c2c
               </div>
             
           
@@ -164,7 +164,6 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Functionality related to coordinates of cubes.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">from</span> <span class="nn">cartopy.util</span> <span class="kn">import</span> <span class="n">add_cyclic_point</span>
 
@@ -178,7 +177,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
-<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AeolusWarning</span><span class="p">,</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">BadCoordinateError</span><span class="p">,</span> <span class="n">NotFoundError</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">_warn</span><span class="p">,</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">BadCoordinateError</span><span class="p">,</span> <span class="n">NotFoundError</span>
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
 
 
@@ -247,7 +246,7 @@
     <span class="k">assert</span> <span class="n">points</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Only 1D points are allowed&quot;</span>
     <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">diffs</span><span class="p">,</span> <span class="n">diffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;_cell_bounds() is supposed to work only for uniformly spaced points&quot;</span><span class="p">,</span> <span class="n">AeolusWarning</span><span class="p">)</span>
+        <span class="n">_warn</span><span class="p">(</span><span class="s2">&quot;_cell_bounds() is supposed to work only for uniformly spaced points&quot;</span><span class="p">)</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="n">diffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">bound_position</span>
     <span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">delta</span><span class="p">],</span> <span class="n">points</span> <span class="o">+</span> <span class="n">delta</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">bounds</span>
