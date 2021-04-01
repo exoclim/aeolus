@@ -8,7 +8,7 @@ from .calc import diag
 from .calc.meta import copy_doc
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
-from .exceptions import _warn, ArgumentError
+from .exceptions import ArgumentError, _warn
 from .io import load_data, save_cubelist
 from .model import um
 from .region import Region

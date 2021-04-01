@@ -8,7 +8,7 @@ import numpy as np
 
 from .calculus import integrate
 from ..coord import area_weights_cube, coord_to_cube, ensure_bounds
-from ..exceptions import _warn, ArgumentError
+from ..exceptions import ArgumentError, _warn
 from ..model import um
 from ..subset import extract_last_n_days
 

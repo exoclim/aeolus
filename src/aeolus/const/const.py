@@ -8,7 +8,7 @@ import iris
 
 import numpy as np
 
-from ..exceptions import _warn, ArgumentError, LoadError
+from ..exceptions import ArgumentError, LoadError, _warn
 
 
 __all__ = ("add_planet_conf_to_cubes", "get_planet_radius", "init_const")

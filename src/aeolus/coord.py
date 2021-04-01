@@ -14,7 +14,7 @@ from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 import numpy as np
 
 from .const import get_planet_radius
-from .exceptions import _warn, ArgumentError, BadCoordinateError, NotFoundError
+from .exceptions import ArgumentError, BadCoordinateError, NotFoundError, _warn
 from .model import um
 
 
