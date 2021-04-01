@@ -1,6 +1,4 @@
 """Core submodule of aeolus package."""
-from warnings import warn
-
 from cached_property import cached_property
 
 import iris
@@ -10,7 +8,7 @@ from .calc import diag
 from .calc.meta import copy_doc
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
-from .exceptions import AeolusWarning, ArgumentError
+from .exceptions import _warn, ArgumentError
 from .io import load_data, save_cubelist
 from .model import um
 from .region import Region
@@ -108,7 +106,7 @@ class AtmoSimBase:
             cube_yx = self._cubes.extract(self.dim_constr.relax.yx)[0]
             self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
         except IndexError:
-            warn("Initialised without a domain.", AeolusWarning)
+            _warn("Initialised without a domain.")
 
         # Variables as attributes
         self._assign_fields()
@@ -176,7 +174,7 @@ class AtmoSimBase:
             self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
         except AttributeError:
             self._coord_system = None
-            warn("Run initialised without a coordinate system.", AeolusWarning)
+            _warn("Run initialised without a coordinate system.")
 
     def _add_planet_conf_to_cubes(self):
         """Add or update planetary constants container to cube attributes."""
@@ -299,10 +297,9 @@ class Run:
         --------
         aeolus.const.init_const
         """
-        warn(
+        _warn(
             "Run is deprecated and will be removed in the next release. "
-            "Use iris.cube.CubeList instead.",
-            AeolusWarning,
+            "Use iris.cube.CubeList instead."
         )
         self.name = name
 
@@ -327,9 +324,9 @@ class Run:
                     cube_yx = self.raw.extract(self.dim_constr.relax.yx)[0]
                 self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
             except IndexError:
-                warn("Run initialised without a domain.")
+                _warn("Run initialised without a domain.")
         else:
-            warn("Run initialised without input files")
+            _warn("Run initialised without input files")
 
     def load_data(self, files):
         """Load cubes."""
@@ -348,7 +345,7 @@ class Run:
             self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
         except AttributeError:
             self._coord_system = None
-            warn("Run initialised without a coordinate system.", AeolusWarning)
+            _warn("Run initialised without a coordinate system.")
 
     def _add_planet_conf_to_cubes(self):
         """Add or update planetary constants container to cube attributes."""
@@ -366,7 +363,7 @@ class Run:
             Keyword arguments passed to `func`.
         """
         if self.processed:
-            warn("Run's data is already processed. Skipping.", AeolusWarning)
+            _warn("Run's data is already processed. Skipping.")
         else:
             self.proc = iris.cube.CubeList()
             if callable(func):

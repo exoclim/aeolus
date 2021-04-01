@@ -1,6 +1,4 @@
 """Statistical functions."""
-from warnings import warn
-
 import iris
 from iris.exceptions import CoordinateCollapseError as CoColErr
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
@@ -10,7 +8,7 @@ import numpy as np
 
 from .calculus import integrate
 from ..coord import area_weights_cube, coord_to_cube, ensure_bounds
-from ..exceptions import AeolusWarning, ArgumentError
+from ..exceptions import _warn, ArgumentError
 from ..model import um
 from ..subset import extract_last_n_days
 
@@ -242,7 +240,7 @@ def spatial(cube, aggr, model=um):
     try:
         out = cube.collapsed(coords, aggregator, **kw)
     except CoColErr as e:
-        warn(f"Caught exception in spatial():\n{e}", AeolusWarning)
+        _warn(f"Caught exception in spatial():\n{e}")
         # out = iris.util.squeeze(cube)
         out = cube
     return out
@@ -255,7 +253,7 @@ def spatial_mean(cube, model=um):
 
 def spatial_quartiles(cube, model=um):
     """Calculate quartiles over horizontal coordinates."""
-    warn("No weights are applied!", AeolusWarning)
+    _warn("No weights are applied!")
     q25 = cube.collapsed((model.y, model.x), iris.analysis.PERCENTILE, percent=25)
     q75 = cube.collapsed((model.y, model.x), iris.analysis.PERCENTILE, percent=75)
     return q25, q75
@@ -266,7 +264,7 @@ def time_mean(cube, model=um):
     try:
         out = cube.collapsed(model.t, iris.analysis.MEAN)
     except CoColErr as e:
-        warn(f"Caught exception in time_mean():\n{e}", AeolusWarning)
+        _warn(f"Caught exception in time_mean():\n{e}")
         # out = iris.util.squeeze(cube)
         out = cube
     return out
@@ -292,7 +290,7 @@ def vertical_mean(cube, weight_by=None, model=um):
     """
     coord = model.z
     if len(cube.coord_dims(coord)) == 0:
-        warn(f"The {repr(coord)} does not describe any dimension in {repr(cube)}.", AeolusWarning)
+        _warn(f"The {repr(coord)} does not describe any dimension in {repr(cube)}.")
         return cube
     if weight_by is None:
         vmean = cube.collapsed(coord, iris.analysis.MEAN)

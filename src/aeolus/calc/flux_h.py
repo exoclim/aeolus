@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """Integrated fluxes."""
-import warnings
-
 import iris
 
 import numpy as np
 
 from ..const import get_planet_radius
 from ..coord import nearest_coord_value, vertical_cross_section_area
-from ..exceptions import AeolusWarning
+from ..exceptions import _warn
 from ..model import um
 
 
@@ -32,10 +30,9 @@ def horizontal_fluxes_through_region_boundaries(
         other_coord, (other_min, other_max) = region._perpendicular_side_limits(bound["name"])
         nearest = nearest_coord_value(scalar_cube, this_coord, bound["value"])
         if abs(nearest - bound["value"]) >= warn_thresh:
-            warnings.warn(
+            _warn(
                 f"Nearest value is {np.round(nearest - bound['value'], 2)} deg away"
                 f" from the given value of {this_coord}",
-                AeolusWarning,
             )
         vcross_cnstr = iris.Constraint(**{this_coord: nearest})
         vcross_cnstr &= vertical_constraint

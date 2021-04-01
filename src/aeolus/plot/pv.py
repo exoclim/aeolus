@@ -1,12 +1,10 @@
 """Prepare data in spherical coordinates for pyvista plotting."""
-from warnings import warn
-
 import numpy as np
 
 from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 
 from ..coord import _cell_bounds
-from ..exceptions import AeolusWarning
+from ..exceptions import _warn
 from ..model import um
 
 
@@ -52,7 +50,7 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
 
     # Add data arras to grid
     if label in grid.cell_arrays:
-        warn(f"Label '{label}' exists in {grid}", AeolusWarning)
+        _warn(f"Label '{label}' exists in {grid}")
     grid.cell_arrays[label] = np.array(cube.data).swapaxes(-2, -1).ravel("C")
     return grid
 

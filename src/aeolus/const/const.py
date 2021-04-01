@@ -3,13 +3,12 @@
 import json
 from dataclasses import make_dataclass
 from pathlib import Path
-from warnings import warn
 
 import iris
 
 import numpy as np
 
-from ..exceptions import AeolusWarning, ArgumentError, LoadError
+from ..exceptions import _warn, ArgumentError, LoadError
 
 
 __all__ = ("add_planet_conf_to_cubes", "get_planet_radius", "init_const")
@@ -38,10 +37,9 @@ class ScalarCube(iris.cube.Cube):
 
     def __init__(self, *args, **kw):
         """Initialise aeolus.const.const.ScalarCube."""
-        warn(
+        _warn(
             "ScalarCube is deprecated and will be removed in the next release. "
             "Use iris.cube.Cube instead.",
-            AeolusWarning,
         )
         super(ScalarCube, self).__init__(*args, **kw)
 
@@ -180,7 +178,7 @@ def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
             r.convert_units("m")
             r = float(r.data)
         except (KeyError, LoadError):
-            warn("Using default radius", AeolusWarning)
+            _warn("Using default radius")
             r = default
     return r
 

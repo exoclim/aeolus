@@ -4,6 +4,9 @@ from matplotlib.lines import Line2D
 
 import numpy as np
 
+from ..exceptions import _warn
+
+
 __all__ = ("MidpointNormalize", "add_custom_legend")
 
 
@@ -11,6 +14,10 @@ class MidpointNormalize(mcolors.Normalize):
     """Normalise data around a midpoint."""
 
     def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):  # noqa
+        _warn(
+            "MidpointNormalize is deprecated and will be removed in the next release. "
+            "Use matplotlib.colors.CenteredNorm instead."
+        )
         self.midpoint = midpoint
         mcolors.Normalize.__init__(self, vmin, vmax, clip)
 

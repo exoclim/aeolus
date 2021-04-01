@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Functionality related to coordinates of cubes."""
 from datetime import timedelta
-from warnings import warn
 
 from cartopy.util import add_cyclic_point
 
@@ -15,7 +14,7 @@ from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 import numpy as np
 
 from .const import get_planet_radius
-from .exceptions import AeolusWarning, ArgumentError, BadCoordinateError, NotFoundError
+from .exceptions import _warn, ArgumentError, BadCoordinateError, NotFoundError
 from .model import um
 
 
@@ -84,7 +83,7 @@ def _cell_bounds(points, bound_position=0.5):
     assert points.ndim == 1, "Only 1D points are allowed"
     diffs = np.diff(points)
     if not np.allclose(diffs, diffs[0]):
-        warn("_cell_bounds() is supposed to work only for uniformly spaced points", AeolusWarning)
+        _warn("_cell_bounds() is supposed to work only for uniformly spaced points")
     delta = diffs[0] * bound_position
     bounds = np.concatenate([[points[0] - delta], points + delta])
     return bounds
