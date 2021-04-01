@@ -7,7 +7,7 @@ dependencies:
 - f90nml
 - iris>=3.0
 - latlon23
-- matplotlib>=3.3
+- matplotlib>=3.4
 - nbsphinx
 - numpy
 - pip
