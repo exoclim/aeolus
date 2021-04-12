@@ -6,7 +6,7 @@ Changelog
 0.4.9
 -----
 
-:Date: TBA
+:Date: 12 April 2021
 
 * Add cached-property as a dependency
 * Rename `AtmosFlow` to `AtmoSim` and create a base class `AtmoSimBase`
@@ -23,6 +23,7 @@ Changelog
 * Add `abs_coord_mean()` to average data over latitudes symmetric around the equator
 * Add functions to calculate meridional and zonal streamfunctions
 * Improve docstrings
+* Add an example notebook for working with model names
 
 
 0.4.8
