@@ -8,7 +8,7 @@ from .calc import diag
 from .calc.meta import copy_doc
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
-from .exceptions import ArgumentError, _warn
+from .exceptions import _warn
 from .io import load_data, save_cubelist
 from .model import um
 from .region import Region
@@ -52,7 +52,7 @@ class AtmoSimBase:
         model=um,
         model_type=None,
         timestep=None,
-        vert_coord="z",
+        vert_coord=None,
     ):
         """
         Instantiate an `AtmoSimBase` object.
@@ -112,15 +112,18 @@ class AtmoSimBase:
         self._assign_fields()
 
         # Common coordinates
+        dim_seq = ["tyx", "yx"]
         self.vert_coord = vert_coord
+        # TODO: make it more flexible
         if self.vert_coord == "z":
-            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tzyx))
+            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.z))
         elif self.vert_coord == "p":
-            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.tpyx))
+            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.p))
         else:
-            raise ArgumentError(f"vert_coord={self.vert_coord} is not allowed.")
+            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.yx))
 
-        dim_seq = [f"t{self.vert_coord}yx", "tyx", f"{self.vert_coord}yx", "yx"]
+        if self.vert_coord is not None:
+            dim_seq += [f"t{self.vert_coord}yx", f"{self.vert_coord}yx"]
         for seq in dim_seq:
             try:
                 setattr(
