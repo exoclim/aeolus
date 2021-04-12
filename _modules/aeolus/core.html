@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.g957cb12 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.gf0f65ba documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0+untagged.1.g957cb12
+                0+untagged.1.gf0f65ba
               </div>
             
           
@@ -171,7 +171,7 @@
 <span class="kn">from</span> <span class="nn">.calc.meta</span> <span class="kn">import</span> <span class="n">copy_doc</span>
 <span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">add_planet_conf_to_cubes</span><span class="p">,</span> <span class="n">init_const</span>
 <span class="kn">from</span> <span class="nn">.coord</span> <span class="kn">import</span> <span class="n">CoordContainer</span>
-<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">_warn</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">_warn</span>
 <span class="kn">from</span> <span class="nn">.io</span> <span class="kn">import</span> <span class="n">load_data</span><span class="p">,</span> <span class="n">save_cubelist</span>
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">.region</span> <span class="kn">import</span> <span class="n">Region</span>
@@ -215,7 +215,7 @@
         <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
         <span class="n">model_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">vert_coord</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span>
+        <span class="n">vert_coord</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate an `AtmoSimBase` object.</span>
@@ -275,15 +275,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_assign_fields</span><span class="p">()</span>
 
         <span class="c1"># Common coordinates</span>
+        <span class="n">dim_seq</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tyx&quot;</span><span class="p">,</span> <span class="s2">&quot;yx&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">=</span> <span class="n">vert_coord</span>
+        <span class="c1"># TODO: make it more flexible</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tzyx</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">tpyx</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vert_coord=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2"> is not allowed.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">))</span>
 
-        <span class="n">dim_seq</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;t</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;tyx&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="s2">&quot;yx&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dim_seq</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;t</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">dim_seq</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="nb">setattr</span><span class="p">(</span>

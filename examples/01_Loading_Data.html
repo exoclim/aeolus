@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Loading Unified Model output &mdash; aeolus 0+untagged.1.g957cb12 documentation</title>
+  <title>Working with model output &mdash; aeolus 0+untagged.1.gf0f65ba documentation</title>
   
 
   
@@ -41,7 +41,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API reference" href="../api/index.html" />
+    <link rel="next" title="Model variable names" href="02_Model_Field_Names.html" />
     <link rel="prev" title="Physical constants" href="00_Constants.html" /> 
 </head>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g957cb12
+                0+untagged.1.gf0f65ba
               </div>
             
           
@@ -95,10 +95,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="00_Constants.html">Physical constants</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Loading Unified Model output</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Minimal-processing-of-loaded-data">Minimal processing of loaded data</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with model output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_Model_Field_Names.html">Model variable names</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a></li>
@@ -154,7 +152,7 @@
         
           <li><a href="index.html">Examples</a> &raquo;</li>
         
-      <li>Loading Unified Model output</li>
+      <li>Working with model output</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -443,10 +441,9 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Loading-Unified-Model-output">
-<h1>Loading Unified Model output<a class="headerlink" href="#Loading-Unified-Model-output" title="Permalink to this headline">¶</a></h1>
-<p><strong>Note: the ``Run`` object is deprecated and will be removed in a future release. Load data using ``iris.load()`` and then convert it to ``aeolus.core.AtmoSim`` instead.</strong></p>
-<p>For convenience, <code class="docutils literal notranslate"><span class="pre">aeolus</span></code> provides a way of keeping loaded and processed data within one object along with extra metadata. The object is called <code class="docutils literal notranslate"><span class="pre">Run</span></code> (as in “simulation run”). The code below provides an example of basic usage of <code class="docutils literal notranslate"><span class="pre">Run</span></code>.</p>
+<div class="section" id="Working-with-model-output">
+<h1>Working with model output<a class="headerlink" href="#Working-with-model-output" title="Permalink to this headline">¶</a></h1>
+<p>For convenience, <code class="docutils literal notranslate"><span class="pre">aeolus</span></code> provides a way of keeping loaded and processed data within one object along with extra metadata. The object is called <code class="docutils literal notranslate"><span class="pre">AtmoSim</span></code> (as in “atmospheric simulation”). The code below provides an example of basic usage of <code class="docutils literal notranslate"><span class="pre">AtmoSim</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -455,8 +452,7 @@ div.rendered_html tbody tr:hover {
 <span></span>from pathlib import Path
 
 import iris
-
-from aeolus.core import Run
+from aeolus.core import AtmoSim
 </pre></div>
 </div>
 </div>
@@ -470,14 +466,42 @@ from aeolus.core import Run
 </pre></div>
 </div>
 </div>
-<p>While instantiating <code class="docutils literal notranslate"><span class="pre">Run</span></code>, it is possible to add a short name, a long description of the experiment; and to specify a planet configuration with relevant constants (see “Physical constants” example for more info).</p>
+<p>To load the data, use <code class="docutils literal notranslate"><span class="pre">iris</span></code> functions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run = Run(
-    files=sample_file,
+<span></span>inp_data = iris.load(str(sample_file))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>type(inp_data)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+iris.cube.CubeList
+</pre></div></div>
+</div>
+<p>This cube list can be then used to instantiate <code class="docutils literal notranslate"><span class="pre">AtmoSim</span></code>. It is also possible to add a short name, a long description of the experiment; and to specify a planet configuration with relevant constants (see “Physical constants” example for more info).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>my_run = AtmoSim(
+    cubes=inp_data,
     name=&quot;t1e_example&quot;,
     description=&quot;This is some sample data from a UM simulation of tidally-locked Trappist-1e planet.&quot;,
     planet=&quot;trap1e&quot;,  # this reads constants from a JSON file
@@ -486,26 +510,50 @@ from aeolus.core import Run
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run
+<span></span>type(my_run)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;aeolus.core.Run at 0x7f3b36b31430&gt;
+aeolus.core.AtmoSim
+</pre></div></div>
+</div>
+<p>The loaded data are stored as a <code class="docutils literal notranslate"><span class="pre">CubeList</span></code> as the <code class="docutils literal notranslate"><span class="pre">_cubes</span></code> attribute.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>print(my_run._cubes)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0: convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+1: convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+2: high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+3: low_type_cloud_area_fraction / (1)  (latitude: 90; longitude: 144)
+4: medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
+5: stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+6: stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
 </pre></div></div>
 </div>
 <p>Constants that have been used in the model:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -514,7 +562,7 @@ from aeolus.core import Run
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -522,13 +570,13 @@ from aeolus.core import Run
 Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], molar_gas_constant [J K-1 mol-1], boltzmann [m^2 kg s^-2 K^-1], avogadro [mol-1], gravity [m s-2], radius [m], day [s], solar_constant [W m-2], reference_surface_pressure [Pa], semi_major_axis [au], eccentricity [1], obliquity [degree], dry_air_spec_heat_press [m2 s-2 K-1], dry_air_molecular_weight [kg mol-1], condensible_density [kg m-3], condensible_heat_vaporization [m2 s-2])
 </pre></div></div>
 </div>
-<p>The loaded data are stored as a <code class="docutils literal notranslate"><span class="pre">CubeList</span></code> under <code class="docutils literal notranslate"><span class="pre">raw</span></code> attribute.</p>
+<p>Individual cubes can be accessed either by via the <code class="docutils literal notranslate"><span class="pre">_cubes</span></code> attribute and <code class="docutils literal notranslate"><span class="pre">iris</span></code> methods, or, more conveniently, as keys or attributes of <code class="docutils literal notranslate"><span class="pre">AtmoSim</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.raw)
+<span></span>print(my_run.cv_rain)
 </pre></div>
 </div>
 </div>
@@ -537,63 +585,29 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiza
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0: convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-1: convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-2: high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
-3: low_type_cloud_area_fraction / (1)  (latitude: 90; longitude: 144)
-4: medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
-5: stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-6: stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+     Dimension coordinates:
+          latitude                               x              -
+          longitude                              -              x
+     Scalar coordinates:
+          forecast_period: 36360.0 hours, bound=(36000.0, 36720.0) hours
+          forecast_reference_time: 2004-05-13 09:00:00
+          time: 2008-07-06 09:00:00, bound=(2008-06-21 09:00:00, 2008-07-21 09:00:00)
+     Attributes:
+          STASH: m01s05i205
+          planet_conf: Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization...
+          source: Data from Met Office Unified Model
+          um_version: 11.3
+     Cell methods:
+          mean: time (1 hour)
 </pre></div></div>
-</div>
-<div class="section" id="Minimal-processing-of-loaded-data">
-<h2>Minimal processing of loaded data<a class="headerlink" href="#Minimal-processing-of-loaded-data" title="Permalink to this headline">¶</a></h2>
-<p>The next step might involve some clean-up and post-processing of raw data.</p>
-<p>This is done by creating a function that takes <code class="docutils literal notranslate"><span class="pre">iris.cube.CubeList</span></code> as its 1st argument and returns another <code class="docutils literal notranslate"><span class="pre">iris.cube.CubeList</span></code> as output. The function is then passed to <code class="docutils literal notranslate"><span class="pre">Run.proc_data()</span></code> and its output stored as <code class="docutils literal notranslate"><span class="pre">Run.proc</span></code> attribute.</p>
-<p>For example, the function <code class="docutils literal notranslate"><span class="pre">roll_cube_pm180()</span></code> imported below takes a <code class="docutils literal notranslate"><span class="pre">Cube</span></code> and rolls its longitudes from 0…360 to -180…180.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.coord import ensure_bounds, roll_cube_pm180
-</pre></div>
-</div>
-</div>
-<p>It can then be applied to all <code class="docutils literal notranslate"><span class="pre">raw</span></code> cubes.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>def _prepare_cubes(cubelist):
-    &quot;&quot;&quot;Post-process data for easier analysis.&quot;&quot;&quot;
-    # Roll cubes
-    r_cubes = iris.cube.CubeList()
-    for cube in cubelist:
-        r_c = roll_cube_pm180(cube)
-        ensure_bounds(r_c)  # also, ensure that longitudes and latitudes have bounds
-        r_cubes.append(r_c)
-
-    return r_cubes
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run.proc_data(_prepare_cubes)
-</pre></div>
-</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.proc)
+<span></span>print(my_run[&quot;cv_rain&quot;])
 </pre></div>
 </div>
 </div>
@@ -602,22 +616,30 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiza
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0: convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-1: convective_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-2: high_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
-3: low_type_cloud_area_fraction / (1)  (latitude: 90; longitude: 144)
-4: medium_type_cloud_area_fraction / (1) (latitude: 90; longitude: 144)
-5: stratiform_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
-6: stratiform_snowfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+     Dimension coordinates:
+          latitude                               x              -
+          longitude                              -              x
+     Scalar coordinates:
+          forecast_period: 36360.0 hours, bound=(36000.0, 36720.0) hours
+          forecast_reference_time: 2004-05-13 09:00:00
+          time: 2008-07-06 09:00:00, bound=(2008-06-21 09:00:00, 2008-07-21 09:00:00)
+     Attributes:
+          STASH: m01s05i205
+          planet_conf: Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization...
+          source: Data from Met Office Unified Model
+          um_version: 11.3
+     Cell methods:
+          mean: time (1 hour)
 </pre></div></div>
 </div>
-<p>Check that it did what expected.</p>
+<p>which is equivalent to typing</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.raw.extract_cube(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;)[:10])
+<span></span>print(my_run._cubes.extract_cube(&quot;convective_rainfall_flux&quot;))
 </pre></div>
 </div>
 </div>
@@ -626,39 +648,41 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiza
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCoord(array([ 1.25,  3.75,  6.25,  8.75, 11.25, 13.75, 16.25, 18.75, 21.25,
-       23.75], dtype=float32), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(6371229.0))
+convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
+     Dimension coordinates:
+          latitude                               x              -
+          longitude                              -              x
+     Scalar coordinates:
+          forecast_period: 36360.0 hours, bound=(36000.0, 36720.0) hours
+          forecast_reference_time: 2004-05-13 09:00:00
+          time: 2008-07-06 09:00:00, bound=(2008-06-21 09:00:00, 2008-07-21 09:00:00)
+     Attributes:
+          STASH: m01s05i205
+          planet_conf: Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization...
+          source: Data from Met Office Unified Model
+          um_version: 11.3
+     Cell methods:
+          mean: time (1 hour)
 </pre></div></div>
 </div>
+<p>Short-cuts are defined using the <code class="docutils literal notranslate"><span class="pre">Model</span></code> container (see the “Model field names” example).</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.proc.extract_cube(&quot;convective_rainfall_flux&quot;).coord(&quot;longitude&quot;)[:10])
+<span></span>my_run.model.cv_rain
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-DimCoord(array([-178.75, -176.25, -173.75, -171.25, -168.75, -166.25, -163.75,
-       -161.25, -158.75, -156.25]), bounds=array([[-180. , -177.5],
-       [-177.5, -175. ],
-       [-175. , -172.5],
-       [-172.5, -170. ],
-       [-170. , -167.5],
-       [-167.5, -165. ],
-       [-165. , -162.5],
-       [-162.5, -160. ],
-       [-160. , -157.5],
-       [-157.5, -155. ]]), standard_name=&#39;longitude&#39;, units=Unit(&#39;degrees&#39;), coord_system=GeogCS(5804071.0))
+&#39;convective_rainfall_flux&#39;
 </pre></div></div>
-</div>
-<p>Note that the longitude coordinate is not only shifted by 180 degrees, but has automatically calculated <code class="docutils literal notranslate"><span class="pre">bounds</span></code>.</p>
-<p>In addition, note that <code class="docutils literal notranslate"><span class="pre">coord_system</span></code> in <code class="docutils literal notranslate"><span class="pre">proc</span></code> cubes is different, because it used <code class="docutils literal notranslate"><span class="pre">Run.const</span></code> attribute to redefine the planet radius correctly. By default the loaded raw data has Earth radius in its <code class="docutils literal notranslate"><span class="pre">coord_system</span></code>, so certain calculations (e.g. grid cell areas) might be incorrect.</p>
 </div>
 </div>
 
@@ -668,7 +692,7 @@ DimCoord(array([-178.75, -176.25, -173.75, -171.25, -168.75, -166.25, -163.75,
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../api/index.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="02_Model_Field_Names.html" class="btn btn-neutral float-right" title="Model variable names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="00_Constants.html" class="btn btn-neutral float-left" title="Physical constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

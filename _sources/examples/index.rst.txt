@@ -15,3 +15,4 @@ Here are few examples on how to use aeolus
 
    00_Constants.ipynb
    01_Loading_Data.ipynb
+   02_Model_Field_Names.ipynb
