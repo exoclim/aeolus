@@ -1,7 +1,7 @@
 Overview
 ========
 
-aeolus is a Python library used for post-processing and analysis of UK Met Office Unified Model output.
+aeolus is a Python library for the analysis and visualisation of climate model output, primarily the UK Met Office Unified Model. It leverages the functionality of `iris`_ and has modules geared towards working with 3D general circulation models of planetary atmospheres.
 
 Contents
 --------
