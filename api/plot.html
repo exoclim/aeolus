@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Plotting functions &mdash; aeolus 0+untagged.1.g5c7a9d4 documentation</title>
+  <title>Plotting functions &mdash; aeolus 0+untagged.1.gbcc0b18 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5c7a9d4
+                0+untagged.1.gbcc0b18
               </div>
             
           
@@ -334,62 +334,6 @@ keywords as values.</p></li>
 
 <div class="section" id="pyvista-interface">
 <span id="pyvista-ref"></span><h2>PyVista interface<a class="headerlink" href="#pyvista-interface" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="aeolus.plot.pv.grid_for_scalar_cube_sph">
-<code class="sig-prename descclassname"><span class="pre">aeolus.plot.pv.</span></code><code class="sig-name descname"><span class="pre">grid_for_scalar_cube_sph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">z_scale=1</span></em>, <em class="sig-param"><span class="pre">z_offset=0</span></em>, <em class="sig-param"><span class="pre">grid=None</span></em>, <em class="sig-param"><span class="pre">label='scalar3d'</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/pv.html#grid_for_scalar_cube_sph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.pv.grid_for_scalar_cube_sph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a <cite>pyvista</cite> grid for an <cite>iris</cite> cube (2D or 3D) in spherical coordinates.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<em>iris.cube.Cube</em>) – 2D or 3D cube with (longitude, latitude, [level_height]) coordinates.</p></li>
-<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
-<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.29.1)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
-the input cube’s coordinates.</p></li>
-<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>PyVista grid with data in cell_arrays.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.29.1)">pyvista.StructuredGrid</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aeolus.plot.pv.grid_for_vector_cubes_sph">
-<code class="sig-prename descclassname"><span class="pre">aeolus.plot.pv.</span></code><code class="sig-name descname"><span class="pre">grid_for_vector_cubes_sph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">u</span></em>, <em class="sig-param"><span class="pre">v</span></em>, <em class="sig-param"><span class="pre">w</span></em>, <em class="sig-param"><span class="pre">vector_scale=1</span></em>, <em class="sig-param"><span class="pre">vertical_wind_scale=1</span></em>, <em class="sig-param"><span class="pre">z_scale=1</span></em>, <em class="sig-param"><span class="pre">z_offset=0</span></em>, <em class="sig-param"><span class="pre">xstride=1</span></em>, <em class="sig-param"><span class="pre">ystride=1</span></em>, <em class="sig-param"><span class="pre">grid=None</span></em>, <em class="sig-param"><span class="pre">label='vector3d'</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/pv.html#grid_for_vector_cubes_sph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.pv.grid_for_vector_cubes_sph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take wind vectors in spherical coordinates and create a <cite>pyvista</cite> grid for them.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<em>iris.cube.Cube</em>) – 2D or 3D cube of x-wind component (zonal wind).</p></li>
-<li><p><strong>v</strong> (<em>iris.cube.Cube</em>) – 2D or 3D cube of y-wind component (meridional wind).</p></li>
-<li><p><strong>w</strong> (<em>iris.cube.Cube</em>) – 2D or 3D cube of z-wind component (vertical wind).</p></li>
-<li><p><strong>vector_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for vectors.</p></li>
-<li><p><strong>vertical_wind_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical wind component (for better visibility).</p></li>
-<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
-<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
-<li><p><strong>xstride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the longitude axis.</p></li>
-<li><p><strong>ystride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the latitude axis.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.29.1)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
-the input cube’s coordinates.</p></li>
-<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>PyVista grid with vector data in point_arrays.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/core/point-grids.html#pyvista.StructuredGrid" title="(in PyVista v0.29.1)">pyvista.StructuredGrid</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 </div>
 

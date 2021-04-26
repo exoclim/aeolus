@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Regions &mdash; aeolus 0+untagged.1.g5c7a9d4 documentation</title>
+  <title>Regions &mdash; aeolus 0+untagged.1.gbcc0b18 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5c7a9d4
+                0+untagged.1.gbcc0b18
               </div>
             
           
@@ -203,105 +203,6 @@
 </style>
 <div class="section" id="regions">
 <h1>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="aeolus.region.Region">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">aeolus.region.</span></code><code class="sig-name descname"><span class="pre">Region</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">west_bound</span></em>, <em class="sig-param"><span class="pre">east_bound</span></em>, <em class="sig-param"><span class="pre">south_bound</span></em>, <em class="sig-param"><span class="pre">north_bound</span></em>, <em class="sig-param"><span class="pre">name=''</span></em>, <em class="sig-param"><span class="pre">description=''</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Rectangular geographical region.</p>
-<dl class="py attribute">
-<dt id="aeolus.region.Region.name">
-<code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#aeolus.region.Region.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>The region’s name</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="aeolus.region.Region.description">
-<code class="sig-name descname"><span class="pre">description</span></code><a class="headerlink" href="#aeolus.region.Region.description" title="Permalink to this definition">¶</a></dt>
-<dd><p>A description of the region</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="aeolus.region.Region.constraint">
-<code class="sig-name descname"><span class="pre">constraint</span></code><a class="headerlink" href="#aeolus.region.Region.constraint" title="Permalink to this definition">¶</a></dt>
-<dd><p>A constraint object associated with the region</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>iris.Constraint</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aeolus.region.Region.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">west_bound</span></em>, <em class="sig-param"><span class="pre">east_bound</span></em>, <em class="sig-param"><span class="pre">south_bound</span></em>, <em class="sig-param"><span class="pre">north_bound</span></em>, <em class="sig-param"><span class="pre">name=''</span></em>, <em class="sig-param"><span class="pre">description=''</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiate a <cite>Region</cite> object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>west_bound</strong> (<em>scalar</em><em>, </em><em>optional</em>) – The western, eastern, southern, and northern boundaries, respectively, of the
-region.</p></li>
-<li><p><strong>east_bound</strong> (<em>scalar</em><em>, </em><em>optional</em>) – The western, eastern, southern, and northern boundaries, respectively, of the
-region.</p></li>
-<li><p><strong>south_bound</strong> (<em>scalar</em><em>, </em><em>optional</em>) – The western, eastern, southern, and northern boundaries, respectively, of the
-region.</p></li>
-<li><p><strong>north_bound</strong> (<em>scalar</em><em>, </em><em>optional</em>) – The western, eastern, southern, and northern boundaries, respectively, of the
-region.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The region’s name.</p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – A description of the region.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate names.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aeolus.region.Region.from_cube">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">name=None</span></em>, <em class="sig-param"><span class="pre">margin=None</span></em>, <em class="sig-param"><span class="pre">margin_units='points'</span></em>, <em class="sig-param"><span class="pre">shift_lons=False</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(78</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region.from_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region.from_cube" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Region from limits of longitude and latitude of the cube.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<em>iris.cube.Cube</em>) – Source cube.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name for the region. If not given, created automatically from <cite>cube</cite>’s name.</p></li>
-<li><p><strong>margin</strong> (<em>scalar</em><em>, </em><em>optional</em>) – Use <cite>margin</cite> number of points or degrees to create a region smaller than the cube.</p></li>
-<li><p><strong>margin_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Units of margin. Can be “points” or “degrees”.</p></li>
-<li><p><strong>shift_lons</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Shift longitudes to -180…180.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#aeolus.region.Region" title="aeolus.region.Region">aeolus.region.Region</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="id0">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">constraint</span></code><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint to select data within the region.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aeolus.region.Region.add_to_ax">
-<code class="sig-name descname"><span class="pre">add_to_ax</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region.add_to_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region.add_to_ax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a Rectangle patch to matplotlib axes <cite>ax</cite> with given keyword arguments <cite>kwargs</cite>.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
