@@ -55,6 +55,8 @@ class Model:
     sfc_shf: str = None
     sfc_lhf: str = None
     sfc_evap: str = None
+    sfc_x_wind_stress: str = None
+    sfc_y_wind_stress: str = None
     # Extra physics
     temp: str = None
     dens: str = None
