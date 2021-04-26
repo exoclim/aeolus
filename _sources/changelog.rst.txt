@@ -3,6 +3,14 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.10
+-----
+
+:Date: TBA
+
+* Add more names to `model.base`
+
+
 0.4.9
 -----
 
