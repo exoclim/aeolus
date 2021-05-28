@@ -1,11 +1,11 @@
-from pathlib import Path
-
+"""Functions for calculating synthetic observations."""
 import iris
-import numpy as np
 from iris.analysis.maths import apply_ufunc
 from iris.util import reverse
 
-from ..coord import isel, roll_cube_pm180
+import numpy as np
+
+from ..coord import roll_cube_pm180
 from ..model import um
 
 
@@ -19,19 +19,20 @@ __all__ = (
 
 def read_spectral_bands(spectral_file):
     """
-    Read spectral bands from a SOCRATES spectral file used by the Met Office Unified Model.
+    Read spectral bands from a SOCRATES spectral file.
 
     Parameters
     ----------
     spectral_file: pathlib.PosixPath
-        Path to the location of a SOCRATES spectral file used by the Met Office Unified Model.
+        Path to the location of a SOCRATES spectral file.
 
     Returns
     -------
     numpy.ndarray
         An array with a list of tuples describing spectral bands.
-        Tuple structure: (spectral_band_index, lower_wavelength_limit, upper_wavelength_limit).
-        Units [m] as stated in a SOCRATES spectral file but not checked directly.
+        Tuple structure:
+        (spectral_band_index, lower_wavelength_limit, upper_wavelength_limit).
+        Units [m] as stated in a spectral file but not checked directly.
     """
     with spectral_file.open("r") as f:
         lines = []
@@ -55,17 +56,18 @@ def read_spectral_bands(spectral_file):
         ],
     )
     return spectral_bands
-    
-    
-    def read_normalized_stellar_flux(spectral_file):
+
+
+def read_normalized_stellar_flux(spectral_file):
     """
-    Read the normalized stellar flux per spectral band from a SOCRATES spectral file
-    used by the Met Office Unified Model.
+    Read the normalized stellar flux per spectral band.
+
+    Read from a SOCRATES spectral file.
 
     Parameters
     ----------
     spectral_file: pathlib.PosixPath
-        Path to the location of a SOCRATES spectral file used by the Met Office Unified Model.
+        Path to the location of a SOCRATES spectral file.
 
     Returns
     -------
@@ -101,16 +103,16 @@ def read_spectral_bands(spectral_file):
         units="1",
     )
     return normalized_stellar_flux
-    
-    
-    def calc_stellar_flux(spectral_file, stellar_constant_at_1_au):
+
+
+def calc_stellar_flux(spectral_file, stellar_constant_at_1_au):
     """
     Calculate the stellar flux per spectral band.
 
     Parameters
     ----------
     spectral_file: pathlib.PosixPath
-        Path to the location of a SOCRATES spectral file used by the Met Office Unified Model.
+        Path to the location of a SOCRATES spectral file.
     stellar_constant_at_1_au: float or iris.cube.Cube
         Stellar constant at 1 AU [W m-2].
 
@@ -130,23 +132,24 @@ def read_spectral_bands(spectral_file):
     stellar_flux = normalized_stellar_flux * stellar_constant_at_1_au
     stellar_flux.rename("stellar_flux")
     return stellar_flux
-    
-    
-    def calc_transmission_spectrum_day_night_average(
+
+
+def calc_transmission_spectrum_day_night_average(
     spectral_file,
     stellar_constant_at_1_au,
     stellar_radius,
     planet_top_of_atmosphere,
     planet_transmission_day,
     planet_transmission_night,
+    model=um,
 ):
-    """
+    r"""
     Calculate the synthetic transmission spectrum averaged over the dayside and the nightside.
 
     Parameters
     ----------
     spectral_file: pathlib.PosixPath
-        Path to the location of a SOCRATES spectral file used by the Met Office Unified Model.
+        Path to the location of a SOCRATES spectral file.
     stellar_constant_at_1_au: float or iris.cube.Cube
         Stellar constant at 1 AU [W m-2].
     stellar_radius: float or iris.cube.Cube
@@ -159,6 +162,8 @@ def read_spectral_bands(spectral_file):
     planet_transmission_night: pathlib.PosixPath
         Path to the location of the Met Office Unified Model output of STASH item m01s01i755
         (in the case of hot Jupiters) from the nightside calculation.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
 
     Returns
     -------
@@ -172,7 +177,8 @@ def read_spectral_bands(spectral_file):
 
     .. math::
 
-        \frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 - \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}
+        \frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 -
+         \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}
 
     where R_p(\nu) is the effective planetary radius,
     R_s is the stellar radius,
@@ -203,13 +209,13 @@ def read_spectral_bands(spectral_file):
 
     # Load UM output from the dayside calculation
     day = iris.load_cube(planet_transmission_day)
-    day_lon_coord = day.coord("longitude")
+    day_lon_coord = day.coord(um.x)
 
     # Load UM output from the nightside calculation
     # Roll nightside data by 180 degrees
     night_rolled = roll_cube_pm180(iris.load_cube(planet_transmission_night))
     # Reverse longitude order
-    night = reverse(night_rolled, night_rolled.coord_dims("longitude"))
+    night = reverse(night_rolled, night_rolled.coord_dims(um.x))
     # Replace the longitude coordinate to be able to do maths with iris
     night.replace_coord(day_lon_coord)
 
@@ -224,7 +230,7 @@ def read_spectral_bands(spectral_file):
     # Calculate the geometric mean of the dayside and nightside transmitted flux
     # and sum this flux over all latitudes and longitudes
     transmitted_flux = apply_ufunc(np.sqrt, day * night, in_place=True).collapsed(
-        ["latitude", "longitude"], iris.analysis.SUM
+        [um.y, um.x], iris.analysis.SUM
     )
     transmitted_flux.rename("total_transmitted_flux")
     transmitted_flux.units = "W m-2"
