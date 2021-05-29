@@ -9,6 +9,7 @@ Changelog
 :Date: TBA
 
 * Add more names to `model.base`
+* Add functions to calculate synthetic transmission spectrum
 
 
 0.4.9

@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Physical constants &mdash; aeolus 0+untagged.1.gd31fa59 documentation</title>
+  <title>Physical constants &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,6 +33,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -66,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd31fa59
+                0+untagged.1.g5a71939
               </div>
             
           
@@ -104,6 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -204,8 +208,8 @@
 <div class="section" id="physical-constants">
 <h1>Physical constants<a class="headerlink" href="#physical-constants" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="aeolus.const.init_const">
-<code class="sig-prename descclassname"><span class="pre">aeolus.const.</span></code><code class="sig-name descname"><span class="pre">init_const</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'general'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#init_const"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.init_const" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.const.init_const">
+<span class="sig-prename descclassname"><span class="pre">aeolus.const.</span></span><span class="sig-name descname"><span class="pre">init_const</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'general'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#init_const"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.init_const" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a dataclass with a given set of constants.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -234,32 +238,32 @@ If not given, only general physical constants are returned.</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt id="aeolus.const.const.ConstContainer">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">aeolus.const.const.</span></code><code class="sig-name descname"><span class="pre">ConstContainer</span></code><a class="reference internal" href="../_modules/aeolus/const/const.html#ConstContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ConstContainer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.const.const.ConstContainer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.const.const.</span></span><span class="sig-name descname"><span class="pre">ConstContainer</span></span><a class="reference internal" href="../_modules/aeolus/const/const.html#ConstContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ConstContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for creating dataclasses and storing planetary constants.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="aeolus.const.const.ScalarCube">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">aeolus.const.const.</span></code><code class="sig-name descname"><span class="pre">ScalarCube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></p>
+<dt class="sig sig-object py" id="aeolus.const.const.ScalarCube">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.const.const.</span></span><span class="sig-name descname"><span class="pre">ScalarCube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a></p>
 <p>Cube without coordinates.</p>
 <dl class="py method">
-<dt id="aeolus.const.const.ScalarCube.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.const.const.ScalarCube.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialise aeolus.const.const.ScalarCube.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="aeolus.const.const.ScalarCube.asc">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">asc</span></code><a class="headerlink" href="#aeolus.const.const.ScalarCube.asc" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="aeolus.const.const.ScalarCube.asc">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">asc</span></span><a class="headerlink" href="#aeolus.const.const.ScalarCube.asc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert cube to AuxCoord for math ops.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="aeolus.const.const.ScalarCube.from_cube">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube.from_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube.from_cube" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.const.const.ScalarCube.from_cube">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#ScalarCube.from_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.const.ScalarCube.from_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert iris cube to ScalarCube.</p>
 </dd></dl>
 

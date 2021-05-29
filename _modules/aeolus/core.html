@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.gd31fa59 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,6 +33,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -64,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd31fa59
+                0+untagged.1.g5a71939
               </div>
             
           
@@ -369,7 +372,7 @@
         <span class="k">return</span> <span class="n">new_obj</span>
 
 
-<span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">(</span><span class="n">AtmoSimBase</span><span class="p">):</span>
+<div class="viewcode-block" id="AtmoSim"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSim">[docs]</a><span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">(</span><span class="n">AtmoSimBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main class for dealing with a atmospheric model simulation output in aeolus.</span>
 
@@ -402,7 +405,7 @@
     <span class="nd">@cached_property</span>
     <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Run"><a class="viewcode-back" href="../../api/core.html#aeolus.core.Run">[docs]</a><span class="k">class</span> <span class="nc">Run</span><span class="p">:</span>

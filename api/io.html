@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>I/O &mdash; aeolus 0+untagged.1.gd31fa59 documentation</title>
+  <title>I/O &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,6 +33,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -66,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.gd31fa59
+                0+untagged.1.g5a71939
               </div>
             
           
@@ -104,6 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -205,14 +209,14 @@
 <h1>I/O<a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h1>
 <p>Input and output utilities.</p>
 <dl class="py function">
-<dt id="aeolus.io.load_multidir">
-<code class="sig-prename descclassname"><span class="pre">aeolus.io.</span></code><code class="sig-name descname"><span class="pre">load_multidir</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'run'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.io.load_multidir">
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">load_multidir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'run'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load cubelists from multiple directories and merge.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="aeolus.io.load_vert_lev">
-<code class="sig-prename descclassname"><span class="pre">aeolus.io.</span></code><code class="sig-name descname"><span class="pre">load_vert_lev</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lev_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'theta'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_vert_lev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_vert_lev" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="aeolus.io.load_vert_lev">
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">load_vert_lev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lev_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'theta'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_vert_lev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_vert_lev" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read data from the UM vertical levels file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
