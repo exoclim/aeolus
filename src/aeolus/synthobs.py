@@ -1,6 +1,5 @@
 """Functions for calculating synthetic observations."""
 import iris
-from iris.analysis.maths import apply_ufunc
 from iris.util import reverse
 
 import numpy as np
@@ -156,11 +155,11 @@ def calc_transmission_spectrum_day_night_average(
         Stellar radius [m].
     planet_top_of_atmosphere: float or iris.cube.Cube
         The extent of the planetary atmosphere [m].
-    planet_transmission_day: pathlib.PosixPath
-        Path to the location of the Met Office Unified Model output of STASH item m01s01i755
+    planet_transmission_day: iris.cube.Cube
+        Met Office Unified Model output of STASH item m01s01i755
         (in the case of hot Jupiters) from the dayside calculation.
-    planet_transmission_night: pathlib.PosixPath
-        Path to the location of the Met Office Unified Model output of STASH item m01s01i755
+    planet_transmission_night: iris.cube.Cube
+        Met Office Unified Model output of STASH item m01s01i755
         (in the case of hot Jupiters) from the nightside calculation.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -169,6 +168,8 @@ def calc_transmission_spectrum_day_night_average(
     -------
     iris.cube.Cube
         The ratio of the effective planetary radius to the stellar radius per spectral band [1].
+    numpy.ndarray
+        Spectral band centers [m].
 
     Notes
     -------
@@ -208,30 +209,28 @@ def calc_transmission_spectrum_day_night_average(
         )
 
     # Load UM output from the dayside calculation
-    day = iris.load_cube(planet_transmission_day)
+    day = planet_transmission_day
     day_lon_coord = day.coord(um.x)
 
     # Load UM output from the nightside calculation
     # Roll nightside data by 180 degrees
-    night_rolled = roll_cube_pm180(iris.load_cube(planet_transmission_night))
+    night_rolled = roll_cube_pm180(planet_transmission_night)
     # Reverse longitude order
     night = reverse(night_rolled, night_rolled.coord_dims(um.x))
     # Replace the longitude coordinate to be able to do maths with iris
     night.replace_coord(day_lon_coord)
 
     # Use the same name for the spectral band index coordinate
-    for i in day.coords():
-        if i.name() in ["pseudo", "pseudo_level"]:
-            day.coord(i.name()).rename("spectral_band_index")
-    for i in night.coords():
-        if i.name() in ["pseudo", "pseudo_level"]:
-            night.coord(i.name()).rename("spectral_band_index")
+    for coord in day.coords():
+        if coord.name() in ["pseudo", "pseudo_level"]:
+            coord.rename("spectral_band_index")
+    for coord in night.coords():
+        if coord.name() in ["pseudo", "pseudo_level"]:
+            coord.rename("spectral_band_index")
 
     # Calculate the geometric mean of the dayside and nightside transmitted flux
     # and sum this flux over all latitudes and longitudes
-    transmitted_flux = apply_ufunc(np.sqrt, day * night, in_place=True).collapsed(
-        [um.y, um.x], iris.analysis.SUM
-    )
+    transmitted_flux = ((day * night) ** (0.5)).collapsed([um.y, um.x], iris.analysis.SUM)
     transmitted_flux.rename("total_transmitted_flux")
     transmitted_flux.units = "W m-2"
 
