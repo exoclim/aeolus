@@ -199,7 +199,7 @@ epub_exclude_files = ["search.html"]
 # Options for intersphinx.
 intersphinx_mapping = {
     "cartopy": ("https://scitools.org.uk/cartopy/docs/latest/", None),
-    "iris": ("https://scitools.org.uk/iris/docs/latest/", None),
+    "iris": ("https://scitools-iris.readthedocs.io/en/latest/", None),
     "matplotlib": ("https://matplotlib.org", None),
     "mpl_toolkits": ("https://matplotlib.org", None),
     "numpy": ("https://numpy.org/doc/stable", None),

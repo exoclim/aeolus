@@ -25,3 +25,4 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    plot
    region
    subset
+   synthobs

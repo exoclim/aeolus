@@ -9,6 +9,9 @@ __all__ = "Model"
 class Model:
     """Base class for model-specific names."""
 
+    def __hash__(self):  # noqa
+        return hash(id(self))
+
     # Coordinates
     t: str = None  # time
     fcst_ref: str = None  # forecast reference
