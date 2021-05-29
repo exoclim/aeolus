@@ -1,4 +1,6 @@
 Regions
 =======
 
-.. autoclass:: aeolus.region.Region
+.. currentmodule:: aeolus.region
+
+.. autoclass:: Region

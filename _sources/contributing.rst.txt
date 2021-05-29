@@ -1,5 +1,6 @@
 Contributor's Guide
 ===================
 
-Aeolus takes contributions using pull requests on `GitHub`_.
-.. _GitHub: https://github.com/exoclim/aeolus/pulls
+Aeolus takes contributions using pull requests on `github`_.
+
+.. _github: https://github.com/exoclim/aeolus/pulls

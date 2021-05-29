@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Physical constants &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
+  <title>Physical constants &mdash; aeolus 0+untagged.1.g6beb4fe documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5a71939
+                0+untagged.1.g6beb4fe
               </div>
             
           
@@ -459,7 +459,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.const import init_const
+<span></span><span class="kn">from</span> <span class="nn">aeolus.const</span> <span class="kn">import</span> <span class="n">init_const</span>
 </pre></div>
 </div>
 </div>
@@ -471,7 +471,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>gen = init_const()
+<span></span><span class="n">gen</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -482,8 +482,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>L = gen.water_heat_vaporization
-L
+<span></span><span class="n">L</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">water_heat_vaporization</span>
+<span class="n">L</span>
 </pre></div>
 </div>
 </div>
@@ -553,7 +553,7 @@ L
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>type(L)
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -571,7 +571,7 @@ iris.cube.Cube
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>L.data, L.units
+<span></span><span class="n">L</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="o">.</span><span class="n">units</span>
 </pre></div>
 </div>
 </div>
@@ -594,8 +594,8 @@ iris.cube.Cube
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>earth_const = init_const(&quot;earth&quot;)
-earth_const
+<span></span><span class="n">earth_const</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="s2">&quot;earth&quot;</span><span class="p">)</span>
+<span class="n">earth_const</span>
 </pre></div>
 </div>
 </div>
@@ -613,7 +613,7 @@ EarthConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporizat
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>c_p = earth_const.dry_air_spec_heat_press
+<span></span><span class="n">c_p</span> <span class="o">=</span> <span class="n">earth_const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
 </pre></div>
 </div>
 </div>
@@ -623,8 +623,8 @@ EarthConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporizat
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>r_d = gen.molar_gas_constant / earth_const.dry_air_molecular_weight
-r_d.rename(&quot;dry_air_gas_constant&quot;)
+<span></span><span class="n">r_d</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">molar_gas_constant</span> <span class="o">/</span> <span class="n">earth_const</span><span class="o">.</span><span class="n">dry_air_molecular_weight</span>
+<span class="n">r_d</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;dry_air_gas_constant&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -633,7 +633,7 @@ r_d.rename(&quot;dry_air_gas_constant&quot;)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>r_d
+<span></span><span class="n">r_d</span>
 </pre></div>
 </div>
 </div>
@@ -703,7 +703,7 @@ r_d.rename(&quot;dry_air_gas_constant&quot;)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>r_d.data
+<span></span><span class="n">r_d</span><span class="o">.</span><span class="n">data</span>
 </pre></div>
 </div>
 </div>
@@ -725,7 +725,7 @@ array(287.05797807)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from pathlib import Path
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 </pre></div>
 </div>
 </div>
@@ -745,7 +745,7 @@ array(287.05797807)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>ex_const = init_const(name=&quot;example&quot;, directory=(Path.cwd() / &quot;sample_data&quot;))
+<span></span><span class="n">ex_const</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;example&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;sample_data&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -754,7 +754,7 @@ array(287.05797807)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>ex_const
+<span></span><span class="n">ex_const</span>
 </pre></div>
 </div>
 </div>
@@ -773,7 +773,7 @@ ExampleConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiz
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>ex_const.my_constant
+<span></span><span class="n">ex_const</span><span class="o">.</span><span class="n">my_constant</span>
 </pre></div>
 </div>
 </div>
@@ -843,7 +843,7 @@ ExampleConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiz
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>ex_const.my_constant.data
+<span></span><span class="n">ex_const</span><span class="o">.</span><span class="n">my_constant</span><span class="o">.</span><span class="n">data</span>
 </pre></div>
 </div>
 </div>

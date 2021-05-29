@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>aeolus.synthobs &mdash; aeolus 0+untagged.1.g6beb4fe documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> aeolus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.1.g6beb4fe
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">aeolus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>aeolus.synthobs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aeolus.synthobs</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Functions for calculating synthetic observations.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.coord</span> <span class="kn">import</span> <span class="n">roll_cube_pm180</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;read_spectral_bands&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;read_normalized_stellar_flux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calc_stellar_flux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calc_transmission_spectrum_day_night_average&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="read_spectral_bands"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_spectral_bands">[docs]</a><span class="k">def</span> <span class="nf">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read spectral bands from a SOCRATES spectral file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">        Path to the location of a SOCRATES spectral file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        An array with a list of tuples describing spectral bands.</span>
+<span class="sd">        Tuple structure:</span>
+<span class="sd">        (spectral_band_index, lower_wavelength_limit, upper_wavelength_limit).</span>
+<span class="sd">        Units [m] as stated in a spectral file but not checked directly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">spectral_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">band_block</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*BLOCK: TYPE =    1&quot;</span><span class="p">):</span>
+                <span class="n">band_block</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">band_block</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*END&quot;</span><span class="p">):</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="nb">tuple</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="p">])</span>
+                    <span class="p">)</span>
+    <span class="n">spectral_bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="n">lines</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">,</span> <span class="s2">&quot;u4&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;lower_wavelength_limit&quot;</span><span class="p">,</span> <span class="s2">&quot;f4&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;upper_wavelength_limit&quot;</span><span class="p">,</span> <span class="s2">&quot;f4&quot;</span><span class="p">),</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">spectral_bands</span></div>
+
+
+<div class="viewcode-block" id="read_normalized_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read the normalized stellar flux per spectral band.</span>
+
+<span class="sd">    Read from a SOCRATES spectral file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">        Path to the location of a SOCRATES spectral file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Normalized stellar flux per spectral band [1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">spectral_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">band_block</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*BLOCK: TYPE =    2&quot;</span><span class="p">):</span>
+                <span class="n">band_block</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">band_block</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*END&quot;</span><span class="p">):</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="nb">tuple</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="p">])</span>
+                    <span class="p">)</span>
+    <span class="n">normalized_stellar_flux_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="n">lines</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">,</span> <span class="s2">&quot;u4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;normalized_stellar_flux&quot;</span><span class="p">,</span> <span class="s2">&quot;f4&quot;</span><span class="p">)]</span>
+    <span class="p">)</span>
+    <span class="c1"># Compose an iris cube</span>
+    <span class="n">spectral_band_index</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">(</span>
+        <span class="n">normalized_stellar_flux_arr</span><span class="p">[</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">],</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">normalized_stellar_flux</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+        <span class="n">normalized_stellar_flux_arr</span><span class="p">[</span><span class="s2">&quot;normalized_stellar_flux&quot;</span><span class="p">],</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;normalized_stellar_flux&quot;</span><span class="p">,</span>
+        <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="p">[(</span><span class="n">spectral_band_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalized_stellar_flux</span></div>
+
+
+<div class="viewcode-block" id="calc_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the stellar flux per spectral band.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">        Path to the location of a SOCRATES spectral file.</span>
+<span class="sd">    stellar_constant_at_1_au: float or iris.cube.Cube</span>
+<span class="sd">        Stellar constant at 1 AU [W m-2].</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Stellar flux per spectral band [W m-2].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure that an input constant is an iris cube</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stellar_constant_at_1_au</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+        <span class="n">stellar_constant_at_1_au</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+            <span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;stellar_constant_at_1_au&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">normalized_stellar_flux</span> <span class="o">=</span> <span class="n">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
+    <span class="n">stellar_flux</span> <span class="o">=</span> <span class="n">normalized_stellar_flux</span> <span class="o">*</span> <span class="n">stellar_constant_at_1_au</span>
+    <span class="n">stellar_flux</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;stellar_flux&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stellar_flux</span></div>
+
+
+<div class="viewcode-block" id="calc_transmission_spectrum_day_night_average"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum_day_night_average">[docs]</a><span class="k">def</span> <span class="nf">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
+    <span class="n">spectral_file</span><span class="p">,</span>
+    <span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
+    <span class="n">stellar_radius</span><span class="p">,</span>
+    <span class="n">planet_top_of_atmosphere</span><span class="p">,</span>
+    <span class="n">planet_transmission_day</span><span class="p">,</span>
+    <span class="n">planet_transmission_night</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the synthetic transmission spectrum averaged over the dayside and the nightside.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">        Path to the location of a SOCRATES spectral file.</span>
+<span class="sd">    stellar_constant_at_1_au: float or iris.cube.Cube</span>
+<span class="sd">        Stellar constant at 1 AU [W m-2].</span>
+<span class="sd">    stellar_radius: float or iris.cube.Cube</span>
+<span class="sd">        Stellar radius [m].</span>
+<span class="sd">    planet_top_of_atmosphere: float or iris.cube.Cube</span>
+<span class="sd">        The extent of the planetary atmosphere [m].</span>
+<span class="sd">    planet_transmission_day: iris.cube.Cube</span>
+<span class="sd">        Met Office Unified Model output of STASH item m01s01i755</span>
+<span class="sd">        (in the case of hot Jupiters) from the dayside calculation.</span>
+<span class="sd">    planet_transmission_night: iris.cube.Cube</span>
+<span class="sd">        Met Office Unified Model output of STASH item m01s01i755</span>
+<span class="sd">        (in the case of hot Jupiters) from the nightside calculation.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        The ratio of the effective planetary radius to the stellar radius per spectral band [1].</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Spectral band centers [m].</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -------</span>
+<span class="sd">    The transmission spectrum is the ratio of the effective planetary radius to the stellar</span>
+<span class="sd">    radius calculated per spectral band:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 -</span>
+<span class="sd">         \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}</span>
+
+<span class="sd">    where</span>
+<span class="sd">    :math:`R_p(\nu)` is the effective planetary radius,</span>
+<span class="sd">    :math:`R_s` is the stellar radius,</span>
+<span class="sd">    :math:`R_{p,TOA}` is the extent of the planetary atmosphere (which usually is the sum of</span>
+<span class="sd">    the planetary radius and the height of the model domain),</span>
+<span class="sd">    :math:`\sum_{lat,lon}^{}F_{transmitted}(\nu)` is the total transmitted flux,</span>
+<span class="sd">    :math:`F_{stellar}(\nu)` is the stellar flux.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure that input constants are iris cubes</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stellar_constant_at_1_au</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+        <span class="n">stellar_constant_at_1_au</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+            <span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;stellar_constant_at_1_au&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stellar_radius</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+        <span class="n">stellar_radius</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+            <span class="n">stellar_radius</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;stellar_radius&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">planet_top_of_atmosphere</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">):</span>
+        <span class="n">planet_top_of_atmosphere</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+            <span class="n">planet_top_of_atmosphere</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;planet_top_of_atmosphere&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Load UM output from the dayside calculation</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">planet_transmission_day</span>
+    <span class="n">day_lon_coord</span> <span class="o">=</span> <span class="n">day</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># Load UM output from the nightside calculation</span>
+    <span class="c1"># Roll nightside data by 180 degrees</span>
+    <span class="n">night_rolled</span> <span class="o">=</span> <span class="n">roll_cube_pm180</span><span class="p">(</span><span class="n">planet_transmission_night</span><span class="p">)</span>
+    <span class="c1"># Reverse longitude order</span>
+    <span class="n">night</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">night_rolled</span><span class="p">,</span> <span class="n">night_rolled</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+    <span class="c1"># Replace the longitude coordinate to be able to do maths with iris</span>
+    <span class="n">night</span><span class="o">.</span><span class="n">replace_coord</span><span class="p">(</span><span class="n">day_lon_coord</span><span class="p">)</span>
+
+    <span class="c1"># Use the same name for the spectral band index coordinate</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">day</span><span class="o">.</span><span class="n">coords</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pseudo&quot;</span><span class="p">,</span> <span class="s2">&quot;pseudo_level&quot;</span><span class="p">]:</span>
+            <span class="n">coord</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">night</span><span class="o">.</span><span class="n">coords</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pseudo&quot;</span><span class="p">,</span> <span class="s2">&quot;pseudo_level&quot;</span><span class="p">]:</span>
+            <span class="n">coord</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the geometric mean of the dayside and nightside transmitted flux</span>
+    <span class="c1"># and sum this flux over all latitudes and longitudes</span>
+    <span class="n">transmitted_flux</span> <span class="o">=</span> <span class="p">((</span><span class="n">day</span> <span class="o">*</span> <span class="n">night</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">))</span><span class="o">.</span><span class="n">collapsed</span><span class="p">([</span><span class="n">um</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">],</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">SUM</span><span class="p">)</span>
+    <span class="n">transmitted_flux</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;total_transmitted_flux&quot;</span><span class="p">)</span>
+    <span class="n">transmitted_flux</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;W m-2&quot;</span>
+
+    <span class="c1"># Calculate stellar flux</span>
+    <span class="n">stellar_flux</span> <span class="o">=</span> <span class="n">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the ratio of the total transmitted flux to the stellar flux</span>
+    <span class="n">flux_ratio</span> <span class="o">=</span> <span class="n">transmitted_flux</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">transmitted_flux</span><span class="o">.</span><span class="n">core_data</span><span class="p">()</span> <span class="o">/</span> <span class="n">stellar_flux</span><span class="o">.</span><span class="n">core_data</span><span class="p">())</span>
+    <span class="n">flux_ratio</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;flux_ratio&quot;</span><span class="p">)</span>
+    <span class="n">flux_ratio</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">transmitted_flux</span><span class="o">.</span><span class="n">units</span> <span class="o">/</span> <span class="n">stellar_flux</span><span class="o">.</span><span class="n">units</span>
+
+    <span class="c1"># Calculate the ratio of the effective planetary radius to the stellar radius</span>
+    <span class="n">rp_eff_over_rs_squared</span> <span class="o">=</span> <span class="p">(</span><span class="n">planet_top_of_atmosphere</span> <span class="o">/</span> <span class="n">stellar_radius</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">flux_ratio</span>
+    <span class="n">rp_eff_over_rs_squared</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">rp_eff_over_rs_squared</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">rp_eff_over_rs</span> <span class="o">=</span> <span class="n">rp_eff_over_rs_squared</span> <span class="o">**</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;radius_ratio&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Find spectral band centers</span>
+    <span class="n">spectral_bands</span> <span class="o">=</span> <span class="n">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
+    <span class="n">spectral_band_centers</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;lower_wavelength_limit&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;upper_wavelength_limit&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">spectral_band_centers</span><span class="p">,</span> <span class="n">rp_eff_over_rs</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the aeolus developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

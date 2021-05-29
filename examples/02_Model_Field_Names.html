@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Model variable names &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
+  <title>Model variable names &mdash; aeolus 0+untagged.1.g6beb4fe documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5a71939
+                0+untagged.1.g6beb4fe
               </div>
             
           
@@ -459,7 +459,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.model.base import Model
+<span></span><span class="kn">from</span> <span class="nn">aeolus.model.base</span> <span class="kn">import</span> <span class="n">Model</span>
 </pre></div>
 </div>
 </div>
@@ -472,18 +472,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>lmdg = Model(
-    # Coordinates
-    t=&quot;Time&quot;,
-    z=&quot;altitude&quot;,
-    y=&quot;latitude&quot;,
-    x=&quot;longitude&quot;,
-    # Variables
-    u=&quot;u&quot;,
-    v=&quot;v&quot;,
-    w=&quot;w&quot;,
-    pres=&quot;p&quot;,
-)
+<span></span><span class="n">lmdg</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span>
+    <span class="c1"># Coordinates</span>
+    <span class="n">t</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+    <span class="n">z</span><span class="o">=</span><span class="s2">&quot;altitude&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="c1"># Variables</span>
+    <span class="n">u</span><span class="o">=</span><span class="s2">&quot;u&quot;</span><span class="p">,</span>
+    <span class="n">v</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span>
+    <span class="n">w</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+    <span class="n">pres</span><span class="o">=</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -492,7 +492,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>lmdg.x
+<span></span><span class="n">lmdg</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
@@ -514,7 +514,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.model import um
+<span></span><span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">um</span>
 </pre></div>
 </div>
 </div>
@@ -524,7 +524,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>um.u, um.v, um.w
+<span></span><span class="n">um</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">um</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">um</span><span class="o">.</span><span class="n">w</span>
 </pre></div>
 </div>
 </div>
@@ -542,7 +542,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>um.x, um.y, um.z
+<span></span><span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">um</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">um</span><span class="o">.</span><span class="n">z</span>
 </pre></div>
 </div>
 </div>
@@ -561,7 +561,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from aeolus.model import um_stash
+<span></span><span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">um_stash</span>
 </pre></div>
 </div>
 </div>
@@ -571,7 +571,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>um_stash.u, um_stash.v, um_stash.w
+<span></span><span class="n">um_stash</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">um_stash</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">um_stash</span><span class="o">.</span><span class="n">w</span>
 </pre></div>
 </div>
 </div>
@@ -589,7 +589,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>um_stash.x, um_stash.y, um_stash.z
+<span></span><span class="n">um_stash</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">um_stash</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">um_stash</span><span class="o">.</span><span class="n">z</span>
 </pre></div>
 </div>
 </div>

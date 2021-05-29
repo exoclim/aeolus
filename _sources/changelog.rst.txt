@@ -4,7 +4,7 @@ Changelog
 .. default-role:: py:obj
 
 0.4.10
------
+------
 
 :Date: TBA
 
@@ -138,8 +138,7 @@ Changelog
 :Date: 04 May 2020 
 
 * Add Python 3.8 to build matrix
-* API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule,
-remove `util` folder by moving `text` to `plot`.
+* API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule, remove `util` folder by moving `text` to `plot`.
 * Add a function to attach non-Earth auxiliary time coordinates to a cube
 * Add Titan constants (some orbital parameters are those for Saturn for simplicity)
 * Fix a typo in Earth constants

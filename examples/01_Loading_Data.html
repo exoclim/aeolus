@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Working with model output &mdash; aeolus 0+untagged.1.g5a71939 documentation</title>
+  <title>Working with model output &mdash; aeolus 0+untagged.1.g6beb4fe documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g5a71939
+                0+untagged.1.g6beb4fe
               </div>
             
           
@@ -454,10 +454,10 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from pathlib import Path
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-import iris
-from aeolus.core import AtmoSim
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">aeolus.core</span> <span class="kn">import</span> <span class="n">AtmoSim</span>
 </pre></div>
 </div>
 </div>
@@ -467,7 +467,7 @@ from aeolus.core import AtmoSim
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>sample_file = Path.cwd() / &quot;sample_data&quot; / &quot;sample_t1e_2d_mean.pp&quot;
+<span></span><span class="n">sample_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;sample_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;sample_t1e_2d_mean.pp&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -477,7 +477,7 @@ from aeolus.core import AtmoSim
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>inp_data = iris.load(str(sample_file))
+<span></span><span class="n">inp_data</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sample_file</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -486,7 +486,7 @@ from aeolus.core import AtmoSim
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>type(inp_data)
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">inp_data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -505,12 +505,12 @@ iris.cube.CubeList
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run = AtmoSim(
-    cubes=inp_data,
-    name=&quot;t1e_example&quot;,
-    description=&quot;This is some sample data from a UM simulation of tidally-locked Trappist-1e planet.&quot;,
-    planet=&quot;trap1e&quot;,  # this reads constants from a JSON file
-)
+<span></span><span class="n">my_run</span> <span class="o">=</span> <span class="n">AtmoSim</span><span class="p">(</span>
+    <span class="n">cubes</span><span class="o">=</span><span class="n">inp_data</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;t1e_example&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;This is some sample data from a UM simulation of tidally-locked Trappist-1e planet.&quot;</span><span class="p">,</span>
+    <span class="n">planet</span><span class="o">=</span><span class="s2">&quot;trap1e&quot;</span><span class="p">,</span>  <span class="c1"># this reads constants from a JSON file</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -519,7 +519,7 @@ iris.cube.CubeList
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>type(my_run)
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">my_run</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -538,7 +538,7 @@ aeolus.core.AtmoSim
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run._cubes)
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_run</span><span class="o">.</span><span class="n">_cubes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -562,7 +562,7 @@ aeolus.core.AtmoSim
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run.const
+<span></span><span class="n">my_run</span><span class="o">.</span><span class="n">const</span>
 </pre></div>
 </div>
 </div>
@@ -581,7 +581,7 @@ Trap1eConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporiza
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run.cv_rain)
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_run</span><span class="o">.</span><span class="n">cv_rain</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -612,7 +612,7 @@ convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run[&quot;cv_rain&quot;])
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_run</span><span class="p">[</span><span class="s2">&quot;cv_rain&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -644,7 +644,7 @@ convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(my_run._cubes.extract_cube(&quot;convective_rainfall_flux&quot;))
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_run</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="s2">&quot;convective_rainfall_flux&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -676,7 +676,7 @@ convective_rainfall_flux / (kg m-2 s-1) (latitude: 90; longitude: 144)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>my_run.model.cv_rain
+<span></span><span class="n">my_run</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cv_rain</span>
 </pre></div>
 </div>
 </div>
