@@ -4,8 +4,8 @@ from iris.util import reverse
 
 import numpy as np
 
-from ..coord import roll_cube_pm180
-from ..model import um
+from .coord import roll_cube_pm180
+from .model import um
 
 
 __all__ = (
@@ -181,12 +181,13 @@ def calc_transmission_spectrum_day_night_average(
         \frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 -
          \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}
 
-    where R_p(\nu) is the effective planetary radius,
-    R_s is the stellar radius,
-    R_{p,TOA} is the extent of the planetary atmosphere (which usually is the sum of
+    where
+    :math:`R_p(\nu)` is the effective planetary radius,
+    :math:`R_s` is the stellar radius,
+    :math:`R_{p,TOA}` is the extent of the planetary atmosphere (which usually is the sum of
     the planetary radius and the height of the model domain),
-    \sum_{lat,lon}^{}F_{transmitted}(\nu) is the total transmitted flux,
-    F_{stellar}(\nu) is the stellar flux.
+    :math:`\sum_{lat,lon}^{}F_{transmitted}(\nu)` is the total transmitted flux,
+    :math:`F_{stellar}(\nu)` is the stellar flux.
     """
     # Ensure that input constants are iris cubes
     if not isinstance(stellar_constant_at_1_au, iris.cube.Cube):

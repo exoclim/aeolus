@@ -168,8 +168,7 @@ class Region:
         return cls(lon0, lon1, lat0, lat1, name=name)
 
     @property
-    def constraint(self):
-        """Constraint to select data within the region."""
+    def constraint(self):  # noqa
         cnstr = iris.Constraint(
             latitude=lambda x: self.bounds.south <= x.point <= self.bounds.north
         )
