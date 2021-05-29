@@ -6,6 +6,7 @@ dependencies:
 - cached-property>=1.5.1
 - cartopy
 - f90nml
+- ipython
 - iris>=3.0
 - latlon23
 - matplotlib>=3.4
