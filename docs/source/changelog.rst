@@ -10,6 +10,7 @@ Changelog
 
 * Add more names to `model.base`
 * Add functions to calculate synthetic transmission spectrum
+* Move test data to a separate repository: `aeolus_data`
 
 
 0.4.9

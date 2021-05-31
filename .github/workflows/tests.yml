@@ -46,4 +46,5 @@ jobs:
       run: |
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate test_env
+        git clone https://github.com/exoclim/aeolus_data.git tests/data
         pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v

@@ -11,8 +11,8 @@ import numpy.testing as npt
 import pytest
 
 
-TST_DATA = Path(__file__).parent / "data"
-CONST_FILE = "dummy"
+TST_DATA = Path(__file__).parent / "data" / "test_data"
+CONST_FILE = "const_dummy"
 
 
 def test_init_const_general():
