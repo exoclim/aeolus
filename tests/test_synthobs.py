@@ -1,11 +1,10 @@
+"""Test synthobs submodule."""
 from pathlib import Path
 
 from aeolus import synthobs
 
 import numpy as np
 import numpy.testing as npt
-
-import pytest
 
 TST_DATA = Path(__file__).parent / "data" / "test_data"
 
@@ -523,3 +522,9 @@ def test_read_spectral_bands():
     )
     actual_arr = synthobs.read_spectral_bands(TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11")
     npt.assert_allclose(expected_arr["spectral_band_index"], actual_arr["spectral_band_index"])
+    npt.assert_allclose(
+        expected_arr["lower_wavelength_limit"], actual_arr["lower_wavelength_limit"]
+    )
+    npt.assert_allclose(
+        expected_arr["upper_wavelength_limit"], actual_arr["upper_wavelength_limit"]
+    )
