@@ -116,7 +116,7 @@
        "      margin-top: 7px;\n",
        "  }\n",
        "</style>\n",
-       "<table class=\"iris\" id=\"140072314338464\">\n",
+       "<table class=\"iris\" id=\"140563663565056\">\n",
        "    <tr class=\"iris\">\n",
        "<th class=\"iris iris-word-cell\">Water Heat Vaporization (m2 s-2)</th>\n",
        "<th class=\"iris iris-word-cell\">(scalar cube)</th>\n",
@@ -304,7 +304,7 @@
        "      margin-top: 7px;\n",
        "  }\n",
        "</style>\n",
-       "<table class=\"iris\" id=\"140071909694768\">\n",
+       "<table class=\"iris\" id=\"140563663270720\">\n",
        "    <tr class=\"iris\">\n",
        "<th class=\"iris iris-word-cell\">Dry Air Gas Constant (m2.s-2.K-1)</th>\n",
        "<th class=\"iris iris-word-cell\">(scalar cube)</th>\n",
@@ -374,14 +374,14 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "For example, we have an `example.json` file in the `sample_data` sub-directory. The file looks like this:\n",
+    "For example, we have an `dummy.json` file in the `data/test_data/json` sub-directory (downloaded from the `exoclim/aeolus_data` repository). The file looks like this:\n",
     "\n",
     "```json\n",
     "[                                                                               \n",
     "    {                                                                           \n",
     "        \"name\": \"my_constant\",                                                  \n",
     "        \"units\": \"m s-1\",                                                       \n",
-    "        \"value\": 123.456                                                        \n",
+    "        \"value\": 123                                                        \n",
     "    }                                                                           \n",
     "]       \n",
     "```"
@@ -400,7 +400,9 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "ex_const = init_const(name=\"example\", directory=(Path.cwd() / \"sample_data\"))"
+    "ex_const = init_const(\n",
+    "    name=\"dummy\", directory=(Path.cwd() / \"data\" / \"test_data\" / \"json\")\n",
+    ")"
    ]
   },
   {
@@ -411,7 +413,7 @@
     {
      "data": {
       "text/plain": [
-       "ExampleConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], molar_gas_constant [J K-1 mol-1], boltzmann [m^2 kg s^-2 K^-1], avogadro [mol-1], my_constant [m s-1])"
+       "DummyConstants(earth_day [s], stefan_boltzmann [W m-2 K-4], water_heat_vaporization [m2 s-2], water_molecular_weight [kg mol-1], molar_gas_constant [J K-1 mol-1], boltzmann [m^2 kg s^-2 K^-1], avogadro [mol-1], my_constant [m s-1])"
       ]
      },
      "execution_count": 13,
@@ -486,7 +488,7 @@
        "      margin-top: 7px;\n",
        "  }\n",
        "</style>\n",
-       "<table class=\"iris\" id=\"140071909396000\">\n",
+       "<table class=\"iris\" id=\"140563663414272\">\n",
        "    <tr class=\"iris\">\n",
        "<th class=\"iris iris-word-cell\">My Constant (m s-1)</th>\n",
        "<th class=\"iris iris-word-cell\">(scalar cube)</th>\n",
@@ -517,7 +519,7 @@
     {
      "data": {
       "text/plain": [
-       "array(123.456)"
+       "array(123)"
       ]
      },
      "execution_count": 15,
@@ -546,7 +548,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.2"
+   "version": "3.9.5"
   }
  },
  "nbformat": 4,
