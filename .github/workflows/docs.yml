@@ -40,6 +40,7 @@ jobs:
       run: |
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate docs_env
+        git clone https://github.com/exoclim/aeolus_data.git examples/data
         cd docs/
         make html -e
     - name: Commit documentation changes

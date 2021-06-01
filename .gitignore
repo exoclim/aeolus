@@ -1,6 +1,9 @@
 # Project-specific
 docs/source/examples/*.ipynb
 docs/source/examples/index.rst
+# Downloaded from aeolus_data github repo
+tests/data
+examples/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
