@@ -12,7 +12,7 @@ import pytest
 
 
 TST_DATA = Path(__file__).parent / "data" / "test_data"
-CONST_FILE = "const_dummy"
+CONST_FILE = "dummy"
 
 
 def test_init_const_general():
