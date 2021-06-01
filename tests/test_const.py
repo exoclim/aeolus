@@ -42,12 +42,12 @@ def test_loaderror():
 def test_argumenterror():
     """Test raising ArgumentError."""
     with pytest.raises(ArgumentError):
-        const.init_const(CONST_FILE, directory=str(TST_DATA))
+        const.init_const(CONST_FILE, directory=str(TST_DATA / "json"))
 
 
 def test_init_const_custom():
     """Test init_const function with a custom JSON file."""
-    cnsts = const.init_const(CONST_FILE, directory=TST_DATA)
+    cnsts = const.init_const(CONST_FILE, directory=TST_DATA / "json")
     assert str(cnsts).startswith("DummyConstants")
     assert isinstance(cnsts, const.const.ConstContainer)
     for key in cnsts.__dataclass_fields__.keys():
