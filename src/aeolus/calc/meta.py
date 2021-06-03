@@ -9,35 +9,39 @@ import iris
 from iris.analysis import _dimensional_metadata_comparison
 from iris.util import broadcast_to_shape
 
-from ..exceptions import ArgumentError
+from ..exceptions import ArgumentError, _warn
 
 
-def const_from_attrs(func):
+def const_from_attrs(strict=True):
     """Get constants container from the input cube attributes if not passed explicitly."""
 
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        const = kwargs.pop("const", None)
-        if const is None:
-            for arg in args:
-                if isinstance(arg, iris.cube.Cube):
-                    const = arg.attributes.get("planet_conf")
-                elif isinstance(arg, iris.cube.CubeList):
-                    try:
-                        const = arg[0].attributes.get("planet_conf")
-                    except IndexError:
-                        const = None
-        if is_dataclass(const):
-            kwargs.update(const=const)
-        else:
-            raise ArgumentError(
-                "Constants dataclass has to be an argument or in the cube attributes"
-            )
-        # Call the decorated function
-        out = func(*args, **kwargs)
-        return out
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            const = kwargs.pop("const", None)
+            if const is None:
+                for arg in args:
+                    if isinstance(arg, iris.cube.Cube):
+                        const = arg.attributes.get("planet_conf")
+                    elif isinstance(arg, iris.cube.CubeList):
+                        try:
+                            const = arg[0].attributes.get("planet_conf")
+                        except IndexError:
+                            const = None
+            if is_dataclass(const):
+                kwargs.update(const=const)
+            else:
+                msg = "`const` has to be the function argument or in the cube attributes."
+                if strict:
+                    raise ArgumentError(msg)
+                else:
+                    _warn(msg)
+            # Call the decorated function
+            out = func(*args, **kwargs)
+            return out
 
-    return wrapper
+        return wrapper
+    return decorator
 
 
 def copy_doc(original):

@@ -626,7 +626,7 @@ def get_xy_coords(cube, model=um):
     return (x_coord, y_coord)
 
 
-@const_from_attrs
+@const_from_attrs(strict=False)
 def interp_cube_from_height_to_pressure_levels(
     variable, pressure, levels, p_ref_frac=False, const=None, interpolator=None, model=um
 ):
@@ -668,7 +668,7 @@ def interp_cube_from_height_to_pressure_levels(
     return iris.util.squeeze(cube_plev)
 
 
-@const_from_attrs
+@const_from_attrs(strict=False)
 def interp_cubelist_from_height_to_pressure_levels(
     cubelist,
     levels,
