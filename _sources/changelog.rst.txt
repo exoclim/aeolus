@@ -12,6 +12,7 @@ Changelog
 * Add functions to calculate synthetic transmission spectrum
 * Move test data to a separate repository: `aeolus_data`
 * Add more names to `model.base`
+* Add an option for the `const_from_attrs()` decorator not to raise an error
 
 
 0.4.9

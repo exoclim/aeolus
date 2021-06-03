@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g8cd0683 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g1acf73b documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g8cd0683
+                0+untagged.1.g1acf73b
               </div>
             
           
@@ -541,7 +541,7 @@
     <span class="k">return</span> <span class="n">sfc_net</span></div>
 
 
-<div class="viewcode-block" id="sfc_water_balance"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.sfc_water_balance">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;surface_net_downward_water_flux&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;mm h-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">sfc_water_balance</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -579,10 +579,10 @@
     <span class="n">precip</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;mm h-1&quot;</span><span class="p">)</span>
     <span class="n">evap</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;mm h-1&quot;</span><span class="p">)</span>
     <span class="n">net</span> <span class="o">=</span> <span class="n">precip</span> <span class="o">-</span> <span class="n">evap</span>
-    <span class="k">return</span> <span class="n">net</span></div>
+    <span class="k">return</span> <span class="n">net</span>
 
 
-<div class="viewcode-block" id="precip_sum"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.precip_sum">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="k">def</span> <span class="nf">precip_sum</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].</span>
@@ -622,7 +622,7 @@
     <span class="n">precip</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span>
     <span class="n">precip</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;mm day^-1&quot;</span><span class="p">)</span>
     <span class="n">precip</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_precip_rate&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">precip</span></div>
+    <span class="k">return</span> <span class="n">precip</span>
 
 
 <div class="viewcode-block" id="heat_redist_eff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.heat_redist_eff">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;heat_redistribution_efficiency&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
@@ -706,7 +706,7 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="bond_albedo"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.bond_albedo">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;bond_albedo&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bond_albedo</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -733,7 +733,7 @@
     <span class="n">toa_osr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_osr</span><span class="p">)</span>
     <span class="n">sc</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_constant</span>
     <span class="n">b_alb</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">toa_osr</span> <span class="o">/</span> <span class="n">sc</span>
-    <span class="k">return</span> <span class="n">b_alb</span></div>
+    <span class="k">return</span> <span class="n">b_alb</span>
 
 
 <div class="viewcode-block" id="water_path"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.water_path">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg m-2&quot;</span><span class="p">)</span>
@@ -823,7 +823,7 @@
     <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span></div>
 
 
-<div class="viewcode-block" id="superrotation_index"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.superrotation_index">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;local_superrotation_index&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">superrotation_index</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -880,7 +880,7 @@
     <span class="n">s_idx</span> <span class="o">=</span> <span class="n">ang_mom</span> <span class="o">/</span> <span class="n">omega</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">s_idx</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
     <span class="n">s_idx</span> <span class="o">=</span> <span class="n">s_idx</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">s_idx</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">s_idx</span></div>
+    <span class="k">return</span> <span class="n">s_idx</span>
 
 
 <div class="viewcode-block" id="wind_speed"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.wind_speed">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m s-1&quot;</span><span class="p">)</span>
@@ -924,7 +924,7 @@
     <span class="k">return</span> <span class="n">pres_cube</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span>
 
 
-<div class="viewcode-block" id="zonal_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.zonal_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;zonal_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">zonal_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -969,10 +969,10 @@
         <span class="n">res</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">gravity</span>
 
     <span class="n">res</span> <span class="o">*=</span> <span class="n">streamf_const</span>
-    <span class="k">return</span> <span class="n">res</span></div>
+    <span class="k">return</span> <span class="n">res</span>
 
 
-<div class="viewcode-block" id="meridional_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.meridional_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="nd">@const_from_attrs</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;meridional_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">meridional_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1035,7 +1035,7 @@
     <span class="c1"># Calculate the constant: 2 pi cos\phi a</span>
     <span class="n">streamf_const</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">lat_cos</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">*=</span> <span class="n">streamf_const</span>
-    <span class="k">return</span> <span class="n">res</span></div>
+    <span class="k">return</span> <span class="n">res</span>
 </pre></div>
 
            </div>

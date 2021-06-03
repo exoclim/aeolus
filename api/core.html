@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Core hierarchy &mdash; aeolus 0+untagged.1.g8cd0683 documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0+untagged.1.g1acf73b documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.g8cd0683
+                0+untagged.1.g1acf73b
               </div>
             
           
@@ -256,28 +256,6 @@ Derived quantities are stored as cached properties to save computational time.</
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Cube of total TOA downward energy flux.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="aeolus.core.AtmoSim.sfc_water_balance">
-<span class="sig-name descname"><span class="pre">sfc_water_balance</span></span><a class="headerlink" href="#aeolus.core.AtmoSim.sfc_water_balance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate domain-average precipitation minus evaporation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
-If not given, attempt is made to retrieve it from cube attributes.</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Cube of total surface downward water flux (P-E).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
