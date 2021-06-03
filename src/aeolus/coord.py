@@ -655,14 +655,14 @@ def interp_cube_from_height_to_pressure_levels(
     Returns
     -------
     iris.cube.Cube
-        Cube of `varname` interpolated to pressure level(s).
+        The variable interpolated to pressure level(s).
     """
     if p_ref_frac:
         p_ref = const.reference_surface_pressure.copy()
         p_ref.convert_units(pressure.units)
-        p_tgt = np.asarray(levels) * float(p_ref.data)
+        p_tgt = np.atleast_1d(levels) * float(p_ref.data)
     else:
-        p_tgt = levels
+        p_tgt = np.atleast_1d(levels)
     cube_plev = stratify.relevel(variable, pressure, p_tgt, axis=model.z, interpolator=interpolator)
     cube_plev.coord(model.pres).attributes = {}
     return iris.util.squeeze(cube_plev)

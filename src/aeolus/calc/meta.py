@@ -41,6 +41,7 @@ def const_from_attrs(strict=True):
             return out
 
         return wrapper
+
     return decorator
 
 
