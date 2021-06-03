@@ -13,6 +13,7 @@ from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
 
 import numpy as np
 
+from .calc.meta import const_from_attrs
 from .const import get_planet_radius
 from .exceptions import ArgumentError, BadCoordinateError, NotFoundError, _warn
 from .model import um
@@ -34,10 +35,9 @@ __all__ = (
     "get_dim_coord",
     "get_xy_coords",
     "isel",
-    "interp_all_to_pres_lev",
+    "interp_cube_from_height_to_pressure_levels",
+    "interp_cubelist_from_height_to_pressure_levels",
     "interp_to_cube_time",
-    "interp_to_pres_lev",
-    "interp_to_single_pres_lev",
     "nearest_coord_value",
     "not_equal_coord_axes",
     "regrid_3d",
@@ -626,9 +626,63 @@ def get_xy_coords(cube, model=um):
     return (x_coord, y_coord)
 
 
-def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):
+@const_from_attrs
+def interp_cube_from_height_to_pressure_levels(
+    variable, pressure, levels, p_ref_frac=False, const=None, interpolator=None, model=um
+):
+    """
+    Interpolate a cube from height to pressure level(s) using stratify relevel() function.
+
+    Parameters
+    ----------
+    variable: iris.cube.Cube
+        A cube to interpolate. Must have the same dimensions as the pressure cube.
+    pressure: iris.cube.Cube
+        A cube of pressure.
+    levels: array-like
+        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    p_ref_frac: bool, optional
+        If True, levels are treated as fractions of the reference surface pressure.
+    const: aeolus.const.const.ConstContainer, optional
+        Required if p_ref_frac=True.
+        If not given, constants are attempted to be retrieved from
+        attributes of a cube in the cube list.
+    interpolator: callable or None
+        The interpolator to use when computing the interpolation. See relevel() docs for more.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of `varname` interpolated to pressure level(s).
+    """
+    if p_ref_frac:
+        p_ref = const.reference_surface_pressure.copy()
+        p_ref.convert_units(pressure.units)
+        p_tgt = np.asarray(levels) * float(p_ref.data)
+    else:
+        p_tgt = levels
+    cube_plev = stratify.relevel(variable, pressure, p_tgt, axis=model.z, interpolator=interpolator)
+    cube_plev.coord(model.pres).attributes = {}
+    return iris.util.squeeze(cube_plev)
+
+
+@const_from_attrs
+def interp_cubelist_from_height_to_pressure_levels(
+    cubelist,
+    levels,
+    p_ref_frac=False,
+    const=None,
+    interpolator=None,
+    model=um,
+    include_pressure=False,
+):
     """
     Interpolate all cubes within a cubelist to the given set of pressure levels.
+
+    Pressure variable is found using the `model.pres` name and then optionally excluded from
+    the output list of interpolated cubes.
 
     Parameters
     ----------
@@ -636,10 +690,18 @@ def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):
         List of cubes, including a cube of pressure.
     levels: array-like
         Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+    p_ref_frac: bool, optional
+        If True, levels are treated as fractions of the reference surface pressure.
+    const: aeolus.const.const.ConstContainer, optional
+        Required if p_ref_frac=True.
+        If not given, constants are attempted to be retrieved from
+        attributes of a cube in the cube list.
     interpolator: callable or None
         The interpolator to use when computing the interpolation. See relevel() docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
+    include_pressure: bool, optional
+        If True, include the pressure cube in the output.
 
     Returns
     -------
@@ -649,11 +711,16 @@ def interp_all_to_pres_lev(cubelist, levels, interpolator=None, model=um):
     pres = cubelist.extract_cube(model.pres)
     cl_out = iris.cube.CubeList()
     for cube in cubelist:
-        if cube != pres:
-            cube_plev = interp_to_pres_lev(
-                cubelist, cube.name(), levels, interpolator=interpolator, model=model
+        if include_pressure or cube != pres:
+            cube_plev = interp_cube_from_height_to_pressure_levels(
+                cube,
+                pres,
+                levels,
+                p_ref_frac=p_ref_frac,
+                const=const,
+                interpolator=interpolator,
+                model=model,
             )
-            cube_plev.coord(model.pres).attributes = {}
             cl_out.append(cube_plev)
     return cl_out
 
@@ -686,77 +753,6 @@ def interp_to_cube_time(cube_src, cube_tgt, model=um):
             out.replace_coord(cube_tgt.coord(getattr(model, coord)))
         except (AttributeError, CoNotFound):
             pass
-    return out
-
-
-def interp_to_pres_lev(cubelist, constraint, levels, interpolator=None, model=um):
-    """
-    Interpolate a cube to pressure level(s) using stratify relevel() function.
-
-    Parameters
-    ----------
-    cubelist: iris.cube.CubeList
-        List of cubes containing a cube extractable by `constraint` and a cube of pressure.
-    constraint: str or iris.Constraint
-        Variable name or constraint to extract a cube from `cubelist`.
-    levels: array-like
-        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
-    interpolator: callable or None
-        The interpolator to use when computing the interpolation. See relevel() docs for more.
-    model: aeolus.model.Model, optional
-        Model class with relevant variable names.
-
-    Returns
-    -------
-    iris.cube.Cube
-        Cube of `varname` interpolated to pressure level(s).
-    """
-    cube = cubelist.extract_cube(constraint)
-    pres = cubelist.extract_cube(model.pres)
-    cube_plev = stratify.relevel(cube, pres, levels, axis=model.z, interpolator=interpolator)
-    cube_plev.coord(model.pres).attributes = {}
-    return iris.util.squeeze(cube_plev)
-
-
-def interp_to_single_pres_lev(
-    cubelist, constraint, p_ref_frac=0.5, const=None, interpolator=None, model=um
-):
-    """
-    Interpolate the field defined by `constraint` to a single pressure level.
-
-    The level is found from the given fraction of the reference surface pressure.
-
-    Parameters
-    ----------
-    cubelist: iris.cube.CubeList
-        Input cubelist.
-    constraint: str or iris.Constraint
-        Variable name or constraint to extract a cube from `cubelist`.
-    p_ref_frac: float, optional
-        Fraction of reference surface pressure at which the estimate is made.
-        The default value is 0.1, which for an Earth-like atmosphere means 100 hPa.
-    const: aeolus.const.const.ConstContainer, optional
-        If not given, constants are attempted to be retrieved from
-        attributes of a cube in the cube list.
-    interpolator: callable or None
-        The interpolator to use when computing the interpolation. See relevel() docs for more.
-    model: aeolus.model.Model, optional
-        Model class with relevant variable names.
-
-    Returns
-    -------
-    iris.cube.Cube
-        Cube on a single pressure level.
-    """
-    if const is None:
-        const = cubelist[0].attributes["planet_conf"]
-    p_ref = const.reference_surface_pressure
-    p_tgt = p_ref_frac * p_ref
-    pres = cubelist.extract_cube(model.pres)
-    p_tgt.convert_units(pres.units)
-    out = interp_to_pres_lev(
-        cubelist, constraint, [p_tgt.data], interpolator=interpolator, model=model
-    )
     return out
 
 
