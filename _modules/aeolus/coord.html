@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g7374dea documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g8cd0683 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g7374dea
+                0+untagged.1.g8cd0683
               </div>
             
           
@@ -179,6 +179,7 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">.calc.meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span>
 <span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">BadCoordinateError</span><span class="p">,</span> <span class="n">NotFoundError</span><span class="p">,</span> <span class="n">_warn</span>
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
@@ -200,10 +201,9 @@
     <span class="s2">&quot;get_dim_coord&quot;</span><span class="p">,</span>
     <span class="s2">&quot;get_xy_coords&quot;</span><span class="p">,</span>
     <span class="s2">&quot;isel&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;interp_all_to_pres_lev&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;interp_cube_from_height_to_pressure_levels&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;interp_cubelist_from_height_to_pressure_levels&quot;</span><span class="p">,</span>
     <span class="s2">&quot;interp_to_cube_time&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;interp_to_pres_lev&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;interp_to_single_pres_lev&quot;</span><span class="p">,</span>
     <span class="s2">&quot;nearest_coord_value&quot;</span><span class="p">,</span>
     <span class="s2">&quot;not_equal_coord_axes&quot;</span><span class="p">,</span>
     <span class="s2">&quot;regrid_3d&quot;</span><span class="p">,</span>
@@ -792,9 +792,63 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">x_coord</span><span class="p">,</span> <span class="n">y_coord</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="interp_all_to_pres_lev"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.interp_all_to_pres_lev">[docs]</a><span class="k">def</span> <span class="nf">interp_all_to_pres_lev</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="interp_cube_from_height_to_pressure_levels"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.interp_cube_from_height_to_pressure_levels">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="k">def</span> <span class="nf">interp_cube_from_height_to_pressure_levels</span><span class="p">(</span>
+    <span class="n">variable</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">p_ref_frac</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interpolate a cube from height to pressure level(s) using stratify relevel() function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    variable: iris.cube.Cube</span>
+<span class="sd">        A cube to interpolate. Must have the same dimensions as the pressure cube.</span>
+<span class="sd">    pressure: iris.cube.Cube</span>
+<span class="sd">        A cube of pressure.</span>
+<span class="sd">    levels: array-like</span>
+<span class="sd">        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).</span>
+<span class="sd">    p_ref_frac: bool, optional</span>
+<span class="sd">        If True, levels are treated as fractions of the reference surface pressure.</span>
+<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
+<span class="sd">        Required if p_ref_frac=True.</span>
+<span class="sd">        If not given, constants are attempted to be retrieved from</span>
+<span class="sd">        attributes of a cube in the cube list.</span>
+<span class="sd">    interpolator: callable or None</span>
+<span class="sd">        The interpolator to use when computing the interpolation. See relevel() docs for more.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube of `varname` interpolated to pressure level(s).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p_ref_frac</span><span class="p">:</span>
+        <span class="n">p_ref</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">p_ref</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">p_ref</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">levels</span>
+    <span class="n">cube_plev</span> <span class="o">=</span> <span class="n">stratify</span><span class="o">.</span><span class="n">relevel</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">p_tgt</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">)</span>
+    <span class="n">cube_plev</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cube_plev</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="interp_cubelist_from_height_to_pressure_levels"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.interp_cubelist_from_height_to_pressure_levels">[docs]</a><span class="nd">@const_from_attrs</span>
+<span class="k">def</span> <span class="nf">interp_cubelist_from_height_to_pressure_levels</span><span class="p">(</span>
+    <span class="n">cubelist</span><span class="p">,</span>
+    <span class="n">levels</span><span class="p">,</span>
+    <span class="n">p_ref_frac</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">interpolator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
+    <span class="n">include_pressure</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Interpolate all cubes within a cubelist to the given set of pressure levels.</span>
+
+<span class="sd">    Pressure variable is found using the `model.pres` name and then optionally excluded from</span>
+<span class="sd">    the output list of interpolated cubes.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -802,10 +856,18 @@
 <span class="sd">        List of cubes, including a cube of pressure.</span>
 <span class="sd">    levels: array-like</span>
 <span class="sd">        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).</span>
+<span class="sd">    p_ref_frac: bool, optional</span>
+<span class="sd">        If True, levels are treated as fractions of the reference surface pressure.</span>
+<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
+<span class="sd">        Required if p_ref_frac=True.</span>
+<span class="sd">        If not given, constants are attempted to be retrieved from</span>
+<span class="sd">        attributes of a cube in the cube list.</span>
 <span class="sd">    interpolator: callable or None</span>
 <span class="sd">        The interpolator to use when computing the interpolation. See relevel() docs for more.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
+<span class="sd">    include_pressure: bool, optional</span>
+<span class="sd">        If True, include the pressure cube in the output.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -815,11 +877,16 @@
     <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
     <span class="n">cl_out</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cubelist</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">cube</span> <span class="o">!=</span> <span class="n">pres</span><span class="p">:</span>
-            <span class="n">cube_plev</span> <span class="o">=</span> <span class="n">interp_to_pres_lev</span><span class="p">(</span>
-                <span class="n">cubelist</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">levels</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+        <span class="k">if</span> <span class="n">include_pressure</span> <span class="ow">or</span> <span class="n">cube</span> <span class="o">!=</span> <span class="n">pres</span><span class="p">:</span>
+            <span class="n">cube_plev</span> <span class="o">=</span> <span class="n">interp_cube_from_height_to_pressure_levels</span><span class="p">(</span>
+                <span class="n">cube</span><span class="p">,</span>
+                <span class="n">pres</span><span class="p">,</span>
+                <span class="n">levels</span><span class="p">,</span>
+                <span class="n">p_ref_frac</span><span class="o">=</span><span class="n">p_ref_frac</span><span class="p">,</span>
+                <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span>
+                <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">,</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">cube_plev</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">cl_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube_plev</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cl_out</span></div>
 
@@ -852,77 +919,6 @@
             <span class="n">out</span><span class="o">.</span><span class="n">replace_coord</span><span class="p">(</span><span class="n">cube_tgt</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coord</span><span class="p">)))</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="n">CoNotFound</span><span class="p">):</span>
             <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">out</span></div>
-
-
-<div class="viewcode-block" id="interp_to_pres_lev"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.interp_to_pres_lev">[docs]</a><span class="k">def</span> <span class="nf">interp_to_pres_lev</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Interpolate a cube to pressure level(s) using stratify relevel() function.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    cubelist: iris.cube.CubeList</span>
-<span class="sd">        List of cubes containing a cube extractable by `constraint` and a cube of pressure.</span>
-<span class="sd">    constraint: str or iris.Constraint</span>
-<span class="sd">        Variable name or constraint to extract a cube from `cubelist`.</span>
-<span class="sd">    levels: array-like</span>
-<span class="sd">        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).</span>
-<span class="sd">    interpolator: callable or None</span>
-<span class="sd">        The interpolator to use when computing the interpolation. See relevel() docs for more.</span>
-<span class="sd">    model: aeolus.model.Model, optional</span>
-<span class="sd">        Model class with relevant variable names.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    iris.cube.Cube</span>
-<span class="sd">        Cube of `varname` interpolated to pressure level(s).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cube</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
-    <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
-    <span class="n">cube_plev</span> <span class="o">=</span> <span class="n">stratify</span><span class="o">.</span><span class="n">relevel</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">)</span>
-    <span class="n">cube_plev</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cube_plev</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="interp_to_single_pres_lev"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.interp_to_single_pres_lev">[docs]</a><span class="k">def</span> <span class="nf">interp_to_single_pres_lev</span><span class="p">(</span>
-    <span class="n">cubelist</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="n">p_ref_frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Interpolate the field defined by `constraint` to a single pressure level.</span>
-
-<span class="sd">    The level is found from the given fraction of the reference surface pressure.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    cubelist: iris.cube.CubeList</span>
-<span class="sd">        Input cubelist.</span>
-<span class="sd">    constraint: str or iris.Constraint</span>
-<span class="sd">        Variable name or constraint to extract a cube from `cubelist`.</span>
-<span class="sd">    p_ref_frac: float, optional</span>
-<span class="sd">        Fraction of reference surface pressure at which the estimate is made.</span>
-<span class="sd">        The default value is 0.1, which for an Earth-like atmosphere means 100 hPa.</span>
-<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        If not given, constants are attempted to be retrieved from</span>
-<span class="sd">        attributes of a cube in the cube list.</span>
-<span class="sd">    interpolator: callable or None</span>
-<span class="sd">        The interpolator to use when computing the interpolation. See relevel() docs for more.</span>
-<span class="sd">    model: aeolus.model.Model, optional</span>
-<span class="sd">        Model class with relevant variable names.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    iris.cube.Cube</span>
-<span class="sd">        Cube on a single pressure level.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">const</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">const</span> <span class="o">=</span> <span class="n">cubelist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span>
-    <span class="n">p_ref</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span>
-    <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">p_ref_frac</span> <span class="o">*</span> <span class="n">p_ref</span>
-    <span class="n">pres</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
-    <span class="n">p_tgt</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="n">pres</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">interp_to_pres_lev</span><span class="p">(</span>
-        <span class="n">cubelist</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="p">[</span><span class="n">p_tgt</span><span class="o">.</span><span class="n">data</span><span class="p">],</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
-    <span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
 
