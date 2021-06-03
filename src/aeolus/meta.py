@@ -9,7 +9,7 @@ import iris
 from iris.analysis import _dimensional_metadata_comparison
 from iris.util import broadcast_to_shape
 
-from ..exceptions import ArgumentError, _warn
+from .exceptions import ArgumentError, _warn
 
 
 def const_from_attrs(strict=True):

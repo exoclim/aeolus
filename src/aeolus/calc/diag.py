@@ -9,11 +9,11 @@ from iris.util import reverse
 import numpy as np
 
 from .calculus import d_dz, integrate
-from .meta import const_from_attrs, update_metadata
 from .stats import cumsum, spatial_mean, time_mean, zonal_mean
 from ..const import init_const
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
+from ..meta import const_from_attrs, update_metadata
 from ..model import um
 from ..subset import _dim_constr
 

@@ -6,9 +6,9 @@ from iris.analysis.calculus import _coord_cos, _curl_differentiate, _curl_regrid
 
 import numpy as np
 
-from .meta import update_metadata
 from ..const import get_planet_radius
 from ..exceptions import NotYetImplementedError
+from ..meta import update_metadata
 from ..model import um
 
 

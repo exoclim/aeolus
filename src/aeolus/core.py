@@ -5,11 +5,11 @@ import iris
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 from .calc import diag
-from .calc.meta import copy_doc
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
 from .exceptions import _warn
 from .io import load_data, save_cubelist
+from .meta import copy_doc
 from .model import um
 from .region import Region
 from .subset import DimConstr
