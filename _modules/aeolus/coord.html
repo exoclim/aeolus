@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g1acf73b documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g6b740da documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g1acf73b
+                0+untagged.1.g6b740da
               </div>
             
           
@@ -821,14 +821,14 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    iris.cube.Cube</span>
-<span class="sd">        Cube of `varname` interpolated to pressure level(s).</span>
+<span class="sd">        The variable interpolated to pressure level(s).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">p_ref_frac</span><span class="p">:</span>
         <span class="n">p_ref</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">p_ref</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
-        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">p_ref</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">p_ref</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">levels</span>
+        <span class="n">p_tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
     <span class="n">cube_plev</span> <span class="o">=</span> <span class="n">stratify</span><span class="o">.</span><span class="n">relevel</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">p_tgt</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">)</span>
     <span class="n">cube_plev</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cube_plev</span><span class="p">)</span></div>
