@@ -23,11 +23,9 @@ TST_DATA = Path(__file__).parent / "data"
 
 
 def test_foo():
-    """Test ..."""
     pass
 
 
 def test_loaderror():
-    """Test raising LoadError."""
     with pytest.raises(LoadError):
         raise LoadError

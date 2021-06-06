@@ -16,7 +16,6 @@ CONST_FILE = "dummy"
 
 
 def test_init_const_general():
-    """Test init_const function w/o arguments."""
     cnsts = const.init_const()
     assert str(cnsts).startswith("GeneralConstants")
     assert isinstance(cnsts, const.const.ConstContainer)
@@ -32,7 +31,6 @@ def test_init_const_general():
 
 
 def test_loaderror():
-    """Test raising LoadError."""
     with pytest.raises(LoadError):
         const.init_const(CONST_FILE)
     with pytest.raises(LoadError):
@@ -40,13 +38,11 @@ def test_loaderror():
 
 
 def test_argumenterror():
-    """Test raising ArgumentError."""
     with pytest.raises(ArgumentError):
         const.init_const(CONST_FILE, directory=str(TST_DATA / "json"))
 
 
 def test_init_const_custom():
-    """Test init_const function with a custom JSON file."""
     cnsts = const.init_const(CONST_FILE, directory=TST_DATA / "json")
     assert str(cnsts).startswith("DummyConstants")
     assert isinstance(cnsts, const.const.ConstContainer)

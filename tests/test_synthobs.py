@@ -10,7 +10,6 @@ TST_DATA = Path(__file__).parent / "data" / "test_data"
 
 
 def test_read_spectral_bands():
-    """Test read_spectral_bands."""
     expected_arr = np.array(
         [
             (1, 1.00000005e-03, 9.99999978e-03),

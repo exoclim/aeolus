@@ -10,7 +10,6 @@ import numpy.testing as npt
 
 
 def test_integrate():
-    """Test integrate function."""
     xc = iris.coords.DimCoord([-1, 2, 3], units="m", standard_name="longitude")
     yc = iris.coords.DimCoord([10, 30, 50, 70], units="m", standard_name="latitude")
     zc = iris.coords.DimCoord([1000, 500], units="hPa", standard_name="air_pressure")

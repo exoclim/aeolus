@@ -8,7 +8,6 @@ import numpy.testing as npt
 
 
 def test_cell_centres():
-    """Test cell_centres."""
     arr = np.array([-1, 0, 1, 2])
     des = np.array([-0.5, 0.5, 1.5])
     act = coord._cell_centres(arr)
@@ -19,7 +18,6 @@ def test_cell_centres():
 
 
 def test_cell_bounds():
-    """Test cell_bounds."""
     arr = np.array([26.0, 27.0, 28.0, 29.0, 30.0])
     des = np.array([25.5, 26.5, 27.5, 28.5, 29.5, 30.5])
     act = coord._cell_bounds(arr)
@@ -30,14 +28,12 @@ def test_cell_bounds():
 
 
 def test__is_longitude_global():
-    """Test _is_longitude_global."""
     assert coord._is_longitude_global(np.arange(0, 360, 2.5))
     assert coord._is_longitude_global(np.linspace(-180, 180, 10))
     assert not coord._is_longitude_global(np.arange(0, 180, 2.5))
 
 
 def test_coord_to_cube():
-    """Test coord_to_cube."""
     xc = iris.coords.DimCoord([-1, 2, 3], units="m", standard_name="longitude")
     yc = iris.coords.DimCoord([10, 30, 50, 70], units="m", standard_name="latitude")
     zc = iris.coords.DimCoord([1000, 500], units="hPa", standard_name="air_pressure")
