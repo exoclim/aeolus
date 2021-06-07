@@ -27,8 +27,9 @@ Testing the code
 1. Install :code:`black`, :code:`pytest` and :code:`flake8`.
 2. Check the formatting style by typing :code:`black --check .`
 3. If it returns an error, fix the issues manually or by running :code:`black path/to/file.py`
-4. Run aeolus tests :code:`pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v`
-5. Fix all the errors, including PEP8 issues (flagged as :code:`flake8` errors or warnings).
+4. Download the test data (from the top level of the aeolus directory) :code:`git clone https://github.com/exoclim/aeolus_data.git tests/data`
+5. Run aeolus tests :code:`pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v`
+6. Fix all the errors, including PEP8 issues (flagged as :code:`flake8` errors or warnings).
 
 
 Contributing to the documentation
