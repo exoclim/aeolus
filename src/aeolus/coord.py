@@ -57,7 +57,7 @@ def _cell_bounds(points, bound_position=0.5):
 
     Parameters
     ----------
-    points: numpy.array
+    points: numpy.ndarray
         One-dimensional array of uniformy spaced values of shape (M,)
     bound_position: bool, optional
         The desired position of the bounds relative to the position
@@ -65,7 +65,7 @@ def _cell_bounds(points, bound_position=0.5):
 
     Returns
     -------
-    bounds: numpy.array
+    bounds: numpy.ndarray
         Array of shape (M+1,)
 
     Examples
@@ -97,7 +97,7 @@ def _cell_centres(bounds, bound_position=0.5):
 
     Parameters
     ----------
-    bounds: numpy.array
+    bounds: numpy.ndarray
         One-dimensional array of cell boundaries of shape (M,)
     bound_position: bool, optional
         The desired position of the bounds relative to the position
@@ -105,7 +105,7 @@ def _cell_centres(bounds, bound_position=0.5):
 
     Returns
     -------
-    centres: numpy.array
+    centres: numpy.ndarray
         Array of shape (M-1,)
 
     Examples
@@ -207,7 +207,7 @@ def add_cyclic_point_to_cube(cube, coord=um.x):
 
     Returns
     -------
-    cyclic_cube
+    iris.cube.Cube
         The cube with a cyclic point added.
     """
     the_coord = cube.coord(coord)
@@ -541,7 +541,7 @@ def get_cube_datetimes(cube, model=um):
 
     Returns
     -------
-    numpy.array
+    numpy.ndarray
         Array of datetime-like objects.
     """
     return cube.coord(model.t).units.num2date(cube.coord(model.t).points)
@@ -560,7 +560,7 @@ def get_cube_rel_days(cube, model=um):
 
     Returns
     -------
-    numpy.array
+    numpy.ndarray
         Array of relative days.
     """
     dts = get_cube_datetimes(cube, model=model)

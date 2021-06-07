@@ -10,6 +10,7 @@ Changelog
 
 * Fix a bug with the `const_from_attrs` decorator
 * Add contributor's guide
+* Replace all autodoc function and class references by module references
  
 
 0.4.10
