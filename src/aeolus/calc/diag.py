@@ -375,7 +375,7 @@ def sfc_net_energy(cubelist, model=um):
     return sfc_net
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="surface_net_downward_water_flux", units="mm h-1")
 def sfc_water_balance(cubelist, const=None, model=um):
     """
@@ -416,7 +416,7 @@ def sfc_water_balance(cubelist, const=None, model=um):
     return net
 
 
-@const_from_attrs
+@const_from_attrs()
 def precip_sum(cubelist, ptype="total", const=None, model=um):
     """
     Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].
@@ -540,7 +540,7 @@ def ghe_norm(cubelist, model=um):
     return out
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="bond_albedo", units="1")
 def bond_albedo(cubelist, const=None, model=um):
     r"""
@@ -657,7 +657,7 @@ def horiz_wind_cmpnts(cubelist, model=um):
     return u, v
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="local_superrotation_index", units="1")
 def superrotation_index(cubelist, const=None, model=um):
     r"""
@@ -734,7 +734,7 @@ def wind_speed(*components):
     return out
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="atmosphere_hybrid_sigma_pressure_coordinate", units="1")
 def sigma_p(cubelist, const=None, model=um):
     r"""
@@ -758,7 +758,7 @@ def sigma_p(cubelist, const=None, model=um):
     return pres_cube / const.reference_surface_pressure
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="zonal_mass_streamfunction", units="kg s^-1")
 def zonal_mass_streamfunction(cubelist, const=None, model=um):
     r"""
@@ -806,7 +806,7 @@ def zonal_mass_streamfunction(cubelist, const=None, model=um):
     return res
 
 
-@const_from_attrs
+@const_from_attrs()
 @update_metadata(name="meridional_mass_streamfunction", units="kg s^-1")
 def meridional_mass_streamfunction(cubelist, const=None, model=um):
     r"""
