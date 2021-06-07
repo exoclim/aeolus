@@ -1,8 +1,8 @@
 """Test the meta submodule."""
+from aeolus import meta
 from aeolus.const import init_const
 from aeolus.const.const import ConstContainer
 from aeolus.exceptions import AeolusWarning, ArgumentError
-from aeolus.meta import const_from_attrs
 
 import iris
 
@@ -10,7 +10,7 @@ import pytest
 
 
 def test_const_from_attrs_default():
-    @const_from_attrs()
+    @meta.const_from_attrs()
     def foo(arg, const=None):
         """Test function."""
         return const
@@ -34,7 +34,7 @@ def test_const_from_attrs_default():
 
 
 def test_const_from_attrs_relax():
-    @const_from_attrs(strict=False)
+    @meta.const_from_attrs(strict=False)
     def bar(arg, const=None):
         """Test function."""
         return const
@@ -53,3 +53,15 @@ def test_const_from_attrs_relax():
         bar(iris.cube.Cube([], attributes={"foo": constants}))
     with pytest.warns(AeolusWarning):
         bar(iris.cube.Cube([], attributes={"planet_conf": 1234}))
+
+
+def test_copy_doc():
+    def foo():
+        """Make docstring."""
+        pass
+
+    @meta.copy_doc(foo)
+    def bar():
+        pass
+
+    assert foo.__doc__ == bar.__doc__
