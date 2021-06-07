@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.synthobs &mdash; aeolus 0+untagged.1.ge4df27c documentation</title>
+  <title>aeolus.synthobs &mdash; aeolus 0+untagged.1.g6aab192 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.ge4df27c
+                0+untagged.1.g6aab192
               </div>
             
           
@@ -184,7 +184,7 @@
 
 <div class="viewcode-block" id="read_spectral_bands"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_spectral_bands">[docs]</a><span class="k">def</span> <span class="nf">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read spectral bands from a SOCRATES spectral file.</span>
+<span class="sd">    Read spectral bands.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -226,8 +226,6 @@
 <div class="viewcode-block" id="read_normalized_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read the normalized stellar flux per spectral band.</span>
-
-<span class="sd">    Read from a SOCRATES spectral file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -332,10 +330,10 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    iris.cube.Cube</span>
-<span class="sd">        The ratio of the effective planetary radius to the stellar radius per spectral band [1].</span>
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        Spectral band centers [m].</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        The ratio of the effective planetary radius to the stellar radius per spectral band [1].</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -------</span>
