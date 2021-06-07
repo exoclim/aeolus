@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.g0b24065 documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g0b24065
+                0+untagged.1.g6a9fe00
               </div>
             
           
@@ -603,8 +603,27 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.bond_albedo">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">bond_albedo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.bond_albedo" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">bond_albedo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#bond_albedo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.bond_albedo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bold albedo.</p>
+<div class="math notranslate nohighlight">
+\[4 \frac{OSR_{TOA}}{S_{0}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>solar_constant</cite> as an attribute.
+If not given, attempt to retrieve it from cube attributes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of bond albedo.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.dry_lapse_rate">
@@ -746,13 +765,70 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.meridional_mass_streamfunction">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">meridional_mass_streamfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.meridional_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">meridional_mass_streamfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#meridional_mass_streamfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.meridional_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean meridional mass streamfunction.</p>
+<ul class="simple">
+<li><p>In height coordinates</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\Psi_M = - 2\pi cos\phi a \int_{z_{sfc}}^{z_{top}}\overline{\rho v} dz\]</div>
+<ul class="simple">
+<li><p>In pressure coordinates</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input cubelist.</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
+attributes of a cube in the cube list.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube with collapsed spatial dimensions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Haqq-Misra &amp; Kopparapu (2015), eq. 4;
+Vallis (2017)</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">aeolus.calc</span> <span class="kn">import</span> <span class="n">meridional_mass_streamfunction</span><span class="p">,</span> <span class="n">time_mean</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">aeolus.const</span> <span class="kn">import</span> <span class="n">init_const</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">um</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">earth_constants</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="s2">&quot;earth&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cubes</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">([</span><span class="n">time_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span> <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">input_cubes</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mmsf</span> <span class="o">=</span> <span class="n">meridional_mass_streamfunction</span><span class="p">(</span><span class="n">cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">earth_constants</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.precip_sum">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">precip_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.precip_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">precip_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">ptype='total'</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#precip_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.precip_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate a sum of different types of precipitation [<span class="math notranslate nohighlight">\(mm~day^{-1}\)</span>].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
+If not given, attempt to retrieve it from cube attributes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sum of cubes of precipitation with units converted to mm per day.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.sfc_net_energy">
@@ -776,13 +852,51 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.sfc_water_balance">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">sfc_water_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.sfc_water_balance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">sfc_water_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sfc_water_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.sfc_water_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate domain-average precipitation minus evaporation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
+If not given, attempt is made to retrieve it from cube attributes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cube of total surface downward water flux (P-E).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.superrotation_index">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">superrotation_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.superrotation_index" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">superrotation_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#superrotation_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.superrotation_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Local superrotation index.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}s = \frac{m}{\Omega a^2} - 1,\\m = a cos\phi(\Omega a cos\phi + u)\end{aligned}\end{align} \]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube of zonal velocity (u).</p></li>
+<li><p><strong>const</strong> (<a class="reference internal" href="const.html#aeolus.const.const.ConstContainer" title="aeolus.const.const.ConstContainer"><em>aeolus.const.const.ConstContainer</em></a><em>, </em><em>optional</em>) – Constainer with the relevant planetary constants.
+If not given, attempt is made to retrieve it from cube attributes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>s_idx</strong> – Cubes of superrotation index.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Read (1986), <a class="reference external" href="https://doi.org/10.1002/qj.49711247114">https://doi.org/10.1002/qj.49711247114</a></p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.toa_cloud_radiative_effect">
@@ -888,8 +1002,21 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.zonal_mass_streamfunction">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">zonal_mass_streamfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aeolus.calc.zonal_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.</span></span><span class="sig-name descname"><span class="pre">zonal_mass_streamfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#zonal_mass_streamfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.zonal_mass_streamfunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate mean zonal mass streamfunction.</p>
+<div class="math notranslate nohighlight">
+\[\Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz\]</div>
+<p class="rubric">References</p>
+<p>Haqq-Misra &amp; Kopparapu (2015), eq. 5;
+Hartmann (1994), Global Physical Climatology, eq. 6.21</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lat_band_constr</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span>
+<span class="go">    latitude=lambda x: -30 &lt;= x.point &lt;= 30, longitude=lambda x: True</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mzsf</span> <span class="o">=</span> <span class="n">zonal_mass_streamfunction</span><span class="p">(</span><span class="n">cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">lat_band_constr</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </div>
 <div class="section" id="horizontal-fluxes">
