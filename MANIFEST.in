@@ -2,7 +2,8 @@ include LICENSE
 include src/aeolus/const/store/*.json
 recursive-include docs *
 recursive-include tests *
-prune docs/html
+prune docs/_build
 prune docs/doctrees
 include versioneer.py
 global-exclude *.py[cod]
+global-exclude __pycache__
