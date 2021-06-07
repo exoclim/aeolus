@@ -18,7 +18,7 @@ __all__ = (
 
 def read_spectral_bands(spectral_file):
     """
-    Read spectral bands from a SOCRATES spectral file.
+    Read spectral bands.
 
     Parameters
     ----------
@@ -60,8 +60,6 @@ def read_spectral_bands(spectral_file):
 def read_normalized_stellar_flux(spectral_file):
     """
     Read the normalized stellar flux per spectral band.
-
-    Read from a SOCRATES spectral file.
 
     Parameters
     ----------
@@ -166,10 +164,10 @@ def calc_transmission_spectrum_day_night_average(
 
     Returns
     -------
-    iris.cube.Cube
-        The ratio of the effective planetary radius to the stellar radius per spectral band [1].
     numpy.ndarray
         Spectral band centers [m].
+    iris.cube.Cube
+        The ratio of the effective planetary radius to the stellar radius per spectral band [1].
 
     Notes
     -------
