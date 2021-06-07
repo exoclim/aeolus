@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.synthobs &mdash; aeolus 0+untagged.1.g6aab192 documentation</title>
+  <title>aeolus.synthobs &mdash; aeolus 0+untagged.1.g5bc0194 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6aab192
+                0+untagged.1.g5bc0194
               </div>
             
           
@@ -184,11 +184,11 @@
 
 <div class="viewcode-block" id="read_spectral_bands"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_spectral_bands">[docs]</a><span class="k">def</span> <span class="nf">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read spectral bands.</span>
+<span class="sd">    Read spectral bands from a SOCRATES spectral file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">    spectral_file: pathlib.Path</span>
 <span class="sd">        Path to the location of a SOCRATES spectral file.</span>
 
 <span class="sd">    Returns</span>
@@ -225,12 +225,12 @@
 
 <div class="viewcode-block" id="read_normalized_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read the normalized stellar flux per spectral band.</span>
+<span class="sd">    Read the normalized stellar flux per spectral band from a SOCRATES spectral file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    spectral_file: pathlib.PosixPath</span>
-<span class="sd">        Path to the location of a SOCRATES spectral file.</span>
+<span class="sd">    spectral_file: pathlib.Path</span>
+<span class="sd">        Path to the location of the SOCRATES spectral file.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -274,7 +274,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">    spectral_file: pathlib.Path</span>
 <span class="sd">        Path to the location of a SOCRATES spectral file.</span>
 <span class="sd">    stellar_constant_at_1_au: float or iris.cube.Cube</span>
 <span class="sd">        Stellar constant at 1 AU [W m-2].</span>
@@ -311,7 +311,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    spectral_file: pathlib.PosixPath</span>
+<span class="sd">    spectral_file: pathlib.Path</span>
 <span class="sd">        Path to the location of a SOCRATES spectral file.</span>
 <span class="sd">    stellar_constant_at_1_au: float or iris.cube.Cube</span>
 <span class="sd">        Stellar constant at 1 AU [W m-2].</span>

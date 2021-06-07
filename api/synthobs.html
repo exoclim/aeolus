@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Synthetic observations &mdash; aeolus 0+untagged.1.g6aab192 documentation</title>
+  <title>Synthetic observations &mdash; aeolus 0+untagged.1.g5bc0194 documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6aab192
+                0+untagged.1.g5bc0194
               </div>
             
           
@@ -212,10 +212,10 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.read_spectral_bands">
 <span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">read_spectral_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectral_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#read_spectral_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.read_spectral_bands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read spectral bands.</p>
+<dd><p>Read spectral bands from a SOCRATES spectral file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="(in Python v3.9)"><em>pathlib.PosixPath</em></a>) – Path to the location of a SOCRATES spectral file.</p>
+<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An array with a list of tuples describing spectral bands.
@@ -232,10 +232,10 @@ Units [m] as stated in a spectral file but not checked directly.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.read_normalized_stellar_flux">
 <span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">read_normalized_stellar_flux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectral_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#read_normalized_stellar_flux"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.read_normalized_stellar_flux" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the normalized stellar flux per spectral band.</p>
+<dd><p>Read the normalized stellar flux per spectral band from a SOCRATES spectral file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="(in Python v3.9)"><em>pathlib.PosixPath</em></a>) – Path to the location of a SOCRATES spectral file.</p>
+<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Path to the location of the SOCRATES spectral file.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Normalized stellar flux per spectral band [1].</p>
@@ -253,7 +253,7 @@ Units [m] as stated in a spectral file but not checked directly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="(in Python v3.9)"><em>pathlib.PosixPath</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
+<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
 <li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
 </ul>
 </dd>
@@ -273,7 +273,7 @@ Units [m] as stated in a spectral file but not checked directly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="(in Python v3.9)"><em>pathlib.PosixPath</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
+<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
 <li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
 <li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
 <li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>

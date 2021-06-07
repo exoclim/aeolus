@@ -6,10 +6,10 @@ Changelog
 0.4.10
 ------
 
-:Date: TBA
+:Date: 07 June 2021
 
+* Add functions to calculate synthetic transmission spectrum. By `Maria Zamyatina <https://github.com/mzamyatina>`_.
 * Replace `interp_to_pres_lev()`, `interp_all_to_pres_lev()` and `interp_to_single_pres_lev()` with `interp_cube_from_height_to_pressure_levels()` and `interp_cubelist_from_height_to_pressure_levels()` with a better interface
-* Add functions to calculate synthetic transmission spectrum
 * Move test data to a separate repository: `aeolus_data`
 * Add more names to `model.base`
 * Add an option for the `const_from_attrs()` decorator not to raise an error
