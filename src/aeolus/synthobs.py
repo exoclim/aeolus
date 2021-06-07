@@ -18,11 +18,11 @@ __all__ = (
 
 def read_spectral_bands(spectral_file):
     """
-    Read spectral bands.
+    Read spectral bands from a SOCRATES spectral file.
 
     Parameters
     ----------
-    spectral_file: pathlib.PosixPath
+    spectral_file: pathlib.Path
         Path to the location of a SOCRATES spectral file.
 
     Returns
@@ -59,12 +59,12 @@ def read_spectral_bands(spectral_file):
 
 def read_normalized_stellar_flux(spectral_file):
     """
-    Read the normalized stellar flux per spectral band.
+    Read the normalized stellar flux per spectral band from a SOCRATES spectral file.
 
     Parameters
     ----------
-    spectral_file: pathlib.PosixPath
-        Path to the location of a SOCRATES spectral file.
+    spectral_file: pathlib.Path
+        Path to the location of the SOCRATES spectral file.
 
     Returns
     -------
@@ -108,7 +108,7 @@ def calc_stellar_flux(spectral_file, stellar_constant_at_1_au):
 
     Parameters
     ----------
-    spectral_file: pathlib.PosixPath
+    spectral_file: pathlib.Path
         Path to the location of a SOCRATES spectral file.
     stellar_constant_at_1_au: float or iris.cube.Cube
         Stellar constant at 1 AU [W m-2].
@@ -145,7 +145,7 @@ def calc_transmission_spectrum_day_night_average(
 
     Parameters
     ----------
-    spectral_file: pathlib.PosixPath
+    spectral_file: pathlib.Path
         Path to the location of a SOCRATES spectral file.
     stellar_constant_at_1_au: float or iris.cube.Cube
         Stellar constant at 1 AU [W m-2].
