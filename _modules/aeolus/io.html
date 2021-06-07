@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.io &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6a9fe00
+                0+untagged.1.gacd1df8
               </div>
             
           
@@ -177,7 +177,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+<div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Wrap `iris.load` to deal with `pathlib.Path` objects.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
@@ -185,7 +185,7 @@
         <span class="n">fnames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not allowed.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="load_multidir"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_multidir">[docs]</a><span class="k">def</span> <span class="nf">load_multidir</span><span class="p">(</span><span class="n">path_mask</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">label_name</span><span class="o">=</span><span class="s2">&quot;run&quot;</span><span class="p">):</span>
@@ -224,7 +224,7 @@
     <span class="k">return</span> <span class="n">levs</span></div>
 
 
-<span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">):</span>
+<div class="viewcode-block" id="save_cubelist"><a class="viewcode-back" href="../../api/io.html#aeolus.io.save_cubelist">[docs]</a><span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save a cubelist w/o the `planet_conf` container to a file.</span>
 
@@ -252,7 +252,7 @@
     <span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="c1"># Restore original attributes</span>
     <span class="k">for</span> <span class="n">cube</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">old_attrs</span><span class="p">):</span>
-        <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attrs</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attrs</span></div>
 </pre></div>
 
            </div>

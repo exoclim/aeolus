@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6a9fe00
+                0+untagged.1.gacd1df8
               </div>
             
           
@@ -223,7 +223,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    points: numpy.array</span>
+<span class="sd">    points: numpy.ndarray</span>
 <span class="sd">        One-dimensional array of uniformy spaced values of shape (M,)</span>
 <span class="sd">    bound_position: bool, optional</span>
 <span class="sd">        The desired position of the bounds relative to the position</span>
@@ -231,7 +231,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    bounds: numpy.array</span>
+<span class="sd">    bounds: numpy.ndarray</span>
 <span class="sd">        Array of shape (M+1,)</span>
 
 <span class="sd">    Examples</span>
@@ -263,7 +263,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    bounds: numpy.array</span>
+<span class="sd">    bounds: numpy.ndarray</span>
 <span class="sd">        One-dimensional array of cell boundaries of shape (M,)</span>
 <span class="sd">    bound_position: bool, optional</span>
 <span class="sd">        The desired position of the bounds relative to the position</span>
@@ -271,7 +271,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    centres: numpy.array</span>
+<span class="sd">    centres: numpy.ndarray</span>
 <span class="sd">        Array of shape (M-1,)</span>
 
 <span class="sd">    Examples</span>
@@ -373,7 +373,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    cyclic_cube</span>
+<span class="sd">    iris.cube.Cube</span>
 <span class="sd">        The cube with a cyclic point added.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">the_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
@@ -707,7 +707,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    numpy.array</span>
+<span class="sd">    numpy.ndarray</span>
 <span class="sd">        Array of datetime-like objects.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span></div>
@@ -726,7 +726,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    numpy.array</span>
+<span class="sd">    numpy.ndarray</span>
 <span class="sd">        Array of relative days.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dts</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>

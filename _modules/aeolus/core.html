@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.core &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
+  <title>aeolus.core &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6a9fe00
+                0+untagged.1.gacd1df8
               </div>
             
           
@@ -187,7 +187,7 @@
 <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">AtmoSimBase</span><span class="p">:</span>
+<div class="viewcode-block" id="AtmoSimBase"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSimBase">[docs]</a><span class="k">class</span> <span class="nc">AtmoSimBase</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for creating atmospheric model simulation classes in aeolus.</span>
 
@@ -208,7 +208,7 @@
 <span class="sd">        Model class with relevant coordinate and variable names.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="AtmoSimBase.__init__"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSimBase.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">cubes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -298,9 +298,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">strict</span><span class="p">,</span> <span class="n">seq</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                <span class="k">pass</span>
+                <span class="k">pass</span></div>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AtmoSimBase.from_parent_class"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSimBase.from_parent_class">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parent_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Dynamically inherit from a similar class.&quot;&quot;&quot;</span>
         <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
@@ -314,7 +314,7 @@
             <span class="n">timestep</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">timestep</span><span class="p">,</span>
             <span class="n">vert_coord</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">vert_coord</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">new_obj</span>
+        <span class="k">return</span> <span class="n">new_obj</span></div>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Redirect self[key] to self.key.&quot;&quot;&quot;</span>
@@ -349,7 +349,7 @@
         <span class="sd">&quot;&quot;&quot;Add or update planetary constants container to cube attributes.&quot;&quot;&quot;</span>
         <span class="n">add_planet_conf_to_cubes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
+<div class="viewcode-block" id="AtmoSimBase.extract"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSimBase.extract">[docs]</a>    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subset `AtmoSim` using iris constraints.</span>
 
@@ -369,7 +369,7 @@
             <span class="n">timestep</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timestep</span><span class="p">,</span>
             <span class="n">vert_coord</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">new_obj</span>
+        <span class="k">return</span> <span class="n">new_obj</span></div></div>
 
 
 <div class="viewcode-block" id="AtmoSim"><a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSim">[docs]</a><span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">(</span><span class="n">AtmoSimBase</span><span class="p">):</span>

@@ -19,7 +19,7 @@ Supported language:
    works on Mac, Linux, and Windows, both on normal computers and
    institutional clusters and doesn't require root permissions.
 
-The main dependency of aeolus is `iris <https://scitools.org.uk/iris/docs/latest/>`, but various
+The main dependency of aeolus is `iris <https://scitools.org.uk/iris/docs/latest/>`_, but various
 minor parts also depend on the following Python packages
 
 - cartopy
@@ -79,7 +79,7 @@ tests using `py.test <http://doc.pytest.org/>`_.  From the top-level
 directory of the aeolus installation ::
 
   conda install pytest  # if you don't have it already; or 'pip install pytest'
-  py.test aeolus
+  pytest aeolus
 
 If you don't know the directory where aeolus was installed, you can find it via ::
 

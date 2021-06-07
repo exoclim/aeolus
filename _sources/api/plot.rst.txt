@@ -2,20 +2,26 @@
 
 Plotting functions
 ==================
-.. autoclass:: aeolus.plot.CloudPlotter
 
-.. autoclass:: aeolus.plot.GeoAxesGrid
+Cartography
+-----------
+.. automodule:: aeolus.plot.cart
+   :members:
 
-.. autofunction:: aeolus.plot.label_global_map_gridlines
+Matplotlib helpers
+------------------
+.. automodule:: aeolus.plot.mpl
+   :members:
 
-.. autofunction:: aeolus.plot.add_custom_legend
+Text-related functions
+----------------------
+.. automodule:: aeolus.plot.text
+   :members:
 
 
 .. _pyvista_ref:
 
 PyVista interface
 -----------------
-
-.. autofunction:: aeolus.plot.pv.grid_for_scalar_cube_sph
-
-.. autofunction:: aeolus.plot.pv.grid_for_vector_cubes_sph
+.. automodule:: aeolus.plot.pv
+   :members:

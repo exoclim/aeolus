@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>I/O &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
+  <title>I/O &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6a9fe00
+                0+untagged.1.gacd1df8
               </div>
             
           
@@ -205,9 +205,15 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="i-o">
-<h1>I/O<a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h1>
-<p>Input and output utilities.</p>
+<div class="section" id="module-aeolus.io">
+<span id="i-o"></span><h1>I/O<a class="headerlink" href="#module-aeolus.io" title="Permalink to this headline">¶</a></h1>
+<p>Input and output functionality.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.io.load_data">
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap <cite>iris.load</cite> to deal with <cite>pathlib.Path</cite> objects.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.io.load_multidir">
 <span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">load_multidir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'run'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_multidir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_multidir" title="Permalink to this definition">¶</a></dt>
@@ -230,6 +236,21 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.io.save_cubelist">
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">save_cubelist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cubelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">aux_attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#save_cubelist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.save_cubelist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a cubelist w/o the <cite>planet_conf</cite> container to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Cube list to write to disk.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – File path.</p></li>
+<li><p><strong>aux_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary of additional attributes to save with the cubes.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

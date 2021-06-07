@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.plot.mpl &mdash; aeolus 0+untagged.1.g6a9fe00 documentation</title>
+  <title>aeolus.plot.mpl &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g6a9fe00
+                0+untagged.1.gacd1df8
               </div>
             
           
@@ -176,24 +176,24 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;MidpointNormalize&quot;</span><span class="p">,</span> <span class="s2">&quot;add_custom_legend&quot;</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">MidpointNormalize</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">):</span>
+<div class="viewcode-block" id="MidpointNormalize"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.MidpointNormalize">[docs]</a><span class="k">class</span> <span class="nc">MidpointNormalize</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Normalise data around a midpoint.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">midpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa</span>
+<div class="viewcode-block" id="MidpointNormalize.__init__"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.MidpointNormalize.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">midpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="n">_warn</span><span class="p">(</span>
             <span class="s2">&quot;MidpointNormalize is deprecated and will be removed in the next release. &quot;</span>
             <span class="s2">&quot;Use matplotlib.colors.CenteredNorm instead.&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">midpoint</span> <span class="o">=</span> <span class="n">midpoint</span>
-        <span class="n">mcolors</span><span class="o">.</span><span class="n">Normalize</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">clip</span><span class="p">)</span>
+        <span class="n">mcolors</span><span class="o">.</span><span class="n">Normalize</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">clip</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="c1"># Ignoring masked values and all kinds of edge cases</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">midpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vmax</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="add_custom_legend"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.add_custom_legend">[docs]</a><span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">):</span>
+<div class="viewcode-block" id="add_custom_legend"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.add_custom_legend">[docs]</a><span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a custom legend to matplotlib axes.</span>
 
