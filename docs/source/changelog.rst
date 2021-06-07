@@ -3,6 +3,15 @@ Changelog
 
 .. default-role:: py:obj
 
+0.4.11
+------
+
+:Date: 08 June 2021
+
+* Fix a bug with the `const_from_attrs` decorator
+* Add contributor's guide
+ 
+
 0.4.10
 ------
 
