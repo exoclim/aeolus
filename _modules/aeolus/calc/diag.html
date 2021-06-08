@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.g7239eab documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0+untagged.1.gd4232e1 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.g7239eab
+                0+untagged.1.gd4232e1
               </div>
             
           
@@ -888,13 +888,17 @@
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the wind speed (magnitude of the wind vector).</span>
 
+<span class="sd">    .. math::</span>
+<span class="sd">        \sqrt{u^2 + v^2 + w^2}</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    args: iris.cube.Cube</span>
 <span class="sd">        Cubes of u, v, w wind components.</span>
 
-<span class="sd">    .. math::</span>
-<span class="sd">        \sqrt{u^2 + v^2 + w^2}</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cube</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">components</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">out</span></div>

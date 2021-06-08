@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Science calculations &mdash; aeolus 0+untagged.1.g7239eab documentation</title>
+  <title>Science calculations &mdash; aeolus 0+untagged.1.gd4232e1 documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.g7239eab
+                0+untagged.1.gd4232e1
               </div>
             
           
@@ -772,12 +772,17 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <dt class="sig sig-object py" id="aeolus.calc.diag.wind_speed">
 <span class="sig-prename descclassname"><span class="pre">aeolus.calc.diag.</span></span><span class="sig-name descname"><span class="pre">wind_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">components</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#wind_speed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.diag.wind_speed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the wind speed (magnitude of the wind vector).</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{u^2 + v^2 + w^2}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p></li>
-<li><p><strong>math::</strong> (<em>.</em>) – sqrt{u^2 + v^2 + w^2}</p></li>
-</ul>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
