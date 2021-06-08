@@ -7,6 +7,7 @@ from iris.exceptions import ConstraintMismatchError as ConMisErr
 from .calc import diag
 from .const import add_planet_conf_to_cubes, init_const
 from .coord import CoordContainer
+from .decor import ReprAtmoSimBase
 from .exceptions import _warn
 from .io import load_data, save_cubelist
 from .meta import copy_doc
@@ -107,6 +108,7 @@ class AtmoSimBase:
             self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
         except IndexError:
             _warn("Initialised without a domain.")
+            self.domain = None
 
         # Variables as attributes
         self._assign_fields()
@@ -133,6 +135,17 @@ class AtmoSimBase:
                 )
             except IndexError:
                 pass
+
+        self.repr = ReprAtmoSimBase(self)
+
+    def __repr__(self):  # noqa
+        return self.repr.str_repr(short=True)
+
+    def __str__(self):  # noqa
+        return self.repr.str_repr(short=False)
+
+    def _repr_html_(self):
+        return self.repr.html_repr()
 
     @classmethod
     def from_parent_class(cls, obj):
