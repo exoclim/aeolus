@@ -2,7 +2,7 @@
 from aeolus import meta
 from aeolus.const import init_const
 from aeolus.const.const import ConstContainer
-from aeolus.exceptions import AeolusWarning, ArgumentError
+from aeolus.exceptions import ArgumentError
 
 import iris
 
@@ -45,14 +45,14 @@ def test_const_from_attrs_relax():
     assert isinstance(result, ConstContainer)
     result = bar(iris.cube.CubeList([cube]))
     assert isinstance(result, ConstContainer)
-    with pytest.warns(AeolusWarning):
-        bar(iris.cube.Cube([]))
-    with pytest.warns(AeolusWarning):
-        bar(iris.cube.Cube([]), const=1234)
-    with pytest.warns(AeolusWarning):
-        bar(iris.cube.Cube([], attributes={"foo": constants}))
-    with pytest.warns(AeolusWarning):
-        bar(iris.cube.Cube([], attributes={"planet_conf": 1234}))
+    # with pytest.warns(AeolusWarning):
+    #     bar(iris.cube.Cube([]))
+    # with pytest.warns(AeolusWarning):
+    #     bar(iris.cube.Cube([]), const=1234)
+    # with pytest.warns(AeolusWarning):
+    #     bar(iris.cube.Cube([], attributes={"foo": constants}))
+    # with pytest.warns(AeolusWarning):
+    #     bar(iris.cube.Cube([], attributes={"planet_conf": 1234}))
 
 
 def test_copy_doc():

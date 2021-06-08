@@ -9,7 +9,7 @@ import iris
 from iris.analysis import _dimensional_metadata_comparison
 from iris.util import broadcast_to_shape
 
-from .exceptions import ArgumentError, _warn
+from .exceptions import ArgumentError  # , _warn
 
 
 def const_from_attrs(strict=True):
@@ -34,8 +34,8 @@ def const_from_attrs(strict=True):
                 msg = "`const` has to be the function argument or in the cube attributes."
                 if strict:
                     raise ArgumentError(msg)
-                else:
-                    _warn(msg)
+                # else:
+                #     _warn(msg)
             # Call the decorated function
             out = func(*args, **kwargs)
             return out
