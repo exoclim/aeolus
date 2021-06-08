@@ -22,6 +22,7 @@ Supported language:
 The main dependency of aeolus is `iris <https://scitools.org.uk/iris/docs/latest/>`_, but various
 minor parts also depend on the following Python packages
 
+- cached-property
 - cartopy
 - matplotlib
 - numpy
@@ -43,10 +44,6 @@ To install aeolus and its primary dependencies ::
 
   conda install -c conda-forge aeolus
 
-To get the latest "nightly" build ::
-
-  conda install -c conda-forge/label/nightly aeolus
-
 Alternative method: PyPI
 ========================
 Install aeolus from the Python Package Index ::
@@ -54,10 +51,10 @@ Install aeolus from the Python Package Index ::
   pip install aeolus
 
 
-Alternative method: clone from Github
-=====================================
+Alternative method: install from source
+=======================================
 
-You can also directly clone the `Github repo <https://github.com/exoclim/aeolus>`_ ::
+To get the latest (potentially unstable) version of the library you can directly clone the `GitHub repository <https://github.com/exoclim/aeolus>`_ ::
 
   git clone https://www.github.com/exoclim/aeolus.git
   cd aeolus
@@ -70,12 +67,16 @@ and install aeolus in the developer mode ::
 
   python setup.py develop
 
+or::
+
+  pip install -e .
+
 
 Verifying proper installation
 =============================
 
 Once installed via any of these methods, you can run aeolus's suite of
-tests using `py.test <http://doc.pytest.org/>`_.  From the top-level
+tests using `pytest <http://doc.pytest.org/>`_.  From the top-level
 directory of the aeolus installation ::
 
   conda install pytest  # if you don't have it already; or 'pip install pytest'
