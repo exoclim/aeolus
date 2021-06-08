@@ -228,7 +228,7 @@ class AtmoSim(AtmoSimBase):
     """
 
     @cached_property
-    @copy_doc(diag.wind_speed)
+    @copy_doc(diag.sigma_p)
     def sigma_p(self):
         # TODO: pass the cube only?
         return diag.sigma_p(self._cubes, const=self.const, model=self.model)
