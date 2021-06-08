@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.gacd1df8 documentation</title>
+  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.g7239eab documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.gacd1df8
+                0+untagged.1.g7239eab
               </div>
             
           
@@ -210,7 +210,7 @@
 <p>Functionality related to coordinates of cubes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Coordinate container.</p>
 <dl class="py attribute">
@@ -226,7 +226,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate an <cite>AtmosFlow</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -306,7 +306,7 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.area_weights_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">area_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">r_planet=None</span></em>, <em class="sig-param"><span class="pre">normalize=False</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#area_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.area_weights_cube" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">area_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#area_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.area_weights_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a cube of area weights for an arbitrary planet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -335,7 +335,7 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.coarsen_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coarsen_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">lon_bins</span></em>, <em class="sig-param"><span class="pre">lat_bins</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coarsen_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coarsen_cube" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coarsen_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">lon_bins,</span> <span class="pre">lat_bins,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coarsen_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coarsen_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Block-average cube in longitude and latitude.</p>
 <p>Note: no weighting is applied!</p>
 <dl class="field-list simple">
@@ -400,13 +400,13 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.ensure_bounds">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">ensure_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">coords=('x'</span></em>, <em class="sig-param"><span class="pre">'y')</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#ensure_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.ensure_bounds" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">ensure_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">coords=('x',</span> <span class="pre">'y'),</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#ensure_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.ensure_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Auto-generate bounds for cube coordinates.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_cube_datetimes">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_datetimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_datetimes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_datetimes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_datetimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_datetimes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_datetimes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert points of a cube’s time coordinate to datetimes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -426,7 +426,7 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_cube_rel_days">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_rel_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_rel_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_rel_days" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_rel_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_rel_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_rel_days" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert points of a cube’s time coordinate to relative number of days.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -475,7 +475,7 @@ with the requested axis.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_xy_coords">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_xy_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_xy_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_xy_coords" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_xy_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_xy_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_xy_coords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return X and Y coordinate tuple for a given <cite>cube</cite> using names from a given <cite>model</cite> container.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -512,7 +512,7 @@ a cube list and inactive if dealing with a single cube.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_cube_from_height_to_pressure_levels">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cube_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variable</span></em>, <em class="sig-param"><span class="pre">pressure</span></em>, <em class="sig-param"><span class="pre">levels</span></em>, <em class="sig-param"><span class="pre">p_ref_frac=False</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">interpolator=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cube_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cube_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variable,</span> <span class="pre">pressure,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cube_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpolate a cube from height to pressure level(s) using stratify relevel() function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -539,7 +539,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_cubelist_from_height_to_pressure_levels">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cubelist_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist</span></em>, <em class="sig-param"><span class="pre">levels</span></em>, <em class="sig-param"><span class="pre">p_ref_frac=False</span></em>, <em class="sig-param"><span class="pre">const=None</span></em>, <em class="sig-param"><span class="pre">interpolator=None</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em>, <em class="sig-param"><span class="pre">include_pressure=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cubelist_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cubelist_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields],</span> <span class="pre">include_pressure=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cubelist_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpolate all cubes within a cubelist to the given set of pressure levels.</p>
 <p>Pressure variable is found using the <cite>model.pres</cite> name and then optionally excluded from
 the output list of interpolated cubes.</p>
@@ -568,7 +568,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_to_cube_time">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_to_cube_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_src</span></em>, <em class="sig-param"><span class="pre">cube_tgt</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_cube_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_to_cube_time" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_to_cube_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_src,</span> <span class="pre">cube_tgt,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_cube_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_to_cube_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Linearly interpolate <cite>cube_src</cite> to <cite>cube_tgt</cite> along the time dimension (<cite>model.t</cite>).</p>
 <p>Forecast period is copied from <cite>cube_tgt</cite>.</p>
 <dl class="field-list simple">
@@ -617,7 +617,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.regrid_3d">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">regrid_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">target</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#regrid_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.regrid_3d" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">regrid_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">target,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#regrid_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.regrid_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Regrid a cube in the horizontal and in the vertical on to coordinates of the target cube.</p>
 <p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
 <dl class="field-list simple">
@@ -639,7 +639,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.replace_z_coord">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace dimensional vertical coordinate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -659,7 +659,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.roll_cube_0_360">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_0_360</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_0_360"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_0_360" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_0_360</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_0_360"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_0_360" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a cube spanning -180…180 degrees in longitude and roll it to 0…360 degrees.</p>
 <p>Works with global model output, and in some cases for regional.</p>
 <dl class="field-list simple">
@@ -684,7 +684,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.roll_cube_pm180">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_pm180</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_pm180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_pm180" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_pm180</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_pm180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_pm180" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a cube spanning 0…360 degrees in longitude and roll it to -180…180 degrees.</p>
 <p>Works with global model output, and in some cases for regional.</p>
 <dl class="field-list simple">
@@ -715,7 +715,7 @@ attributes of a cube in the cube list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.volume_weights_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">volume_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube</span></em>, <em class="sig-param"><span class="pre">r_planet=None</span></em>, <em class="sig-param"><span class="pre">normalize=False</span></em>, <em class="sig-param"><span class="pre">model=&lt;class</span> <span class="pre">'aeolus.model.base.Model'&gt;(80</span> <span class="pre">fields)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#volume_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.volume_weights_cube" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">volume_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#volume_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.volume_weights_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a cube of volume weights from a grid of a given cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
