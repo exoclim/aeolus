@@ -722,13 +722,17 @@ def wind_speed(*components):
     r"""
     Calculate the wind speed (magnitude of the wind vector).
 
+    .. math::
+        \sqrt{u^2 + v^2 + w^2}
+
     Parameters
     ----------
     args: iris.cube.Cube
         Cubes of u, v, w wind components.
 
-    .. math::
-        \sqrt{u^2 + v^2 + w^2}
+    Returns
+    -------
+    iris.cube.Cube
     """
     out = sum(cube ** 2 for cube in components) ** 0.5
     return out
