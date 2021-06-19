@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.coord &mdash; aeolus 0+untagged.1.ga909755 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0+untagged.1.g202d404 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0+untagged.1.ga909755
+                0+untagged.1.g202d404
               </div>
             
           
@@ -310,7 +310,7 @@
 <span class="sd">        Coordinates in the respective dimensions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CoordContainer.__init__"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.CoordContainer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cubes</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="CoordContainer.__init__"><a class="viewcode-back" href="../../api/coord.html#aeolus.coord.CoordContainer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cubes</span><span class="p">,</span> <span class="n">coord_check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate an `AtmosFlow` object.</span>
 
@@ -318,10 +318,13 @@
 <span class="sd">        ----------</span>
 <span class="sd">        cubes: iris.cube.CubeList</span>
 <span class="sd">            Atmospheric fields with necessary coordinates.</span>
+<span class="sd">        coord_check: bool, optional</span>
+<span class="sd">            Check if all cubes have the same set of coordinates.</span>
 <span class="sd">        model: aeolus.model.Model, optional</span>
 <span class="sd">            Model class with relevant coordinate and variable names.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">check_coords</span><span class="p">(</span><span class="n">cubes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coord_check</span><span class="p">:</span>
+            <span class="n">check_coords</span><span class="p">(</span><span class="n">cubes</span><span class="p">)</span>
         <span class="c1"># self.x = cubes[0].coord(model.x)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">]:</span>

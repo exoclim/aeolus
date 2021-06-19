@@ -3,6 +3,16 @@ Changelog
 
 .. default-role:: py:obj
 
+
+0.4.12
+------
+
+:Date: TBA
+
+* Add `coord_check` option to `AtmoSim` and `CoordContainer` to allow for non-checking of coordinates.
+* 
+
+
 0.4.11
 ------
 

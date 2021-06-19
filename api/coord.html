@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.ga909755 documentation</title>
+  <title>Cube coordinate functionality &mdash; aeolus 0+untagged.1.g202d404 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0+untagged.1.ga909755
+                0+untagged.1.g202d404
               </div>
             
           
@@ -210,7 +210,7 @@
 <p>Functionality related to coordinates of cubes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Coordinate container.</p>
 <dl class="py attribute">
@@ -226,12 +226,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[80</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate an <cite>AtmosFlow</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
+<li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
 </dd>
