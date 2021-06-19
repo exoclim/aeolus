@@ -54,6 +54,7 @@ class AtmoSimBase:
         model_type=None,
         timestep=None,
         vert_coord=None,
+        coord_check=False,
     ):
         """
         Instantiate an `AtmoSimBase` object.
@@ -81,10 +82,12 @@ class AtmoSimBase:
             Character identificator for the type of the model's vertical coordinate.
             "z" - data on "level_height"
             "p" - data on pressure levels
+        coord_check: bool, optional
+            Check if all cubes have the same set of coordinates.
 
         See also
         --------
-        aeolus.const.init_const, aeolus.core.Run
+        aeolus.const.init_const, aeolus.coord.CoordContainer
         """
         self._cubes = cubes
         self.name = name
@@ -118,11 +121,12 @@ class AtmoSimBase:
         self.vert_coord = vert_coord
         # TODO: make it more flexible
         if self.vert_coord == "z":
-            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.z))
+            _constr = self.dim_constr.relax.z
         elif self.vert_coord == "p":
-            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.p))
+            _constr = self.dim_constr.relax.p
         else:
-            self.coord = CoordContainer(self._cubes.extract(self.dim_constr.relax.yx))
+            _constr = self.dim_constr.relax.yx
+        self.coord = CoordContainer(self._cubes.extract(_constr), coord_check=coord_check)
 
         if self.vert_coord is not None:
             dim_seq += [f"t{self.vert_coord}yx", f"{self.vert_coord}yx"]

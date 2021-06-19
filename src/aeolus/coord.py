@@ -144,7 +144,7 @@ class CoordContainer:
         Coordinates in the respective dimensions
     """
 
-    def __init__(self, cubes, model=um):
+    def __init__(self, cubes, coord_check=False, model=um):
         """
         Instantiate an `AtmosFlow` object.
 
@@ -152,10 +152,13 @@ class CoordContainer:
         ----------
         cubes: iris.cube.CubeList
             Atmospheric fields with necessary coordinates.
+        coord_check: bool, optional
+            Check if all cubes have the same set of coordinates.
         model: aeolus.model.Model, optional
             Model class with relevant coordinate and variable names.
         """
-        check_coords(cubes)
+        if coord_check:
+            check_coords(cubes)
         # self.x = cubes[0].coord(model.x)
         self.model = model
         for axis in ["x", "y", "z", "t"]:
