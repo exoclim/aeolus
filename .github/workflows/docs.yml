@@ -1,4 +1,4 @@
-name: docs 
+name: docs
 
 on:
   push:
@@ -31,13 +31,13 @@ jobs:
         mamba update -q conda
         conda info -a
         mamba env create -q -n docs_env -f=docs/environment.yml
-        source $HOME/mambaforge/etc/profile.d/conda.sh                                                      
+        source $HOME/mambaforge/etc/profile.d/conda.sh
         conda activate docs_env
         git status
         python setup.py develop
     - name: Build docs
       run: |
-        source $HOME/mambaforge/etc/profile.d/conda.sh                                                      
+        source $HOME/mambaforge/etc/profile.d/conda.sh
         conda activate docs_env
         git clone https://github.com/exoclim/aeolus_data.git examples/data
         cd docs/
