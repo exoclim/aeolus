@@ -1,8 +1,9 @@
+global-exclude *.py[cod]
+global-exclude __pycache__
+prune docs/_build
 include LICENSE
 include src/aeolus/const/store/*.json
 recursive-include docs *
 recursive-include tests *
-prune docs/_build
 include versioneer.py
-global-exclude *.py[cod]
-global-exclude __pycache__
+include src/aeolus/_version.py
