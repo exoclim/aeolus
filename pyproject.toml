@@ -24,6 +24,7 @@ exclude = '''
     | build
     | dist
   )/
+  | src/aeolus/_version.py
   | versioneer.py    # also separately exclude a file named foo.py in
                      # the root of the project
 )
