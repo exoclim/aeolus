@@ -22,15 +22,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        # python -m pip install --upgrade pip
         wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -O $HOME/install_mambaforge.sh
         bash $HOME/install_mambaforge.sh -b -p $HOME/mambaforge
         export PATH="$HOME/mambaforge/bin:$PATH"
         hash -r
         conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-        conda config --add channels conda-forge
         conda config --set channel_priority strict
-        mamba update -q conda
+        mamba update -q conda mamba
         conda info -a
         mamba env create -q -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
         source $HOME/mambaforge/etc/profile.d/conda.sh

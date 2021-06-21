@@ -28,16 +28,12 @@ jobs:
         export PATH="$HOME/mambaforge/bin:$PATH"
         hash -r
         conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-        conda config --add channels conda-forge
         conda config --set channel_priority strict
-        mamba update -q conda
+        mamba update -q conda mamba
         conda info -a
         mamba env create -q -n docs_env -f=docs/environment.yml
         source $HOME/mambaforge/etc/profile.d/conda.sh
         conda activate docs_env
-        git --version
-        git status
-        git describe --tags --dirty --always --long
         python setup.py develop
     - name: Build docs
       run: |
