@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Core hierarchy &mdash; aeolus 0+untagged.1.ge09aa4b documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0+untagged.1.g1a2b463 documentation</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                0+untagged.1.ge09aa4b
+                0+untagged.1.g1a2b463
               </div>
             
           
@@ -226,7 +226,7 @@ Derived quantities are stored as cached properties to save computational time.</
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a cube of reference (surface) pressure as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -243,13 +243,13 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 \[\sqrt{u^2 + v^2 + w^2}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p>
+<dd class="field-odd"><p><strong>args</strong> (<em>iris.cube.Cube</em>) – Cubes of u, v, w wind components.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p>iris.cube.Cube</p>
 </dd>
 </dl>
 </dd></dl>
@@ -261,7 +261,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -269,7 +269,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of total TOA downward energy flux.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p>iris.cube.Cube</p>
 </dd>
 </dl>
 </dd></dl>
@@ -281,7 +281,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<em>iris.cube.CubeList</em>) – Input list of cubes.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
 If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -291,7 +291,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of total surface downward water flux (P-E).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.1.dev0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p>iris.cube.Cube</p>
 </dd>
 </dl>
 </dd></dl>
@@ -357,7 +357,7 @@ Derived quantities are stored as cached properties to save computational time.</
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.1.dev0)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields.</p></li>
+<li><p><strong>cubes</strong> (<em>iris.cube.CubeList</em>) – Atmospheric fields.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The name or label of this <cite>AtmoSim</cite>.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – This is not used internally; it is solely for the user’s information.</p></li>
 <li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
@@ -391,7 +391,7 @@ If not given, Earth physical constants are initialised.</p></li>
 <dd><p>Subset <cite>AtmoSim</cite> using iris constraints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>constraints</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.html#iris.Constraint" title="(in Iris v3.1.dev0)"><em>iris.Constraint</em></a><em> or </em><em>iterable of constraints</em>) – A single constraint or an iterable.</p>
+<dd class="field-odd"><p><strong>constraints</strong> (<em>iris.Constraint</em><em> or </em><em>iterable of constraints</em>) – A single constraint or an iterable.</p>
 </dd>
 </dl>
 </dd></dl>
