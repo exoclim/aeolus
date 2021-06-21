@@ -20,24 +20,24 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        wget -q http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-        bash miniconda.sh -b -p $HOME/miniconda
-        export PATH="$HOME/miniconda/bin:$PATH"
+        # python -m pip install --upgrade pip
+        wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -O $HOME/install_mambaforge.sh
+        bash $HOME/install_mambaforge.sh -b -p $HOME/mambaforge
+        export PATH="$HOME/mambaforge/bin:$PATH"
         hash -r
         conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
         conda config --add channels conda-forge
         conda config --set channel_priority strict
-        conda update -q conda
+        mamba update -q conda
         conda info -a
-        conda env create -q -n docs_env -f=docs/environment.yml
-        source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+        mamba env create -q -n docs_env -f=docs/environment.yml
+        source $HOME/mambaforge/etc/profile.d/conda.sh                                                      
         conda activate docs_env
         git status
         python setup.py develop
     - name: Build docs
       run: |
-        source $HOME/miniconda/etc/profile.d/conda.sh                                                      
+        source $HOME/mambaforge/etc/profile.d/conda.sh                                                      
         conda activate docs_env
         git clone https://github.com/exoclim/aeolus_data.git examples/data
         cd docs/
