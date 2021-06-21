@@ -30,18 +30,17 @@ jobs:
         conda config --set channel_priority strict
         conda update -q conda
         conda info -a
-        conda env create -n docs_env -f=docs/environment.yml
+        conda env create -q -n docs_env -f=docs/environment.yml
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate docs_env
+        git pull --tags
         python setup.py develop
-        python -c "import aeolus; print(aeolus.__version__)"
     - name: Build docs
       run: |
         source $HOME/miniconda/etc/profile.d/conda.sh                                                      
         conda activate docs_env
         git clone https://github.com/exoclim/aeolus_data.git examples/data
         cd docs/
-        python -c "import aeolus; print(aeolus.__version__)"
         make html -e
     - name: Commit documentation changes
       run: |
