@@ -1,30 +1,7 @@
 """Matplotlib-related utilities."""
-import matplotlib.colors as mcolors
 from matplotlib.lines import Line2D
 
-import numpy as np
-
-from ..exceptions import _warn
-
-
-__all__ = ("MidpointNormalize", "add_custom_legend")
-
-
-class MidpointNormalize(mcolors.Normalize):
-    """Normalise data around a midpoint."""
-
-    def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):  # noqa
-        _warn(
-            "MidpointNormalize is deprecated and will be removed in the next release. "
-            "Use matplotlib.colors.CenteredNorm instead."
-        )
-        self.midpoint = midpoint
-        mcolors.Normalize.__init__(self, vmin, vmax, clip)
-
-    def __call__(self, value, clip=None):  # noqa
-        # Ignoring masked values and all kinds of edge cases
-        x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
-        return np.ma.masked_array(np.interp(value, x, y))
+__all__ = ("add_custom_legend",)
 
 
 def add_custom_legend(ax, styles_and_labels, **leg_kw):

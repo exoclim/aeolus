@@ -10,7 +10,8 @@ Changelog
 :Date: TBA
 
 * Add `coord_check` option to `AtmoSim` and `CoordContainer` to allow for non-checking of coordinates.
-* 
+* Remove `MidpointNormalize`
+
 
 
 0.4.11
