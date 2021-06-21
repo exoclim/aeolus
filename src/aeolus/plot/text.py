@@ -7,7 +7,7 @@ from LatLon23 import Latitude, Longitude
 from ..exceptions import ArgumentError
 
 
-__all__ = ("fmt_lonlat", "subplot_label_generator")
+__all__ = ("fmt_lonlat", "subplot_label_generator", "tex2cf_units")
 
 
 def fmt_lonlat(value, lon_or_lat, degree=False):
@@ -55,3 +55,10 @@ def subplot_label_generator():
     for i in itertools.count(1):
         for p in itertools.product(string.ascii_lowercase, repeat=i):
             yield "".join(p)
+
+
+def tex2cf_units(unit_str):
+    """Convert a TeX string to a string that can be used in cf_units."""
+    return (
+        unit_str.replace("$", "").replace("{", "").replace("}", "").replace("^", "**")
+    )

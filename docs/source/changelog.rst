@@ -11,7 +11,7 @@ Changelog
 
 * Add `coord_check` option to `AtmoSim` and `CoordContainer` to allow for non-checking of coordinates.
 * Remove `MidpointNormalize`
-
+* Add `plot.text.tex2cf_units()`
 
 
 0.4.11

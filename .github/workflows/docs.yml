@@ -33,6 +33,7 @@ jobs:
         mamba env create -q -n docs_env -f=docs/environment.yml
         source $HOME/mambaforge/etc/profile.d/conda.sh
         conda activate docs_env
+        git --version
         git status
         python setup.py develop
     - name: Build docs
