@@ -59,6 +59,4 @@ def subplot_label_generator():
 
 def tex2cf_units(unit_str):
     """Convert a TeX string to a string that can be used in cf_units."""
-    return (
-        unit_str.replace("$", "").replace("{", "").replace("}", "").replace("^", "**")
-    )
+    return unit_str.replace("$", "").replace("{", "").replace("}", "").replace("^", "**")
