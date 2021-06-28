@@ -17,8 +17,7 @@ Developing the code
 2. Make changes, commit them and push to *your* remote. (Which again, should have your URL. You can check it by typing :code:`git remote -v`).
 3. Test the changes (see below)!
 4. Go to your aeolus page on GitHub and create a pull request (a prompt for this should show up on top of the page).
-5. Wait for the automatic tests to pass and for aeolus developers to review your pull request.
-   a. If any further changes are needed, make the necessary changes and commit to your forked remote repository. The pull request will update automatically.
+5. Wait for the automatic tests to pass and for aeolus developers to review your pull request. If any further changes are needed, make the necessary changes and commit to your forked remote repository. The pull request will update automatically.
 
 
 Checking the code formatting
