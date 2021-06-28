@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Contains functionality for making special plots."""
 from .cart import GeoAxesGrid, label_global_map_gridlines
 from .cloud import CloudPlotter

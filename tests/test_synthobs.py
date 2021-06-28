@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test synthobs submodule."""
 from pathlib import Path
 

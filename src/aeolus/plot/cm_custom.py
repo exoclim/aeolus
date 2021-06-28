@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Custom colormaps."""
 from matplotlib.colors import ListedColormap
 

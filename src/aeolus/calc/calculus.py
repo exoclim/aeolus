@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Generic calculus functions."""
 from cf_units import Unit
 

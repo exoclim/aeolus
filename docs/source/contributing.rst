@@ -21,15 +21,20 @@ Developing the code
    a. If any further changes are needed, make the necessary changes and commit to your forked remote repository. The pull request will update automatically.
 
 
+Checking the code formatting
+----------------------------
+0. Install :code:`pre-commit` in the current environment: :code:`pip install pre-commit`.
+1. Check the formatting style by running :code:`pre-commit` on all files: :code:`pre-commit run --all-files`.
+2. The errors should be corrected automatically, otherwise fix them manually.
+3. On your next commit, the :code:`pre-commit` hook should work automatically.
+
+
 Testing the code
 ----------------
 0. Run your own tests to make sure the code does what you expect (make sure you are importing the "right" version of aeolus).
-1. Install :code:`black`, :code:`pytest` and :code:`flake8`.
-2. Check the formatting style by typing :code:`black --check .`
-3. If it returns an error, fix the issues manually or by running :code:`black path/to/file.py`
-4. Download the test data (from the top level of the aeolus directory) :code:`git clone https://github.com/exoclim/aeolus_data.git tests/data`
-5. Run aeolus tests :code:`pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v`
-6. Fix all the errors, including PEP8 issues (flagged as :code:`flake8` errors or warnings).
+1. Download the test data (from the top level of the aeolus directory) :code:`git clone https://github.com/exoclim/aeolus_data.git tests/data`
+2. Run aeolus tests :code:`pytest -c setup.cfg --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v`
+3. Fix all the errors, if there are any!.
 
 
 Contributing to the documentation

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Subsetting variables over geographical regions."""
 import iris
 from iris.analysis.cartography import wrap_lons

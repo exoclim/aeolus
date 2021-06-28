@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Prepare data in spherical coordinates for pyvista plotting."""
 import numpy as np
 

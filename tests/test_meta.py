@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test the meta submodule."""
 from aeolus import meta
 from aeolus.const import init_const

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Interface to metpy calc functions."""
 import functools
 

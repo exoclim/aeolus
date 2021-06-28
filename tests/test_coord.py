@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test coord submodule."""
 from aeolus import coord
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Input and output functionality."""
 from pathlib import Path
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Matplotlib-related utilities."""
 from matplotlib.lines import Line2D
 

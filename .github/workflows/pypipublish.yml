@@ -1,4 +1,4 @@
-name: pypipublish 
+name: pypipublish
 
 on:
   release:

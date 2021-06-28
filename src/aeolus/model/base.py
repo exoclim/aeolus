@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Model-specific dictionaries of variable names and coordinates."""
 import textwrap
 from dataclasses import dataclass

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Some commonly used diagnostics in atmospheric science."""
 from cf_units import Unit
 

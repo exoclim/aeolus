@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Metadata-related functionality."""
 import functools
 from collections.abc import Iterable

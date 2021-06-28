@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Model-specific dictionaries of variable names and coordinates."""
 from .base import Model
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Plotting functions used with cartopy."""
 import cartopy.crs as ccrs
 from cartopy.mpl.geoaxes import GeoAxes

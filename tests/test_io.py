@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test io submodule."""
 from pathlib import Path
 

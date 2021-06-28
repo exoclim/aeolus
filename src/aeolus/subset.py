@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Subset cubes using iris constraints."""
 from datetime import timedelta
 from itertools import combinations

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """aeolus package."""
 from ._version import get_versions
 

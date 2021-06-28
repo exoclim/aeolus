@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Statistical functions."""
 import iris
 from iris.exceptions import CoordinateCollapseError as CoColErr

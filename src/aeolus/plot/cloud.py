@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Utilities to plot cloud-related output of UM."""
 import warnings
 

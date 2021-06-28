@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Text-related formatting functions."""
 import itertools
 import string

@@ -38,5 +38,5 @@ Python library for the analysis and visualisation of climate model output, prima
 <p align="center">
 It leverages the functionality of <a href=https://github.com/SciTools/iris>iris</a> and has modules geared towards working with 3D general circulation models of planetary atmospheres.
 The documentation is available <a href=https://exoclim.github.io/aeolus>here</a>.
-Contributions are welcome.
+<a href=https://exoclim.github.io/aeolus/contributing.html>Contributions</a> are very welcome.
 </p>

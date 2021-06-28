@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Functions for calculating synthetic observations."""
 import iris
 from iris.util import reverse
