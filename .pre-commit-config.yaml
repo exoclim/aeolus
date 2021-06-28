@@ -4,7 +4,7 @@ repos:
     hooks:
     - id: black
       language_version: python3
-      args: [--config=./pyproject.toml]
+      exclude: versioneer\.py|src/aeolus/_version\.py$
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.2
     hooks:

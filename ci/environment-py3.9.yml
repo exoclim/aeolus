@@ -1,4 +1,4 @@
-name: aeolus_py39
+name: aeolus_test
 channels:
 - conda-forge
 dependencies:

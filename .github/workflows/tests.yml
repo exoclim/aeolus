@@ -7,42 +7,38 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9']
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -O $HOME/install_mambaforge.sh
-        bash $HOME/install_mambaforge.sh -b -p $HOME/mambaforge
-        export PATH="$HOME/mambaforge/bin:$PATH"
-        hash -r
-        conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-        conda config --set channel_priority strict
-        mamba update -q conda mamba
-        conda info -a
-        mamba env create -q -n test_env -f=ci/environment-py${{ matrix.python-version }}.yml
-        source $HOME/mambaforge/etc/profile.d/conda.sh
-        conda activate test_env
-        python setup.py develop
-    - name: Check formatting with black
-      run: |
-        source $HOME/mambaforge/etc/profile.d/conda.sh
-        conda activate test_env
-        python -m pip install --upgrade black
-        black --check .
-    - name: Test with pytest
-      run: |
-        source $HOME/mambaforge/etc/profile.d/conda.sh
-        conda activate test_env
-        git clone https://github.com/exoclim/aeolus_data.git tests/data
-        pytest -c setup.cfg --flake8 --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Conda Environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          environment-file: ci/environment-${{ matrix.python-version }}.yml
+          miniforge-variant: Mambaforge
+          miniforge-version: "latest"
+          use-mamba: true
+          activate-environment: aeolus_test
+          auto-activate-base: false
+
+      - name: Install
+        shell: bash -l {0}
+        run: python -m pip install -e .
+
+      - name: List installed packages
+        shell: bash -l {0}
+        run: conda list
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+          git clone https://github.com/exoclim/aeolus_data.git tests/data
+          python -m pytest -c setup.cfg --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
