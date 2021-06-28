@@ -38,10 +38,12 @@ jobs:
         run: conda list
 
       - name: Build docs
+        shell: bash -l {0}
         run: |
           git clone https://github.com/exoclim/aeolus_data.git examples/data
           cd docs/
           make html -e
+
       - name: Commit documentation changes
         run: |
           git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
@@ -52,6 +54,7 @@ jobs:
           git add .
           git commit -m "Update documentation" -a || true
           # The above command will fail if no changes were present, so we ignore that.
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

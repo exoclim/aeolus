@@ -42,3 +42,6 @@ jobs:
         run: |
           git clone https://github.com/exoclim/aeolus_data.git tests/data
           python -m pytest -c setup.cfg --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v
+
+      - name: Coverage
+        uses: codecov/codecov-action@v1
