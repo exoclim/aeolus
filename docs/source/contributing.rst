@@ -13,7 +13,7 @@ Setting up repositories
 Developing the code
 -------------------
 0. It is often more convenient to install the library you are developing in the "developer" mode. To do this, navigate to the cloned copy of the repository and type :code:`pip install -e .` (Make sure you are using :code:`pip` in the correct python environment and note the dot at the end!) Alternatively, run :code:`python setup.py develop` (no dot at the end).
-1. It is also better to create a new branch instead of working on the master branch (e.g. :code:`git checkout -b new_branch_for_cool_addition`). If your contribution is relatively small, such as fixing one small bug or typo, you can skip this step.
+1. It is also better to create a new branch instead of working on the main branch (e.g. :code:`git checkout -b new_branch_for_cool_addition`). If your contribution is relatively small, such as fixing one small bug or typo, you can skip this step.
 2. Make changes, commit them and push to *your* remote. (Which again, should have your URL. You can check it by typing :code:`git remote -v`).
 3. Test the changes (see below)!
 4. Go to your aeolus page on GitHub and create a pull request (a prompt for this should show up on top of the page).
