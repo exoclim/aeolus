@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Contributor’s Guide &mdash; aeolus 0.4.11+27.g2192ce8 documentation</title>
+  <title>Contributor’s Guide &mdash; aeolus 0.4.11+28.g3b771d6 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.4.11+27.g2192ce8
+                0.4.11+28.g3b771d6
               </div>
             
           
@@ -101,6 +101,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributor’s Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-repositories">Setting up repositories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#developing-the-code">Developing the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-the-code-formatting">Checking the code formatting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-the-code">Testing the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#contributing-to-the-documentation">Contributing to the documentation</a></li>
 </ul>
@@ -219,16 +220,22 @@
 a. If any further changes are needed, make the necessary changes and commit to your forked remote repository. The pull request will update automatically.</p></li>
 </ol>
 </div>
+<div class="section" id="checking-the-code-formatting">
+<h2>Checking the code formatting<a class="headerlink" href="#checking-the-code-formatting" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple" start="0">
+<li><p>Install <code class="code docutils literal notranslate"><span class="pre">pre-commit</span></code> in the current environment: <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pre-commit</span></code>.</p></li>
+<li><p>Check the formatting style by running <code class="code docutils literal notranslate"><span class="pre">pre-commit</span></code> on all files: <code class="code docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all-files</span></code>.</p></li>
+<li><p>The errors should be corrected automatically, otherwise fix them manually.</p></li>
+<li><p>On your next commit, the <code class="code docutils literal notranslate"><span class="pre">pre-commit</span></code> hook should work automatically.</p></li>
+</ol>
+</div>
 <div class="section" id="testing-the-code">
 <h2>Testing the code<a class="headerlink" href="#testing-the-code" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple" start="0">
 <li><p>Run your own tests to make sure the code does what you expect (make sure you are importing the “right” version of aeolus).</p></li>
-<li><p>Install <code class="code docutils literal notranslate"><span class="pre">black</span></code>, <code class="code docutils literal notranslate"><span class="pre">pytest</span></code> and <code class="code docutils literal notranslate"><span class="pre">flake8</span></code>.</p></li>
-<li><p>Check the formatting style by typing <code class="code docutils literal notranslate"><span class="pre">black</span> <span class="pre">--check</span> <span class="pre">.</span></code></p></li>
-<li><p>If it returns an error, fix the issues manually or by running <code class="code docutils literal notranslate"><span class="pre">black</span> <span class="pre">path/to/file.py</span></code></p></li>
 <li><p>Download the test data (from the top level of the aeolus directory) <code class="code docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/exoclim/aeolus_data.git</span> <span class="pre">tests/data</span></code></p></li>
-<li><p>Run aeolus tests <code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-c</span> <span class="pre">setup.cfg</span> <span class="pre">--flake8</span> <span class="pre">--cov=aeolus</span> <span class="pre">--cov-config</span> <span class="pre">.coveragerc</span> <span class="pre">--cov-report</span> <span class="pre">term-missing</span> <span class="pre">-v</span></code></p></li>
-<li><p>Fix all the errors, including PEP8 issues (flagged as <code class="code docutils literal notranslate"><span class="pre">flake8</span></code> errors or warnings).</p></li>
+<li><p>Run aeolus tests <code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-c</span> <span class="pre">setup.cfg</span> <span class="pre">--cov=aeolus</span> <span class="pre">--cov-config</span> <span class="pre">.coveragerc</span> <span class="pre">--cov-report</span> <span class="pre">term-missing</span> <span class="pre">-v</span></code></p></li>
+<li><p>Fix all the errors, if there are any!.</p></li>
 </ol>
 </div>
 <div class="section" id="contributing-to-the-documentation">

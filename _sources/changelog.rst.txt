@@ -13,6 +13,7 @@ Changelog
 * Remove `MidpointNormalize`
 * Add `plot.text.tex2cf_units()`
 * Rewrite github actions
+* Add pre-commit hooks
 
 
 0.4.11
@@ -24,7 +25,7 @@ Changelog
 * Fix a bug with the `const_from_attrs` decorator
 * Add contributor's guide
 * Replace all autodoc function and class references by module references
- 
+
 
 0.4.10
 ------
@@ -81,7 +82,7 @@ Changelog
 * Replace TravisCI with GitHub Actions
 
 * Restructure the package:
-  
+
   - the library is now in `src/aeolus`
   - tests are now in `tests/`
 
@@ -156,12 +157,12 @@ Changelog
   - replace all `DIM_CONSTR_*` by a class `DimConstr` with each of the constraints as an attribute
   - replace `coord.add_binned_lon_lat()` by a generic `coord.add_binned_coord()` function
 
-* Minor bug fixes and clean-up 
+* Minor bug fixes and clean-up
 
 0.4.4
 -----
 
-:Date: 04 May 2020 
+:Date: 04 May 2020
 
 * Add Python 3.8 to build matrix
 * API changes: merge `grid` into `coord`; move `misc` flux calculations to `calc` submodule, remove `util` folder by moving `text` to `plot`.
