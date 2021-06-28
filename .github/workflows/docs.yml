@@ -5,56 +5,56 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  docs:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ubuntu-latest 
         python-version: ['3.9']
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        # python -m pip install --upgrade pip
-        wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -O $HOME/install_mambaforge.sh
-        bash $HOME/install_mambaforge.sh -b -p $HOME/mambaforge
-        export PATH="$HOME/mambaforge/bin:$PATH"
-        hash -r
-        conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-        conda config --set channel_priority strict
-        mamba update -q conda mamba
-        conda info -a
-        mamba env create -q -n docs_env -f=docs/environment.yml
-        source $HOME/mambaforge/etc/profile.d/conda.sh
-        conda activate docs_env
-        python setup.py develop
-    - name: Build docs
-      run: |
-        source $HOME/mambaforge/etc/profile.d/conda.sh
-        conda activate docs_env
-        git clone https://github.com/exoclim/aeolus_data.git examples/data
-        cd docs/
-        make html -e
-    - name: Commit documentation changes
-      run: |
-        git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
-        cp -r docs/_build/html/* gh-pages/
-        cd gh-pages
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Update documentation" -a || true
-        # The above command will fail if no changes were present, so we ignore that.
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: gh-pages
-        directory: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Conda Environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          environment-file: docs/environment.yml
+          miniforge-variant: Mambaforge
+          miniforge-version: "latest"
+          use-mamba: true
+          activate-environment: aeolus_docs
+          auto-activate-base: false
+
+      - name: Install
+        shell: bash -l {0}
+        run: python -m pip install -e .
+
+      - name: List installed packages
+        shell: bash -l {0}
+        run: conda list
+
+      - name: Build docs
+        run: |
+          git clone https://github.com/exoclim/aeolus_data.git examples/data
+          cd docs/
+          make html -e
+      - name: Commit documentation changes
+        run: |
+          git clone https://github.com/$GITHUB_REPOSITORY.git --branch gh-pages --single-branch gh-pages
+          cp -r docs/_build/html/* gh-pages/
+          cd gh-pages
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update documentation" -a || true
+          # The above command will fail if no changes were present, so we ignore that.
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          directory: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
