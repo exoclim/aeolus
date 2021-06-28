@@ -15,6 +15,9 @@ Python library for the analysis and visualisation of climate model output, prima
 <a href="https://github.com/exoclim/aeolus/actions?query=workflow%3Atests">
 <img src="https://github.com/exoclim/aeolus/workflows/tests/badge.svg"
      alt="Tests"></a>
+<a href="https://codecov.io/github/exoclim/aeolus?branch=master">
+<img src="https://codecov.io/github/exoclim/aeolus/coverage.svg?branch=master"
+     alt="Coverage"></a>
 <a href="https://github.com/exoclim/aeolus/actions?query=workflow%3Alinting">
 <img src="https://github.com/exoclim/aeolus/workflows/linting/badge.svg"
      alt="Linting"></a>
