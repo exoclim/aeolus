@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 """Test coord submodule."""
+from pathlib import Path
+
 from aeolus import coord
 
 import iris
 
 import numpy as np
 import numpy.testing as npt
+
+import pytest
+
+
+TST_DATA = Path(__file__).parent / "data" / "test_data"
+
+
+@pytest.fixture(scope="module")
+def example_cubelist_from_file():
+    return iris.load(str(TST_DATA / "netcdf" / "held_suarez_1200d.nc"))
 
 
 def test_cell_centres():
@@ -54,3 +66,45 @@ def test_coord_to_cube():
     assert cc.standard_name == "longitude"
     assert cc.units == "m"
     npt.assert_allclose(cc.data, xc.points)
+
+
+def test_isel_cube(example_cubelist_from_file):
+    cube = example_cubelist_from_file[0]
+    result = coord.isel(cube, "latitude", 11)
+    assert result.shape == (7, 72)
+    assert result.coord("latitude").points[0] == -44.0
+    kgo = [
+        279.34421964,
+        304.32601524,
+        314.35886024,
+        357.66854755,
+        443.61117028,
+        575.30497115,
+        732.65202309,
+    ]
+    npt.assert_allclose(result.data[:, 0], kgo)
+    result = coord.isel(cube, cube.coords()[-1], 0)
+    assert result.shape == (45, 72)
+    with pytest.raises(IndexError):
+        coord.isel(cube, "latitude", 123, skip_not_found=True)
+    with pytest.raises(iris.exceptions.CoordinateNotFoundError):
+        coord.isel(cube, "blah", 11)
+    result = coord.isel(cube, "blah", 11, skip_not_found=True)
+    assert result is cube
+
+
+def test_isel_cubelist(example_cubelist_from_file):
+    cl = example_cubelist_from_file
+    result = coord.isel(cl, "latitude", 11)
+    assert all([i.shape == (7, 72) for i in result])
+    assert result[-1].coord("latitude").points[0] == -44.0
+    result = coord.isel(cl, "blah", 11)
+    assert result == cl
+    with pytest.raises(iris.exceptions.CoordinateNotFoundError):
+        result = coord.isel(cl, "blah", 11, skip_not_found=False)
+    cube1 = cl[0].copy()
+    cube1.remove_coord("latitude")
+    cube1.remove_coord("longitude")
+    cube2 = cl[1]
+    result = coord.isel([cube1, cube2], "latitude", 11)
+    assert len(result) == 2
