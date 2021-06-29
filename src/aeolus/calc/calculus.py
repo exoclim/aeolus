@@ -98,9 +98,9 @@ def div_h(i_cube, j_cube, r_planet=None, model=um):
     .. math::
 
         \nabla\cdot \vec A = \frac{1}{r cos \theta} (
-        \frac{\partial \vec A_\lambda}{\partial \lambda}
+        \frac{\partial A_\lambda}{\partial \lambda}
         + \frac{\partial}{\partial \theta}
-        (\vec A_\theta cos \theta))
+        (A_\theta cos \theta))
 
     where \lambda is longitude, \theta is latitude.
     """
