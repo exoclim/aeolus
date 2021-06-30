@@ -3,8 +3,18 @@ name: tests
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'ci/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'setup.*'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'ci/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'setup.*'
 
 jobs:
   test:
