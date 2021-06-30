@@ -33,6 +33,9 @@ Python library for the analysis and visualisation of climate model output, prima
 <a href="https://github.com/psf/black">
 <img src="https://img.shields.io/badge/code%20style-black-000000.svg"
      alt="black"></a>
+<a href="https://results.pre-commit.ci/latest/github/exoclim/aeolus/main">
+<img src="https://results.pre-commit.ci/badge/github/exoclim/aeolus/main.svg"
+     alt="pre-commit.ci status"></a>
 </p>
 
 <p align="center">
