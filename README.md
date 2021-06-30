@@ -18,9 +18,6 @@ Python library for the analysis and visualisation of climate model output, prima
 <a href="https://codecov.io/github/exoclim/aeolus?branch=main">
 <img src="https://codecov.io/github/exoclim/aeolus/coverage.svg?branch=main"
      alt="Coverage"></a>
-<a href="https://github.com/exoclim/aeolus/actions?query=workflow%3Alinting">
-<img src="https://github.com/exoclim/aeolus/workflows/linting/badge.svg"
-     alt="Linting"></a>
 <a href="https://anaconda.org/conda-forge/aeolus">
 <img src="https://img.shields.io/conda/vn/conda-forge/aeolus.svg"
      alt="Conda Version"></a>
@@ -28,7 +25,7 @@ Python library for the analysis and visualisation of climate model output, prima
 <img src="https://img.shields.io/pypi/v/aeolus.svg?logo=pypi&logoColor=white"
      alt="PyPI"></a>
 <a href="LICENSE">
-<img src="https://img.shields.io/badge/License-LGPL%20v3-blue.svg?logo=gnu"
+<img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg?logo=gnu"
      alt="License: LGPL v3"></a>
 <a href="https://github.com/psf/black">
 <img src="https://img.shields.io/badge/code%20style-black-000000.svg"
