@@ -51,7 +51,7 @@ jobs:
         shell: bash -l {0}
         run: |
           git clone https://github.com/exoclim/aeolus_data.git tests/data
-          python -m pytest -c setup.cfg --cov=aeolus --cov-config .coveragerc --cov-report=xml
+          python -m pytest -c setup.cfg --cov=aeolus --cov-report=xml
 
       - name: Coverage
         uses: codecov/codecov-action@v1
