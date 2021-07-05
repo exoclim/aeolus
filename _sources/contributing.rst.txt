@@ -32,7 +32,7 @@ Testing the code
 ----------------
 0. Run your own tests to make sure the code does what you expect (make sure you are importing the "right" version of aeolus).
 1. Download the test data (from the top level of the aeolus directory) :code:`git clone https://github.com/exoclim/aeolus_data.git tests/data`
-2. Run aeolus tests :code:`pytest -c setup.cfg --cov=aeolus --cov-config .coveragerc --cov-report term-missing -v`
+2. Run aeolus tests :code:`pytest -c setup.cfg --cov=aeolus --cov-report term-missing -v`
 3. Fix all the errors, if there are any!.
 
 
