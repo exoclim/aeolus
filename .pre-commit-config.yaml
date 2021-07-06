@@ -21,7 +21,7 @@ repos:
     - id: blacken-docs
       types: [file, rst]
       additional_dependencies: [black==21.6b0]
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
     - id: flake8
