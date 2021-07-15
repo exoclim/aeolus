@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.plot.text &mdash; aeolus 0.4.11+38.g67298c2 documentation</title>
+  <title>aeolus.plot.text &mdash; aeolus 0.4.11+43.g2c3d24c documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.4.11+38.g67298c2
+                0.4.11+43.g2c3d24c
               </div>
             
           
@@ -167,9 +167,8 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Text-related formatting functions.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">string</span>
-
-<span class="kn">from</span> <span class="nn">LatLon23</span> <span class="kn">import</span> <span class="n">Latitude</span><span class="p">,</span> <span class="n">Longitude</span>
 
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span>
 
@@ -203,6 +202,8 @@
 <span class="sd">    &gt;&gt;&gt; fmt_lonlat(0, &quot;lon&quot;)</span>
 <span class="sd">    &#39;0&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">LatLon23</span> <span class="kn">import</span> <span class="n">Latitude</span><span class="p">,</span> <span class="n">Longitude</span>  <span class="c1"># noqa</span>
+
     <span class="k">if</span> <span class="n">lon_or_lat</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lat&quot;</span><span class="p">):</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">Latitude</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">lon_or_lat</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lon&quot;</span><span class="p">):</span>
@@ -227,6 +228,69 @@
 <div class="viewcode-block" id="tex2cf_units"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.text.tex2cf_units">[docs]</a><span class="k">def</span> <span class="nf">tex2cf_units</span><span class="p">(</span><span class="n">unit_str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert a TeX string to a string that can be used in cf_units.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">unit_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="s2">&quot;**&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">unit_format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">decimal_digits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a string representation of a given number with units.</span>
+
+<span class="sd">    Format the scientific notation of the given number for use with LaTeX or Mathtext,</span>
+<span class="sd">    with specified number of significant decimal digits and precision (number of decimal digits</span>
+<span class="sd">    to show). The exponent to be used can also be specified explicitly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value: int or float</span>
+<span class="sd">        Number to be formatted.</span>
+<span class="sd">    unit: str or int, optional</span>
+<span class="sd">        Units of the number, if any.</span>
+<span class="sd">    decimal_digits: int, optional</span>
+<span class="sd">        Significant decimal digits.</span>
+<span class="sd">    precision: int, optional</span>
+<span class="sd">        Number of decimal digits to show.</span>
+<span class="sd">    exponent: int, optional</span>
+<span class="sd">        Exponent of the resulting number.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; unit_format(-1.234e-5)</span>
+<span class="sd">    &#39;$-1.2\\times10^{-5}$&#39;</span>
+<span class="sd">    &gt;&gt;&gt; unit_format(6)</span>
+<span class="sd">    &#39;$6.0$&#39;</span>
+<span class="sd">    &gt;&gt;&gt; unit_format(1.234e5, unit=&quot;m s^{-1}&quot;)</span>
+<span class="sd">    &#39;$1.2\\times10^{5}$ $m$ $s^{-1}$&#39;</span>
+<span class="sd">    &gt;&gt;&gt; unit_format(1.234, decimal_digits=1, precision=3)</span>
+<span class="sd">    &#39;$1.200$&#39;</span>
+<span class="sd">    &gt;&gt;&gt; unit_format(1.234, decimal_digits=3, precision=1)</span>
+<span class="sd">    &#39;$1.2$&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+        <span class="n">unit_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unit_str</span> <span class="o">=</span> <span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;$ $&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">$&#39;</span>
+        <span class="k">if</span> <span class="s2">&quot;%&quot;</span> <span class="ow">in</span> <span class="n">unit_str</span><span class="p">:</span>
+            <span class="n">unit_str</span> <span class="o">=</span> <span class="n">unit_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\%&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">unit_str</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">precision</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">precision</span> <span class="o">=</span> <span class="n">decimal_digits</span>
+        <span class="k">if</span> <span class="n">exponent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">exponent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">))))</span>
+
+        <span class="n">coeff</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">exponent</span><span class="p">,</span> <span class="n">decimal_digits</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exponent</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="sa">fr</span><span class="s2">&quot;$</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">decimal_digits</span><span class="p">)</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">$&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="sa">fr</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">coeff</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">\times10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exponent</span><span class="si">:</span><span class="s2">d</span><span class="se">}}</span><span class="si">}</span><span class="s2">$&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="sa">fr</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">unit_str</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">string</span>
 </pre></div>
 
            </div>
