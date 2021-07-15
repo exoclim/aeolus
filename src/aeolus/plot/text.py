@@ -37,6 +37,7 @@ def fmt_lonlat(value, lon_or_lat, degree=False):
     '0'
     """
     from LatLon23 import Latitude, Longitude  # noqa
+
     if lon_or_lat.lower().startswith("lat"):
         res = Latitude(value)
     elif lon_or_lat.lower().startswith("lon"):
