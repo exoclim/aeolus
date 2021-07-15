@@ -4,7 +4,7 @@ from .cart import GeoAxesGrid, label_global_map_gridlines
 from .cloud import CloudPlotter
 from .cm_custom import cloudtypes_cmap
 from .mpl import add_custom_legend
-from .text import fmt_lonlat, subplot_label_generator, tex2cf_units
+from .text import fmt_lonlat, subplot_label_generator, tex2cf_units, unit_format
 
 
 __all__ = (
@@ -16,4 +16,5 @@ __all__ = (
     "label_global_map_gridlines",
     "subplot_label_generator",
     "tex2cf_units",
+    "unit_format",
 )
