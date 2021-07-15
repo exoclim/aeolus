@@ -65,7 +65,7 @@ def tex2cf_units(unit_str):
 
 
 def unit_format(value, unit="1", decimal_digits=1, precision=None, exponent=None):
-    """
+    r"""
     Return a string representation of a given number with units.
 
     Format the scientific notation of the given number for use with LaTeX or Mathtext,
