@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Plotting functions &mdash; aeolus 0.4.11+44.gf1d437e documentation</title>
+  <title>Plotting functions &mdash; aeolus 0.4.11+45.gf742d28 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.4.11+44.gf1d437e
+                0.4.11+45.gf742d28
               </div>
             
           
@@ -339,6 +339,45 @@ keywords as values.</p></li>
 <dt class="sig sig-object py" id="aeolus.plot.text.tex2cf_units">
 <span class="sig-prename descclassname"><span class="pre">aeolus.plot.text.</span></span><span class="sig-name descname"><span class="pre">tex2cf_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/text.html#tex2cf_units"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.text.tex2cf_units" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a TeX string to a string that can be used in cf_units.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.plot.text.unit_format">
+<span class="sig-prename descclassname"><span class="pre">aeolus.plot.text.</span></span><span class="sig-name descname"><span class="pre">unit_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exponent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/text.html#unit_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.text.unit_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representation of a given number with units.</p>
+<p>Format the scientific notation of the given number for use with LaTeX or Mathtext,
+with specified number of significant decimal digits and precision (number of decimal digits
+to show). The exponent to be used can also be specified explicitly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Number to be formatted.</p></li>
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Units of the number, if any.</p></li>
+<li><p><strong>decimal_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Significant decimal digits.</p></li>
+<li><p><strong>precision</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of decimal digits to show.</p></li>
+<li><p><strong>exponent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Exponent of the resulting number.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">unit_format</span><span class="p">(</span><span class="o">-</span><span class="mf">1.234e-5</span><span class="p">)</span>
+<span class="go">&#39;$-1.2\\times10^{-5}$&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unit_format</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">&#39;$6.0$&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unit_format</span><span class="p">(</span><span class="mf">1.234e5</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;m s^{-1}&quot;</span><span class="p">)</span>
+<span class="go">&#39;$1.2\\times10^{5}$ $m$ $s^{-1}$&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unit_format</span><span class="p">(</span><span class="mf">1.234</span><span class="p">,</span> <span class="n">decimal_digits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&#39;$1.200$&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unit_format</span><span class="p">(</span><span class="mf">1.234</span><span class="p">,</span> <span class="n">decimal_digits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;$1.2$&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
