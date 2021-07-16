@@ -7,7 +7,7 @@ import string
 from ..exceptions import ArgumentError
 
 
-__all__ = ("fmt_lonlat", "subplot_label_generator", "tex2cf_units")
+__all__ = ("fmt_lonlat", "subplot_label_generator", "tex2cf_units", "unit_format")
 
 
 def fmt_lonlat(value, lon_or_lat, degree=False):
