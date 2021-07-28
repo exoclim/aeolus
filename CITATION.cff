@@ -1,0 +1,15 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Sergeev
+    given-names: Denis E.
+    orcid: https://orcid.org/0000-0001-8832-5288
+    website: dennissergeev.github.io
+  - family-names: Zamyatina
+    given-names: Maria
+    orcid: https://orcid.org/0000-0002-9705-0535
+    website: dennissergeev.github.io
+title: "aeolus"
+version: 0.4.11
+# doi:
+date-released: 2021-06-08
