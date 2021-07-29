@@ -7,7 +7,7 @@ Changelog
 0.4.12
 ------
 
-:Date: TBA
+:Date: 29 July 2021
 
 * Add `coord_check` option to `AtmoSim` and `CoordContainer` to allow for non-checking of coordinates.
 * Remove `MidpointNormalize`
