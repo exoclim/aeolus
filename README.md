@@ -33,7 +33,7 @@ Python library for the analysis and visualisation of climate model output, prima
 <a href="https://results.pre-commit.ci/latest/github/exoclim/aeolus/main">
 <img src="https://results.pre-commit.ci/badge/github/exoclim/aeolus/main.svg"
      alt="pre-commit.ci status"></a>
-<a href="https://zenodo.org/badge/latestdoi/173159428">i
+<a href="https://zenodo.org/badge/latestdoi/173159428">
 <img src="https://zenodo.org/badge/173159428.svg"
      alt="DOI"></a>
 </p>
