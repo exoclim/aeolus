@@ -8,7 +8,7 @@ authors:
   - family-names: Zamyatina
     given-names: Maria
     orcid: https://orcid.org/0000-0002-9705-0535
-title: "aeolus"
-version: 0.4.11
-# doi:
+title: "Aeolus - a Python library for the analysis and visualisation of climate model output."
+version: 0.4.12
+doi: 10.5281/zenodo.5145604
 date-released: 2021-06-08
