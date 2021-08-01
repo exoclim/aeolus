@@ -4,6 +4,14 @@ Changelog
 .. default-role:: py:obj
 
 
+0.4.13
+------
+
+:Date: TBA
+
+* Use `da.roll()` instead of `np.roll` in `coord.roll_*` functions.
+
+
 0.4.12
 ------
 
