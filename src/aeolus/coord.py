@@ -2,6 +2,8 @@
 """Functionality related to coordinates of cubes."""
 from datetime import timedelta
 
+import dask.array as da
+
 from cartopy.util import add_cyclic_point
 
 import iris
@@ -943,7 +945,7 @@ def roll_cube_0_360(cube_in, model=um):
     lon = cube.coord(coord_name)
     if (lon.points < 0.0).any():
         add = 180
-        cube.data = np.roll(cube.data, len(lon.points) // 2, axis=-1)
+        cube.data = da.roll(cube.core_data(), len(lon.points) // 2, axis=-1)
         if lon.has_bounds():
             bounds = lon.bounds + add
         else:
@@ -980,7 +982,7 @@ def roll_cube_pm180(cube_in, model=um):
         assert is_regular(xcoord), "Operation is only valid for a regularly spaced coordinate."
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
-            cube.data = np.roll(cube.data, len(xcoord.points) // 2, axis=-1)
+            cube.data = da.roll(cube.core_data(), len(xcoord.points) // 2, axis=-1)
 
         if xcoord.has_bounds():
             bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract
