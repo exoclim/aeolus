@@ -10,6 +10,7 @@ Changelog
 :Date: TBA
 
 * Use `da.roll()` instead of `np.roll` in `coord.roll_*` functions.
+* Fix  a few minor bugs in synthobs.
 
 
 0.4.12
