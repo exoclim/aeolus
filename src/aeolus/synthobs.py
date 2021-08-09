@@ -208,15 +208,15 @@ def calc_transmission_spectrum_day_night_average(
             units="m",
         )
 
-    # Load UM output from the dayside calculation
+    # Load output from the dayside calculation
     day = planet_transmission_day
-    day_lon_coord = day.coord(um.x)
+    day_lon_coord = day.coord(model.x)
 
-    # Load UM output from the nightside calculation
+    # Load output from the nightside calculation
     # Roll nightside data by 180 degrees
-    night_rolled = roll_cube_pm180(planet_transmission_night)
+    night_rolled = roll_cube_pm180(planet_transmission_night, model=model)
     # Reverse longitude order
-    night = reverse(night_rolled, night_rolled.coord_dims(um.x))
+    night = reverse(night_rolled, night_rolled.coord_dims(model.x))
     # Replace the longitude coordinate to be able to do maths with iris
     night.replace_coord(day_lon_coord)
 
@@ -230,7 +230,7 @@ def calc_transmission_spectrum_day_night_average(
 
     # Calculate the geometric mean of the dayside and nightside transmitted flux
     # and sum this flux over all latitudes and longitudes
-    transmitted_flux = ((day * night) ** (0.5)).collapsed([um.y, um.x], iris.analysis.SUM)
+    transmitted_flux = ((day * night) ** (0.5)).collapsed([model.y, model.x], iris.analysis.SUM)
     transmitted_flux.rename("total_transmitted_flux")
     transmitted_flux.units = "W m-2"
 
