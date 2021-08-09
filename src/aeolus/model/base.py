@@ -49,6 +49,7 @@ class Model:
     sfc_net_down_lw: str = None
     sfc_net_down_sw: str = None
     lw_up: str = None
+    lw_up_forcing: str = None
     sw_up: str = None
     lw_dn: str = None
     sw_dn: str = None
