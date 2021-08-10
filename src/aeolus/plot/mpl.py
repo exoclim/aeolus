@@ -5,14 +5,14 @@ from matplotlib.lines import Line2D
 __all__ = ("add_custom_legend",)
 
 
-def add_custom_legend(ax, styles_and_labels, **leg_kw):
+def add_custom_legend(ax_or_fig, styles_and_labels, **leg_kw):
     """
-    Add a custom legend to matplotlib axes.
+    Add a custom legend to a matplotlib axis or figure.
 
     Parameters
     ----------
-    ax: matplotlib.axes._subplots.AxesSubplot
-        Axes where to put the legend.
+    ax_or_fig: matplotlib.axes._subplots.AxesSubplot or matplotlib.figure.Figure
+        Matplotlib object where to put the legend.
     styles_and_labels: dict
         Dictionary with labels as keys and a dictionary of plot
         keywords as values.
@@ -29,6 +29,9 @@ def add_custom_legend(ax, styles_and_labels, **leg_kw):
 
     """
     lines = [Line2D([0], [0], **style) for style in styles_and_labels.values()]
-    leg = ax.legend(lines, styles_and_labels.keys(), **leg_kw)
-    if ax.legend_ is not None:
-        ax.add_artist(leg)
+    leg = ax_or_fig.legend(lines, styles_and_labels.keys(), **leg_kw)
+    try:
+        if ax_or_fig.legend_ is not None:
+            ax_or_fig.add_artist(leg)
+    except AttributeError:
+        pass
