@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aeolus.plot.mpl &mdash; aeolus 0.4.12+8.g4352a4e documentation</title>
+  <title>aeolus.plot.mpl &mdash; aeolus 0.4.12+9.gd6a66b9 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.4.12+8.g4352a4e
+                0.4.12+9.gd6a66b9
               </div>
             
           
@@ -171,14 +171,14 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;add_custom_legend&quot;</span><span class="p">,)</span>
 
 
-<div class="viewcode-block" id="add_custom_legend"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.add_custom_legend">[docs]</a><span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">):</span>
+<div class="viewcode-block" id="add_custom_legend"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.add_custom_legend">[docs]</a><span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span><span class="n">ax_or_fig</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add a custom legend to matplotlib axes.</span>
+<span class="sd">    Add a custom legend to a matplotlib axis or figure.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ax: matplotlib.axes._subplots.AxesSubplot</span>
-<span class="sd">        Axes where to put the legend.</span>
+<span class="sd">    ax_or_fig: matplotlib.axes._subplots.AxesSubplot or matplotlib.figure.Figure</span>
+<span class="sd">        Matplotlib object where to put the legend.</span>
 <span class="sd">    styles_and_labels: dict</span>
 <span class="sd">        Dictionary with labels as keys and a dictionary of plot</span>
 <span class="sd">        keywords as values.</span>
@@ -195,9 +195,12 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">style</span><span class="p">)</span> <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">styles_and_labels</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-    <span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">leg</span><span class="p">)</span></div>
+    <span class="n">leg</span> <span class="o">=</span> <span class="n">ax_or_fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">styles_and_labels</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ax_or_fig</span><span class="o">.</span><span class="n">legend_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax_or_fig</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">leg</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
 </pre></div>
 
            </div>

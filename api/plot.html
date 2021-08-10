@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Plotting functions &mdash; aeolus 0.4.12+8.g4352a4e documentation</title>
+  <title>Plotting functions &mdash; aeolus 0.4.12+9.gd6a66b9 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.4.12+8.g4352a4e
+                0.4.12+9.gd6a66b9
               </div>
             
           
@@ -273,12 +273,12 @@ otherwise at the north boundary.</p></li>
 <p>Matplotlib-related utilities.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.plot.mpl.add_custom_legend">
-<span class="sig-prename descclassname"><span class="pre">aeolus.plot.mpl.</span></span><span class="sig-name descname"><span class="pre">add_custom_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">styles_and_labels</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">leg_kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/mpl.html#add_custom_legend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.mpl.add_custom_legend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a custom legend to matplotlib axes.</p>
+<span class="sig-prename descclassname"><span class="pre">aeolus.plot.mpl.</span></span><span class="sig-name descname"><span class="pre">add_custom_legend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax_or_fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">styles_and_labels</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">leg_kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/plot/mpl.html#add_custom_legend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.plot.mpl.add_custom_legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a custom legend to a matplotlib axis or figure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ax</strong> (<em>matplotlib.axes._subplots.AxesSubplot</em>) – Axes where to put the legend.</p></li>
+<li><p><strong>ax_or_fig</strong> (<em>matplotlib.axes._subplots.AxesSubplot</em><em> or </em><a class="reference external" href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.4.1)"><em>matplotlib.figure.Figure</em></a>) – Matplotlib object where to put the legend.</p></li>
 <li><p><strong>styles_and_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Dictionary with labels as keys and a dictionary of plot
 keywords as values.</p></li>
 <li><p><strong>leg_kw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Keyword arguments passed to <cite>legend()</cite> function.</p></li>
