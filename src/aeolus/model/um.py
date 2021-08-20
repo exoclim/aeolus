@@ -40,6 +40,7 @@ um = Model(
     sfc_net_down_sw="surface_net_downward_shortwave_flux",
     lw_up="upwelling_longwave_flux_in_air",
     lw_up_forcing="upwelling_longwave_flux_in_air_with_forcing",
+    lw_dn_forcing="downwelling_longwave_flux_in_air_with_forcing",
     sw_up="upwelling_shortwave_flux_in_air",
     lw_dn="downwelling_longwave_flux_in_air",
     sw_dn="downwelling_shortwave_flux_in_air",
@@ -88,7 +89,16 @@ um = Model(
     dq_cv="change_over_time_in_specific_humidity_due_to_convection",
     dq_lscld="m01s09i182",
     dq_adv="change_over_time_in_specific_humidity_due_to_advection",
+    du_bl="change_over_time_in_x_wind_due_to_boundary_layer_mixing",
+    du_cv="change_over_time_in_x_wind_due_to_convection",
+    du_solve="change_over_time_in_x_wind_due_to_pressure_solver",
+    du_adv="change_over_time_in_x_wind_due_to_advection",
+    du_total="change_over_time_in_x_wind",
     soil_moist="moisture_content_of_soil_layer",
+    # Eliassen-Palm flux
+    ep_flux_x="northward_eliassen_palm_flux_in_air",
+    ep_flux_y="upward_eliassen_palm_flux_in_air",
+    ep_flux_div="tendency_of_eastward_wind_due_to_eliassen_palm_flux_divergence",
 )
 
 um_stash = Model(
@@ -126,6 +136,7 @@ um_stash = Model(
     sfc_net_down_sw="m01s01i201",
     lw_up="m01s02i217",
     lw_up_forcing="m01s02i417",
+    lw_dn_forcing="m01s02i418",
     sw_up="m01s01i217",
     lw_dn="m01s02i218",
     sw_dn="m01s01i218",
@@ -170,4 +181,13 @@ um_stash = Model(
     dq_lscld="m01s09i182",
     dq_adv="m01s12i182",
     soil_moist="m01s08i223",
+    # Eliassen-Palm flux
+    ep_flux_x="m01s30i312",
+    ep_flux_y="m01s30i313",
+    ep_flux_div="m01s30i314",
+    du_bl="m01s03i185",
+    du_cv="m01s05i185",
+    du_solve="m01s10i185",
+    du_adv="m01s12i185",
+    du_total="m01s30i185",
 )

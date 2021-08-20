@@ -50,6 +50,7 @@ class Model:
     sfc_net_down_sw: str = None
     lw_up: str = None
     lw_up_forcing: str = None
+    lw_dn_forcing: str = None
     sw_up: str = None
     lw_dn: str = None
     sw_dn: str = None
@@ -103,8 +104,18 @@ class Model:
     dq_cv: str = None
     dq_lscld: str = None
     dq_adv: str = None
+    # Increments of eastward wind
+    du_bl: str = None
+    du_cv: str = None
+    du_solve: str = None
+    du_adv: str = None
+    du_total: str = None
     # Soil
     soil_moist: str = None
+    # Eliassen-Palm flux
+    ep_flux_x: str = None
+    ep_flux_y: str = None
+    ep_flux_div: str = None
 
     def __repr__(self):
         """Override the repr method of the dataclass."""
