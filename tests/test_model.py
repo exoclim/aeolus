@@ -19,6 +19,6 @@ def test_model_um_stash():
 
 def test_model_dummy():
     dummy = Model(u="abc")
-    assert isinstance(dummy.u, "str")
+    assert isinstance(dummy.u, str)
     assert dummy.u == "abc"
     assert dummy.v is None
