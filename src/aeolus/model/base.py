@@ -113,8 +113,8 @@ class Model:
     # Soil
     soil_moist: str = None
     # Eliassen-Palm flux
-    ep_flux_x: str = None
     ep_flux_y: str = None
+    ep_flux_z: str = None
     ep_flux_div: str = None
 
     def __repr__(self):

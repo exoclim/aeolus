@@ -96,8 +96,8 @@ um = Model(
     du_total="change_over_time_in_x_wind",
     soil_moist="moisture_content_of_soil_layer",
     # Eliassen-Palm flux
-    ep_flux_x="northward_eliassen_palm_flux_in_air",
-    ep_flux_y="upward_eliassen_palm_flux_in_air",
+    ep_flux_y="northward_eliassen_palm_flux_in_air",
+    ep_flux_z="upward_eliassen_palm_flux_in_air",
     ep_flux_div="tendency_of_eastward_wind_due_to_eliassen_palm_flux_divergence",
 )
 
@@ -181,9 +181,8 @@ um_stash = Model(
     dq_lscld="m01s09i182",
     dq_adv="m01s12i182",
     soil_moist="m01s08i223",
-    # Eliassen-Palm flux
-    ep_flux_x="m01s30i312",
-    ep_flux_y="m01s30i313",
+    ep_flux_y="m01s30i312",
+    ep_flux_z="m01s30i313",
     ep_flux_div="m01s30i314",
     du_bl="m01s03i185",
     du_cv="m01s05i185",
