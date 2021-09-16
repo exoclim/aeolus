@@ -9,7 +9,19 @@ import iris
 import numpy as np
 import numpy.testing as npt
 
+import pytest
+
 TST_DATA = Path(__file__).parent / "data" / "test_data"
+
+
+@pytest.fixture(scope="module")
+def example_trans_day():
+    return iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_day.nc"))
+
+
+@pytest.fixture(scope="module")
+def example_trans_night():
+    return iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_night.nc"))
 
 
 def test_read_spectral_bands():
@@ -58,29 +70,52 @@ def test_calc_stellar_flux():
     npt.assert_allclose(expected, actual.data[:5])
 
 
-def test_calc_transmission_spectrum_day_night_average():
-    expected_spectral_band_centers = [
+def test_calc_geom_mean_mirrored(example_trans_day, example_trans_night):
+    actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night)
+    npt.assert_allclose(actual.data.max(), 1.5901232591606386e-08)
+    npt.assert_allclose(
+        actual.data[123, 1, 71:74],
+        [2.40635831e-11, 2.40620869e-11, 2.40149215e-11],
+    )
+    assert actual.units == example_trans_day.units
+    assert actual.shape == example_trans_day.shape
+
+
+def test_calc_transmission_spectrum(example_trans_day):
+    expected_spectral_bands = [
         0.0055,
         0.00075,
         0.00041666668,
         0.00029166666,
         0.000225,
     ]
+    expected_rp_eff_over_rs = [0.06043149, 0.0605353, 0.06054769, 0.060621, 0.06062967]
+    actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum(
+        example_trans_day,
+        TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
+        300.85538168664425,
+        475026500.0,
+        28995379.0,
+    )
+    actual_spectral_bands = actual_rp_eff_over_rs.coord("spectral_band_centres")
+    assert isinstance(actual_spectral_bands, iris.coords.AuxCoord)
+    assert isinstance(actual_rp_eff_over_rs, iris.cube.Cube)
+    assert actual_spectral_bands.shape[0] == 500
+    assert actual_rp_eff_over_rs.shape[0] == 500
+    npt.assert_allclose(expected_spectral_bands, actual_spectral_bands.points[:5])
+    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[:5])
+
+
+def test_calc_transmission_spectrum_day_night_average(example_trans_day, example_trans_night):
     expected_rp_eff_over_rs = [0.99991664, 0.99993102, 0.99993353, 0.99994311, 0.99994491]
-    (
-        actual_spectral_band_centers,
-        actual_rp_eff_over_rs,
-    ) = synthobs.calc_transmission_spectrum_day_night_average(
+    actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
+        example_trans_day,
+        example_trans_night,
         TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
         123,
         123,
         123,
-        iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_day.nc")),
-        iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_night.nc")),
     )
-    assert isinstance(actual_spectral_band_centers, np.ndarray)
     assert isinstance(actual_rp_eff_over_rs, iris.cube.Cube)
-    assert actual_spectral_band_centers.shape[0] == 500
     assert actual_rp_eff_over_rs.shape[0] == 500
-    npt.assert_allclose(expected_spectral_band_centers, actual_spectral_band_centers[:5])
     npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[:5])
