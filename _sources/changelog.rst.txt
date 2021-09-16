@@ -9,6 +9,8 @@ Changelog
 
 :Date: TBA
 
+* Refactor functions to calculate transmission spectrum.
+* Add `synthobs.calc_transmission_spectrum()`
 * Use `da.roll()` instead of `np.roll` in `coord.roll_*` functions.
 * Fix  a few minor bugs in synthobs.
 
