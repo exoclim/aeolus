@@ -5,7 +5,7 @@ from dataclasses import make_dataclass
 from pathlib import Path
 
 import iris.fileformats
-from iris.coord_system import GeogCS
+from iris.coord_systems import GeogCS
 from iris.cube import Cube
 
 import numpy as np

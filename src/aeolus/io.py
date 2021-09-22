@@ -3,8 +3,8 @@
 from pathlib import Path
 
 import iris
+from iris.coords import AuxCoord
 from iris.cube import CubeList
-from iris import AuxCoord
 
 import numpy as np
 

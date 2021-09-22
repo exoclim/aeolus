@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Functions for calculating synthetic observations."""
+import warnings
+
 from iris.analysis import SUM
 from iris.cube import Cube
 from iris.coords import AuxCoord, DimCoord
@@ -155,7 +157,9 @@ def calc_transmission_spectrum(
 
     # Sum transmission flux over all latitudes and longitudes
     try:
-        trans_flux = trans_flux.collapsed([model.y, model.x], SUM)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UserWarning)
+            trans_flux = trans_flux.collapsed([model.y, model.x], SUM)
     except CoNotFound:
         pass
     # trans_flux.rename("shortwave_transmission_flux")
