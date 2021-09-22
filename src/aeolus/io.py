@@ -3,6 +3,8 @@
 from pathlib import Path
 
 import iris
+from iris.cube import CubeList
+from iris import AuxCoord
 
 import numpy as np
 
@@ -25,12 +27,12 @@ def load_data(files):
 
 def load_multidir(path_mask, labels, label_name="run"):
     """Load cubelists from multiple directories and merge."""
-    joint_cl = iris.cube.CubeList()
+    joint_cl = CubeList()
     for label in labels:
         cl = iris.load(str(path_mask).format(label))
         for cube in cl:
             cube.attributes["um_version"] = ""  # FIXME
-            cube.add_aux_coord(iris.coords.AuxCoord([label], long_name=label_name))
+            cube.add_aux_coord(AuxCoord([label], long_name=label_name))
             joint_cl.append(cube)
     return joint_cl.merge()
 
@@ -73,7 +75,7 @@ def save_cubelist(cubelist, path, **aux_attrs):
         Dictionary of additional attributes to save with the cubes.
     """
     # Remove planet_conf attribute before saving
-    out = iris.cube.CubeList()
+    out = CubeList()
     old_attrs = []
     for cube in cubelist:
         old_attrs.append(cube.attributes.copy())

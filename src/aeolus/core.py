@@ -2,7 +2,8 @@
 """Core submodule of aeolus package."""
 from cached_property import cached_property
 
-import iris
+from iris.cube import CubeList
+from iris.coord_systems import GeogCS
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
 from .calc import diag
@@ -192,7 +193,7 @@ class AtmoSimBase:
         self.const = init_const(self.planet, directory=self.const_dir)
         try:
             self.const.radius.convert_units("m")
-            self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
+            self._coord_system = GeogCS(semi_major_axis=self.const.radius.data)
         except AttributeError:
             self._coord_system = None
             _warn("Run initialised without a coordinate system.")
@@ -363,7 +364,7 @@ class Run:
         self.const = init_const(planet, directory=const_dir)
         try:
             self.const.radius.convert_units("m")
-            self._coord_system = iris.coord_systems.GeogCS(semi_major_axis=self.const.radius.data)
+            self._coord_system = GeogCS(semi_major_axis=self.const.radius.data)
         except AttributeError:
             self._coord_system = None
             _warn("Run initialised without a coordinate system.")
@@ -386,7 +387,7 @@ class Run:
         if self.processed:
             _warn("Run's data is already processed. Skipping.")
         else:
-            self.proc = iris.cube.CubeList()
+            self.proc = CubeList()
             if callable(func):
                 self.proc = func(self.raw, **func_args)
             self._add_planet_conf_to_cubes()

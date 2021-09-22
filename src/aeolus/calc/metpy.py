@@ -4,7 +4,7 @@ import functools
 
 import cf_units
 
-import iris
+from iris.cube import Cube
 
 import metpy.units as metunits
 
@@ -69,7 +69,7 @@ def preprocess_iris(f):
 
         # Loop over cubes and re-format units
         for arg in args:
-            if isinstance(arg, iris.cube.Cube):
+            if isinstance(arg, Cube):
                 if arg.ndim > 0:
                     # TODO: make this flexible
                     _cube = arg
@@ -80,9 +80,7 @@ def preprocess_iris(f):
             else:
                 nargs.append(arg)
 
-        kwargs = {
-            k: (to_xarray(v) if isinstance(v, iris.cube.Cube) else v) for k, v in kwargs.items()
-        }
+        kwargs = {k: (to_xarray(v) if isinstance(v, Cube) else v) for k, v in kwargs.items()}
 
         # Call the decorated function
         out = f(*nargs, **kwargs)

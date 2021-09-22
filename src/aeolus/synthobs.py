@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Functions for calculating synthetic observations."""
-import iris
+from iris.analysis import SUM
+from iris.cube import Cube
+from iris.coords import AuxCoord, DimCoord
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
 from iris.util import reverse
 
@@ -66,8 +68,8 @@ def calc_stellar_flux(spectral_file, stellar_constant_at_1_au):
         Stellar flux per spectral band [W m-2].
     """
     # Ensure that an input constant is an iris cube
-    if not isinstance(stellar_constant_at_1_au, iris.cube.Cube):
-        stellar_constant_at_1_au = iris.cube.Cube(
+    if not isinstance(stellar_constant_at_1_au, Cube):
+        stellar_constant_at_1_au = Cube(
             stellar_constant_at_1_au,
             long_name="stellar_constant_at_1_au",
             units="W m-2",
@@ -130,20 +132,20 @@ def calc_transmission_spectrum(
     :math:`F_{stellar}(\nu)` is the stellar flux.
     """
     # Ensure that input constants are iris cubes
-    if not isinstance(stellar_constant_at_1_au, iris.cube.Cube):
-        stellar_constant_at_1_au = iris.cube.Cube(
+    if not isinstance(stellar_constant_at_1_au, Cube):
+        stellar_constant_at_1_au = Cube(
             stellar_constant_at_1_au,
             long_name="stellar_constant_at_1_au",
             units="W m-2",
         )
-    if not isinstance(stellar_radius, iris.cube.Cube):
-        stellar_radius = iris.cube.Cube(
+    if not isinstance(stellar_radius, Cube):
+        stellar_radius = Cube(
             stellar_radius,
             long_name="stellar_radius",
             units="m",
         )
-    if not isinstance(planet_top_of_atmosphere, iris.cube.Cube):
-        planet_top_of_atmosphere = iris.cube.Cube(
+    if not isinstance(planet_top_of_atmosphere, Cube):
+        planet_top_of_atmosphere = Cube(
             planet_top_of_atmosphere,
             long_name="planet_top_of_atmosphere",
             units="m",
@@ -153,7 +155,7 @@ def calc_transmission_spectrum(
 
     # Sum transmission flux over all latitudes and longitudes
     try:
-        trans_flux = trans_flux.collapsed([model.y, model.x], iris.analysis.SUM)
+        trans_flux = trans_flux.collapsed([model.y, model.x], SUM)
     except CoNotFound:
         pass
     # trans_flux.rename("shortwave_transmission_flux")
@@ -180,7 +182,7 @@ def calc_transmission_spectrum(
     spectral_band_centres = 0.5 * (
         spectral_bands["lower_wavelength_limit"] + spectral_bands["upper_wavelength_limit"]
     )
-    spectral_bands_coord = iris.coords.AuxCoord(
+    spectral_bands_coord = AuxCoord(
         spectral_band_centres, long_name="spectral_band_centres", units="m"
     )
 
@@ -263,12 +265,12 @@ def read_normalized_stellar_flux(spectral_file):
         lines, dtype=[("spectral_band_index", "u4"), ("normalized_stellar_flux", "f4")]
     )
     # Compose an iris cube
-    spectral_band_index = iris.coords.DimCoord(
+    spectral_band_index = DimCoord(
         normalized_stellar_flux_arr["spectral_band_index"],
         long_name="spectral_band_index",
         units="1",
     )
-    normalized_stellar_flux = iris.cube.Cube(
+    normalized_stellar_flux = Cube(
         normalized_stellar_flux_arr["normalized_stellar_flux"],
         long_name="normalized_stellar_flux",
         dim_coords_and_dims=[(spectral_band_index, 0)],

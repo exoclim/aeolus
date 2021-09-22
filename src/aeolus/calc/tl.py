@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """Operations in tidally-locked coordinates."""
-import iris
+import iris.analysis
+from iris.cube import Cube
+from iris.coords import AuxCoord
 from iris.analysis.cartography import _meshgrid, rotate_pole, rotate_winds
 from iris.coord_systems import RotatedGeogCS
+from iris.util import promote_aux_coord_to_dim_coord
 
 import numpy as np
 
@@ -39,14 +42,14 @@ def regrid_to_rotated_pole_coordinates(cube, pole_lon, pole_lat, model=um):
     lon2d, lat2d = _meshgrid(xcoord.points, ycoord.points)
     r_lons, r_lats = rotate_pole(lon2d, lat2d, pole_lon, pole_lat)
 
-    r_lon_coord = iris.coords.AuxCoord(
+    r_lon_coord = AuxCoord(
         r_lons.flatten(),
         units=xcoord.units,
         standard_name=xcoord.standard_name,
         var_name=xcoord.var_name,
         coord_system=_cs,
     )
-    r_lat_coord = iris.coords.AuxCoord(
+    r_lat_coord = AuxCoord(
         r_lats.flatten(),
         units=ycoord.units,
         standard_name=ycoord.standard_name,
@@ -58,7 +61,7 @@ def regrid_to_rotated_pole_coordinates(cube, pole_lon, pole_lat, model=um):
     lat_dim = len(non_xy_coords)
     if lat_dim != cube.coord_dims(ycoord)[0]:
         raise BadCoordinateError("Ensure latitude and longitude are the rightmost dimensions.")
-    cube_flat = iris.cube.Cube(
+    cube_flat = Cube(
         cube.core_data().reshape((*cube.shape[:lat_dim], np.product(cube.shape[lat_dim:]))),
         aux_coords_and_dims=[
             *non_xy_coords,
@@ -68,7 +71,7 @@ def regrid_to_rotated_pole_coordinates(cube, pole_lon, pole_lat, model=um):
         units=cube.units,
     )
     for coord, _ in non_xy_coords:
-        iris.util.promote_aux_coord_to_dim_coord(cube_flat, coord)
+        promote_aux_coord_to_dim_coord(cube_flat, coord)
 
     out = cube_flat.regrid(cube, iris.analysis.UnstructuredNearest())
     return out

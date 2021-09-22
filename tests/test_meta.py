@@ -5,7 +5,7 @@ from aeolus.const import init_const
 from aeolus.const.const import ConstContainer
 from aeolus.exceptions import ArgumentError
 
-import iris
+import iris.cube
 
 import pytest
 

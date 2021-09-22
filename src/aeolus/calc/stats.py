@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """Statistical functions."""
-import iris
+import iris.analysis
+from iris.analysis.maths import apply_ufunc
+from iris.coords import AuxCoord
 from iris.exceptions import CoordinateCollapseError as CoColErr
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
-from iris.util import broadcast_to_shape
+from iris.util import broadcast_to_shape, promote_aux_coord_to_dim_coord
 
 import numpy as np
 
@@ -50,11 +52,11 @@ def abs_coord_mean(cube, coord):
     iris.cube.Cube
         Cube with a reduced dimension.
     """
-    sign_lat = iris.analysis.maths.apply_ufunc(np.sign, coord_to_cube(cube, coord, broadcast=False))
+    sign_lat = apply_ufunc(np.sign, coord_to_cube(cube, coord, broadcast=False))
     sign_cube = sign_lat * cube
     _coord = sign_cube.coord(coord)
     _coord_dim = sign_cube.coord_dims(_coord)
-    abs_coord = iris.coords.AuxCoord.from_coord(_coord)
+    abs_coord = AuxCoord.from_coord(_coord)
     abs_coord.rename(f"abs_{abs_coord.name()}")
     abs_coord.points = np.abs(_coord.points)
     abs_coord.bounds = np.abs(_coord.bounds)
@@ -63,7 +65,7 @@ def abs_coord_mean(cube, coord):
     out.remove_coord(_coord)
     out.rename(cube.name())
     out.units = cube.units
-    iris.util.promote_aux_coord_to_dim_coord(out, abs_coord.name())
+    promote_aux_coord_to_dim_coord(out, abs_coord.name())
     out.coord(abs_coord).rename(_coord.name())
     return out
 
@@ -133,7 +135,7 @@ def meridional_mean(cube, model=um):
     """
     lat_name = model.y
     coslat = np.cos(np.deg2rad(cube.coord(lat_name).points))
-    coslat2d = iris.util.broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
+    coslat2d = broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
     cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
     return cube_mean
 

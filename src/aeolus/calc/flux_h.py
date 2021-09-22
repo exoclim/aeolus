@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """Integrated fluxes."""
-import iris
+from iris import Constraint
+from iris.analysis import SUM
+from iris.cube import CubeList
+from iris.util import guess_coord_axis
 
 import numpy as np
 
@@ -24,7 +27,7 @@ def horizontal_fluxes_through_region_boundaries(
     else:
         r = r_planet
 
-    total_h_fluxes = iris.cube.CubeList()
+    total_h_fluxes = CubeList()
     for bound in region:
         this_coord = bound["coord"]
         other_coord, (other_min, other_max) = region._perpendicular_side_limits(bound["name"])
@@ -34,14 +37,14 @@ def horizontal_fluxes_through_region_boundaries(
                 f"Nearest value is {np.round(nearest - bound['value'], 2)} deg away"
                 f" from the given value of {this_coord}",
             )
-        vcross_cnstr = iris.Constraint(**{this_coord: nearest})
+        vcross_cnstr = Constraint(**{this_coord: nearest})
         vcross_cnstr &= vertical_constraint
 
         if other_max >= other_min:
-            vcross_cnstr &= iris.Constraint(**{other_coord: lambda x: other_min <= x <= other_max})
+            vcross_cnstr &= Constraint(**{other_coord: lambda x: other_min <= x <= other_max})
             cube = scalar_cube.extract(vcross_cnstr)
         else:
-            vcross_cnstr &= iris.Constraint(
+            vcross_cnstr &= Constraint(
                 **{other_coord: lambda x: (other_max >= x) or (other_min <= x)}
             )
             cube = scalar_cube.extract(vcross_cnstr)
@@ -52,10 +55,8 @@ def horizontal_fluxes_through_region_boundaries(
         cube = perpendicular_wind_cmpnts[this_coord].extract(vcross_cnstr) * cube * vcross_area
         cube.rename(f"{scalar_cube.name()}_flux_through_{bound['name']}_boundary")
         # Total flux
-        collapsible_dims = [
-            i for i in cube.dim_coords if iris.util.guess_coord_axis(i) in ["Z", "Y", "X"]
-        ]
-        cube_total = cube.collapsed(collapsible_dims, iris.analysis.SUM)
+        collapsible_dims = [i for i in cube.dim_coords if guess_coord_axis(i) in ["Z", "Y", "X"]]
+        cube_total = cube.collapsed(collapsible_dims, SUM)
         total_h_fluxes.append(cube_total)
     return total_h_fluxes
 
@@ -74,16 +75,10 @@ def net_horizontal_flux_to_region(
         model=model,
     )
     net_flux = (
-        total_h_fluxes.extract_cube(iris.Constraint(cube_func=lambda x: "through_west" in x.name()))
-        - total_h_fluxes.extract_cube(
-            iris.Constraint(cube_func=lambda x: "through_east" in x.name())
-        )
-        + total_h_fluxes.extract_cube(
-            iris.Constraint(cube_func=lambda x: "through_south" in x.name())
-        )
-        - total_h_fluxes.extract_cube(
-            iris.Constraint(cube_func=lambda x: "through_north" in x.name())
-        )
+        total_h_fluxes.extract_cube(Constraint(cube_func=lambda x: "through_west" in x.name()))
+        - total_h_fluxes.extract_cube(Constraint(cube_func=lambda x: "through_east" in x.name()))
+        + total_h_fluxes.extract_cube(Constraint(cube_func=lambda x: "through_south" in x.name()))
+        - total_h_fluxes.extract_cube(Constraint(cube_func=lambda x: "through_north" in x.name()))
     )
     net_flux.rename(f"net_{scalar_cube.name()}_horizontal_flux_to_region")
     net_flux.attributes["region_str"] = str(region)

@@ -4,7 +4,9 @@ from pathlib import Path
 
 from aeolus import coord
 
-import iris
+import iris.coords
+import iris.cube
+import iris.exceptions
 
 import numpy as np
 import numpy.testing as npt

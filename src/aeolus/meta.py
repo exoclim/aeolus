@@ -6,7 +6,7 @@ from dataclasses import is_dataclass
 
 import cf_units
 
-import iris
+from iris.cube import Cube, CubeList
 from iris.analysis import _dimensional_metadata_comparison
 from iris.util import broadcast_to_shape
 
@@ -22,9 +22,9 @@ def const_from_attrs(strict=True):
             const = kwargs.pop("const", None)
             if const is None:
                 for arg in args:
-                    if isinstance(arg, iris.cube.Cube):
+                    if isinstance(arg, Cube):
                         const = arg.attributes.get("planet_conf")
-                    elif isinstance(arg, iris.cube.CubeList):
+                    elif isinstance(arg, CubeList):
                         try:
                             const = arg[0].attributes.get("planet_conf")
                         except IndexError:
@@ -62,7 +62,7 @@ def preserve_shape(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         cube_in = args[0]
-        if isinstance(cube_in, iris.cube.Cube):
+        if isinstance(cube_in, Cube):
             orig_shape = cube_in.shape
         else:
             raise ArgumentError(
@@ -112,7 +112,7 @@ def update_metadata(name=None, units=None, attrs=None):
         def wrapper(*args, **kwargs):
             # Call the decorated function
             out = func(*args, **kwargs)
-            if isinstance(out, iris.cube.Cube):
+            if isinstance(out, Cube):
                 _update(out)
             elif isinstance(out, Iterable):
                 [_update(cube) for cube in out]

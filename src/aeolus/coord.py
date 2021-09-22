@@ -6,12 +6,23 @@ import dask.array as da
 
 from cartopy.util import add_cyclic_point
 
-import iris
+import iris.analysis
+import iris.analysis.cartography
+from iris import Constraint
+from iris.cube import Cube, CubeList
+from iris.coords import AuxCoord, DimCoord
 from iris.analysis.cartography import wrap_lons
+import iris.fileformats
 from iris.coord_categorisation import _months_in_season, add_categorised_coord
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
 from iris.experimental import stratify
-from iris.util import broadcast_to_shape, guess_coord_axis, is_regular
+from iris.util import (
+    broadcast_to_shape,
+    guess_coord_axis,
+    is_regular,
+    promote_aux_coord_to_dim_coord,
+    squeeze,
+)
 
 import numpy as np
 
@@ -190,7 +201,7 @@ def add_binned_coord(cube, coord_name, bins):
     cube_out = cube.copy()
     binned_points = np.digitize(cube_out.coord(coord_name).points, bins)
     binned_points = np.clip(binned_points, 0, len(bins) - 1)
-    new_coord = iris.coords.AuxCoord(binned_points, long_name=f"{coord_name}_binned")
+    new_coord = AuxCoord(binned_points, long_name=f"{coord_name}_binned")
     cube_out.add_aux_coord(new_coord, cube_out.coord_dims(coord_name))
     return cube_out
 
@@ -244,7 +255,7 @@ def add_cyclic_point_to_cube(cube, coord=um.x):
             "cell_measures_and_dims",
         ]
     }
-    cyclic_cube = iris.cube.Cube(
+    cyclic_cube = Cube(
         cy_data,
         dim_coords_and_dims=dim_coords_and_dims,
         aux_coords_and_dims=aux_coords_and_dims,
@@ -406,7 +417,7 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
     # To avoid oversampling on the edges, extract subset within the boundaries of target coords
     for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
         cube_out = cube_out.extract(
-            iris.Constraint(**{coord: lambda p: target_points.min() <= p <= target_points.max()})
+            Constraint(**{coord: lambda p: target_points.min() <= p <= target_points.max()})
         )
 
     for coord in coord_names:
@@ -418,7 +429,7 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
         cube_out.remove_coord(coord)
         aux = cube_out.coord(f"{coord}_binned")
         new_points = target_points[aux.points]
-        new_coord = iris.coords.DimCoord.from_coord(aux.copy(points=new_points, bounds=None))
+        new_coord = DimCoord.from_coord(aux.copy(points=new_points, bounds=None))
         cube_out.remove_coord(f"{coord}_binned")
         new_coord.rename(coord)
         new_coord.units = units
@@ -468,14 +479,14 @@ def coord_delta_to_cube(cube, coord, normalize=False):
         _data = broadcast_to_shape(_data, cube.shape, dim_map)
         dc = [(c.copy(), cube.coord_dims(c)) for c in cube.dim_coords]
         ac = [(c.copy(), cube.coord_dims(c)) for c in cube.aux_coords]
-        new_cube = iris.cube.Cube(
+        new_cube = Cube(
             data=_data,
             units=units,
             dim_coords_and_dims=dc,
             aux_coords_and_dims=ac,
         )
     else:
-        new_cube = iris.cube.Cube(data=_data, units=units)
+        new_cube = Cube(data=_data, units=units)
     new_cube.rename(f"{prefix}delta_{_coord.name()}")
     return new_cube
 
@@ -514,9 +525,9 @@ def coord_to_cube(cube, coord, broadcast=True):
         _data = broadcast_to_shape(_data, cube.shape, dim_map)
         dc = [(c.copy(), cube.coord_dims(c)) for c in cube.dim_coords]
         ac = [(c.copy(), cube.coord_dims(c)) for c in cube.aux_coords]
-        new_cube = iris.cube.Cube(data=_data, dim_coords_and_dims=dc, aux_coords_and_dims=ac, **kw)
+        new_cube = Cube(data=_data, dim_coords_and_dims=dc, aux_coords_and_dims=ac, **kw)
     else:
-        new_cube = iris.cube.Cube(data=_data, dim_coords_and_dims=[(_coord.copy(), 0)], **kw)
+        new_cube = Cube(data=_data, dim_coords_and_dims=[(_coord.copy(), 0)], **kw)
     return new_cube
 
 
@@ -670,7 +681,7 @@ def interp_cube_from_height_to_pressure_levels(
         p_tgt = np.atleast_1d(levels)
     cube_plev = stratify.relevel(variable, pressure, p_tgt, axis=model.z, interpolator=interpolator)
     cube_plev.coord(model.pres).attributes = {}
-    return iris.util.squeeze(cube_plev)
+    return squeeze(cube_plev)
 
 
 @const_from_attrs(strict=False)
@@ -714,7 +725,7 @@ def interp_cubelist_from_height_to_pressure_levels(
         List of cubes interpolated to pressure level(s).
     """
     pres = cubelist.extract_cube(model.pres)
-    cl_out = iris.cube.CubeList()
+    cl_out = CubeList()
     for cube in cubelist:
         if include_pressure or cube != pres:
             cube_plev = interp_cube_from_height_to_pressure_levels(
@@ -782,7 +793,7 @@ def isel(obj, coord, idx, skip_not_found=None):
     iris.cube.Cube or iris.cube.CubeList
         Slice along the coordinate.
     """
-    if isinstance(obj, iris.cube.Cube):
+    if isinstance(obj, Cube):
         try:
             _coord = obj.coord(coord)
             val = _coord.points[idx]
@@ -790,7 +801,7 @@ def isel(obj, coord, idx, skip_not_found=None):
                 val = _coord.units.num2date(val)
             except ValueError:
                 pass
-            constr = iris.Constraint(**{_coord.name(): lambda x: x.point == val})
+            constr = Constraint(**{_coord.name(): lambda x: x.point == val})
             out = obj.extract(constr)
         except CoNotFound as e:
             if skip_not_found:
@@ -837,7 +848,7 @@ def not_equal_coord_axes(cube1, cube2):
     dims = []
     for coord_pair in neq_dim_coords:
         for coord in coord_pair:
-            dims.append(iris.util.guess_coord_axis(coord))
+            dims.append(guess_coord_axis(coord))
     return set(filter(None, dims))
 
 
@@ -908,7 +919,7 @@ def replace_z_coord(cube, model=um):
     """
     new_cube = cube.copy()
     new_cube.coord(model.z).bounds = None
-    iris.util.promote_aux_coord_to_dim_coord(new_cube, model.z)
+    promote_aux_coord_to_dim_coord(new_cube, model.z)
     ensure_bounds(new_cube, coords=[model.z])
     for coord in [model.s, model.lev]:
         # By default, model levels and sigma coordinates are removed.
@@ -1008,7 +1019,7 @@ def vertical_cross_section_area(cube2d, r_planet=None):
     else:
         r = r_planet
     m_per_deg = (np.pi / 180) * r
-    if iris.util.guess_coord_axis(cube2d.dim_coords[1]) == "X":
+    if guess_coord_axis(cube2d.dim_coords[1]) == "X":
         m_per_deg *= np.cos(np.deg2rad(cube2d.coord(axis="Y").points[0]))
 
     for dim_coord in cube2d.dim_coords:

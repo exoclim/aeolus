@@ -8,6 +8,10 @@ from aeolus.exceptions import AeolusWarning
 from cf_units import Unit
 
 import iris
+import iris.coord_systems
+import iris.coords
+import iris.cube
+import iris.exceptions
 
 import numpy as np
 import numpy.testing as npt

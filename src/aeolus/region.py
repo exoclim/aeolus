@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Subsetting variables over geographical regions."""
-import iris
+from iris import Constraint
 from iris.analysis.cartography import wrap_lons
 
 from .exceptions import BoundaryError
@@ -170,17 +170,13 @@ class Region:
 
     @property
     def constraint(self):  # noqa
-        cnstr = iris.Constraint(
-            latitude=lambda x: self.bounds.south <= x.point <= self.bounds.north
-        )
+        cnstr = Constraint(latitude=lambda x: self.bounds.south <= x.point <= self.bounds.north)
         if self.bounds.west < self.bounds.east:
             # Western boundary is to the west
-            cnstr &= iris.Constraint(
-                longitude=lambda x: self.bounds.west <= x.point <= self.bounds.east
-            )
+            cnstr &= Constraint(longitude=lambda x: self.bounds.west <= x.point <= self.bounds.east)
         else:
             # Region wrapping around dateline (180deg)
-            cnstr &= iris.Constraint(
+            cnstr &= Constraint(
                 longitude=lambda x: (self.bounds.west <= x.point) or (x.point <= self.bounds.east)
             )
         return cnstr

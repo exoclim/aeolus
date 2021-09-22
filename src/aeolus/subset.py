@@ -3,7 +3,8 @@
 from datetime import timedelta
 from itertools import combinations
 
-import iris
+from iris import Constraint
+from iris.cube import CubeList
 
 from .coord import get_cube_datetimes
 from .model import um
@@ -46,7 +47,7 @@ def _dim_constr(*coords, strict=True):
             # Cube has these dim coords and possibly other
             return coord_set.issubset(cube_dimcoords)
 
-    return iris.Constraint(cube_func=__cube_func)
+    return Constraint(cube_func=__cube_func)
 
 
 def l_range_constr(h_min, h_max, units="km", coord=um.z):
@@ -55,16 +56,14 @@ def l_range_constr(h_min, h_max, units="km", coord=um.z):
         factor = 1e-3
     else:
         factor = 1
-    return iris.Constraint(**{coord: lambda x: h_min <= (x.point * factor) <= h_max})
+    return Constraint(**{coord: lambda x: h_min <= (x.point * factor) <= h_max})
 
 
 def extract_last_month(cube, model=um):
     """Extract time slices within the last months of a cube."""
     dt = get_cube_datetimes(cube)[-1]
     return cube.extract(
-        iris.Constraint(
-            **{model.t: lambda x: (x.point.year == dt.year) and (x.point.month == dt.month)}
-        )
+        Constraint(**{model.t: lambda x: (x.point.year == dt.year) and (x.point.month == dt.month)})
     )
 
 
@@ -72,12 +71,12 @@ def extract_last_n_days(cube, days=365, model=um):
     """Extract time slices within the last `n` days of its time dimension."""
     dt = get_cube_datetimes(cube)[-1]
     ndays_before = dt - timedelta(days=days)
-    cube_sub = cube.extract(iris.Constraint(**{model.t: lambda t: t.point > ndays_before}))
+    cube_sub = cube.extract(Constraint(**{model.t: lambda t: t.point > ndays_before}))
     return cube_sub
 
 
-CM_INST_CONSTR = iris.Constraint(cube_func=_select_inst)
-CM_MEAN_CONSTR = iris.Constraint(cube_func=_select_mean)
+CM_INST_CONSTR = Constraint(cube_func=_select_inst)
+CM_MEAN_CONSTR = Constraint(cube_func=_select_mean)
 
 
 class _ModeDimConstr:
@@ -130,7 +129,7 @@ class DimConstr:
 def unique_cubes(cubelist):
     """Remove duplicate cubes from `iris.cube.CubeList`."""
     if len(cubelist) > 1:
-        out = iris.cube.CubeList([cubelist[0]])
+        out = CubeList([cubelist[0]])
         for src_cube in cubelist[1:]:
             exists = False
             for dest_cube in out:

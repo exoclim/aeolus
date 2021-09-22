@@ -5,7 +5,7 @@ from pathlib import Path
 from aeolus import const
 from aeolus.exceptions import ArgumentError, LoadError
 
-import iris
+import iris.cube
 
 import numpy.testing as npt
 

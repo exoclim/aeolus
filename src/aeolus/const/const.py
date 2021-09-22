@@ -4,7 +4,9 @@ import json
 from dataclasses import make_dataclass
 from pathlib import Path
 
-import iris
+import iris.fileformats
+from iris.coord_system import GeogCS
+from iris.cube import Cube
 
 import numpy as np
 
@@ -32,38 +34,6 @@ DERIVED_CONST = {
 }
 
 
-class ScalarCube(iris.cube.Cube):
-    """Cube without coordinates."""
-
-    def __init__(self, *args, **kw):
-        """Initialise aeolus.const.const.ScalarCube."""
-        _warn(
-            "ScalarCube is deprecated and will be removed in the next release. "
-            "Use iris.cube.Cube instead.",
-        )
-        super(ScalarCube, self).__init__(*args, **kw)
-
-    def __repr__(self):
-        """Repr of this class."""
-        return f"<ScalarCube of {self.long_name} [{self.units}]>"
-
-    def __deepcopy__(self, memo):
-        """Deep copy of a scalar cube."""
-        return self.from_cube(self._deepcopy(memo))
-
-    @property
-    def asc(self):
-        """Convert cube to AuxCoord for math ops."""
-        return iris.coords.AuxCoord(
-            np.asarray(self.data), units=self.units, long_name=self.long_name
-        )
-
-    @classmethod
-    def from_cube(cls, cube):
-        """Convert iris cube to ScalarCube."""
-        return cls(**{k: getattr(cube, k) for k in ["data", "units", "long_name"]})
-
-
 class ConstContainer:
     """Base class for creating dataclasses and storing planetary constants."""
 
@@ -86,9 +56,7 @@ class ConstContainer:
         """Loop through fields and convert each of them to `iris.cube.Cube`."""
         for name in self.__dataclass_fields__:
             _field = getattr(self, name)
-            cube = iris.cube.Cube(
-                data=_field.get("value"), units=_field.get("units", 1), long_name=name
-            )
+            cube = Cube(data=_field.get("value"), units=_field.get("units", 1), long_name=name)
             object.__setattr__(self, name, cube)
 
     def _derive_const(self):
@@ -195,7 +163,7 @@ def add_planet_conf_to_cubes(cubelist, const):
         Constainer with the relevant planetary constants.
     """
     const.radius.convert_units("m")
-    _coord_system = iris.coord_systems.GeogCS(semi_major_axis=const.radius.data)
+    _coord_system = GeogCS(semi_major_axis=const.radius.data)
     for cube in cubelist:
         # add constants to cube attributes
         cube.attributes["planet_conf"] = const
