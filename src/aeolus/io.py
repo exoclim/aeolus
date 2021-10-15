@@ -5,13 +5,15 @@ from pathlib import Path
 import iris
 from iris.coords import AuxCoord
 from iris.cube import CubeList
+from iris.fileformats.pp import EARTH_RADIUS
+from iris.coord_systems import GeogCS
 
 import numpy as np
 
 from .exceptions import ArgumentError
 
 
-__all__ = ("load_data", "load_multidir", "load_vert_lev", "save_cubelist")
+__all__ = ("create_dummy_cube", "load_data", "load_multidir", "load_vert_lev", "save_cubelist")
 
 
 def load_data(files):
@@ -90,3 +92,99 @@ def save_cubelist(cubelist, path, **aux_attrs):
     # Restore original attributes
     for cube, attrs in zip(cubelist, old_attrs):
         cube.attributes = attrs
+
+
+def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type="a"):
+    """
+    Create a dummy 2D cube with given resolution compatible with the UM grid.
+
+    Parameters
+    ----------
+    nlat: int, optional
+        Number of points in latitude. Not needed if `n_res` is given.
+    nlon: int, optional
+        Number of points in longitude. Not needed if `n_res` is given.
+    n_res: int, optional
+        N-notation resolution.
+        If given, `nlat` and `nlon` are calculated automatically.
+    endgame: bool, optional
+        Use ENDGame grid.
+        If True, "A" grid starts at lat=-90+dlat/2, lon=dlon/2.
+        If False, "A" grid starts at lat=-90, lon=0.
+        ENDGame's "A" grid is NewDyn "B" grid and vice versa.
+    grid_type: str, optional
+        Type of the UM grid.
+          - A is main UM grid
+          - B is staggered lorenz wind grid
+          - Cu is staggered U wind grid
+          - Cv is staggered V wind grid
+    Returns
+    -------
+    cube: iris.cube.Cube
+        A dummy 2D cube of zeros.
+
+    Examples
+    --------
+    >>> create_dummy_cube(nlat=90, nlon=144)
+    >>> create_dummy_cube(n=96)
+    """
+    assert grid_type.lower() in ["a", "b", "cu", "cv"], f"Grid {grid_type} not valid."
+
+    # Calculate the number of points given the N-notation resolution.
+    if n_res is not None:
+        nlon = 2 * n_res
+        nlat = 3 * (n_res // 2)
+
+    # Default grid set up is for ENDGame A Grid, equivalent to NewDyn B grid.
+    if endgame:
+        lat_shift = grid_type.lower() in ("b", "cv")
+        lon_shift = grid_type.lower() in ("b", "cu")
+    else:
+        lat_shift = grid_type.lower() in ("a", "cu")
+        lon_shift = grid_type.lower() in ("a", "cv")
+
+    # Set coordinate system to match PP data.
+    geog_cs = GeogCS(EARTH_RADIUS)
+
+    # Latitude
+    spacing = 180.0 / nlat
+    if lat_shift:
+        lower_bound = -90.0
+        upper_bound = 90.0
+        act_nlat = nlat + 1
+    else:
+        lower_bound = -90.0 + spacing / 2.0
+        upper_bound = 90.0 - spacing / 2.0
+        act_nlat = nlat
+    lats = np.linspace(lower_bound, upper_bound, act_nlat)
+    lat_coord = iris.coords.DimCoord(
+        lats, standard_name="latitude", units="degrees", coord_system=geog_cs
+    )
+    lat_coord.guess_bounds()
+
+    # Longitude
+    spacing = 360.0 / nlon
+    if lon_shift:
+        lower_bound = 0.0
+        upper_bound = 360.0 - spacing
+    else:
+        lower_bound = 0.0 + spacing / 2.0
+        upper_bound = 360.0 - spacing / 2.0
+    lons = np.linspace(lower_bound, upper_bound, nlon)
+    lon_coord = iris.coords.DimCoord(
+        lons, standard_name="longitude", units="degrees", circular=True, coord_system=geog_cs
+    )
+    lon_coord.guess_bounds()
+
+    # Create a numpy array of zeros.
+    data = np.zeros((nlat, nlon), dtype=np.int32)
+
+    # Assemble the cube.
+    cube = iris.cube.Cube(
+        data,
+        dim_coords_and_dims=((lat_coord, 0), (lon_coord, 1)),
+        var_name="dummy_cube",
+        units="1",
+    )
+
+    return cube
