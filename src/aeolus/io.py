@@ -16,7 +16,7 @@ from .exceptions import ArgumentError
 __all__ = ("create_dummy_cube", "load_data", "load_multidir", "load_vert_lev", "save_cubelist")
 
 
-def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type="a"):
+def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type="a", pm180=False):
     """
     Create a dummy 2D cube with given resolution compatible with the UM grid.
 
@@ -40,6 +40,9 @@ def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type=
           - B is staggered lorenz wind grid
           - Cu is staggered U wind grid
           - Cv is staggered V wind grid
+    pm180: bool, optional
+        Use -/+180 instead of 0 to 360 for the longitude span.
+
     Returns
     -------
     cube: iris.cube.Cube
@@ -93,6 +96,8 @@ def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type=
         lower_bound = 0.0 + spacing / 2.0
         upper_bound = 360.0 - spacing / 2.0
     lons = np.linspace(lower_bound, upper_bound, nlon)
+    if pm180:
+        lons -= 180.0
     lon_coord = iris.coords.DimCoord(
         lons, standard_name="longitude", units="degrees", circular=True, coord_system=geog_cs
     )
