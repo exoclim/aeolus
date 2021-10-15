@@ -14,6 +14,23 @@ import numpy.testing as npt
 TST_DATA = Path(__file__).parent / "data" / "test_data"
 
 
+def test_create_dummy_cube():
+    # using n_res
+    cube_n72 = io.create_dummy_cube(n_res=72)
+    assert cube_n72.shape == (108, 144)
+    assert cube_n72.coord("longitude").units == "degrees"
+    assert cube_n72.coord("longitude").circular
+    npt.assert_allclose(cube_n72.coord("longitude").points[:3], [1.25, 3.75, 6.25])
+    npt.assert_allclose(cube_n72.coord("latitude").points[:3], [-89.16666667, -87.5, -85.83333333])
+    # using nlat and nlon
+    cube = io.create_dummy_cube(nlat=108, nlon=144)
+    assert cube_n72 == cube
+    # using other grids
+    assert io.create_dummy_cube(n_res=72, endgame=False, grid_type="b") == io.create_dummy_cube(
+        n_res=72, endgame=True, grid_type="a"
+    )
+
+
 def test_load_vert_lev_theta():
     levs = io.load_vert_lev(TST_DATA / "vert_lev" / "vertlevs_L38_29t_9s_40km")
     assert isinstance(levs, np.ndarray)
