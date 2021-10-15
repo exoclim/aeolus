@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I/O &mdash; aeolus 0.4.12+20.gbcd976e documentation</title>
+  <title>I/O &mdash; aeolus 0.4.12+23.ge17b64f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+20.gbcd976e
+                0.4.12+23.ge17b64f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -115,6 +115,47 @@
 <span id="i-o"></span><h1>I/O<a class="headerlink" href="#module-aeolus.io" title="Permalink to this headline"></a></h1>
 <p>Input and output functionality.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="aeolus.io.create_dummy_cube">
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">create_dummy_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endgame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'a'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#create_dummy_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.create_dummy_cube" title="Permalink to this definition"></a></dt>
+<dd><p>Create a dummy 2D cube with given resolution compatible with the UM grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nlat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Number of points in latitude. Not needed if <cite>n_res</cite> is given.</p></li>
+<li><p><strong>nlon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Number of points in longitude. Not needed if <cite>n_res</cite> is given.</p></li>
+<li><p><strong>n_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – N-notation resolution.
+If given, <cite>nlat</cite> and <cite>nlon</cite> are calculated automatically.</p></li>
+<li><p><strong>endgame</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Use ENDGame grid.
+If True, “A” grid starts at lat=-90+dlat/2, lon=dlon/2.
+If False, “A” grid starts at lat=-90, lon=0.
+ENDGame’s “A” grid is NewDyn “B” grid and vice versa.</p></li>
+<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Type of the UM grid.</dt><dd><ul>
+<li><p>A is main UM grid</p></li>
+<li><p>B is staggered lorenz wind grid</p></li>
+<li><p>Cu is staggered U wind grid</p></li>
+<li><p>Cv is staggered V wind grid</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cube</strong> – A dummy 2D cube of zeros.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.dev0)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">create_dummy_cube</span><span class="p">(</span><span class="n">nlat</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">nlon</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_dummy_cube</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="aeolus.io.load_data">
 <span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.load_data" title="Permalink to this definition"></a></dt>
 <dd><p>Wrap <cite>iris.load</cite> to deal with <cite>pathlib.Path</cite> objects.</p>
@@ -133,8 +174,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_to_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – Full path to the vertical levels file.</p></li>
-<li><p><strong>lev_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – What levels to return: “theta” or “rho”.</p></li>
+<li><p><strong>path_to_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – Full path to the vertical levels file.</p></li>
+<li><p><strong>lev_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – What levels to return: “theta” or “rho”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -154,8 +195,8 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.2.dev0)"><em>iris.cube.CubeList</em></a>) – Cube list to write to disk.</p></li>
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – File path.</p></li>
-<li><p><strong>aux_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary of additional attributes to save with the cubes.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – File path.</p></li>
+<li><p><strong>aux_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary of additional attributes to save with the cubes.</p></li>
 </ul>
 </dd>
 </dl>

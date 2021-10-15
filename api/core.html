@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core hierarchy &mdash; aeolus 0.4.12+20.gbcd976e documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0.4.12+23.ge17b64f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+20.gbcd976e
+                0.4.12+23.ge17b64f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -207,7 +207,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.core.AtmoSimBase">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.core.</span></span><span class="sig-name descname"><span class="pre">AtmoSimBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes=None,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">planet='',</span> <span class="pre">const_dir=None,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields],</span> <span class="pre">model_type=None,</span> <span class="pre">timestep=None,</span> <span class="pre">vert_coord=None,</span> <span class="pre">coord_check=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSimBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSimBase" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for creating atmospheric model simulation classes in aeolus.</p>
 <p>Used to store and calculate atmospheric fields from gridded model output.
 Derived quantities are stored as cached properties to save computational time.</p>
@@ -218,7 +218,7 @@ Derived quantities are stored as cached properties to save computational time.</
 <dd><p>The run’s name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -229,7 +229,7 @@ Derived quantities are stored as cached properties to save computational time.</
 <dd><p>A description of the run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -264,18 +264,18 @@ Derived quantities are stored as cached properties to save computational time.</
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.2.dev0)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The name or label of this <cite>AtmoSim</cite>.</p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – This is not used internally; it is solely for the user’s information.</p></li>
-<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – The name or label of this <cite>AtmoSim</cite>.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – This is not used internally; it is solely for the user’s information.</p></li>
+<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
 If not given, Earth physical constants are initialised.</p></li>
-<li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with files containing constants for a specific planet.</p></li>
+<li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with files containing constants for a specific planet.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
-<li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
-<li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
-<li><p><strong>vert_coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Character identificator for the type of the model’s vertical coordinate.
+<li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
+<li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
+<li><p><strong>vert_coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Character identificator for the type of the model’s vertical coordinate.
 “z” - data on “level_height”
 “p” - data on pressure levels</p></li>
-<li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
+<li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
 </ul>
 </dd>
 </dl>
@@ -307,7 +307,7 @@ If not given, Earth physical constants are initialised.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.core.Run">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.core.</span></span><span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">files=None,</span> <span class="pre">name='',</span> <span class="pre">planet='',</span> <span class="pre">const_dir=None,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields],</span> <span class="pre">model_type=None,</span> <span class="pre">timestep=None,</span> <span class="pre">processed=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.Run" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A single model ‘run’, i.e. simulation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="aeolus.core.Run.name">
@@ -315,7 +315,7 @@ If not given, Earth physical constants are initialised.</p></li>
 <dd><p>The run’s name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,17 +349,17 @@ If not given, Earth physical constants are initialised.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>files</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Wildcard for loading files.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The run’s name.</p></li>
-<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
+<li><p><strong>files</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Wildcard for loading files.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – The run’s name.</p></li>
+<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
 If not given, Earth physical constants are initialised.</p></li>
-<li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
+<li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
-<li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
-<li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
+<li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
+<li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
 <li><p><strong>parent</strong> (<a class="reference internal" href="#aeolus.core.Run" title="aeolus.core.Run"><em>aeolus.core.Run</em></a><em>, </em><em>optional</em>) – Pointer to this run’s driving model if this is a LAM-type simulation.</p></li>
-<li><p><strong>children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>, </em><em>optional</em>) – List of <cite>aeolus.core.Run</cite> objects if this is a driving model.</p></li>
-<li><p><strong>processed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, data from <cite>files</cite> is assigned to <cite>proc</cite> attribute.</p></li>
+<li><p><strong>children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>, </em><em>optional</em>) – List of <cite>aeolus.core.Run</cite> objects if this is a driving model.</p></li>
+<li><p><strong>processed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, data from <cite>files</cite> is assigned to <cite>proc</cite> attribute.</p></li>
 </ul>
 </dd>
 </dl>
@@ -410,7 +410,7 @@ and appends new cubes to it (and does not return anything).</p></li>
 <dd><p>Save <cite>proc</cite> cubelist to a file with appropriate metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a>) – File path.</p>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – File path.</p>
 </dd>
 </dl>
 </dd></dl>

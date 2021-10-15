@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plotting functions &mdash; aeolus 0.4.12+20.gbcd976e documentation</title>
+  <title>Plotting functions &mdash; aeolus 0.4.12+23.ge17b64f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+20.gbcd976e
+                0.4.12+23.ge17b64f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -160,14 +160,14 @@ the subplot position code (e.g., “121”).</p>
 <li><p><strong>ax</strong> (<a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/reference/generated/cartopy.mpl.geoaxes.GeoAxesSubplot.html#cartopy.mpl.geoaxes.GeoAxesSubplot" title="(in cartopy v0.20.0)"><em>cartopy.mpl.geoaxes.GeoAxesSubplot</em></a>) – Cartopy axes.</p></li>
 <li><p><strong>xticks</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Sequence of longitude ticks.</p></li>
 <li><p><strong>yticks</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Sequence of latitude ticks.</p></li>
-<li><p><strong>xoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Longitude label offset from the axis (units are points).
+<li><p><strong>xoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Longitude label offset from the axis (units are points).
 If negative (by default), the labels are drawn at the east boundary,
 otherwise at the west boundary.</p></li>
-<li><p><strong>yoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Latitude label offset from the axis (units are points).
+<li><p><strong>yoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Latitude label offset from the axis (units are points).
 If negative (by default), the labels are drawn at the south boundary,
 otherwise at the north boundary.</p></li>
-<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Add a degree symbol to tick labels.</p></li>
-<li><p><strong>**text_kw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Label text properties.</p></li>
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Add a degree symbol to tick labels.</p></li>
+<li><p><strong>**text_kw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Label text properties.</p></li>
 </ul>
 </dd>
 </dl>
@@ -185,9 +185,9 @@ otherwise at the north boundary.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ax_or_fig</strong> (<em>matplotlib.axes._subplots.AxesSubplot</em><em> or </em><a class="reference external" href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.4.3)"><em>matplotlib.figure.Figure</em></a>) – Matplotlib object where to put the legend.</p></li>
-<li><p><strong>styles_and_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Dictionary with labels as keys and a dictionary of plot
+<li><p><strong>styles_and_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary with labels as keys and a dictionary of plot
 keywords as values.</p></li>
-<li><p><strong>leg_kw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Keyword arguments passed to <cite>legend()</cite> function.</p></li>
+<li><p><strong>leg_kw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Keyword arguments passed to <cite>legend()</cite> function.</p></li>
 </ul>
 </dd>
 </dl>
@@ -212,16 +212,16 @@ keywords as values.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Value of longitude or latitude. Note that this function is only for integer values.</p></li>
-<li><p><strong>lon_or_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Longitude or latitude</p></li>
-<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a TeX degree symbol is included</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Value of longitude or latitude. Note that this function is only for integer values.</p></li>
+<li><p><strong>lon_or_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Longitude or latitude</p></li>
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If true, a TeX degree symbol is included</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -257,18 +257,18 @@ to show). The exponent to be used can also be specified explicitly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Number to be formatted.</p></li>
-<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Units of the number, if any.</p></li>
-<li><p><strong>decimal_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Significant decimal digits.</p></li>
-<li><p><strong>precision</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of decimal digits to show.</p></li>
-<li><p><strong>exponent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Exponent of the resulting number.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Number to be formatted.</p></li>
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Units of the number, if any.</p></li>
+<li><p><strong>decimal_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Significant decimal digits.</p></li>
+<li><p><strong>precision</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Number of decimal digits to show.</p></li>
+<li><p><strong>exponent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – Exponent of the resulting number.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -298,11 +298,11 @@ to show). The exponent to be used can also be specified explicitly.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.dev0)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube with (longitude, latitude, [level_height]) coordinates.</p></li>
-<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
-<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
+<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
+<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
 <li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.32.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
-<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
+<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -325,15 +325,15 @@ the input cube’s coordinates.</p></li>
 <li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.dev0)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube of x-wind component (zonal wind).</p></li>
 <li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.dev0)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube of y-wind component (meridional wind).</p></li>
 <li><p><strong>w</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.dev0)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube of z-wind component (vertical wind).</p></li>
-<li><p><strong>vector_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for vectors.</p></li>
-<li><p><strong>vertical_wind_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical wind component (for better visibility).</p></li>
-<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
-<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
-<li><p><strong>xstride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the longitude axis.</p></li>
-<li><p><strong>ystride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the latitude axis.</p></li>
+<li><p><strong>vector_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for vectors.</p></li>
+<li><p><strong>vertical_wind_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical wind component (for better visibility).</p></li>
+<li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
+<li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
+<li><p><strong>xstride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the longitude axis.</p></li>
+<li><p><strong>ystride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the latitude axis.</p></li>
 <li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.32.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
-<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
+<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>

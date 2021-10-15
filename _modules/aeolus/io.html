@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.12+20.gbcd976e documentation</title>
+  <title>aeolus.io &mdash; aeolus 0.4.12+23.ge17b64f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+20.gbcd976e
+                0.4.12+23.ge17b64f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -79,13 +79,15 @@
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">CubeList</span>
+<span class="kn">from</span> <span class="nn">iris.fileformats.pp</span> <span class="kn">import</span> <span class="n">EARTH_RADIUS</span>
+<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span> <span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
@@ -164,6 +166,102 @@
     <span class="c1"># Restore original attributes</span>
     <span class="k">for</span> <span class="n">cube</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">old_attrs</span><span class="p">):</span>
         <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attrs</span></div>
+
+
+<div class="viewcode-block" id="create_dummy_cube"><a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a><span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span><span class="n">nlat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nlon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endgame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a dummy 2D cube with given resolution compatible with the UM grid.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nlat: int, optional</span>
+<span class="sd">        Number of points in latitude. Not needed if `n_res` is given.</span>
+<span class="sd">    nlon: int, optional</span>
+<span class="sd">        Number of points in longitude. Not needed if `n_res` is given.</span>
+<span class="sd">    n_res: int, optional</span>
+<span class="sd">        N-notation resolution.</span>
+<span class="sd">        If given, `nlat` and `nlon` are calculated automatically.</span>
+<span class="sd">    endgame: bool, optional</span>
+<span class="sd">        Use ENDGame grid.</span>
+<span class="sd">        If True, &quot;A&quot; grid starts at lat=-90+dlat/2, lon=dlon/2.</span>
+<span class="sd">        If False, &quot;A&quot; grid starts at lat=-90, lon=0.</span>
+<span class="sd">        ENDGame&#39;s &quot;A&quot; grid is NewDyn &quot;B&quot; grid and vice versa.</span>
+<span class="sd">    grid_type: str, optional</span>
+<span class="sd">        Type of the UM grid.</span>
+<span class="sd">          - A is main UM grid</span>
+<span class="sd">          - B is staggered lorenz wind grid</span>
+<span class="sd">          - Cu is staggered U wind grid</span>
+<span class="sd">          - Cv is staggered V wind grid</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cube: iris.cube.Cube</span>
+<span class="sd">        A dummy 2D cube of zeros.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; create_dummy_cube(nlat=90, nlon=144)</span>
+<span class="sd">    &gt;&gt;&gt; create_dummy_cube(n=96)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;cu&quot;</span><span class="p">,</span> <span class="s2">&quot;cv&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;Grid </span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> not valid.&quot;</span>
+
+    <span class="c1"># Calculate the number of points given the N-notation resolution.</span>
+    <span class="k">if</span> <span class="n">n_res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nlon</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_res</span>
+        <span class="n">nlat</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_res</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Default grid set up is for ENDGame A Grid, equivalent to NewDyn B grid.</span>
+    <span class="k">if</span> <span class="n">endgame</span><span class="p">:</span>
+        <span class="n">lat_shift</span> <span class="o">=</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;cv&quot;</span><span class="p">)</span>
+        <span class="n">lon_shift</span> <span class="o">=</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;cu&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lat_shift</span> <span class="o">=</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;cu&quot;</span><span class="p">)</span>
+        <span class="n">lon_shift</span> <span class="o">=</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;cv&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Set coordinate system to match PP data.</span>
+    <span class="n">geog_cs</span> <span class="o">=</span> <span class="n">GeogCS</span><span class="p">(</span><span class="n">EARTH_RADIUS</span><span class="p">)</span>
+
+    <span class="c1"># Latitude</span>
+    <span class="n">spacing</span> <span class="o">=</span> <span class="mf">180.0</span> <span class="o">/</span> <span class="n">nlat</span>
+    <span class="k">if</span> <span class="n">lat_shift</span><span class="p">:</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="o">-</span><span class="mf">90.0</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">90.0</span>
+        <span class="n">act_nlat</span> <span class="o">=</span> <span class="n">nlat</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="o">-</span><span class="mf">90.0</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">90.0</span> <span class="o">-</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">act_nlat</span> <span class="o">=</span> <span class="n">nlat</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="n">act_nlat</span><span class="p">)</span>
+    <span class="n">lat_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">(</span>
+        <span class="n">lats</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="n">coord_system</span><span class="o">=</span><span class="n">geog_cs</span>
+    <span class="p">)</span>
+    <span class="n">lat_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+
+    <span class="c1"># Longitude</span>
+    <span class="n">spacing</span> <span class="o">=</span> <span class="mf">360.0</span> <span class="o">/</span> <span class="n">nlon</span>
+    <span class="k">if</span> <span class="n">lon_shift</span><span class="p">:</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">360.0</span> <span class="o">-</span> <span class="n">spacing</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">360.0</span> <span class="o">-</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="n">nlon</span><span class="p">)</span>
+    <span class="n">lon_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">(</span>
+        <span class="n">lons</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="n">circular</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coord_system</span><span class="o">=</span><span class="n">geog_cs</span>
+    <span class="p">)</span>
+    <span class="n">lon_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+
+    <span class="c1"># Create a numpy array of zeros.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="c1"># Assemble the cube.</span>
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">dim_coords_and_dims</span><span class="o">=</span><span class="p">((</span><span class="n">lat_coord</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">lon_coord</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="n">var_name</span><span class="o">=</span><span class="s2">&quot;dummy_cube&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cube</span></div>
 </pre></div>
 
            </div>
