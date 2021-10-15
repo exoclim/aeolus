@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.12+24.gc6888f2 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0.4.12+25.g82d8e6c documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+24.gc6888f2
+                0.4.12+25.g82d8e6c
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span> <span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="create_dummy_cube"><a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a><span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span><span class="n">nlat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nlon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endgame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="create_dummy_cube"><a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a><span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span><span class="n">nlat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nlon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_res</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">endgame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">pm180</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a dummy 2D cube with given resolution compatible with the UM grid.</span>
 
@@ -114,6 +114,9 @@
 <span class="sd">          - B is staggered lorenz wind grid</span>
 <span class="sd">          - Cu is staggered U wind grid</span>
 <span class="sd">          - Cv is staggered V wind grid</span>
+<span class="sd">    pm180: bool, optional</span>
+<span class="sd">        Use -/+180 instead of 0 to 360 for the longitude span.</span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    cube: iris.cube.Cube</span>
@@ -167,6 +170,8 @@
         <span class="n">lower_bound</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
         <span class="n">upper_bound</span> <span class="o">=</span> <span class="mf">360.0</span> <span class="o">-</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">lons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="n">nlon</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pm180</span><span class="p">:</span>
+        <span class="n">lons</span> <span class="o">-=</span> <span class="mf">180.0</span>
     <span class="n">lon_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">(</span>
         <span class="n">lons</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="n">circular</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coord_system</span><span class="o">=</span><span class="n">geog_cs</span>
     <span class="p">)</span>

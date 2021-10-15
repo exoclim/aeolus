@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I/O &mdash; aeolus 0.4.12+24.gc6888f2 documentation</title>
+  <title>I/O &mdash; aeolus 0.4.12+25.g82d8e6c documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.12+24.gc6888f2
+                0.4.12+25.g82d8e6c
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -116,7 +116,7 @@
 <p>Input and output functionality.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.io.create_dummy_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">create_dummy_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endgame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'a'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#create_dummy_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.create_dummy_cube" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.io.</span></span><span class="sig-name descname"><span class="pre">create_dummy_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endgame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'a'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pm180</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/io.html#create_dummy_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.io.create_dummy_cube" title="Permalink to this definition"></a></dt>
 <dd><p>Create a dummy 2D cube with given resolution compatible with the UM grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -139,6 +139,7 @@ ENDGame’s “A” grid is NewDyn “B” grid and vice versa.</p></li>
 </dd>
 </dl>
 </p></li>
+<li><p><strong>pm180</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Use -/+180 instead of 0 to 360 for the longitude span.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
