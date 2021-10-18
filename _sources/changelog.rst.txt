@@ -7,7 +7,7 @@ Changelog
 0.4.13
 ------
 
-:Date: TBA
+:Date: 18 October 2021
 
 * Make the package compatible with iris v3.1 by using explicit imports
 * Refactor functions to calculate transmission spectrum.
