@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.13 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.13+3.gf3f9712 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13
+                0.4.13+3.gf3f9712
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -813,9 +813,8 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="sigma_p"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.sigma_p">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
-<span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;atmosphere_hybrid_sigma_pressure_coordinate&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">sigma_p</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="sigma_p"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.sigma_p">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;atmosphere_hybrid_sigma_pressure_coordinate&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sigma_p</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate sigma (normalised pressure coordinate) from a cube of pressure.</span>
 
@@ -826,15 +825,13 @@
 <span class="sd">    ----------</span>
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes.</span>
-<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have a cube of reference (surface) pressure as an attribute.</span>
-<span class="sd">        If not given, attempt to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pres_cube</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">spatial_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)))</span>
-    <span class="n">pres_cube</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pres_cube</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span></div>
+    <span class="n">pres_atm</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
+    <span class="n">pres_sfc</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">p_sfc</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pres_atm</span> <span class="o">/</span> <span class="n">pres_sfc</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="zonal_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.zonal_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>

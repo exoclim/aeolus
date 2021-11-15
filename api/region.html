@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regions &mdash; aeolus 0.4.13 documentation</title>
+  <title>Regions &mdash; aeolus 0.4.13+3.gf3f9712 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13
+                0.4.13+3.gf3f9712
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -116,7 +116,7 @@
 <p>Subsetting variables over geographical regions.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.region.Region">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aeolus.region.</span></span><span class="sig-name descname"><span class="pre">Region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">west_bound,</span> <span class="pre">east_bound,</span> <span class="pre">south_bound,</span> <span class="pre">north_bound,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.region.</span></span><span class="sig-name descname"><span class="pre">Region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">west_bound,</span> <span class="pre">east_bound,</span> <span class="pre">south_bound,</span> <span class="pre">north_bound,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Rectangular geographical region.</p>
 <dl class="py attribute">
@@ -177,7 +177,7 @@ region.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aeolus.region.Region.from_cube">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">name=None,</span> <span class="pre">margin=None,</span> <span class="pre">margin_units='points',</span> <span class="pre">shift_lons=False,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region.from_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region.from_cube" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">name=None,</span> <span class="pre">margin=None,</span> <span class="pre">margin_units='points',</span> <span class="pre">shift_lons=False,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/region.html#Region.from_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.region.Region.from_cube" title="Permalink to this definition"></a></dt>
 <dd><p>Create a Region from limits of longitude and latitude of the cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

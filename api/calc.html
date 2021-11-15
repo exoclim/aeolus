@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Science calculations &mdash; aeolus 0.4.13 documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.13+3.gf3f9712 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -17,7 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13
+                0.4.13+3.gf3f9712
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -570,7 +570,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.calc.diag.sigma_p">
-<span class="sig-prename descclassname"><span class="pre">aeolus.calc.diag.</span></span><span class="sig-name descname"><span class="pre">sigma_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">const=None,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sigma_p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.diag.sigma_p" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.diag.</span></span><span class="sig-name descname"><span class="pre">sigma_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#sigma_p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.diag.sigma_p" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate sigma (normalised pressure coordinate) from a cube of pressure.</p>
 <div class="math notranslate nohighlight">
 \[\sigma = p / p_{sfc}\]</div>
@@ -578,8 +578,6 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.2.dev0)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a cube of reference (surface) pressure as an attribute.
-If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>

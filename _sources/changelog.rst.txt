@@ -4,6 +4,14 @@ Changelog
 .. default-role:: py:obj
 
 
+0.4.14
+------
+
+:Date: TBA
+
+* Correct the calculation of `sigma_p` and remove its averaging.
+
+
 0.4.13
 ------
 
