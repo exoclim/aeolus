@@ -739,9 +739,8 @@ def wind_speed(*components):
     return out
 
 
-@const_from_attrs()
 @update_metadata(name="atmosphere_hybrid_sigma_pressure_coordinate", units="1")
-def sigma_p(cubelist, const=None, model=um):
+def sigma_p(cubelist, model=um):
     r"""
     Calculate sigma (normalised pressure coordinate) from a cube of pressure.
 
@@ -752,15 +751,13 @@ def sigma_p(cubelist, const=None, model=um):
     ----------
     cubelist: iris.cube.CubeList
         Input list of cubes.
-    const: aeolus.const.const.ConstContainer, optional
-        Must have a cube of reference (surface) pressure as an attribute.
-        If not given, attempt to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
     """
-    pres_cube = time_mean(spatial_mean(cubelist.extract_cube(model.pres)))
-    pres_cube.convert_units("Pa")
-    return pres_cube / const.reference_surface_pressure
+    pres_atm = cubelist.extract_cube(model.pres)
+    pres_sfc = cubelist.extract_cube(model.p_sfc)
+    out = pres_atm / pres_sfc
+    return out
 
 
 @const_from_attrs()
