@@ -9,6 +9,7 @@ Changelog
 
 :Date: TBA
 
+* Add tests for Python 3.10
 * Correct the calculation of `sigma_p` and remove its averaging.
 
 
