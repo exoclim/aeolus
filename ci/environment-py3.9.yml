@@ -5,7 +5,7 @@ dependencies:
 - python=3.9
 - cached-property>=1.5.1
 - cartopy
-- dask
+- dask-core
 - f90nml
 - flake8-builtins
 - flake8-comprehensions
