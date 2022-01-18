@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with synthetic observations &mdash; aeolus 0.4.13+8.g7bef66d documentation</title>
+  <title>Working with synthetic observations &mdash; aeolus 0.4.13+15.g13a2c8b documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+8.g7bef66d
+                0.4.13+15.g13a2c8b
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -296,7 +296,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -387,8 +387,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
@@ -403,8 +402,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">um</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">aeolus.synthobs</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">calc_stellar_flux</span><span class="p">,</span>
     <span class="n">calc_transmission_spectrum</span><span class="p">,</span>
@@ -419,8 +417,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;mathtext.default&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;regular&quot;</span>
 </pre></div>
 </div>
@@ -432,8 +429,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">spectral_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;spectral&quot;</span> <span class="o">/</span> <span class="s2">&quot;sp_sw_500ir_bd_hatp11&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectral_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;spectral&quot;</span> <span class="o">/</span> <span class="s2">&quot;sp_sw_500ir_bd_hatp11&quot;</span>
 <span class="c1"># To keep the units of stellar and planetary parameters, store the parameters as iris cubes</span>
 <span class="n">stellar_constant_at_1_au</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
     <span class="mf">300.85538168664425</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;stellar_constant_at_1_au&quot;</span>
@@ -455,8 +451,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># print the first four spectral bands</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># print the first four spectral bands</span>
 </pre></div>
 </div>
 </div>
@@ -478,8 +473,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">normalized_stellar_flux</span> <span class="o">=</span> <span class="n">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_stellar_flux</span> <span class="o">=</span> <span class="n">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">normalized_stellar_flux</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">,</span>
@@ -504,8 +498,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">stellar_flux</span> <span class="o">=</span> <span class="n">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stellar_flux</span> <span class="o">=</span> <span class="n">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stellar_flux</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">stellar_flux</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Spectral band index&quot;</span><span class="p">)</span>
@@ -527,8 +520,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_day</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_day</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -546,8 +538,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rp_eff_over_rs</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum</span><span class="p">(</span>
     <span class="n">planet_transmission_day</span><span class="p">,</span>
     <span class="n">spectral_file</span><span class="p">,</span>
     <span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
@@ -565,8 +556,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">planet_transmission_night</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">planet_transmission_night</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span>
     <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_night.nc&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
@@ -576,8 +566,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_night</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_night</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -592,8 +581,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rp_eff_over_rs_dn</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_dn</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
     <span class="n">planet_transmission_day</span><span class="p">,</span>
     <span class="n">planet_transmission_night</span><span class="p">,</span>
     <span class="n">spectral_file</span><span class="p">,</span>
@@ -609,8 +597,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">,</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">data</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
