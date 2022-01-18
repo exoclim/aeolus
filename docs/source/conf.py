@@ -17,6 +17,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import datetime
 import os
 from glob import glob
 
@@ -26,8 +27,8 @@ import aeolus
 # -- Project information -----------------------------------------------------
 
 project = "aeolus"
-copyright = "2021, the aeolus developers"  # noqa
-author = "The aeolus developers"
+author = "{project} contributors"
+copyright = f"2020 - {datetime.datetime.now().year}, {author}"
 
 # The short X.Y version
 version = aeolus.__version__
@@ -95,7 +96,6 @@ html_theme_path = ["_themes"]
 # import sphinx_rtd_theme  # noqa
 html_theme = "sphinx_rtd_theme"
 # html_theme = 'sphinxdoc'
-# html_theme = "sphinx13_aeolus"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -125,7 +125,7 @@ html_favicon = "_static/favicon.ico"
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "aeolusdoc"
+htmlhelp_basename = f"{project}doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -148,14 +148,14 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [(master_doc, "aeolus.tex", "aeolus Documentation", "Denis Sergeev", "manual")]
+latex_documents = [(master_doc, f"{project}.tex", f"{project} Documentation", author, "manual")]
 
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "aeolus", "aeolus Documentation", [author], 1)]
+man_pages = [(master_doc, project, f"{project} Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------------
@@ -165,11 +165,9 @@ man_pages = [(master_doc, "aeolus", "aeolus Documentation", [author], 1)]
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        master_doc,
-        "aeolus",
-        "aeolus Documentation",
-        author,
-        "aeolus",
+        master_doc,project, f"{project} Documentation",
+        project,
+        project,
         "One line description of project.",
         "Miscellaneous",
     )
