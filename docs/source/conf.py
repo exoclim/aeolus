@@ -165,7 +165,9 @@ man_pages = [(master_doc, project, f"{project} Documentation", [author], 1)]
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        master_doc,project, f"{project} Documentation",
+        master_doc,
+        project,
+        f"{project} Documentation",
         project,
         project,
         "One line description of project.",
