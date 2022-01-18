@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 """Statistical functions."""
+from collections.abc import Iterable, Mapping
+
 import iris.analysis
 from iris.analysis.maths import apply_ufunc
 from iris.coords import AuxCoord
+from iris.cube import Cube
 from iris.exceptions import CoordinateCollapseError as CoColErr
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
+import iris.util
 from iris.util import broadcast_to_shape, promote_aux_coord_to_dim_coord
 
 import numpy as np
@@ -262,14 +266,28 @@ def spatial_quartiles(cube, model=um):
     return q25, q75
 
 
-def time_mean(cube, model=um):
-    """Time average of a cube."""
-    try:
-        out = cube.collapsed(model.t, iris.analysis.MEAN)
-    except CoColErr as e:
-        _warn(f"Caught exception in time_mean():\n{e}")
-        # out = iris.util.squeeze(cube)
-        out = cube
+def time_mean(obj, squeeze=False, model=um):
+    """Time average of a cube or a container with cubes."""
+    if isinstance(obj, Cube):
+        try:
+            out = obj.collapsed(model.t, iris.analysis.MEAN)
+        except CoColErr as e:
+            _warn(f"Caught exception in time_mean():\n{e}")
+            out = obj
+        if squeeze:
+            out = iris.util.squeeze(out)
+    elif isinstance(obj, Mapping):
+        out = {}
+        for key, cube in obj.items():
+            out[key] = time_mean(cube, model=model)
+        out = obj.__class__(out)
+    elif isinstance(obj, Iterable):
+        out = []
+        for cube in obj:
+            out.append(time_mean(cube, model=model))
+        out = obj.__class__(out)
+    else:
+        raise ArgumentError(f"Unrecognised type of obj: {type(obj)}")
     return out
 
 

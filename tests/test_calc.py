@@ -116,3 +116,62 @@ def test_spatial_mean_twice(example_cubelist_from_file):
     with pytest.warns(AeolusWarning):
         other = calc.spatial_mean(result)
     assert result == other
+
+
+def test_time_mean_single():
+    xc = iris.coords.DimCoord([0, 1], units="m", standard_name="longitude")
+    tc = iris.coords.DimCoord(
+        np.arange(10), units="hours since 1970-01-01 00:00:00", standard_name="time"
+    )
+    tc.guess_bounds()
+    arr = np.arange(20).reshape((10, 2))
+    cube = iris.cube.Cube(
+        data=arr,
+        dim_coords_and_dims=[i[::-1] for i in [*enumerate((tc, xc))]],
+        standard_name="x_wind",
+        units="m/s",
+    )
+    result = calc.time_mean(cube)
+    assert result.shape == (2,)
+    assert result.units == "m/s"
+    assert result.standard_name == "x_wind"
+    kgo = [9.0, 10.0]
+    npt.assert_allclose(result.data, kgo)
+    result2 = calc.time_mean(cube, squeeze=True)
+    assert result2 == result
+
+
+def test_time_mean_collection():
+    xc = iris.coords.DimCoord([0, 1], units="m", standard_name="longitude")
+    tc = iris.coords.DimCoord(
+        np.arange(10), units="hours since 1970-01-01 00:00:00", standard_name="time"
+    )
+    tc.guess_bounds()
+    arr = np.arange(20).reshape((10, 2))
+    cube1 = iris.cube.Cube(
+        data=arr,
+        dim_coords_and_dims=[i[::-1] for i in [*enumerate((tc, xc))]],
+        standard_name="x_wind",
+        units="m/s",
+    )
+    cube2 = iris.cube.Cube(
+        data=arr * 2,
+        dim_coords_and_dims=[i[::-1] for i in [*enumerate((tc, xc))]],
+        standard_name="air_pressure",
+        units="Pa",
+    )
+    cont_cl = iris.cube.CubeList([cube1, cube2])
+    result = calc.time_mean(cont_cl)
+    assert isinstance(result, iris.cube.CubeList)
+    assert result[0] == calc.time_mean(cube1)
+    assert result[1] == calc.time_mean(cube2)
+    cont_tuple = (cube1, cube2)
+    result = calc.time_mean(cont_tuple)
+    assert isinstance(result, tuple)
+    assert result[0] == calc.time_mean(cube1)
+    assert result[1] == calc.time_mean(cube2)
+    cont_dict = {"a": cube1, "b": cube2}
+    result = calc.time_mean(cont_dict)
+    assert isinstance(result, dict)
+    assert result["a"] == calc.time_mean(cube1)
+    assert result["b"] == calc.time_mean(cube2)
