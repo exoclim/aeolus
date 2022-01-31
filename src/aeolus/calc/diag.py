@@ -712,7 +712,7 @@ def superrotation_index(cubelist, const=None, model=um):
     ang_mom = multiply(inner_sum, r_coslat, dim=lat_dim)
 
     # Final index
-    s_idx = ang_mom / omega / (r ** 2)
+    s_idx = ang_mom / omega / (r**2)
     s_idx.convert_units("1")
     s_idx = s_idx.copy(data=s_idx.data - 1)
     return s_idx
@@ -735,7 +735,7 @@ def wind_speed(*components):
     -------
     iris.cube.Cube
     """
-    out = sum(cube ** 2 for cube in components) ** 0.5
+    out = sum(cube**2 for cube in components) ** 0.5
     return out
 
 

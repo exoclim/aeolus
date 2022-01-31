@@ -105,7 +105,7 @@ def unit_format(value, unit="1", decimal_digits=1, precision=None, exponent=None
     if unit in ["", "1", 1]:
         unit_str = ""
     else:
-        unit_str = fr'${str(unit).replace(" ", "$ $")}$'
+        unit_str = rf'${str(unit).replace(" ", "$ $")}$'
         if "%" in unit_str:
             unit_str = unit_str.replace("%", r"\%")
     if value == 1:
@@ -116,12 +116,12 @@ def unit_format(value, unit="1", decimal_digits=1, precision=None, exponent=None
         if exponent is None:
             exponent = int(math.floor(math.log10(abs(value))))
 
-        coeff = round(value / 10 ** exponent, decimal_digits)
+        coeff = round(value / 10**exponent, decimal_digits)
 
         if exponent in [0, 1]:
-            string = fr"${round(value, decimal_digits):.{precision}f}$"
+            string = rf"${round(value, decimal_digits):.{precision}f}$"
         else:
-            string = fr"${coeff:.{precision}f}\times10^{{{exponent:d}}}$"
+            string = rf"${coeff:.{precision}f}\times10^{{{exponent:d}}}$"
         if not unit == "1":
-            string += fr" {unit_str}"
+            string += rf" {unit_str}"
     return string
