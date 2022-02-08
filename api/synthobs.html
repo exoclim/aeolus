@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Synthetic observations &mdash; aeolus 0.4.13+20.g487dd42 documentation</title>
+  <title>Synthetic observations &mdash; aeolus 0.4.13+22.g6e7cfd9 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+20.g487dd42
+                0.4.13+22.g6e7cfd9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -118,7 +118,7 @@
 <p>Functions for calculating synthetic observations.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.calc_geom_mean_mirrored">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_geom_mean_mirrored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_a,</span> <span class="pre">cube_b,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_geom_mean_mirrored"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_geom_mean_mirrored" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_geom_mean_mirrored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_a,</span> <span class="pre">cube_b,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_geom_mean_mirrored"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_geom_mean_mirrored" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate geometric mean of two cubes with one flipped along the x-axis.</p>
 <p>This function can be used to get an average transmission flux
 calculated separately from the day- and night-side perspective.</p>
@@ -140,31 +140,31 @@ calculated separately from the day- and night-side perspective.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
+<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Stellar flux per spectral band [W m-2].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.calc_transmission_spectrum">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum" title="Permalink to this definition"></a></dt>
 <dd><p>Convert the model output of transmission flux to a planetary-stellar radius ratio.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
+<li><p><strong>trans_flux</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
 In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
 <li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
-<li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
-<li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>
+<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
+<li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
+<li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -173,7 +173,7 @@ In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in sectio
 Spectral band centres [m] is attached as an auxiliary coordinate.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -193,15 +193,15 @@ the planetary radius and the height of the model domain),
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.calc_transmission_spectrum_day_night_average">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum_day_night_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux_day,</span> <span class="pre">trans_flux_night,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[90</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum_day_night_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum_day_night_average" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum_day_night_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux_day,</span> <span class="pre">trans_flux_night,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum_day_night_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum_day_night_average" title="Permalink to this definition"></a></dt>
 <dd><p>Convert the model output of transmission flux to a planetary-stellar radius ratio.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux_day</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
+<li><p><strong>trans_flux_day</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
 Day-side perspective.
 In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
-<li><p><strong>trans_flux_night</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
+<li><p><strong>trans_flux_night</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
 Night-side perspective.
 In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
 <li><p><strong>parameters</strong> (<em>For other</em>) – </p></li>
@@ -227,7 +227,7 @@ In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in sectio
 <dd class="field-even"><p>Normalized stellar flux per spectral band [1].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.2.0rc0)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
