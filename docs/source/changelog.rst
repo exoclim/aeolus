@@ -10,6 +10,7 @@ Changelog
 :Date: TBA
 
 * Add tests for Python 3.10
+* Add new model names
 * Correct the calculation of `sigma_p` and remove its averaging.
 * Make `calc.stats.time_mean()` be able to accept cubes or collections of cubes.
 

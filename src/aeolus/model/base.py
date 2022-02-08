@@ -73,6 +73,9 @@ class Model:
     cld_ice_mf: str = None
     cld_liq_mf: str = None
     rain_mf: str = None
+    cca_anvil: str = None
+    ccw_rad: str = None
+    cld_top_hgt: str = None
     cld_ice_v: str = None
     cld_liq_v: str = None
     cld_v: str = None
@@ -116,6 +119,9 @@ class Model:
     ep_flux_y: str = None
     ep_flux_z: str = None
     ep_flux_div: str = None
+    # Lightning
+    light_flash_rate: str = None
+    light_number: str = None
 
     def __repr__(self):
         """Override the repr method of the dataclass."""

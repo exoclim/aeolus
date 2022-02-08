@@ -60,6 +60,9 @@ um = Model(
     cld_ice_mf="mass_fraction_of_cloud_ice_in_air",
     cld_liq_mf="mass_fraction_of_cloud_liquid_water_in_air",
     rain_mf="mass_fraction_of_rain_in_air",
+    cca_anvil="convective_cloud_amount_with_anvil",
+    ccw_rad="convective_cloud_water_passed_to_radiation",
+    cld_top_hgt="total_cloud_top_height",
     cld_ice_v="ice_cloud_volume_fraction_in_atmosphere_layer",
     cld_liq_v="liquid_cloud_volume_fraction_in_atmosphere_layer",
     cld_v="cloud_volume_fraction_in_atmosphere_layer",
@@ -99,6 +102,9 @@ um = Model(
     ep_flux_y="northward_eliassen_palm_flux_in_air",
     ep_flux_z="upward_eliassen_palm_flux_in_air",
     ep_flux_div="tendency_of_eastward_wind_due_to_eliassen_palm_flux_divergence",
+    # Lightning
+    light_flash_rate="lightning_flash_rate",
+    light_number="Number_of_lightning_flashes",
 )
 
 um_stash = Model(
@@ -151,6 +157,9 @@ um_stash = Model(
     cld_ice_mf="m01s00i012",
     cld_liq_mf="m01s00i254",
     rain_mf="m01s00i272",
+    cca_anvil="m01s00i211",
+    ccw_rad="m01s00i212",
+    cld_top_hgt="m01s09i223",
     cld_ice_v="m01s00i268",
     cld_liq_v="m01s00i267",
     cld_v="m01s00i266",
@@ -189,4 +198,6 @@ um_stash = Model(
     du_solve="m01s10i185",
     du_adv="m01s12i185",
     du_total="m01s30i185",
+    light_flash_rate="m01s21i100",
+    light_number="m01s21i104",
 )
