@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.13+22.g6e7cfd9 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0.4.13+23.g5c3133c documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+22.g6e7cfd9
+                0.4.13+23.g5c3133c
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -74,17 +74,14 @@
   <h1>Source code for aeolus.io</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">CubeList</span>
 <span class="kn">from</span> <span class="nn">iris.fileformats.pp</span> <span class="kn">import</span> <span class="n">EARTH_RADIUS</span>
+<span class="kn">from</span> <span class="nn">iris.fileformats.um</span> <span class="kn">import</span> <span class="n">structured_um_loading</span>
 <span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span> <span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
@@ -191,15 +188,14 @@
     <span class="k">return</span> <span class="n">cube</span></div>
 
 
-<div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrap `iris.load` to deal with `pathlib.Path` objects.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-        <span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
-        <span class="n">fnames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">structured</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Use `iris.load` with optional structured loading for PP files.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">structured</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">structured_um_loading</span><span class="p">():</span>
+            <span class="n">cubes</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not allowed.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span></div>
+        <span class="n">cubes</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cubes</span></div>
 
 
 <div class="viewcode-block" id="load_multidir"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_multidir">[docs]</a><span class="k">def</span> <span class="nf">load_multidir</span><span class="p">(</span><span class="n">path_mask</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">label_name</span><span class="o">=</span><span class="s2">&quot;run&quot;</span><span class="p">):</span>

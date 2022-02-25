@@ -9,10 +9,13 @@ Changelog
 
 :Date: TBA
 
-* Add tests for Python 3.10
-* Add new model names
+* Require iris 3.2 as a minimum.
+* Drop Python 3.7 support.
+* Add github action tests for Python 3.10.
+* Add new model names.
 * Correct the calculation of `sigma_p` and remove its averaging.
 * Make `calc.stats.time_mean()` be able to accept cubes or collections of cubes.
+* Add the `structured_um_loading` option to `io.load_data()`.
 
 
 0.4.13
