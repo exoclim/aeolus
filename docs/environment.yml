@@ -7,7 +7,7 @@ dependencies:
 - cartopy
 - f90nml
 - ipython
-- iris>=3.0
+- iris>=3.2
 - latlon23
 - matplotlib>=3.4
 - nbsphinx

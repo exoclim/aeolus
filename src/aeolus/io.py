@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 """Input and output functionality."""
-from pathlib import Path
-
 import iris
 from iris.coords import AuxCoord
 from iris.cube import CubeList
 from iris.fileformats.pp import EARTH_RADIUS
+from iris.fileformats.um import structured_um_loading
 from iris.coord_systems import GeogCS
 
 import numpy as np
-
-from .exceptions import ArgumentError
 
 
 __all__ = ("create_dummy_cube", "load_data", "load_multidir", "load_vert_lev", "save_cubelist")
@@ -117,15 +114,14 @@ def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type=
     return cube
 
 
-def load_data(files):
-    """Wrap `iris.load` to deal with `pathlib.Path` objects."""
-    if isinstance(files, (list, set, tuple)):
-        fnames = [str(i) for i in files]
-    elif isinstance(files, (str, Path)):
-        fnames = str(files)
+def load_data(files, structured=False):
+    """Use `iris.load` with optional structured loading for PP files."""
+    if structured:
+        with structured_um_loading():
+            cubes = iris.load(files)
     else:
-        raise ArgumentError(f"Input type {type(files)} is not allowed.")
-    return iris.load(fnames)
+        cubes = iris.load(files)
+    return cubes
 
 
 def load_multidir(path_mask, labels, label_name="run"):
