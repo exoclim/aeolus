@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.13+26.g401a89f documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.13+27.gc8172e6 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+26.g401a89f
+                0.4.13+27.gc8172e6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -988,9 +988,7 @@
     <span class="kn">from</span> <span class="nn">windspharm.iris</span> <span class="kn">import</span> <span class="n">VectorWind</span>
 
     <span class="n">vec</span> <span class="o">=</span> <span class="n">VectorWind</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">rsphere</span><span class="o">=</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">rot_cmpnt_v</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">helmholtz</span><span class="p">(</span>
-        <span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span>
-    <span class="p">)</span>
+    <span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">rot_cmpnt_v</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">helmholtz</span><span class="p">(</span><span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span><span class="p">)</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">out</span><span class="p">[</span><span class="s2">&quot;u_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
     <span class="n">out</span><span class="p">[</span><span class="s2">&quot;v_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
