@@ -914,9 +914,7 @@ def wind_rot_div(u, v, truncation=None, const=None, model=um):
     from windspharm.iris import VectorWind
 
     vec = VectorWind(u, v, rsphere=const.radius.data)
-    div_cmpnt_u, div_cmpnt_v, rot_cmpnt_u, rot_cmpnt_v = vec.helmholtz(
-        truncation=truncation
-    )
+    div_cmpnt_u, div_cmpnt_v, rot_cmpnt_u, rot_cmpnt_v = vec.helmholtz(truncation=truncation)
     out = {}
     out["u_total"] = u
     out["v_total"] = v
