@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with synthetic observations &mdash; aeolus 0.4.13+23.g5c3133c documentation</title>
+  <title>Working with synthetic observations &mdash; aeolus 0.4.13+26.g401a89f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API reference" href="../api/index.html" />
+    <link rel="next" title="A primer on calculating rotational and divergent wind components" href="04_Rotational_And_Divergent_Winds.html" />
     <link rel="prev" title="Model variable names" href="02_Model_Field_Names.html" /> 
 </head>
 
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+23.g5c3133c
+                0.4.13+26.g401a89f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -54,6 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#Transmission-spectrum">Transmission spectrum</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="04_Rotational_And_Divergent_Winds.html">A primer on calculating rotational and divergent wind components</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a></li>
@@ -429,7 +430,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectral_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;spectral&quot;</span> <span class="o">/</span> <span class="s2">&quot;sp_sw_500ir_bd_hatp11&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectral_file</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;spectral&quot;</span> <span class="o">/</span> <span class="s2">&quot;sp_sw_500ir_bd_hatp11&quot;</span>
+<span class="p">)</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_day.nc&quot;</span>
+<span class="p">)</span>
 <span class="c1"># To keep the units of stellar and planetary parameters, store the parameters as iris cubes</span>
 <span class="n">stellar_constant_at_1_au</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span>
     <span class="mf">300.85538168664425</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;stellar_constant_at_1_au&quot;</span>
@@ -438,9 +444,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">planet_radius</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="mf">27195379.0</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;planet_radius&quot;</span><span class="p">)</span>
 <span class="n">planet_domain_height</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">Cube</span><span class="p">(</span><span class="mf">1.8e6</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;height_domain&quot;</span><span class="p">)</span>
 <span class="n">planet_top_of_atmosphere</span> <span class="o">=</span> <span class="n">planet_radius</span> <span class="o">+</span> <span class="n">planet_domain_height</span>
-<span class="n">planet_transmission_day</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span>
-    <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_day.nc&quot;</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="n">planet_transmission_day</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -557,7 +561,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">planet_transmission_night</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span>
-    <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_night.nc&quot;</span><span class="p">)</span>
+    <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_night.nc&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -600,12 +604,12 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">,</span>
-    <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">data</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">data</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dayside&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">,</span>
-    <span class="n">rp_eff_over_rs_dn</span><span class="o">.</span><span class="n">data</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">rp_eff_over_rs_dn</span><span class="o">.</span><span class="n">data</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Average over the dayside and nightside&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -643,7 +647,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="02_Model_Field_Names.html" class="btn btn-neutral float-left" title="Model variable names" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../api/index.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="04_Rotational_And_Divergent_Winds.html" class="btn btn-neutral float-right" title="A primer on calculating rotational and divergent wind components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

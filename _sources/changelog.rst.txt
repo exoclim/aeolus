@@ -16,6 +16,7 @@ Changelog
 * Correct the calculation of `sigma_p` and remove its averaging.
 * Make `calc.stats.time_mean()` be able to accept cubes or collections of cubes.
 * Add the `structured_um_loading` option to `io.load_data()`.
+* Add `wind_rot_div()` to the diagnostics module and a relevant example notebook.
 
 
 0.4.13

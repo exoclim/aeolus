@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.13+23.g5c3133c documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.13+26.g401a89f documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+23.g5c3133c
+                0.4.13+26.g401a89f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -88,7 +88,7 @@
 <span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">init_const</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span><span class="p">,</span> <span class="n">regrid_3d</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">MissingCubeError</span>
-<span class="kn">from</span> <span class="nn">..meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span><span class="p">,</span> <span class="n">update_metadata</span>
+<span class="kn">from</span> <span class="nn">..meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span><span class="p">,</span> <span class="n">preserve_shape</span><span class="p">,</span> <span class="n">update_metadata</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">_dim_constr</span>
 
@@ -113,6 +113,7 @@
     <span class="s2">&quot;toa_eff_temp&quot;</span><span class="p">,</span>
     <span class="s2">&quot;toa_net_energy&quot;</span><span class="p">,</span>
     <span class="s2">&quot;water_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wind_rot_div&quot;</span><span class="p">,</span>
     <span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span>
     <span class="s2">&quot;zonal_mass_streamfunction&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -946,6 +947,65 @@
     <span class="n">streamf_const</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">lat_cos</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">*=</span> <span class="n">streamf_const</span>
     <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="wind_rot_div"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.wind_rot_div">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">wind_rot_div</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).</span>
+
+<span class="sd">    The Helmholtz decomposition method uses the `windspharm` library:</span>
+<span class="sd">    https://ajdawson.github.io/windspharm/latest/</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    u: iris.cube.Cube</span>
+<span class="sd">        Eastward wind.</span>
+<span class="sd">    v: iris.cube.Cube</span>
+<span class="sd">        Northward wind.</span>
+<span class="sd">    truncation: int</span>
+<span class="sd">        Truncation for the spherical harmonic computation (See windspharm docs for details).</span>
+<span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
+<span class="sd">        If not given, constants are attempted to be retrieved from</span>
+<span class="sd">        attributes of a cube in the cube list.</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out: dict</span>
+<span class="sd">        Dictionary of cubes of:</span>
+<span class="sd">          - input wind components (for convenience),</span>
+<span class="sd">          - divergent components,</span>
+<span class="sd">          - rotational components,</span>
+<span class="sd">          - zonal mean rotational components,</span>
+<span class="sd">          - zonal eddy rotational components.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Hammond and Lewis (2021), https://doi.org/10.1073/pnas.2022705118.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">windspharm.iris</span> <span class="kn">import</span> <span class="n">VectorWind</span>
+
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">VectorWind</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">rsphere</span><span class="o">=</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">rot_cmpnt_v</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">helmholtz</span><span class="p">(</span>
+        <span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span>
+    <span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;u_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;v_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;u_div&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;v_div&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;u_rot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">&quot;v_rot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">rot_cmpnt_v</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">cmpnt</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">]:</span>
+        <span class="n">rot_cmpnt</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot&quot;</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preserve_shape</span><span class="p">(</span><span class="n">zonal_mean</span><span class="p">)(</span><span class="n">rot_cmpnt</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zonal_mean_of_</span><span class="si">{</span><span class="n">rot_cmpnt</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_eddy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rot_cmpnt</span> <span class="o">-</span> <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_eddy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zonal_deviation_of_</span><span class="si">{</span><span class="n">rot_cmpnt</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 </pre></div>
 
            </div>

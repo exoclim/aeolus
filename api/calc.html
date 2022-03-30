@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Science calculations &mdash; aeolus 0.4.13+23.g5c3133c documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.13+26.g401a89f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+23.g5c3133c
+                0.4.13+26.g401a89f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -670,6 +670,45 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)">iris.cube.Cube</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.calc.diag.wind_rot_div">
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.diag.</span></span><span class="sig-name descname"><span class="pre">wind_rot_div</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">u,</span> <span class="pre">v,</span> <span class="pre">truncation=None,</span> <span class="pre">const=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#wind_rot_div"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.diag.wind_rot_div" title="Permalink to this definition"></a></dt>
+<dd><p>Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).</p>
+<p>The Helmholtz decomposition method uses the <cite>windspharm</cite> library:
+<a class="reference external" href="https://ajdawson.github.io/windspharm/latest/">https://ajdawson.github.io/windspharm/latest/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Eastward wind.</p></li>
+<li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – Northward wind.</p></li>
+<li><p><strong>truncation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Truncation for the spherical harmonic computation (See windspharm docs for details).</p></li>
+<li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
+attributes of a cube in the cube list.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>out</strong> –</p>
+<dl class="simple">
+<dt>Dictionary of cubes of:</dt><dd><ul class="simple">
+<li><p>input wind components (for convenience),</p></li>
+<li><p>divergent components,</p></li>
+<li><p>rotational components,</p></li>
+<li><p>zonal mean rotational components,</p></li>
+<li><p>zonal eddy rotational components.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Hammond and Lewis (2021), <a class="reference external" href="https://doi.org/10.1073/pnas.2022705118">https://doi.org/10.1073/pnas.2022705118</a>.</p>
 </dd></dl>
 
 <dl class="py function">
