@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.coord &mdash; aeolus 0.4.13+27.gc8172e6 documentation</title>
+  <title>aeolus.coord &mdash; aeolus 0.4.13+28.gb02939a documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.13+27.gc8172e6
+                0.4.13+28.gb02939a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -89,7 +89,6 @@
 <span class="kn">import</span> <span class="nn">iris.fileformats</span>
 <span class="kn">from</span> <span class="nn">iris.coord_categorisation</span> <span class="kn">import</span> <span class="n">_months_in_season</span><span class="p">,</span> <span class="n">add_categorised_coord</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateNotFoundError</span> <span class="k">as</span> <span class="n">CoNotFound</span>
-<span class="kn">from</span> <span class="nn">iris.experimental</span> <span class="kn">import</span> <span class="n">stratify</span>
 <span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">broadcast_to_shape</span><span class="p">,</span>
     <span class="n">guess_coord_axis</span><span class="p">,</span>
@@ -747,6 +746,8 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        The variable interpolated to pressure level(s).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">iris.experimental</span> <span class="kn">import</span> <span class="n">stratify</span>
+
     <span class="k">if</span> <span class="n">p_ref_frac</span><span class="p">:</span>
         <span class="n">p_ref</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">p_ref</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="n">pressure</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
