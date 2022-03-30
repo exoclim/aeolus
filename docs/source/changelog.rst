@@ -17,6 +17,7 @@ Changelog
 * Make `calc.stats.time_mean()` be able to accept cubes or collections of cubes.
 * Add the `structured_um_loading` option to `io.load_data()`.
 * Add `wind_rot_div()` to the diagnostics module and a relevant example notebook.
+* Simplify `isel()` following suggestions from the `iris` devs.
 
 
 0.4.13

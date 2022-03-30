@@ -796,14 +796,16 @@ def isel(obj, coord, idx, skip_not_found=None):
     """
     if isinstance(obj, Cube):
         try:
-            _coord = obj.coord(coord)
-            val = _coord.points[idx]
-            try:
-                val = _coord.units.num2date(val)
-            except ValueError:
-                pass
-            constr = Constraint(**{_coord.name(): lambda x: x.point == val})
-            out = obj.extract(constr)
+            # _coord = obj.coord(coord)
+            # val = _coord.points[idx]
+            # try:
+            #     val = _coord.units.num2date(val)
+            # except ValueError:
+            #     pass
+            # constr = Constraint(**{_coord.name(): lambda x: x.point == val})
+            # out = obj.extract(constr)
+            val = obj.coord(coord)[idx]
+            out = squeeze(obj.subset(val))
         except CoNotFound as e:
             if skip_not_found:
                 out = obj
