@@ -7,11 +7,11 @@ Changelog
 0.4.14
 ------
 
-:Date: TBA
+:Date: 30 March 2022
 
 * Require iris 3.2 as a minimum.
 * Drop Python 3.7 support.
-* Add github action tests for Python 3.10.
+* Add github action tests for Python 3.10 (for now excluding windows).
 * Add new model names.
 * Correct the calculation of `sigma_p` and remove its averaging.
 * Make `calc.stats.time_mean()` be able to accept cubes or collections of cubes.
