@@ -15,7 +15,6 @@ from iris.analysis.cartography import wrap_lons
 import iris.fileformats
 from iris.coord_categorisation import _months_in_season, add_categorised_coord
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
-from iris.experimental import stratify
 from iris.util import (
     broadcast_to_shape,
     guess_coord_axis,
@@ -673,6 +672,8 @@ def interp_cube_from_height_to_pressure_levels(
     iris.cube.Cube
         The variable interpolated to pressure level(s).
     """
+    from iris.experimental import stratify
+
     if p_ref_frac:
         p_ref = const.reference_surface_pressure.copy()
         p_ref.convert_units(pressure.units)
