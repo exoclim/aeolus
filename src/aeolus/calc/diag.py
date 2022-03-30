@@ -14,7 +14,7 @@ from .stats import cumsum, spatial_mean, time_mean, zonal_mean
 from ..const import init_const
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
-from ..meta import const_from_attrs, update_metadata
+from ..meta import const_from_attrs, preserve_shape, update_metadata
 from ..model import um
 from ..subset import _dim_constr
 
@@ -39,6 +39,7 @@ __all__ = (
     "toa_eff_temp",
     "toa_net_energy",
     "water_path",
+    "wind_rot_div",
     "wind_speed",
     "zonal_mass_streamfunction",
 )
@@ -872,3 +873,62 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
     streamf_const = 2 * np.pi * const.radius * lat_cos(res, model=model)
     res *= streamf_const
     return res
+
+
+@const_from_attrs()
+def wind_rot_div(u, v, truncation=None, const=None, model=um):
+    """
+    Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).
+
+    The Helmholtz decomposition method uses the `windspharm` library:
+    https://ajdawson.github.io/windspharm/latest/
+
+    Parameters
+    ----------
+    u: iris.cube.Cube
+        Eastward wind.
+    v: iris.cube.Cube
+        Northward wind.
+    truncation: int
+        Truncation for the spherical harmonic computation (See windspharm docs for details).
+    const: aeolus.const.const.ConstContainer, optional
+        If not given, constants are attempted to be retrieved from
+        attributes of a cube in the cube list.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    out: dict
+        Dictionary of cubes of:
+          - input wind components (for convenience),
+          - divergent components,
+          - rotational components,
+          - zonal mean rotational components,
+          - zonal eddy rotational components.
+
+    References
+    ----------
+    Hammond and Lewis (2021), https://doi.org/10.1073/pnas.2022705118.
+    """
+    from windspharm.iris import VectorWind
+
+    vec = VectorWind(u, v, rsphere=const.radius.data)
+    div_cmpnt_u, div_cmpnt_v, rot_cmpnt_u, rot_cmpnt_v = vec.helmholtz(
+        truncation=truncation
+    )
+    out = {}
+    out["u_total"] = u
+    out["v_total"] = v
+    out["u_div"] = reverse(div_cmpnt_u, model.y)
+    out["v_div"] = reverse(div_cmpnt_v, model.y)
+    out["u_rot"] = reverse(rot_cmpnt_u, model.y)
+    out["v_rot"] = reverse(rot_cmpnt_v, model.y)
+
+    for cmpnt in ["u", "v"]:
+        rot_cmpnt = out[f"{cmpnt}_rot"]
+        out[f"{cmpnt}_rot_zm"] = preserve_shape(zonal_mean)(rot_cmpnt)
+        out[f"{cmpnt}_rot_zm"].rename(f"zonal_mean_of_{rot_cmpnt.name()}")
+        out[f"{cmpnt}_rot_eddy"] = rot_cmpnt - out[f"{cmpnt}_rot_zm"]
+        out[f"{cmpnt}_rot_eddy"].rename(f"zonal_deviation_of_{rot_cmpnt.name()}")
+    return out

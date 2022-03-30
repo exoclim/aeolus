@@ -22,6 +22,7 @@ from .diag import (
     toa_eff_temp,
     toa_net_energy,
     water_path,
+    wind_rot_div,
     wind_speed,
     zonal_mass_streamfunction,
 )
@@ -92,6 +93,7 @@ __all__ = (
     "toa_net_energy",
     "vertical_mean",
     "water_path",
+    "wind_rot_div",
     "wind_speed",
     "zonal_mass_streamfunction",
     "zonal_mean",
