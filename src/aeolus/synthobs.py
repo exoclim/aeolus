@@ -6,7 +6,6 @@ from iris.analysis import SUM
 from iris.cube import Cube
 from iris.coords import AuxCoord, DimCoord
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
-from iris.util import reverse
 
 import numpy as np
 
@@ -26,7 +25,7 @@ __all__ = (
 
 def calc_geom_mean_mirrored(cube_a, cube_b, model=um):
     """
-    Calculate geometric mean of two cubes with one flipped along the x-axis.
+    Calculate geometric mean of two cubes with one of them rolled along the x-axis.
 
     This function can be used to get an average transmission flux
     calculated separately from the day- and night-side perspective.
@@ -42,14 +41,12 @@ def calc_geom_mean_mirrored(cube_a, cube_b, model=um):
     x_coord = cube_a.coord(model.x)
 
     # Roll the 2nd cube by 180 degrees
+    # This is specific to the UM output
     cube_b_rolled = roll_cube_pm180(cube_b, model=model)
-    # Reverse the cube along the x-axis
-    cube_b_reversed = reverse(cube_b_rolled, cube_b_rolled.coord_dims(model.x))
-    # Replace the x-coordinate to match the 1st cube.
-    cube_b_reversed.replace_coord(x_coord)
+    cube_b_rolled.replace_coord(x_coord)
 
     # Calculate geometric mean of the two cubes
-    geom_mean = (cube_a * cube_b_reversed) ** 0.5
+    geom_mean = (cube_a * cube_b_rolled) ** 0.5
     return geom_mean
 
 
@@ -208,6 +205,15 @@ def calc_transmission_spectrum_day_night_average(
     r"""
     Convert the model output of transmission flux to a planetary-stellar radius ratio.
 
+    For UM output, this function averages the flux calculated from the day-side and the night-side
+    of the planet. Why does it use a geometric mean? The reason to use a geometric average instead
+    of an arithmetic average is that you want to add the optical depths. The flux decreases via
+    Beer's law (i.e., it's proportional to :math:`exp[-optical depth]`) so when you multiply the
+    dayside fluxes and nightside fluxes together and take a square root, you end up with
+    :math:`exp[-( optical depth 1 + optical depth 2)/2]`. Since each optical depth is double the
+    optical depth for it's respective side, the factors of two cancel and you end up with
+    :math:`exp[-(true optical depth)]`.
+
     Parameters
     ----------
     trans_flux_day: iris.cube.Cube
@@ -226,7 +232,6 @@ def calc_transmission_spectrum_day_night_average(
     aeolus.synthobs.calc_transmission_spectrum
     """
     # Average the day and night flux
-    # and sum this flux over all latitudes and longitudes
     trans_flux = calc_geom_mean_mirrored(trans_flux_day, trans_flux_night, model=model)
     return calc_transmission_spectrum(
         trans_flux,
