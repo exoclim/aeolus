@@ -4,6 +4,15 @@ Changelog
 .. default-role:: py:obj
 
 
+0.4.15
+------
+
+:Date: 22 March 2022
+
+* Patch the calculation of the day-night average transmission flux.
+* Update citation
+
+
 0.4.14
 ------
 
