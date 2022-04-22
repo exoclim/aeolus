@@ -74,10 +74,10 @@ def test_calc_stellar_flux():
 
 def test_calc_geom_mean_mirrored(example_trans_day, example_trans_night):
     actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night)
-    npt.assert_allclose(actual.data.max(), 1.5901232591606386e-08)
+    npt.assert_allclose(actual.data.max(), 1.7307187876145394e-08)
     npt.assert_allclose(
         actual.data[123, 1, 71:74],
-        [2.40635831e-11, 2.40620869e-11, 2.40149215e-11],
+        [2.40508136e-11, 2.40748625e-11, 2.40532320e-11],
     )
     assert actual.units == example_trans_day.units
     assert actual.shape == example_trans_day.shape
@@ -109,7 +109,13 @@ def test_calc_transmission_spectrum(example_trans_day):
 
 
 def test_calc_transmission_spectrum_day_night_average(example_trans_day, example_trans_night):
-    expected_rp_eff_over_rs = [0.99991664, 0.99993102, 0.99993353, 0.99994311, 0.99994491]
+    expected_rp_eff_over_rs = [
+        0.9999097552081786,
+        0.9999249847710132,
+        0.9999267911653156,
+        0.9999376935302737,
+        0.9999389664305547,
+    ]
     actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
         example_trans_day,
         example_trans_night,
