@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plotting functions &mdash; aeolus 0.4.14 documentation</title>
+  <title>Plotting functions &mdash; aeolus 0.4.15 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.14
+                0.4.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -294,7 +294,7 @@ to show). The exponent to be used can also be specified explicitly.</p>
 <li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.3.dev0)"><em>iris.cube.Cube</em></a>) – 2D or 3D cube with (longitude, latitude, [level_height]) coordinates.</p></li>
 <li><p><strong>z_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling factor for the vertical level dimension.</p></li>
 <li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.33.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.34.1)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -304,7 +304,7 @@ the input cube’s coordinates.</p></li>
 <dd class="field-even"><p>PyVista grid with data in cell_arrays.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.33.0)">pyvista.StructuredGrid</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.34.1)">pyvista.StructuredGrid</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,7 +325,7 @@ the input cube’s coordinates.</p></li>
 <li><p><strong>z_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Scaling offset for the vertical level dimension.</p></li>
 <li><p><strong>xstride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the longitude axis.</p></li>
 <li><p><strong>ystride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Stride along the latitude axis.</p></li>
-<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.33.0)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.34.1)"><em>pyvista.StructuredGrid</em></a><em>, </em><em>optional</em>) – If given, add data to the existing grid, otherwise create a new one from
 the input cube’s coordinates.</p></li>
 <li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Label for the data within the grid.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -335,7 +335,7 @@ the input cube’s coordinates.</p></li>
 <dd class="field-even"><p>PyVista grid with vector data in point_arrays.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.33.0)">pyvista.StructuredGrid</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.StructuredGrid.html#pyvista.StructuredGrid" title="(in PyVista v0.34.1)">pyvista.StructuredGrid</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Synthetic observations &mdash; aeolus 0.4.14 documentation</title>
+  <title>Synthetic observations &mdash; aeolus 0.4.15 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.14
+                0.4.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -119,7 +119,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.synthobs.calc_geom_mean_mirrored">
 <span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_geom_mean_mirrored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_a,</span> <span class="pre">cube_b,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_geom_mean_mirrored"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_geom_mean_mirrored" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate geometric mean of two cubes with one flipped along the x-axis.</p>
+<dd><p>Calculate geometric mean of two cubes with one of them rolled along the x-axis.</p>
 <p>This function can be used to get an average transmission flux
 calculated separately from the day- and night-side perspective.</p>
 <dl class="simple">
@@ -195,6 +195,14 @@ the planetary radius and the height of the model domain),
 <dt class="sig sig-object py" id="aeolus.synthobs.calc_transmission_spectrum_day_night_average">
 <span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum_day_night_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux_day,</span> <span class="pre">trans_flux_night,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum_day_night_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum_day_night_average" title="Permalink to this definition"></a></dt>
 <dd><p>Convert the model output of transmission flux to a planetary-stellar radius ratio.</p>
+<p>For UM output, this function averages the flux calculated from the day-side and the night-side
+of the planet. Why does it use a geometric mean? The reason to use a geometric average instead
+of an arithmetic average is that you want to add the optical depths. The flux decreases via
+Beer’s law (i.e., it’s proportional to <span class="math notranslate nohighlight">\(exp[-optical depth]\)</span>) so when you multiply the
+dayside fluxes and nightside fluxes together and take a square root, you end up with
+<span class="math notranslate nohighlight">\(exp[-( optical depth 1 + optical depth 2)/2]\)</span>. Since each optical depth is double the
+optical depth for it’s respective side, the factors of two cancel and you end up with
+<span class="math notranslate nohighlight">\(exp[-(true optical depth)]\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
