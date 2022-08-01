@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Physical constants &mdash; aeolus 0.4.15 documentation</title>
+  <title>Physical constants &mdash; aeolus 0.4.15+5.g0f7945a documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -34,7 +35,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15
+                0.4.15+5.g0f7945a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -304,6 +305,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -312,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -327,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -360,7 +369,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Physical-constants">
-<h1>Physical constants<a class="headerlink" href="#Physical-constants" title="Permalink to this headline"></a></h1>
+<h1>Physical constants<a class="headerlink" href="#Physical-constants" title="Permalink to this heading"></a></h1>
 <p>A couple of short examples of using <code class="docutils literal notranslate"><span class="pre">aeolus</span></code> physical contants submodule, which can serve as a convenient way to store a number of constants used in an atmospheric model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -371,7 +380,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="General-constants">
-<h2>General constants<a class="headerlink" href="#General-constants" title="Permalink to this headline"></a></h2>
+<h2>General constants<a class="headerlink" href="#General-constants" title="Permalink to this heading"></a></h2>
 <p>First, generic (planet-independent constants) are available.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -490,7 +499,7 @@ iris.cube.Cube
 <p>Having constants stored as iris cubes is convenient for unit-aware operations.</p>
 </section>
 <section id="Earth-constants">
-<h2>Earth constants<a class="headerlink" href="#Earth-constants" title="Permalink to this headline"></a></h2>
+<h2>Earth constants<a class="headerlink" href="#Earth-constants" title="Permalink to this heading"></a></h2>
 <p>Along with <code class="docutils literal notranslate"><span class="pre">aeolus</span></code>, some basic constants of the Earth atmosphere are also provided. Note that all the “generic” constants are also added to this container.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -616,7 +625,7 @@ array(287.05797807)
 </div>
 </section>
 <section id="Extending-constants-container">
-<h2>Extending constants container<a class="headerlink" href="#Extending-constants-container" title="Permalink to this headline"></a></h2>
+<h2>Extending constants container<a class="headerlink" href="#Extending-constants-container" title="Permalink to this heading"></a></h2>
 <p>All constants shown above are stored in JSON files, so it is possible to create a custom JSON file and read constants from it.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -763,7 +772,7 @@ array(123)
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020 - 2022, {project} contributors.</p>
+    <p>&#169; Copyright 2020 - 2022, aeolus contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

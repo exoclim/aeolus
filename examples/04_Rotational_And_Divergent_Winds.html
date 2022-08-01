@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A primer on calculating rotational and divergent wind components &mdash; aeolus 0.4.15 documentation</title>
+  <title>A primer on calculating rotational and divergent wind components &mdash; aeolus 0.4.15+5.g0f7945a documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -34,7 +35,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15
+                0.4.15+5.g0f7945a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -304,6 +305,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -312,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -327,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -360,7 +369,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="A-primer-on-calculating-rotational-and-divergent-wind-components">
-<h1>A primer on calculating rotational and divergent wind components<a class="headerlink" href="#A-primer-on-calculating-rotational-and-divergent-wind-components" title="Permalink to this headline"></a></h1>
+<h1>A primer on calculating rotational and divergent wind components<a class="headerlink" href="#A-primer-on-calculating-rotational-and-divergent-wind-components" title="Permalink to this heading"></a></h1>
 <div class="alert alert-warning" role="alert"><p>This example requires windspharm installed.</p>
 </div><p>You can install it using <code class="docutils literal notranslate"><span class="pre">conda</span></code> (in the correct environment):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!conda install -c conda-forge windspharm --yes
@@ -380,7 +389,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Loading-data">
-<h2>Loading data<a class="headerlink" href="#Loading-data" title="Permalink to this headline"></a></h2>
+<h2>Loading data<a class="headerlink" href="#Loading-data" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -434,7 +443,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Applying-Helmoltz-decomposition">
-<h2>Applying Helmoltz decomposition<a class="headerlink" href="#Applying-Helmoltz-decomposition" title="Permalink to this headline"></a></h2>
+<h2>Applying Helmoltz decomposition<a class="headerlink" href="#Applying-Helmoltz-decomposition" title="Permalink to this heading"></a></h2>
 <p>For convenience, let’s select a single level in the vertical. This is optional - the rot/div decomposition can be performed on an N-dimensional cubes, as long as they have longitude and latitude dimensions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -507,7 +516,7 @@ DimCoord :  level_height / (m)
 </div>
 </section>
 <section id="Visualise-the-rot/div-components">
-<h2>Visualise the rot/div components<a class="headerlink" href="#Visualise-the-rot/div-components" title="Permalink to this headline"></a></h2>
+<h2>Visualise the rot/div components<a class="headerlink" href="#Visualise-the-rot/div-components" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -608,7 +617,7 @@ DimCoord :  level_height / (m)
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020 - 2022, {project} contributors.</p>
+    <p>&#169; Copyright 2020 - 2022, aeolus contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
