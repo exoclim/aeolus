@@ -27,7 +27,7 @@ import aeolus
 # -- Project information -----------------------------------------------------
 
 project = "aeolus"
-author = "{project} contributors"
+author = f"{project} contributors"
 copyright = f"2020 - {datetime.datetime.now().year}, {author}"
 
 # The short X.Y version
