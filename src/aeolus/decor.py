@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Bells and whistles."""
+from iris.experimental.representation import CubeListRepresentation
 
 
 class ReprAtmoSimBase:
@@ -103,9 +104,10 @@ class ReprAtmoSimBase:
                 cells.append("</tr>")
         if len(self._cubes) > 0:
             # List cubes
+            cl_repr_html = CubeListRepresentation(self._cubes).repr_html()
             cells.append('<tr class="aeolus">')
             cells.append('<td class="octant aeolus-ra">Cubes</td>')
-            cells.append(f'<td class="aeolus aeolus-la">{self._cubes._repr_html_()}</td>')
+            cells.append(f'<td class="aeolus aeolus-la">{cl_repr_html}</td>')
             cells.append("</tr>")
 
         return "\n".join(cells)
