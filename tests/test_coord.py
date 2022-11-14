@@ -14,6 +14,7 @@ import numpy.testing as npt
 import pytest
 
 
+iris.FUTURE.datum_support = True
 TST_DATA = Path(__file__).parent / "data" / "test_data"
 
 
