@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Physical constants &mdash; aeolus 0.4.15+12.g7bb0f07 documentation</title>
+  <title>Physical constants &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -33,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+12.g7bb0f07
+                0.4.15+17.g7acc1af
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -49,7 +50,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Physical constants</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Physical constants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.const.add_planet_conf_to_cubes"><code class="docutils literal notranslate"><span class="pre">add_planet_conf_to_cubes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.const.get_planet_radius"><code class="docutils literal notranslate"><span class="pre">get_planet_radius()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.const.init_const"><code class="docutils literal notranslate"><span class="pre">init_const()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
@@ -76,9 +82,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">API reference</a> &raquo;</li>
-      <li>Physical constants</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">Physical constants</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/const.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -122,7 +128,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube of zonal velocity (u).</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube of zonal velocity (u).</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Constainer with the relevant planetary constants.</p></li>
 </ul>
 </dd>
@@ -142,10 +148,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the constants set.
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the constants set.
 Should be identical to the JSON file name (without the .json extension).
 If not given, only general physical constants are returned.</p></li>
-<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
+<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

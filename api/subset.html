@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subset cubes using constraints &mdash; aeolus 0.4.15+12.g7bb0f07 documentation</title>
+  <title>Subset cubes using constraints &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -33,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+12.g7bb0f07
+                0.4.15+17.g7acc1af
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -55,7 +56,17 @@
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Subset cubes using constraints</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Subset cubes using constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.DimConstr"><code class="docutils literal notranslate"><span class="pre">DimConstr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.subset.DimConstr.__init__"><code class="docutils literal notranslate"><span class="pre">DimConstr.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_month"><code class="docutils literal notranslate"><span class="pre">extract_last_month()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_n_days"><code class="docutils literal notranslate"><span class="pre">extract_last_n_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.l_range_constr"><code class="docutils literal notranslate"><span class="pre">l_range_constr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.unique_cubes"><code class="docutils literal notranslate"><span class="pre">unique_cubes()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
 </ul>
 </li>
@@ -76,9 +87,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">API reference</a> &raquo;</li>
-      <li>Subset cubes using constraints</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">Subset cubes using constraints</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/subset.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,7 +129,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.subset.DimConstr">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">DimConstr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#DimConstr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.DimConstr" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Container for strict or relaxed dimensional constraints.</p>
 <p class="rubric">Examples</p>
 <p>Extract cubes that have y and x dimensional coordinates (among others):</p>

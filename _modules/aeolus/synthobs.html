@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.synthobs &mdash; aeolus 0.4.15+12.g7bb0f07 documentation</title>
+  <title>aeolus.synthobs &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -16,6 +16,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -30,7 +31,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+12.g7bb0f07
+                0.4.15+17.g7acc1af
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -61,9 +62,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>aeolus.synthobs</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">aeolus.synthobs</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -78,8 +79,8 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">from</span> <span class="nn">iris.analysis</span> <span class="kn">import</span> <span class="n">SUM</span>
-<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span><span class="p">,</span> <span class="n">DimCoord</span>
+<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateNotFoundError</span> <span class="k">as</span> <span class="n">CoNotFound</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -259,11 +260,25 @@
         <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;lower_wavelength_limit&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;upper_wavelength_limit&quot;</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">spectral_bands_coord</span> <span class="o">=</span> <span class="n">AuxCoord</span><span class="p">(</span>
-        <span class="n">spectral_band_centres</span><span class="p">,</span> <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span>
+        <span class="n">spectral_band_centres</span><span class="p">,</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">spectral_bands_ll</span> <span class="o">=</span> <span class="n">AuxCoord</span><span class="p">(</span>
+        <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;lower_wavelength_limit&quot;</span><span class="p">],</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;spectral_band_lower_limit&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">spectral_bands_ul</span> <span class="o">=</span> <span class="n">AuxCoord</span><span class="p">(</span>
+        <span class="n">spectral_bands</span><span class="p">[</span><span class="s2">&quot;upper_wavelength_limit&quot;</span><span class="p">],</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;spectral_band_upper_limit&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="c1"># Attach spectral bands to the resulting cube as an auxiliary coordinate</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
+    <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_ll</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
+    <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_ul</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
 
     <span class="k">return</span> <span class="n">rp_eff_over_rs</span></div>
 

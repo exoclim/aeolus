@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with synthetic observations &mdash; aeolus 0.4.15+12.g7bb0f07 documentation</title>
+  <title>Working with synthetic observations &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -35,7 +36,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+12.g7bb0f07
+                0.4.15+17.g7acc1af
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -76,9 +77,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Examples</a> &raquo;</li>
-      <li>Working with synthetic observations</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Working with synthetic observations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/03_Transmission_Spectrum.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -198,10 +199,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -436,6 +438,14 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">datum_support</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note that the file paths should be pathlib.Path-like objects, not just plain strings!</span>
 <span class="n">TEST_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;test_data&quot;</span>
 </pre></div>
@@ -445,7 +455,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Provide the required inputs</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectral_file</span> <span class="o">=</span> <span class="n">TEST_DIR</span> <span class="o">/</span> <span class="s2">&quot;spectral&quot;</span> <span class="o">/</span> <span class="s2">&quot;sp_sw_500ir_bd_hatp11&quot;</span>
@@ -467,15 +477,16 @@ div.rendered_html tbody tr:hover {
 <li><p>Check if the information about the spectral bands is read in correctly</p></li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># print the first four spectral bands</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectral_bands</span> <span class="o">=</span> <span class="n">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
+<span class="n">spectral_bands</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># print the first four spectral bands</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -489,7 +500,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <li><p>Check if the information about the normalized stellar flux per spectral band is read in correctly</p></li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_stellar_flux</span> <span class="o">=</span> <span class="n">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">)</span>
@@ -507,14 +518,14 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_03_Transmission_Spectrum_12_0.png" src="../_images/examples_03_Transmission_Spectrum_12_0.png" />
+<img alt="../_images/examples_03_Transmission_Spectrum_13_0.png" src="../_images/examples_03_Transmission_Spectrum_13_0.png" />
 </div>
 </div>
 <ol class="arabic simple" start="5">
 <li><p>Calculate the stellar flux per spectral band</p></li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stellar_flux</span> <span class="o">=</span> <span class="n">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">)</span>
@@ -529,14 +540,14 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_03_Transmission_Spectrum_14_0.png" src="../_images/examples_03_Transmission_Spectrum_14_0.png" />
+<img alt="../_images/examples_03_Transmission_Spectrum_15_0.png" src="../_images/examples_03_Transmission_Spectrum_15_0.png" />
 </div>
 </div>
 <ol class="arabic simple" start="6">
 <li><p>Check if you use the correct UM output by plotting the m01s01i755 field at a single spectral band</p></li>
 </ol>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_day</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
@@ -547,14 +558,14 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_03_Transmission_Spectrum_16_0.png" src="../_images/examples_03_Transmission_Spectrum_16_0.png" />
+<img alt="../_images/examples_03_Transmission_Spectrum_17_0.png" src="../_images/examples_03_Transmission_Spectrum_17_0.png" />
 </div>
 </div>
 <ol class="arabic simple" start="6">
 <li><p>Calculate transmission spectrum as a planet-to-star radius ratio</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum</span><span class="p">(</span>
@@ -572,7 +583,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <li><p>Calculate transmission spectrum averaged over the dayside and the nightside</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">planet_transmission_night</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span><span class="n">TEST_DIR</span> <span class="o">/</span> <span class="s2">&quot;netcdf&quot;</span> <span class="o">/</span> <span class="s2">&quot;planet_transmission_night.nc&quot;</span><span class="p">)</span>
@@ -580,7 +591,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qplt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">planet_transmission_night</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="o">...</span><span class="p">]);</span>
@@ -591,11 +602,11 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_03_Transmission_Spectrum_21_0.png" src="../_images/examples_03_Transmission_Spectrum_21_0.png" />
+<img alt="../_images/examples_03_Transmission_Spectrum_22_0.png" src="../_images/examples_03_Transmission_Spectrum_22_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_night</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum</span><span class="p">(</span>
@@ -610,7 +621,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_dn</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
@@ -626,7 +637,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -680,8 +691,49 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_03_Transmission_Spectrum_24_0.png" src="../_images/examples_03_Transmission_Spectrum_24_0.png" />
+<img alt="../_images/examples_03_Transmission_Spectrum_25_0.png" src="../_images/examples_03_Transmission_Spectrum_25_0.png" />
 </div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Check what the band limits are</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_dn</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_upper_limit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([0.01      , 0.001     , 0.0005    , 0.00033333, 0.00025   ,
+       0.0002    , 0.00016667, 0.00014286, 0.000125  , 0.00011111],
+      dtype=float32)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_dn</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_lower_limit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1.0000000e-03, 5.0000002e-04, 3.3333333e-04, 2.5000001e-04,
+       1.9999999e-04, 1.6666666e-04, 1.4285714e-04, 1.2500001e-04,
+       1.1111111e-04, 9.9999997e-05], dtype=float32)
+</pre></div></div>
 </div>
 </section>
 </section>

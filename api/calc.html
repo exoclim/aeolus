@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Science calculations &mdash; aeolus 0.4.15+12.g7bb0f07 documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -35,7 +36,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+12.g7bb0f07
+                0.4.15+17.g7acc1af
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,11 +51,67 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Science calculations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.calculus">Calculus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.diag">Diagnostics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.flux_h">Horizontal fluxes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.stats">Statistics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.tl">Tidally-locked coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.calculus">Calculus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.d_dx"><code class="docutils literal notranslate"><span class="pre">d_dx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.d_dy"><code class="docutils literal notranslate"><span class="pre">d_dy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.d_dz"><code class="docutils literal notranslate"><span class="pre">d_dz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.deriv"><code class="docutils literal notranslate"><span class="pre">deriv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.div_h"><code class="docutils literal notranslate"><span class="pre">div_h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.calculus.integrate"><code class="docutils literal notranslate"><span class="pre">integrate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.diag">Diagnostics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.air_density"><code class="docutils literal notranslate"><span class="pre">air_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.air_potential_temperature"><code class="docutils literal notranslate"><span class="pre">air_potential_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.air_temperature"><code class="docutils literal notranslate"><span class="pre">air_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.bond_albedo"><code class="docutils literal notranslate"><span class="pre">bond_albedo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.dry_lapse_rate"><code class="docutils literal notranslate"><span class="pre">dry_lapse_rate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.flux"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.geopotential_height"><code class="docutils literal notranslate"><span class="pre">geopotential_height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.ghe_norm"><code class="docutils literal notranslate"><span class="pre">ghe_norm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.heat_redist_eff"><code class="docutils literal notranslate"><span class="pre">heat_redist_eff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.horiz_wind_cmpnts"><code class="docutils literal notranslate"><span class="pre">horiz_wind_cmpnts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.meridional_mass_streamfunction"><code class="docutils literal notranslate"><span class="pre">meridional_mass_streamfunction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.precip_sum"><code class="docutils literal notranslate"><span class="pre">precip_sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.sfc_net_energy"><code class="docutils literal notranslate"><span class="pre">sfc_net_energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.sfc_water_balance"><code class="docutils literal notranslate"><span class="pre">sfc_water_balance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.sigma_p"><code class="docutils literal notranslate"><span class="pre">sigma_p()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.toa_cloud_radiative_effect"><code class="docutils literal notranslate"><span class="pre">toa_cloud_radiative_effect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.toa_eff_temp"><code class="docutils literal notranslate"><span class="pre">toa_eff_temp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.toa_net_energy"><code class="docutils literal notranslate"><span class="pre">toa_net_energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.water_path"><code class="docutils literal notranslate"><span class="pre">water_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.wind_rot_div"><code class="docutils literal notranslate"><span class="pre">wind_rot_div()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.wind_speed"><code class="docutils literal notranslate"><span class="pre">wind_speed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.zonal_mass_streamfunction"><code class="docutils literal notranslate"><span class="pre">zonal_mass_streamfunction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.flux_h">Horizontal fluxes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.flux_h.horizontal_fluxes_through_region_boundaries"><code class="docutils literal notranslate"><span class="pre">horizontal_fluxes_through_region_boundaries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.flux_h.net_horizontal_flux_to_region"><code class="docutils literal notranslate"><span class="pre">net_horizontal_flux_to_region()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.stats">Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.abs_coord_mean"><code class="docutils literal notranslate"><span class="pre">abs_coord_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.cumsum"><code class="docutils literal notranslate"><span class="pre">cumsum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.last_n_day_mean"><code class="docutils literal notranslate"><span class="pre">last_n_day_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.meridional_mean"><code class="docutils literal notranslate"><span class="pre">meridional_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.minmaxdiff"><code class="docutils literal notranslate"><span class="pre">minmaxdiff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.normalize_cube"><code class="docutils literal notranslate"><span class="pre">normalize_cube()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.region_mean_diff"><code class="docutils literal notranslate"><span class="pre">region_mean_diff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.spatial"><code class="docutils literal notranslate"><span class="pre">spatial()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.spatial_mean"><code class="docutils literal notranslate"><span class="pre">spatial_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.spatial_quartiles"><code class="docutils literal notranslate"><span class="pre">spatial_quartiles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.time_mean"><code class="docutils literal notranslate"><span class="pre">time_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.vertical_mean"><code class="docutils literal notranslate"><span class="pre">vertical_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.zonal_mean"><code class="docutils literal notranslate"><span class="pre">zonal_mean()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.tl">Tidally-locked coordinates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.tl.regrid_to_rotated_pole_coordinates"><code class="docutils literal notranslate"><span class="pre">regrid_to_rotated_pole_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.tl.regrid_to_tidally_locked_coordinates"><code class="docutils literal notranslate"><span class="pre">regrid_to_tidally_locked_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.tl.rotate_winds_to_tidally_locked_coordinates"><code class="docutils literal notranslate"><span class="pre">rotate_winds_to_tidally_locked_coordinates()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
@@ -85,9 +142,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">API reference</a> &raquo;</li>
-      <li>Science calculations</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">Science calculations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/calc.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -153,15 +210,15 @@ interpolates the result to the grid points of the original cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev25)"><em>iris.coords.Coord</em></a>) – Coordinate for differentiation.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev65)"><em>iris.coords.Coord</em></a>) – Coordinate for differentiation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>d(cube)/d(coord).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -180,7 +237,7 @@ interpolates the result to the grid points of the original cube.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>i_cube</strong> – i-component (e.g. u-wind)</p></li>
 <li><p><strong>j_cube</strong> – j-component (e.g. v-wind)</p></li>
-<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
+<li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
@@ -189,7 +246,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of horizontal divergence.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -210,15 +267,15 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev25)"><em>iris.coords.Coord</em></a>) – Coordinate for integration.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Input cube containing the given coordinate.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev65)"><em>iris.coords.Coord</em></a>) – Coordinate for integration.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Integrated cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -235,7 +292,7 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have <cite>dry_air_gas_constant</cite> as an attribute.
 If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -245,7 +302,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of air density.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -259,7 +316,7 @@ Exner pressure or air pressure, and real temperature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have <cite>reference_surface_pressure</cite> and <cite>dry_air_gas_constant</cite> as attributes.
 If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -269,7 +326,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of air potential temperature.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -283,7 +340,7 @@ Exner pressure or air pressure, and potential temperature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have <cite>reference_surface_pressure</cite> and <cite>dry_air_gas_constant</cite> as attributes.
 If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -293,7 +350,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of air temperature.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -307,7 +364,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>solar_constant</cite> as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -317,7 +374,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of bond albedo.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -331,7 +388,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -339,7 +396,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of dT/dz.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -355,10 +412,10 @@ F_{z} = w (\rho q)\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>quantity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.html#iris.Constraint" title="(in Iris v3.4.0.dev25)"><em>iris.Constraint</em></a>) – Quantity (present in the cube list).</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Axis of the flux component (x|y|z)</p></li>
-<li><p><strong>weight_by_density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – Multiply by a cube of air density (must be present in the input cube list).</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>quantity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.html#iris.Constraint" title="(in Iris v3.4.0.dev65)"><em>iris.Constraint</em></a>) – Quantity (present in the cube list).</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Axis of the flux component (x|y|z)</p></li>
+<li><p><strong>weight_by_density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Multiply by a cube of air density (must be present in the input cube list).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -366,7 +423,7 @@ F_{z} = w (\rho q)\]</div>
 <dd class="field-even"><p>Cube of a flux component with the same dimensions as input cubes.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -379,7 +436,7 @@ F_{z} = w (\rho q)\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing temperature.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have <cite>gravity</cite> as an attribute.
 If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -389,7 +446,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of geopotential height.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,7 +460,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -411,7 +468,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of greenhouse effect parameter.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -425,7 +482,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>region_a</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – First region (usually nightside).</p></li>
 <li><p><strong>region_b</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – Second region (usually dayside).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -435,7 +492,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of eta parameter with collapsed spatial dimensions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -447,7 +504,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – List of cubes with horizontal wind components</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – List of cubes with horizontal wind components</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -455,7 +512,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p><strong>u, v</strong> – Cubes of wind components.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -477,7 +534,7 @@ If not given, an attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input cubelist.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input cubelist.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
 attributes of a cube in the cube list.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -487,7 +544,7 @@ attributes of a cube in the cube list.</p></li>
 <dd class="field-even"><p>Cube with collapsed spatial dimensions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <p class="rubric">References</p>
@@ -511,8 +568,8 @@ Vallis (2017)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>ptype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Precipitation type (total|stra|conv|rain|snow).</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
 If not given, attempt to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -522,7 +579,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Sum of cubes of precipitation with units converted to mm per day.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -534,7 +591,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes with net LW and SW radiation, sensible and latent surface fluxes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes with net LW and SW radiation, sensible and latent surface fluxes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -542,7 +599,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of total surface downward energy flux.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -554,7 +611,7 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
 If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -564,7 +621,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of total surface downward water flux (P-E).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -578,7 +635,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -594,15 +651,15 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes</p></li>
-<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Shortwave (‘sw’), longwave (‘lw’), or ‘total’ CRE</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes</p></li>
+<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Shortwave (‘sw’), longwave (‘lw’), or ‘total’ CRE</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Cube of CRE.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -614,7 +671,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -622,7 +679,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of <span class="math notranslate nohighlight">\(T_{eff}\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -634,7 +691,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -642,7 +699,7 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dd class="field-even"><p>Cube of total TOA downward energy flux.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -656,8 +713,8 @@ If not given, attempt is made to retrieve it from cube attributes.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing appropriate mixing ratio and air density.</p></li>
-<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Short name of the water phase to be integrated.
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes containing appropriate mixing ratio and air density.</p></li>
+<li><p><strong>kind</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Short name of the water phase to be integrated.
 Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <cite>cloud_water</cite> is the sum of liquid and ice phases.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.
@@ -668,7 +725,7 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <dd class="field-even"><p>Cube of water path with collapsed vertical dimension.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -682,9 +739,9 @@ Options are water_vapour (default) | liquid_water | ice_water | cloud_water
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Eastward wind.</p></li>
-<li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Northward wind.</p></li>
-<li><p><strong>truncation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Truncation for the spherical harmonic computation (See windspharm docs for details).</p></li>
+<li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Eastward wind.</p></li>
+<li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Northward wind.</p></li>
+<li><p><strong>truncation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Truncation for the spherical harmonic computation (See windspharm docs for details).</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – If not given, constants are attempted to be retrieved from
 attributes of a cube in the cube list.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
@@ -705,7 +762,7 @@ attributes of a cube in the cube list.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 <p class="rubric">References</p>
@@ -720,10 +777,10 @@ attributes of a cube in the cube list.</p></li>
 \[\sqrt{u^2 + v^2 + w^2}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -775,15 +832,15 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cube with the specified coordinate.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev25)"><em>iris.coords.Coord</em></a>) – Coordinate to apply abs().</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cube with the specified coordinate.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev65)"><em>iris.coords.Coord</em></a>) – Coordinate to apply abs().</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Cube with a reduced dimension.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -795,9 +852,9 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Coordinate axis of operation (t|z|y|x).</p></li>
-<li><p><strong>axis_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, multiply data by the coordinate spacings.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Coordinate axis of operation (t|z|y|x).</p></li>
+<li><p><strong>axis_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, multiply data by the coordinate spacings.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
 </ul>
 </dd>
@@ -805,7 +862,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Cube of cumulative sums with the same dimensions as the input cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -823,7 +880,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
 </ul>
 </dd>
@@ -831,7 +888,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Collapsed cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -843,15 +900,15 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cube name.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cube name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Difference between the extrema with collapsed spatial dimensions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -864,7 +921,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 \[z_i = (x_i - min(x)) / (max(x) - min(x))\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – The input cube.</p>
+<dd class="field-odd"><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – The input cube.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -876,8 +933,8 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev25)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cube name.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.4.0.dev65)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cube name.</p></li>
 <li><p><strong>region_a</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – First region.</p></li>
 <li><p><strong>region_b</strong> (<a class="reference internal" href="region.html#aeolus.region.Region" title="aeolus.region.Region"><em>aeolus.region.Region</em></a>) – Second region.</p></li>
 </ul>
@@ -886,7 +943,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Difference between the region averages with collapsed spatial dimensions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -898,8 +955,8 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
-<li><p><strong>aggr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Statistical aggregator (see iris.analysis for available aggregators).</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>aggr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Statistical aggregator (see iris.analysis for available aggregators).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -907,7 +964,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Collapsed cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -941,8 +998,8 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cube to average.</p></li>
-<li><p><strong>weight_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev25)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a><em>, </em><em>optional</em>) – Coordinate of the given cube or another cube used for weighting.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cube to average.</p></li>
+<li><p><strong>weight_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/coords.html#iris.coords.Coord" title="(in Iris v3.4.0.dev65)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a><em>, </em><em>optional</em>) – Coordinate of the given cube or another cube used for weighting.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
 </ul>
 </dd>
@@ -950,7 +1007,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Collapsed cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -962,7 +1019,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Cube with a latitude coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant coordinate name.</p></li>
 </ul>
 </dd>
@@ -970,7 +1027,7 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-even"><p>Collapsed cube.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -987,9 +1044,9 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – New North Pole longitude.</p></li>
-<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – New North Pole latitude.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – New North Pole longitude.</p></li>
+<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – New North Pole latitude.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
 </dd>
@@ -1005,9 +1062,9 @@ By default, the substellar point is assumed to be at (0, 0).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole longitude.</p></li>
-<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole latitude.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole longitude.</p></li>
+<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole latitude.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
 </dd>
@@ -1023,10 +1080,10 @@ By default, the substellar point is assumed to be at (0, 0).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – An instance of <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a> that contains the x-component of the vector.</p></li>
-<li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><em>iris.cube.Cube</em></a>) – An instance of <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a> that contains the y-component of the vector.</p></li>
-<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole longitude.</p></li>
-<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole latitude.</p></li>
+<li><p><strong>u</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – An instance of <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a> that contains the x-component of the vector.</p></li>
+<li><p><strong>v</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><em>iris.cube.Cube</em></a>) – An instance of <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.4.0.dev65)"><code class="xref py py-class docutils literal notranslate"><span class="pre">iris.cube.Cube</span></code></a> that contains the y-component of the vector.</p></li>
+<li><p><strong>pole_lon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole longitude.</p></li>
+<li><p><strong>pole_lat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – New North Pole latitude.</p></li>
 </ul>
 </dd>
 </dl>
