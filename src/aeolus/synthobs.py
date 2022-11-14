@@ -3,8 +3,8 @@
 import warnings
 
 from iris.analysis import SUM
-from iris.cube import Cube
 from iris.coords import AuxCoord, DimCoord
+from iris.cube import Cube
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
 
 import numpy as np
@@ -184,11 +184,25 @@ def calc_transmission_spectrum(
         spectral_bands["lower_wavelength_limit"] + spectral_bands["upper_wavelength_limit"]
     )
     spectral_bands_coord = AuxCoord(
-        spectral_band_centres, long_name="spectral_band_centres", units="m"
+        spectral_band_centres,
+        long_name="spectral_band_centres",
+        units="m",
+    )
+    spectral_bands_ll = AuxCoord(
+        spectral_bands["lower_wavelength_limit"],
+        long_name="spectral_band_lower_limit",
+        units="m",
+    )
+    spectral_bands_ul = AuxCoord(
+        spectral_bands["upper_wavelength_limit"],
+        long_name="spectral_band_upper_limit",
+        units="m",
     )
 
     # Attach spectral bands to the resulting cube as an auxiliary coordinate
     rp_eff_over_rs.add_aux_coord(spectral_bands_coord, data_dims=(coord_dim,))
+    rp_eff_over_rs.add_aux_coord(spectral_bands_ll, data_dims=(coord_dim,))
+    rp_eff_over_rs.add_aux_coord(spectral_bands_ul, data_dims=(coord_dim,))
 
     return rp_eff_over_rs
 
