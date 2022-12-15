@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.plot.text &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
+  <title>aeolus.plot.text &mdash; aeolus 0.4.15+24.g489fe38 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -31,7 +31,7 @@
             <a href="../../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+17.g7acc1af
+                0.4.15+24.g489fe38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -81,9 +81,38 @@
 <span class="kn">import</span> <span class="nn">string</span>
 
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span>
+<span class="kn">from</span> <span class="nn">..calc</span> <span class="kn">import</span> <span class="n">spatial_mean</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;fmt_lonlat&quot;</span><span class="p">,</span> <span class="s2">&quot;subplot_label_generator&quot;</span><span class="p">,</span> <span class="s2">&quot;tex2cf_units&quot;</span><span class="p">,</span> <span class="s2">&quot;unit_format&quot;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;cube_minmeanmax_str&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fmt_lonlat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;subplot_label_generator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tex2cf_units&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unit_format&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="cube_minmeanmax_str"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.text.cube_minmeanmax_str">[docs]</a><span class="k">def</span> <span class="nf">cube_minmeanmax_str</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">eq_sign</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_unit_format</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return min, mean and max of an iris cube as a string.&quot;&quot;&quot;</span>
+    <span class="c1"># Compute the stats</span>
+    <span class="n">_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">_mean</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">spatial_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="c1"># Assemble a string</span>
+    <span class="n">txts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">_min</span><span class="p">,</span> <span class="n">_mean</span><span class="p">,</span> <span class="n">_max</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">_mean</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">_mean</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">):</span>
+                <span class="n">_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">eq_sign</span><span class="si">}{</span><span class="n">num</span><span class="si">:</span><span class="s2">.0e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">eq_sign</span><span class="si">}{</span><span class="nb">round</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;pretty&quot;</span><span class="p">:</span>
+            <span class="n">_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">eq_sign</span><span class="si">}{</span><span class="n">unit_format</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_unit_format</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">eq_sign</span><span class="si">}{</span><span class="n">num</span><span class="si">:{</span><span class="n">fmt</span><span class="si">}}</span><span class="s2">&quot;</span>
+        <span class="n">txts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">txts</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="fmt_lonlat"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.text.fmt_lonlat">[docs]</a><span class="k">def</span> <span class="nf">fmt_lonlat</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">lon_or_lat</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>

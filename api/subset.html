@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subset cubes using constraints &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
+  <title>Subset cubes using constraints &mdash; aeolus 0.4.15+24.g489fe38 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+17.g7acc1af
+                0.4.15+24.g489fe38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,6 +61,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.subset.DimConstr.__init__"><code class="docutils literal notranslate"><span class="pre">DimConstr.__init__()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_after_n_days"><code class="docutils literal notranslate"><span class="pre">extract_after_n_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_between_days"><code class="docutils literal notranslate"><span class="pre">extract_between_days()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_month"><code class="docutils literal notranslate"><span class="pre">extract_last_month()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_n_days"><code class="docutils literal notranslate"><span class="pre">extract_last_n_days()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.l_range_constr"><code class="docutils literal notranslate"><span class="pre">l_range_constr()</span></code></a></li>
@@ -153,6 +155,18 @@
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_after_n_days">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_after_n_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">days=365,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_after_n_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_after_n_days" title="Permalink to this definition"></a></dt>
+<dd><p>Extract time slices after the given number of <cite>days</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_between_days">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_between_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">day_start,</span> <span class="pre">day_end,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_between_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_between_days" title="Permalink to this definition"></a></dt>
+<dd><p>Extract a cube subset between <cite>day_start</cite> and <cite>day_end</cite> of its time coordinate.</p>
 </dd></dl>
 
 <dl class="py function">

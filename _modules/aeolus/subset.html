@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.subset &mdash; aeolus 0.4.15+17.g7acc1af documentation</title>
+  <title>aeolus.subset &mdash; aeolus 0.4.15+24.g489fe38 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -31,7 +31,7 @@
             <a href="../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+17.g7acc1af
+                0.4.15+24.g489fe38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,6 +90,8 @@
     <span class="s2">&quot;CM_INST_CONSTR&quot;</span><span class="p">,</span>
     <span class="s2">&quot;CM_MEAN_CONSTR&quot;</span><span class="p">,</span>
     <span class="s2">&quot;DimConstr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extract_after_n_days&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extract_between_days&quot;</span><span class="p">,</span>
     <span class="s2">&quot;extract_last_month&quot;</span><span class="p">,</span>
     <span class="s2">&quot;extract_last_n_days&quot;</span><span class="p">,</span>
     <span class="s2">&quot;l_range_constr&quot;</span><span class="p">,</span>
@@ -148,6 +150,23 @@
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">ndays_before</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">point</span> <span class="o">&gt;</span> <span class="n">ndays_before</span><span class="p">}))</span>
+    <span class="k">return</span> <span class="n">cube_sub</span></div>
+
+
+<div class="viewcode-block" id="extract_between_days"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_between_days">[docs]</a><span class="k">def</span> <span class="nf">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract a cube subset between `day_start` and `day_end` of its time coordinate.&quot;&quot;&quot;</span>
+    <span class="n">dt_s</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">lbound</span> <span class="o">=</span> <span class="n">dt_s</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_start</span><span class="p">)</span>
+    <span class="n">ubound</span> <span class="o">=</span> <span class="n">dt_s</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_end</span><span class="p">)</span>
+    <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">lbound</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">.</span><span class="n">point</span> <span class="o">&lt;=</span> <span class="n">ubound</span><span class="p">}))</span>
+    <span class="k">return</span> <span class="n">cube_sub</span></div>
+
+
+<div class="viewcode-block" id="extract_after_n_days"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_after_n_days">[docs]</a><span class="k">def</span> <span class="nf">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract time slices after the given number of `days`.&quot;&quot;&quot;</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ndays_after</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
+    <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">point</span> <span class="o">&gt;</span> <span class="n">ndays_after</span><span class="p">}))</span>
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
