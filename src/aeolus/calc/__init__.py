@@ -41,6 +41,8 @@ from .stats import (
     time_mean,
     vertical_mean,
     zonal_mean,
+    after_n_day_mean,
+    between_day_mean,
 )
 from .tl import (
     regrid_to_rotated_pole_coordinates,
@@ -50,9 +52,11 @@ from .tl import (
 
 __all__ = (
     "abs_coord_mean",
+    "after_n_day_mean",
     "air_density",
     "air_potential_temperature",
     "air_temperature",
+    "between_day_mean",
     "bond_albedo",
     "cumsum",
     "d_dx",
