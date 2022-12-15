@@ -25,7 +25,7 @@ TST_DATA = Path(__file__).parent / "data" / "test_data"
 
 @pytest.fixture(scope="module")
 def example_cubelist_from_file():
-    return iris.load(str(TST_DATA / "netcdf" / "held_suarez_1200d.nc"))
+    return iris.load(TST_DATA / "netcdf" / "held_suarez_1200d.nc")
 
 
 def test_integrate():

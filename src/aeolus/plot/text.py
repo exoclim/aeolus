@@ -5,9 +5,34 @@ import math
 import string
 
 from ..exceptions import ArgumentError
+from ..calc import spatial_mean
 
 
-__all__ = ("fmt_lonlat", "subplot_label_generator", "tex2cf_units", "unit_format")
+__all__ = ("cube_minmeanmax_str", "fmt_lonlat", "subplot_label_generator", "tex2cf_units", "unit_format")
+
+
+def cube_minmeanmax_str(
+    cube, sep=" | ", eq_sign="=", fmt="auto", **kw_unit_format
+):
+    """Return min, mean and max of an iris cube as a string."""
+    # Compute the stats
+    _min = float(cube.data.min())
+    _mean = float(spatial_mean(cube).data)
+    _max = float(cube.data.max())
+    # Assemble a string
+    txts = []
+    for label, num in zip(["min", "mean", "max"], [_min, _mean, _max]):
+        if fmt == "auto":
+            if (math.log10(abs(_mean)) < 0) or (math.log10(abs(_mean)) > 5):
+                _str = f"{label}{eq_sign}{num:.0e}"
+            else:
+                _str = f"{label}{eq_sign}{round(num):.0f}"
+        elif fmt == "pretty":
+            _str = f"{label}{eq_sign}{unit_format(num, **kw_unit_format)}"
+        else:
+            _str = f"{label}{eq_sign}{num:{fmt}}"
+        txts.append(_str)
+    return sep.join(txts)
 
 
 def fmt_lonlat(value, lon_or_lat, degree=False):
