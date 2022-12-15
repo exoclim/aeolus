@@ -82,9 +82,7 @@ def extract_between_days(cube, day_start, day_end, model=um):
     dt_s = get_cube_datetimes(cube)[0]
     lbound = dt_s + timedelta(days=day_start)
     ubound = dt_s + timedelta(days=day_end)
-    cube_sub = cube.extract(
-        Constraint(**{model.t: lambda t: lbound <= t.point <= ubound})
-    )
+    cube_sub = cube.extract(Constraint(**{model.t: lambda t: lbound <= t.point <= ubound}))
     return cube_sub
 
 

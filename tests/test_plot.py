@@ -11,10 +11,7 @@ import pytest
 def example_cube_2d():
     xc = iris.coords.DimCoord([-1, 2, 3], units="degrees", standard_name="longitude")
     yc = iris.coords.DimCoord([10, 30, 50, 70], units="degrees", standard_name="latitude")
-    arr = [[ 0,  1,  2],
-       [ 3,  4,  5],
-       [ 6,  7,  8],
-       [ 9, 10, 11]]
+    arr = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]]
     cube = iris.cube.Cube(
         data=arr,
         dim_coords_and_dims=[i[::-1] for i in [*enumerate((yc, xc))]],

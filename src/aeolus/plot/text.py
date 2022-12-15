@@ -8,12 +8,16 @@ from ..exceptions import ArgumentError
 from ..calc import spatial_mean
 
 
-__all__ = ("cube_minmeanmax_str", "fmt_lonlat", "subplot_label_generator", "tex2cf_units", "unit_format")
+__all__ = (
+    "cube_minmeanmax_str",
+    "fmt_lonlat",
+    "subplot_label_generator",
+    "tex2cf_units",
+    "unit_format",
+)
 
 
-def cube_minmeanmax_str(
-    cube, sep=" | ", eq_sign="=", fmt="auto", **kw_unit_format
-):
+def cube_minmeanmax_str(cube, sep=" | ", eq_sign="=", fmt="auto", **kw_unit_format):
     """Return min, mean and max of an iris cube as a string."""
     # Compute the stats
     _min = float(cube.data.min())
