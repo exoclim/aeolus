@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Science calculations &mdash; aeolus 0.4.15+24.g489fe38 documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.15+25.gf135562 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -36,7 +36,7 @@
             <a href="../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+24.g489fe38
+                0.4.15+25.gf135562
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -92,6 +92,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-aeolus.calc.stats">Statistics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.abs_coord_mean"><code class="docutils literal notranslate"><span class="pre">abs_coord_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.after_n_day_mean"><code class="docutils literal notranslate"><span class="pre">after_n_day_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.between_day_mean"><code class="docutils literal notranslate"><span class="pre">between_day_mean()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.cumsum"><code class="docutils literal notranslate"><span class="pre">cumsum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.last_n_day_mean"><code class="docutils literal notranslate"><span class="pre">last_n_day_mean()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.stats.meridional_mean"><code class="docutils literal notranslate"><span class="pre">meridional_mean()</span></code></a></li>
@@ -843,6 +845,18 @@ from SP to NP returns a cube with (N+1)//2 latitudes.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev12)">iris.cube.Cube</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.calc.stats.after_n_day_mean">
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.stats.</span></span><span class="sig-name descname"><span class="pre">after_n_day_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">days=365,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#after_n_day_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.stats.after_n_day_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Average the cube over the last <cite>n</cite> days of its time dimension.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.calc.stats.between_day_mean">
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.stats.</span></span><span class="sig-name descname"><span class="pre">between_day_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">day_start,</span> <span class="pre">day_end,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/stats.html#between_day_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.stats.between_day_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Average the cube over a subset of days.</p>
 </dd></dl>
 
 <dl class="py function">

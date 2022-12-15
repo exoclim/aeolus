@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.stats &mdash; aeolus 0.4.15+24.g489fe38 documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0.4.15+25.gf135562 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -31,7 +31,7 @@
             <a href="../../../index.html" class="icon icon-home"> aeolus
           </a>
               <div class="version">
-                0.4.15+24.g489fe38
+                0.4.15+25.gf135562
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -93,11 +93,13 @@
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">area_weights_cube</span><span class="p">,</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">_warn</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
-<span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">extract_last_n_days</span>
+<span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">extract_last_n_days</span><span class="p">,</span> <span class="n">extract_after_n_days</span><span class="p">,</span> <span class="n">extract_between_days</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;abs_coord_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;after_n_day_mean&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;between_day_mean&quot;</span><span class="p">,</span>
     <span class="s2">&quot;cumsum&quot;</span><span class="p">,</span>
     <span class="s2">&quot;last_n_day_mean&quot;</span><span class="p">,</span>
     <span class="s2">&quot;meridional_mean&quot;</span><span class="p">,</span>
@@ -194,6 +196,20 @@
 <div class="viewcode-block" id="last_n_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.last_n_day_mean">[docs]</a><span class="k">def</span> <span class="nf">last_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Average the cube over the last `n` days of its time dimension.&quot;&quot;&quot;</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cube_sub</span></div>
+
+
+<div class="viewcode-block" id="after_n_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.after_n_day_mean">[docs]</a><span class="k">def</span> <span class="nf">after_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Average the cube over the last `n` days of its time dimension.&quot;&quot;&quot;</span>
+    <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cube_sub</span></div>
+
+
+<div class="viewcode-block" id="between_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.between_day_mean">[docs]</a><span class="k">def</span> <span class="nf">between_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Average the cube over a subset of days.&quot;&quot;&quot;</span>
+    <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span>
+        <span class="n">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="o">=</span><span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="o">=</span><span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
