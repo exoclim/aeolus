@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test the plot submodule."""
 from aeolus import plot
+
 import iris.coords
 import iris.cube
 
