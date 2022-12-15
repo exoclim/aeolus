@@ -14,6 +14,8 @@ __all__ = (
     "CM_INST_CONSTR",
     "CM_MEAN_CONSTR",
     "DimConstr",
+    "extract_after_n_days",
+    "extract_between_days",
     "extract_last_month",
     "extract_last_n_days",
     "l_range_constr",
@@ -72,6 +74,25 @@ def extract_last_n_days(cube, days=365, model=um):
     dt = get_cube_datetimes(cube)[-1]
     ndays_before = dt - timedelta(days=days)
     cube_sub = cube.extract(Constraint(**{model.t: lambda t: t.point > ndays_before}))
+    return cube_sub
+
+
+def extract_between_days(cube, day_start, day_end, model=um):
+    """Extract a cube subset between `day_start` and `day_end` of its time coordinate."""
+    dt_s = get_cube_datetimes(cube)[0]
+    lbound = dt_s + timedelta(days=day_start)
+    ubound = dt_s + timedelta(days=day_end)
+    cube_sub = cube.extract(
+        Constraint(**{model.t: lambda t: lbound <= t.point <= ubound})
+    )
+    return cube_sub
+
+
+def extract_after_n_days(cube, days=365, model=um):
+    """Extract time slices after the given number of `days`."""
+    dt = get_cube_datetimes(cube)[0]
+    ndays_after = dt + timedelta(days=days)
+    cube_sub = cube.extract(Constraint(**{model.t: lambda t: t.point > ndays_after}))
     return cube_sub
 
 
