@@ -823,7 +823,7 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
     * In pressure coordinates
 
     .. math::
-        \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{\rho v} dp / g
+        \Psi_M = 2\pi cos\phi a \int_{0}^{p_{sfc}}\overline{v} dp / g
 
     Parameters
     ----------
