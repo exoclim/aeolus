@@ -17,11 +17,13 @@ from .calculus import integrate
 from ..coord import area_weights_cube, coord_to_cube, ensure_bounds
 from ..exceptions import ArgumentError, _warn
 from ..model import um
-from ..subset import extract_last_n_days
+from ..subset import extract_last_n_days, extract_after_n_days, extract_between_days
 
 
 __all__ = (
     "abs_coord_mean",
+    "after_n_day_mean",
+    "between_day_mean",
     "cumsum",
     "last_n_day_mean",
     "meridional_mean",
@@ -118,6 +120,20 @@ def cumsum(cube, axis, axis_weights=False, model=um):
 def last_n_day_mean(cube, days=365, model=um):
     """Average the cube over the last `n` days of its time dimension."""
     cube_sub = time_mean(extract_last_n_days(cube, days=days, model=model), model=model)
+    return cube_sub
+
+
+def after_n_day_mean(cube, days=365, model=um):
+    """Average the cube over the last `n` days of its time dimension."""
+    cube_sub = time_mean(extract_after_n_days(cube, days=days, model=model), model=model)
+    return cube_sub
+
+
+def between_day_mean(cube, day_start, day_end, model=um):
+    """Average the cube over a subset of days."""
+    cube_sub = time_mean(
+        extract_between_days(cube, day_start=day_start, day_end=day_end, model=model), model=model
+    )
     return cube_sub
 
 
