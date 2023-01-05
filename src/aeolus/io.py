@@ -1,19 +1,29 @@
 # -*- coding: utf-8 -*-
 """Input and output functionality."""
+from pathlib import Path
+
 import iris
 from iris.coords import AuxCoord
-from iris.cube import CubeList
+from iris.cube import Cube, CubeList
 from iris.fileformats.pp import EARTH_RADIUS
 from iris.fileformats.um import structured_um_loading
 from iris.coord_systems import GeogCS
 
 import numpy as np
+from typing import Optional, Any, Sequence
 
 
 __all__ = ("create_dummy_cube", "load_data", "load_multidir", "load_vert_lev", "save_cubelist")
 
 
-def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type="a", pm180=False):
+def create_dummy_cube(
+    nlat: Optional[int] = None,
+    nlon: Optional[int] = None,
+    n_res: Optional[int] = None,
+    endgame: Optional[bool] = True,
+    grid_type: Optional[str] = "a",
+    pm180: Optional[bool] = False,
+) -> Cube:
     """
     Create a dummy 2D cube with given resolution compatible with the UM grid.
 
@@ -104,7 +114,7 @@ def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type=
     data = np.zeros((len(lats), len(lons)), dtype=np.int32)
 
     # Assemble the cube.
-    cube = iris.cube.Cube(
+    cube = Cube(
         data,
         dim_coords_and_dims=((lat_coord, 0), (lon_coord, 1)),
         var_name="dummy_cube",
@@ -114,7 +124,7 @@ def create_dummy_cube(nlat=None, nlon=None, n_res=None, endgame=True, grid_type=
     return cube
 
 
-def load_data(files, structured=False):
+def load_data(files: Sequence, structured: Optional[bool] = False) -> CubeList:
     """Use `iris.load` with optional structured loading for PP files."""
     if structured:
         with structured_um_loading():
@@ -124,7 +134,9 @@ def load_data(files, structured=False):
     return cubes
 
 
-def load_multidir(path_mask, labels, label_name="run"):
+def load_multidir(
+    path_mask: str, labels: Sequence[str], label_name: Optional[str] = "run"
+) -> CubeList:
     """Load cubelists from multiple directories and merge."""
     joint_cl = CubeList()
     for label in labels:
@@ -136,7 +148,7 @@ def load_multidir(path_mask, labels, label_name="run"):
     return joint_cl.merge()
 
 
-def load_vert_lev(path_to_file, lev_type="theta"):
+def load_vert_lev(path_to_file: Path, lev_type: Optional[str] = "theta") -> np.array:
     """
     Read data from the UM vertical levels file.
 
@@ -160,7 +172,7 @@ def load_vert_lev(path_to_file, lev_type="theta"):
     return levs
 
 
-def save_cubelist(cubelist, path, **aux_attrs):
+def save_cubelist(cubelist: CubeList, path: Path, **aux_attrs: Optional[Any]) -> None:
     """
     Save a cubelist w/o the `planet_conf` container to a file.
 
