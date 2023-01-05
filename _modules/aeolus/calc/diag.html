@@ -1,38 +1,75 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.15+28.gb9b6b0a documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.16 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> aeolus
+          
+
+          
           </a>
+
+          
+            
+            
               <div class="version">
-                0.4.15+28.gb9b6b0a
+                0.4.16
               </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -40,7 +77,18 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
@@ -49,30 +97,69 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributor’s Guide</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">aeolus</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">aeolus.calc.diag</li>
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>aeolus.calc.diag</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Source code for aeolus.calc.diag</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Some commonly used diagnostics in atmospheric science.&quot;&quot;&quot;</span>
@@ -122,7 +209,7 @@
 
 
 <span class="k">def</span> <span class="nf">_precip_name_mapping</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate lists of variable names for `precip_sum()`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate lists of variable names for `precip_sum()`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">ls_rain</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ls_snow</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_rain</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_snow</span><span class="p">],</span>
         <span class="s2">&quot;conv&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">cv_rain</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_snow</span><span class="p">],</span>
@@ -134,7 +221,7 @@
 
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cos_lat&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">lat_cos</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert the latitude coordinate to a cube and apply cosine to it.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the latitude coordinate to a cube and apply cosine to it.&quot;&quot;&quot;</span>
     <span class="n">lat_cube</span> <span class="o">=</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">broadcast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">lat_cos_cube</span> <span class="o">=</span> <span class="n">apply_ufunc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span> <span class="n">apply_ufunc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">,</span> <span class="n">lat_cube</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">lat_cos_cube</span>
@@ -142,7 +229,7 @@
 
 <div class="viewcode-block" id="air_temperature"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.air_temperature">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">air_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the real temperature from the given cube list.</span>
 
 <span class="sd">    If not present, it is attempted to calculate it from other variables,</span>
@@ -189,7 +276,7 @@
 
 <div class="viewcode-block" id="air_potential_temperature"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.air_potential_temperature">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">air_potential_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the potential temperature from the given cube list.</span>
 
 <span class="sd">    If not present, it is attempted to calculate it from other variables,</span>
@@ -237,7 +324,7 @@
 
 <div class="viewcode-block" id="air_density"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.air_density">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg m-3&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">air_density</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get air density from the given cube list.</span>
 
 <span class="sd">    If not present, it is attempted to calculate it from pressure and temperature.</span>
@@ -275,7 +362,7 @@
 
 <div class="viewcode-block" id="geopotential_height"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.geopotential_height">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;m2 s-2&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">geopotential_height</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get geopotential height from the given cube list.</span>
 
 <span class="sd">    If not present, the altitude coordinate is transformed into a cube.</span>
@@ -313,7 +400,7 @@
 
 
 <div class="viewcode-block" id="flux"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.flux">[docs]</a><span class="k">def</span> <span class="nf">flux</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">weight_by_density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate horizontal or vertical flux of some quantity.</span>
 
 <span class="sd">    .. math::</span>
@@ -355,7 +442,7 @@
 
 <div class="viewcode-block" id="toa_cloud_radiative_effect"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.toa_cloud_radiative_effect">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">toa_cloud_radiative_effect</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate domain-average TOA cloud radiative effect (CRE).</span>
 
 <span class="sd">    .. math::</span>
@@ -396,7 +483,7 @@
 
 <div class="viewcode-block" id="toa_net_energy"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.toa_net_energy">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;toa_net_downward_energy_flux&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">toa_net_energy</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate domain-average TOA energy flux.</span>
 
 <span class="sd">    Parameters</span>
@@ -430,7 +517,7 @@
 
 <div class="viewcode-block" id="sfc_net_energy"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.sfc_net_energy">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;surface_net_downward_energy_flux&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;W m-2&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">sfc_net_energy</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate domain-average surface energy flux.</span>
 
 <span class="sd">    Parameters</span>
@@ -456,7 +543,7 @@
 <div class="viewcode-block" id="sfc_water_balance"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.sfc_water_balance">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;surface_net_downward_water_flux&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;mm h-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">sfc_water_balance</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate domain-average precipitation minus evaporation.</span>
 
 <span class="sd">    Parameters</span>
@@ -496,7 +583,7 @@
 
 <div class="viewcode-block" id="precip_sum"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.precip_sum">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">precip_sum</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">ptype</span><span class="o">=</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate a sum of different types of precipitation [:math:`mm~day^{-1}`].</span>
 
 <span class="sd">    Parameters</span>
@@ -539,7 +626,7 @@
 
 <div class="viewcode-block" id="heat_redist_eff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.heat_redist_eff">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;heat_redistribution_efficiency&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">heat_redist_eff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">region_a</span><span class="p">,</span> <span class="n">region_b</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Heat redistribution efficiency (Leconte et al. 2013).</span>
 
 <span class="sd">    .. math::</span>
@@ -570,7 +657,7 @@
 
 <div class="viewcode-block" id="toa_eff_temp"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.toa_eff_temp">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;toa_effective_temperature&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">toa_eff_temp</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate effective temperature from TOA OLR.</span>
 
 <span class="sd">    Parameters</span>
@@ -593,7 +680,7 @@
 
 <div class="viewcode-block" id="ghe_norm"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.ghe_norm">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;normalised_greenhouse_effect_parameter&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">ghe_norm</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalised greenhouse effect parameter.</span>
 
 <span class="sd">    .. math::</span>
@@ -621,7 +708,7 @@
 <div class="viewcode-block" id="bond_albedo"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.bond_albedo">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;bond_albedo&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bond_albedo</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Bold albedo.</span>
 
 <span class="sd">    .. math::</span>
@@ -650,7 +737,7 @@
 
 <div class="viewcode-block" id="water_path"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.water_path">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg m-2&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">water_path</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;water_vapour&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Water vapour or condensate path, i.e. a vertical integral of a water phase.</span>
 
 <span class="sd">    .. math::</span>
@@ -689,7 +776,7 @@
 
 
 <div class="viewcode-block" id="dry_lapse_rate"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.dry_lapse_rate">[docs]</a><span class="k">def</span> <span class="nf">dry_lapse_rate</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Dry lapse rate, or the change of air temperature with altitude.</span>
 
 <span class="sd">    .. math::</span>
@@ -712,7 +799,7 @@
 
 
 <div class="viewcode-block" id="horiz_wind_cmpnts"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.horiz_wind_cmpnts">[docs]</a><span class="k">def</span> <span class="nf">horiz_wind_cmpnts</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract u and v wind components from a cube list and interpolate v on u&#39;s grid if necessary.</span>
 
 <span class="sd">    Parameters</span>
@@ -738,7 +825,7 @@
 <span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;local_superrotation_index&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">superrotation_index</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Local superrotation index.</span>
 
 <span class="sd">    .. math::</span>
@@ -797,7 +884,7 @@
 
 <div class="viewcode-block" id="wind_speed"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.wind_speed">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m s-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">wind_speed</span><span class="p">(</span><span class="o">*</span><span class="n">components</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the wind speed (magnitude of the wind vector).</span>
 
 <span class="sd">    .. math::</span>
@@ -818,7 +905,7 @@
 
 <div class="viewcode-block" id="sigma_p"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.sigma_p">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;atmosphere_hybrid_sigma_pressure_coordinate&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">sigma_p</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate sigma (normalised pressure coordinate) from a cube of pressure.</span>
 
 <span class="sd">    .. math::</span>
@@ -840,7 +927,7 @@
 <div class="viewcode-block" id="zonal_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.zonal_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;zonal_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">zonal_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate mean zonal mass streamfunction.</span>
 
 <span class="sd">    .. math::</span>
@@ -888,7 +975,7 @@
 <div class="viewcode-block" id="meridional_mass_streamfunction"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.meridional_mass_streamfunction">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;meridional_mass_streamfunction&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;kg s^-1&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">meridional_mass_streamfunction</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the mean meridional mass streamfunction.</span>
 
 <span class="sd">    * In height coordinates</span>
@@ -953,7 +1040,7 @@
 
 <div class="viewcode-block" id="wind_rot_div"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.wind_rot_div">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">wind_rot_div</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).</span>
 
 <span class="sd">    The Helmholtz decomposition method uses the `windspharm` library:</span>
@@ -1009,30 +1096,46 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020 - 2022, aeolus contributors.</p>
-  </div>
+    <p>
+        &#169; Copyright 2020 - 2023, aeolus contributors.
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
