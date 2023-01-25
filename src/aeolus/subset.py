@@ -159,3 +159,72 @@ def unique_cubes(cubelist):
         return out
     else:
         return cubelist
+
+
+class CellMethodConstraint(Constraint):
+    """Provides a simple Cube-CellMethod based :class:`Constraint`."""
+
+    _names = ("method", "coord_names", "intervals", "comments")
+
+    def __init__(self, method, coord_names=None, intervals=None, comments=None):
+        """
+        Initialise a CellMethod-based constraint.
+
+        Provides a Cube cell method based :class:`Constraint`, which matches
+        against attributes of each of the cell methods in the cube, if there
+        are any. See :class:`iris.coords.CellMethod` for more info.
+
+        The constraint will succeed if *any* of the provided attributes match.
+
+        Example usage::
+
+            iris.CellMethodConstraint(method='mean')
+
+            iris.CellMethodConstraint(method='mean',
+                coord_names=("mesh_coordinates",))
+
+        .. note:: Cell method names are case sensitive.
+
+        """
+        self.method = method
+        self.coord_names = coord_names
+        self.intervals = intervals
+        self.comments = comments
+        # self.cell_method = iris.coords.CellMethod(
+        #     method, coords=coord_names, intervals=intervals, comments=comments
+        # )
+        super().__init__(cube_func=self._cube_func)
+
+    def __eq__(self, other):
+        eq = type(other) == CellMethodConstraint and all(
+            getattr(self, attname) == getattr(other, attname) for attname in self._names
+        )
+        return eq
+
+    def __hash__(self):
+        # Must re-define if you overload __eq__ : Use object identity.
+        return id(self)
+
+    def _cube_func(self, cube):
+        match = False
+        try:
+            cell_methods = cube.cell_methods
+            for cell_method in cell_methods:
+                for name in self._names:
+                    expected = getattr(self, name)
+                    actual = getattr(cell_method, name)
+                    # Currently relaxed / permissive condition
+                    if actual == expected:
+                        match = True
+                        break
+        except AttributeError:
+            match = False
+        return match
+
+    def __repr__(self):
+        names = []
+        for name in self._names:
+            value = getattr(self, name)
+            if value != "none":
+                names.append("{}={!r}".format(name, value))
+        return "{}({})".format(self.__class__.__name__, ", ".join(names))

@@ -4,6 +4,22 @@ Changelog
 .. default-role:: py:obj
 
 
+0.4.17
+------
+
+:Date: TBA
+
+* Add `subset.CellMethodConstraint`
+
+
+0.4.16
+------
+
+:Date: 11 January 2023
+
+* Miscellaneous improvements.
+
+
 0.4.15
 ------
 
