@@ -29,6 +29,7 @@ def preprocess_iris(f):
     Note this works only for functions that preserve dimensions and may not work with some units.
     Now that metpy has xarray preprocessor, this decorator depends on it.
     """
+
     # Define local functions
     def to_xarray(cube):
         """Convert `iris.cube.Cube` to `xarray.DataArray` and format units correctly."""
