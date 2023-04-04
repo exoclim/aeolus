@@ -130,7 +130,8 @@ def load_data(files: Sequence, structured: Optional[bool] = False) -> CubeList:
         with structured_um_loading():
             cubes = iris.load(files)
     else:
-        cubes = iris.load(files)
+        with iris.FUTURE.context(datum_support=True):
+            cubes = iris.load(files)
     return cubes
 
 

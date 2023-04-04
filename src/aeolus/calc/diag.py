@@ -305,8 +305,8 @@ def toa_cloud_radiative_effect(cubelist, kind, model=um):
         all_sky = model.toa_olr
         clr_sky = model.toa_olr_cs
     elif kind == "total":
-        sw = toa_cloud_radiative_effect(cubelist, "sw")
-        lw = toa_cloud_radiative_effect(cubelist, "lw")
+        sw = toa_cloud_radiative_effect(cubelist, "sw", model=model)
+        lw = toa_cloud_radiative_effect(cubelist, "lw", model=model)
         cre = sw + lw
         cre.rename(name)
         return cre

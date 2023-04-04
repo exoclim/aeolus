@@ -17,15 +17,26 @@ __all__ = (
 )
 
 
-def cube_minmeanmax_str(cube, sep=" | ", eq_sign="=", fmt="auto", **kw_unit_format):
+def cube_minmeanmax_str(
+    cube,
+    sep=" | ",
+    eq_sign="=",
+    fmt="auto",
+    weight=True,
+    labels=["min", "mean", "max"],
+    **kw_unit_format,
+):
     """Return min, mean and max of an iris cube as a string."""
     # Compute the stats
     _min = float(cube.data.min())
-    _mean = float(spatial_mean(cube).data)
+    if weight:
+        _mean = float(spatial_mean(cube).data)
+    else:
+        _mean = float(cube.data.mean())
     _max = float(cube.data.max())
     # Assemble a string
     txts = []
-    for label, num in zip(["min", "mean", "max"], [_min, _mean, _max]):
+    for label, num in zip(labels, [_min, _mean, _max]):
         if fmt == "auto":
             if (math.log10(abs(_mean)) < 0) or (math.log10(abs(_mean)) > 5):
                 _str = f"{label}{eq_sign}{num:.0e}"
