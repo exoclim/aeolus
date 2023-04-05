@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.16+11.g7d82b4d documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.16+12.g787a608 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+11.g7d82b4d
+                0.4.16+12.g787a608
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -105,6 +105,7 @@
     <span class="s2">&quot;flux&quot;</span><span class="p">,</span>
     <span class="s2">&quot;geopotential_height&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ghe_norm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;greenhouse_effect&quot;</span><span class="p">,</span>
     <span class="s2">&quot;heat_redist_eff&quot;</span><span class="p">,</span>
     <span class="s2">&quot;horiz_wind_cmpnts&quot;</span><span class="p">,</span>
     <span class="s2">&quot;meridional_mass_streamfunction&quot;</span><span class="p">,</span>
@@ -617,6 +618,38 @@
     <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_eff</span> <span class="o">/</span> <span class="n">t_sfc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span> <span class="n">out</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="greenhouse_effect"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.greenhouse_effect">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
+<span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;greenhouse_effect_parameter&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">greenhouse_effect</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;all_sky&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the greenhouse effect [K].</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        GHE = T_{sfc} - \left(\frac{T_{eff}}{T_{sfc}}\right)^4</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cubelist: iris.cube.CubeList</span>
+<span class="sd">        Input list of cubes.</span>
+<span class="sd">    kind: str, optional</span>
+<span class="sd">        Type of GHE:  &quot;all_sky&quot; or &quot;clear_sky&quot;</span>
+<span class="sd">    model: aeolus.model.Model, optional</span>
+<span class="sd">        Model class with relevant variable names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iris.cube.Cube</span>
+<span class="sd">        Cube of greenhouse effect parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t_sfc</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t_sfc</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;all_sky&quot;</span><span class="p">:</span>
+        <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;clear_sky&quot;</span><span class="p">:</span>
+        <span class="n">toa_olr</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">toa_olr_cs</span><span class="p">)</span>
+    <span class="n">ghe</span> <span class="o">=</span> <span class="n">t_sfc</span> <span class="o">-</span> <span class="p">(</span><span class="n">toa_olr</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">stefan_boltzmann</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.25</span>
+    <span class="k">return</span> <span class="n">ghe</span></div>
 
 
 <div class="viewcode-block" id="bond_albedo"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.bond_albedo">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
