@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Synthetic observations &mdash; aeolus 0.4.16+12.g787a608 documentation</title>
+  <title>Synthetic observations &mdash; aeolus 0.4.16+14.g658718b documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -16,8 +16,6 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +35,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+12.g787a608
+                0.4.16+14.g658718b
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -60,15 +58,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Synthetic observations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.calc_geom_mean_mirrored"><code class="docutils literal notranslate"><span class="pre">calc_geom_mean_mirrored()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.calc_stellar_flux"><code class="docutils literal notranslate"><span class="pre">calc_stellar_flux()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.calc_transmission_spectrum"><code class="docutils literal notranslate"><span class="pre">calc_transmission_spectrum()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.calc_transmission_spectrum_day_night_average"><code class="docutils literal notranslate"><span class="pre">calc_transmission_spectrum_day_night_average()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.read_normalized_stellar_flux"><code class="docutils literal notranslate"><span class="pre">read_normalized_stellar_flux()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.synthobs.read_spectral_bands"><code class="docutils literal notranslate"><span class="pre">read_spectral_bands()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Synthetic observations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -100,153 +90,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-aeolus.synthobs">
-<span id="synthetic-observations"></span><h1>Synthetic observations<a class="headerlink" href="#module-aeolus.synthobs" title="Permalink to this heading"></a></h1>
-<p>Functions for calculating synthetic observations.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.calc_geom_mean_mirrored">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_geom_mean_mirrored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_a,</span> <span class="pre">cube_b,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_geom_mean_mirrored"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_geom_mean_mirrored" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate geometric mean of two cubes with one of them rolled along the x-axis.</p>
-<p>This function can be used to get an average transmission flux
-calculated separately from the day- and night-side perspective.</p>
-<dl class="simple">
-<dt>cube_a: iris.cube.Cube</dt><dd><p>Cube with an x-coordinate.</p>
-</dd>
-<dt>cube_b: iris.cube.Cube</dt><dd><p>Another cube with an x-coordinate to be flipped before being averaged with cube A.</p>
-</dd>
-<dt>model: aeolus.model.Model, optional</dt><dd><p>Model class with relevant variable names.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.calc_stellar_flux">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_stellar_flux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectral_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stellar_constant_at_1_au</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_stellar_flux"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_stellar_flux" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate the stellar flux per spectral band.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Stellar flux per spectral band [W m-2].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.calc_transmission_spectrum">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum" title="Permalink to this definition"></a></dt>
-<dd><p>Convert the model output of transmission flux to a planetary-stellar radius ratio.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
-In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
-<li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
-<li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
-<li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>
-<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The ratio of the effective planetary radius to the stellar radius per spectral band [1].
-Spectral band centres [m] is attached as an auxiliary coordinate.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The transmission spectrum is the ratio of the effective planetary radius to the stellar
-radius calculated per spectral band:</p>
-<div class="math notranslate nohighlight">
-\[\frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 -
- \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}\]</div>
-<p>where
-<span class="math notranslate nohighlight">\(R_p(\nu)\)</span> is the effective planetary radius,
-<span class="math notranslate nohighlight">\(R_s\)</span> is the stellar radius,
-<span class="math notranslate nohighlight">\(R_{p,TOA}\)</span> is the extent of the planetary atmosphere (which usually is the sum of
-the planetary radius and the height of the model domain),
-<span class="math notranslate nohighlight">\(\sum_{lat,lon}^{}F_{transmitted}(\nu)\)</span> is the total transmitted flux,
-<span class="math notranslate nohighlight">\(F_{stellar}(\nu)\)</span> is the stellar flux.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.calc_transmission_spectrum_day_night_average">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">calc_transmission_spectrum_day_night_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">trans_flux_day,</span> <span class="pre">trans_flux_night,</span> <span class="pre">spectral_file=None,</span> <span class="pre">stellar_constant_at_1_au=None,</span> <span class="pre">stellar_radius=None,</span> <span class="pre">planet_top_of_atmosphere=None,</span> <span class="pre">model=Model</span> <span class="pre">[95</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#calc_transmission_spectrum_day_night_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.calc_transmission_spectrum_day_night_average" title="Permalink to this definition"></a></dt>
-<dd><p>Convert the model output of transmission flux to a planetary-stellar radius ratio.</p>
-<p>For UM output, this function averages the flux calculated from the day-side and the night-side
-of the planet. Why does it use a geometric mean? The reason to use a geometric average instead
-of an arithmetic average is that you want to add the optical depths. The flux decreases via
-Beer’s law (i.e., it’s proportional to <span class="math notranslate nohighlight">\(exp[-optical depth]\)</span>) so when you multiply the
-dayside fluxes and nightside fluxes together and take a square root, you end up with
-<span class="math notranslate nohighlight">\(exp[-( optical depth 1 + optical depth 2)/2]\)</span>. Since each optical depth is double the
-optical depth for it’s respective side, the factors of two cancel and you end up with
-<span class="math notranslate nohighlight">\(exp[-(true optical depth)]\)</span>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux_day</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
-Day-side perspective.
-In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
-<li><p><strong>trans_flux_night</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally latitudes and longitudes.
-Night-side perspective.
-In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</p></li>
-<li><p><strong>parameters</strong> (<em>For other</em>) – </p></li>
-<li><p><strong>aeolus.synthobs.calc_transmission_spectrum</strong><strong>(</strong><strong>)</strong> (<em>see the docstring of</em>) – </p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#aeolus.synthobs.calc_transmission_spectrum" title="aeolus.synthobs.calc_transmission_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.synthobs.calc_transmission_spectrum</span></code></a></p>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.read_normalized_stellar_flux">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">read_normalized_stellar_flux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectral_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#read_normalized_stellar_flux"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.read_normalized_stellar_flux" title="Permalink to this definition"></a></dt>
-<dd><p>Read the normalized stellar flux per spectral band from a SOCRATES spectral file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a>) – Path to the location of the SOCRATES spectral file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Normalized stellar flux per spectral band [1].</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev70)">iris.cube.Cube</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="aeolus.synthobs.read_spectral_bands">
-<span class="sig-prename descclassname"><span class="pre">aeolus.synthobs.</span></span><span class="sig-name descname"><span class="pre">read_spectral_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectral_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/synthobs.html#read_spectral_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.synthobs.read_spectral_bands" title="Permalink to this definition"></a></dt>
-<dd><p>Read spectral bands from a SOCRATES spectral file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An array with a list of tuples describing spectral bands.
-Tuple structure:
-(spectral_band_index, lower_wavelength_limit, upper_wavelength_limit).
-Units [m] as stated in a spectral file but not checked directly.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)">numpy.ndarray</a></p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="synthetic-observations">
+<h1>Synthetic observations<a class="headerlink" href="#synthetic-observations" title="Permalink to this heading"></a></h1>
 </section>
 
 
