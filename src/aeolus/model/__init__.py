@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Model-specific dictionaries of variable names and coordinates."""
+"""All model dictionaries."""
 from .um import um, um_stash
+from .lfric import lfric
 
-__all__ = ("um", "um_stash")
+__all__ = ("lfric", "um", "um_stash")

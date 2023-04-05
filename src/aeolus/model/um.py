@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Model-specific dictionaries of variable names and coordinates."""
+"""UM-specific dictionaries of variable names and coordinates."""
 from .base import Model
 
 __all__ = ("um", "um_stash")
@@ -36,6 +36,10 @@ um = Model(
     sfc_dn_lw_cs="surface_downwelling_longwave_flux_in_air_assuming_clear_sky",
     sfc_dn_sw="surface_downwelling_shortwave_flux_in_air",
     sfc_dn_sw_cs="surface_downwelling_shortwave_flux_in_air_assuming_clear_sky",
+    sfc_up_lw="surface_upwelling_longwave_flux_in_air",
+    sfc_up_lw_cs="surface_upwelling_longwave_flux_in_air_assuming_clear_sky",
+    sfc_up_sw="surface_upwelling_shortwave_flux_in_air",
+    sfc_up_sw_cs="surface_upwelling_shortwave_flux_in_air_assuming_clear_sky",
     sfc_net_down_lw="surface_net_downward_longwave_flux",
     sfc_net_down_sw="surface_net_downward_shortwave_flux",
     lw_up="upwelling_longwave_flux_in_air",
