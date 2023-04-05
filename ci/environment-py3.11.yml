@@ -20,6 +20,7 @@ dependencies:
 - latlon23
 - matplotlib>=3.6
 - numpy
+- pandas
 - pep8-naming
 - pip
 - pytest>=3.3

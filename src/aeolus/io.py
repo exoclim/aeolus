@@ -9,11 +9,21 @@ from iris.fileformats.pp import EARTH_RADIUS
 from iris.fileformats.um import structured_um_loading
 from iris.coord_systems import GeogCS
 
+import iris.pandas
+import pandas as pd
+
 import numpy as np
 from typing import Optional, Any, Sequence
 
 
-__all__ = ("create_dummy_cube", "load_data", "load_multidir", "load_vert_lev", "save_cubelist")
+__all__ = (
+    "create_dummy_cube",
+    "load_conservation_diag",
+    "load_data",
+    "load_multidir",
+    "load_vert_lev",
+    "save_cubelist",
+)
 
 
 def create_dummy_cube(
@@ -122,6 +132,40 @@ def create_dummy_cube(
     )
 
     return cube
+
+
+def load_conservation_diag(fnames, convert_to_iris=True, drop_duplicates=True):
+    """Load UM conservation diagnostics from a series of text files."""
+    dset = pd.concat(
+        map(
+            lambda fpath: pd.read_csv(fpath, header=None, sep=r"\s+"),
+            fnames,
+        )
+    )
+    if drop_duplicates:
+        dset = dset.drop_duplicates()
+    dset = (
+        dset.rename(
+            {
+                0: "timestep",
+                1: "total_atmosphere_mass",
+                2: "total_axial_angular_momentum",
+                3: "total_kinetic_energy",
+            },
+            axis="columns",
+        )
+        .sort_values(by="timestep")
+        .set_index("timestep")
+    )
+    if convert_to_iris:
+        dset = iris.pandas.as_cubes(dset)
+        cube = dset.extract_cube("total_atmosphere_mass")
+        cube.units = "kg"
+        cube = dset.extract_cube("total_axial_angular_momentum")
+        cube.units = "kg m**2 s**-1"
+        cube = dset.extract_cube("total_kinetic_energy")
+        cube.units = "kg m**2 s**-2"
+    return dset
 
 
 def load_data(files: Sequence, structured: Optional[bool] = False) -> CubeList:
