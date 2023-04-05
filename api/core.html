@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core hierarchy &mdash; aeolus 0.4.16+14.g658718b documentation</title>
+  <title>Core hierarchy &mdash; aeolus 0.4.16+15.gd4237f3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -16,6 +16,8 @@
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -35,7 +37,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+14.g658718b
+                0.4.16+15.gd4237f3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,7 +52,26 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Core hierarchy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Core hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.core.AtmoSim"><code class="docutils literal notranslate"><span class="pre">AtmoSim</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSim.sigma_p"><code class="docutils literal notranslate"><span class="pre">AtmoSim.sigma_p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSim.wind_speed"><code class="docutils literal notranslate"><span class="pre">AtmoSim.wind_speed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSim.toa_net_energy"><code class="docutils literal notranslate"><span class="pre">AtmoSim.toa_net_energy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSim.sfc_water_balance"><code class="docutils literal notranslate"><span class="pre">AtmoSim.sfc_water_balance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.core.AtmoSimBase"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.name"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.description"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.const"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.const</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.model"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.__init__"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.from_parent_class"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.from_parent_class()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.core.AtmoSimBase.extract"><code class="docutils literal notranslate"><span class="pre">AtmoSimBase.extract()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
@@ -90,8 +111,192 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="core-hierarchy">
-<h1>Core hierarchy<a class="headerlink" href="#core-hierarchy" title="Permalink to this heading"></a></h1>
+  <section id="module-aeolus.core">
+<span id="core-hierarchy"></span><h1>Core hierarchy<a class="headerlink" href="#module-aeolus.core" title="Permalink to this heading"></a></h1>
+<p>Core submodule of aeolus package.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.core.</span></span><span class="sig-name descname"><span class="pre">AtmoSim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes=None,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">planet='',</span> <span class="pre">const_dir=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields],</span> <span class="pre">model_type=None,</span> <span class="pre">timestep=None,</span> <span class="pre">vert_coord=None,</span> <span class="pre">coord_check=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSim" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aeolus.core.AtmoSimBase" title="aeolus.core.AtmoSimBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtmoSimBase</span></code></a></p>
+<p>Main class for dealing with a atmospheric model simulation output in aeolus.</p>
+<p>Used to store and calculate atmospheric fields from gridded model output.
+Derived quantities are stored as cached properties to save computational time.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSim.sigma_p">
+<span class="sig-name descname"><span class="pre">sigma_p</span></span><a class="headerlink" href="#aeolus.core.AtmoSim.sigma_p" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate sigma (normalised pressure coordinate) from a cube of pressure.</p>
+<div class="math notranslate nohighlight">
+\[\sigma = p / p_{sfc}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.5.0.dev71)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSim.wind_speed">
+<span class="sig-name descname"><span class="pre">wind_speed</span></span><a class="headerlink" href="#aeolus.core.AtmoSim.wind_speed" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the wind speed (magnitude of the wind vector).</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{u^2 + v^2 + w^2}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev71)"><em>iris.cube.Cube</em></a>) – Cubes of u, v, w wind components.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev71)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSim.toa_net_energy">
+<span class="sig-name descname"><span class="pre">toa_net_energy</span></span><a class="headerlink" href="#aeolus.core.AtmoSim.toa_net_energy" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate domain-average TOA energy flux.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.5.0.dev71)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cube of total TOA downward energy flux.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev71)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSim.sfc_water_balance">
+<span class="sig-name descname"><span class="pre">sfc_water_balance</span></span><a class="headerlink" href="#aeolus.core.AtmoSim.sfc_water_balance" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate domain-average precipitation minus evaporation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.5.0.dev71)"><em>iris.cube.CubeList</em></a>) – Input list of cubes.</p></li>
+<li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Must have a scalar cube of <cite>condensible_density</cite> as an attribute.
+If not given, attempt is made to retrieve it from cube attributes.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cube of total surface downward water flux (P-E).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.Cube" title="(in Iris v3.5.0.dev71)">iris.cube.Cube</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.core.</span></span><span class="sig-name descname"><span class="pre">AtmoSimBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes=None,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">planet='',</span> <span class="pre">const_dir=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields],</span> <span class="pre">model_type=None,</span> <span class="pre">timestep=None,</span> <span class="pre">vert_coord=None,</span> <span class="pre">coord_check=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSimBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSimBase" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for creating atmospheric model simulation classes in aeolus.</p>
+<p>Used to store and calculate atmospheric fields from gridded model output.
+Derived quantities are stored as cached properties to save computational time.</p>
+<p>Assumes the data are in spherical coordinates on a regular longitude-latitude grid.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#aeolus.core.AtmoSimBase.name" title="Permalink to this definition"></a></dt>
+<dd><p>The run’s name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#aeolus.core.AtmoSimBase.description" title="Permalink to this definition"></a></dt>
+<dd><p>A description of the run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.const">
+<span class="sig-name descname"><span class="pre">const</span></span><a class="headerlink" href="#aeolus.core.AtmoSimBase.const" title="Permalink to this definition"></a></dt>
+<dd><p>Physical constants used in calculations for this run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>aeolus.const.ConstContainer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#aeolus.core.AtmoSimBase.model" title="Permalink to this definition"></a></dt>
+<dd><p>Model class with relevant coordinate and variable names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>aeolus.model.Model, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes=None,</span> <span class="pre">name='',</span> <span class="pre">description='',</span> <span class="pre">planet='',</span> <span class="pre">const_dir=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields],</span> <span class="pre">model_type=None,</span> <span class="pre">timestep=None,</span> <span class="pre">vert_coord=None,</span> <span class="pre">coord_check=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSimBase.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSimBase.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Instantiate an <cite>AtmoSimBase</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris/cube.html#iris.cube.CubeList" title="(in Iris v3.5.0.dev71)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – The name or label of this <cite>AtmoSim</cite>.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – This is not used internally; it is solely for the user’s information.</p></li>
+<li><p><strong>planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Planet configuration. This is used to get appropriate physical constants.
+If not given, Earth physical constants are initialised.</p></li>
+<li><p><strong>const_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with files containing constants for a specific planet.</p></li>
+<li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
+<li><p><strong>model_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Type of the model run, global or LAM.</p></li>
+<li><p><strong>timestep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – Model time step in s.</p></li>
+<li><p><strong>vert_coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Character identificator for the type of the model’s vertical coordinate.
+“z” - data on “level_height”
+“p” - data on pressure levels</p></li>
+<li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="const.html#aeolus.const.init_const" title="aeolus.const.init_const"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.const.init_const</span></code></a>, <a class="reference internal" href="coord.html#aeolus.coord.CoordContainer" title="aeolus.coord.CoordContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aeolus.coord.CoordContainer</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.from_parent_class">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_parent_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSimBase.from_parent_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSimBase.from_parent_class" title="Permalink to this definition"></a></dt>
+<dd><p>Dynamically inherit from a similar class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aeolus.core.AtmoSimBase.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/core.html#AtmoSimBase.extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.core.AtmoSimBase.extract" title="Permalink to this definition"></a></dt>
+<dd><p>Subset <cite>AtmoSim</cite> using iris constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>constraints</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.html#iris.Constraint" title="(in Iris v3.5.0.dev71)"><em>iris.Constraint</em></a><em> or </em><em>iterable</em><em> of </em><em>constraints</em>) – A single constraint or an iterable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

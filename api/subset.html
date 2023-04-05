@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subset cubes using constraints &mdash; aeolus 0.4.16+14.g658718b documentation</title>
+  <title>Subset cubes using constraints &mdash; aeolus 0.4.16+15.gd4237f3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -35,7 +35,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+14.g658718b
+                0.4.16+15.gd4237f3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -57,7 +57,19 @@
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Subset cubes using constraints</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Subset cubes using constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.DimConstr"><code class="docutils literal notranslate"><span class="pre">DimConstr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.subset.DimConstr.__init__"><code class="docutils literal notranslate"><span class="pre">DimConstr.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_after_n_days"><code class="docutils literal notranslate"><span class="pre">extract_after_n_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_between_days"><code class="docutils literal notranslate"><span class="pre">extract_between_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_month"><code class="docutils literal notranslate"><span class="pre">extract_last_month()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.extract_last_n_days"><code class="docutils literal notranslate"><span class="pre">extract_last_n_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.l_range_constr"><code class="docutils literal notranslate"><span class="pre">l_range_constr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.subset.unique_cubes"><code class="docutils literal notranslate"><span class="pre">unique_cubes()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
 </ul>
 </li>
@@ -90,8 +102,74 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="subset-cubes-using-constraints">
-<h1>Subset cubes using constraints<a class="headerlink" href="#subset-cubes-using-constraints" title="Permalink to this heading"></a></h1>
+  <section id="module-aeolus.subset">
+<span id="subset-cubes-using-constraints"></span><h1>Subset cubes using constraints<a class="headerlink" href="#module-aeolus.subset" title="Permalink to this heading"></a></h1>
+<p>Subset cubes using iris constraints.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aeolus.subset.DimConstr">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">DimConstr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#DimConstr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.DimConstr" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Container for strict or relaxed dimensional constraints.</p>
+<p class="rubric">Examples</p>
+<p>Extract cubes that have y and x dimensional coordinates (among others):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dc</span> <span class="o">=</span> <span class="n">DimConstr</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Extract cubes that only have model levels, y and x dimensions:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dc</span> <span class="o">=</span> <span class="n">DimConstr</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">strict</span><span class="o">.</span><span class="n">myx</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="aeolus.subset.DimConstr.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#DimConstr.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.DimConstr.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialise DimConstr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_after_n_days">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_after_n_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">days=365,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_after_n_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_after_n_days" title="Permalink to this definition"></a></dt>
+<dd><p>Extract time slices after the given number of <cite>days</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_between_days">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_between_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">day_start,</span> <span class="pre">day_end,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_between_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_between_days" title="Permalink to this definition"></a></dt>
+<dd><p>Extract a cube subset between <cite>day_start</cite> and <cite>day_end</cite> of its time coordinate.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_last_month">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_last_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_last_month" title="Permalink to this definition"></a></dt>
+<dd><p>Extract time slices within the last months of a cube.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.extract_last_n_days">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">extract_last_n_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">days=365,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#extract_last_n_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.extract_last_n_days" title="Permalink to this definition"></a></dt>
+<dd><p>Extract time slices within the last <cite>n</cite> days of its time dimension.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.l_range_constr">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">l_range_constr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'km'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'level_height'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#l_range_constr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.l_range_constr" title="Permalink to this definition"></a></dt>
+<dd><p>Make a constraint on length range.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.subset.unique_cubes">
+<span class="sig-prename descclassname"><span class="pre">aeolus.subset.</span></span><span class="sig-name descname"><span class="pre">unique_cubes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cubelist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/subset.html#unique_cubes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.subset.unique_cubes" title="Permalink to this definition"></a></dt>
+<dd><p>Remove duplicate cubes from <cite>iris.cube.CubeList</cite>.</p>
+</dd></dl>
+
 </section>
 
 
