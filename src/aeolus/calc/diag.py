@@ -28,6 +28,7 @@ __all__ = (
     "flux",
     "geopotential_height",
     "ghe_norm",
+    "greenhouse_effect",
     "heat_redist_eff",
     "horiz_wind_cmpnts",
     "meridional_mass_streamfunction",
@@ -540,6 +541,38 @@ def ghe_norm(cubelist, model=um):
     out = (t_eff / t_sfc) ** 4
     out = out.copy(data=1 - out.data)
     return out
+
+
+@const_from_attrs()
+@update_metadata(name="greenhouse_effect_parameter", units="K")
+def greenhouse_effect(cubelist, kind="all_sky", const=None, model=um):
+    r"""
+    Calculate the greenhouse effect [K].
+
+    .. math::
+        GHE = T_{sfc} - \left(\frac{T_{eff}}{T_{sfc}}\right)^4
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes.
+    kind: str, optional
+        Type of GHE:  "all_sky" or "clear_sky"
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of greenhouse effect parameter.
+    """
+    t_sfc = cubelist.extract_cube(model.t_sfc)
+    if kind == "all_sky":
+        toa_olr = cubelist.extract_cube(model.toa_olr)
+    elif kind == "clear_sky":
+        toa_olr = cubelist.extract_cube(model.toa_olr_cs)
+    ghe = t_sfc - (toa_olr / const.stefan_boltzmann) ** 0.25
+    return ghe
 
 
 @const_from_attrs()
