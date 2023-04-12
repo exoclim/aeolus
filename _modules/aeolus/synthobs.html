@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.synthobs &mdash; aeolus 0.4.16+16.g7a995fd documentation</title>
+  <title>aeolus.synthobs &mdash; aeolus 0.4.16+17.g9a8cb49 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+16.g7a995fd
+                0.4.16+17.g9a8cb49
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -277,6 +277,7 @@
     <span class="p">)</span>
 
     <span class="c1"># Attach spectral bands to the resulting cube as an auxiliary coordinate</span>
+    <span class="n">coord_dim</span> <span class="o">=</span> <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="s2">&quot;spectral_band_index&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_ll</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
     <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">spectral_bands_ul</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="p">(</span><span class="n">coord_dim</span><span class="p">,))</span>
