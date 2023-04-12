@@ -200,6 +200,7 @@ def calc_transmission_spectrum(
     )
 
     # Attach spectral bands to the resulting cube as an auxiliary coordinate
+    coord_dim = rp_eff_over_rs.coord_dims("spectral_band_index")[0]
     rp_eff_over_rs.add_aux_coord(spectral_bands_coord, data_dims=(coord_dim,))
     rp_eff_over_rs.add_aux_coord(spectral_bands_ll, data_dims=(coord_dim,))
     rp_eff_over_rs.add_aux_coord(spectral_bands_ul, data_dims=(coord_dim,))
