@@ -7,9 +7,12 @@ Changelog
 0.4.17
 ------
 
-:Date: TBA
+:Date: 14 April 2023
 
-* Add `subset.CellMethodConstraint`
+* Add `lfric` name dictionary.
+* Add `subset.CellMethodConstraint`.
+* Update `pyvista` functions to be in step with the latest `pyvista` version.
+* Fix a bug in the `calc_transmission_spectrum()` (does not affect the results).
 
 
 0.4.16
@@ -26,7 +29,7 @@ Changelog
 :Date: 22 March 2022
 
 * Patch the calculation of the day-night average transmission flux.
-* Update citation
+* Update citation.
 
 
 0.4.14

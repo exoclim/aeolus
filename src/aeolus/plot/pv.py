@@ -104,7 +104,7 @@ def grid_for_vector_cubes_sph(
     Returns
     -------
     pyvista.StructuredGrid
-       PyVista grid with vector data in point_arrays.
+       PyVista grid with vector data in the point_data attribute.
     """
     assert (u.shape == v.shape) and (
         u.shape == w.shape
@@ -144,5 +144,5 @@ def grid_for_vector_cubes_sph(
         grid = grid_from_sph_coords(lons_s, lats_s, levels)
 
     # Add vectors to the grid
-    grid.point_arrays[label] = vectors
+    grid.point_data[label] = vectors
     return grid
