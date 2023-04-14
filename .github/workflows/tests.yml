@@ -28,7 +28,9 @@ jobs:
         exclude:
           # excludes py3.10 on windows because of python-stratify
           - os: windows-latest
-            python-version: ['3.10', '3.11']
+            python-version: '3.10'
+          - os: windows-latest
+            python-version: '3.11'
 
     steps:
       - name: Checkout source
