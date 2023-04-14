@@ -35,7 +35,7 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
     Returns
     -------
     pyvista.StructuredGrid
-       PyVista grid with data in cell_arrays.
+       PyVista grid with data in the cell_data attribute.
     """
     if grid is None:
         lons = _cell_bounds(cube.coord(model.x).points)
@@ -50,9 +50,9 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
         grid = grid_from_sph_coords(lons, lats, levels)
 
     # Add data arras to grid
-    if label in grid.cell_arrays:
+    if label in grid.cell_data:
         _warn(f"Label '{label}' exists in {grid}")
-    grid.cell_arrays[label] = np.array(cube.data).swapaxes(-2, -1).ravel("C")
+    grid.cell_data[label] = np.array(cube.data).swapaxes(-2, -1).ravel("C")
     return grid
 
 
