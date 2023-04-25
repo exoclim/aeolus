@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Functions for LFRic output &mdash; aeolus 0.4.17+2.gacb54c8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model-specific dictionaries of variable and coordinate names" href="model.html" />
+    <link rel="prev" title="I/O" href="io.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            aeolus
+          </a>
+              <div class="version">
+                0.4.17+2.gacb54c8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Functions for LFRic output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.add_um_height_coord"><code class="docutils literal notranslate"><span class="pre">add_um_height_coord()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.add_equally_spaced_height_coord"><code class="docutils literal notranslate"><span class="pre">add_equally_spaced_height_coord()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.clean_attrs"><code class="docutils literal notranslate"><span class="pre">clean_attrs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.fix_time_coord"><code class="docutils literal notranslate"><span class="pre">fix_time_coord()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.load_lfric_raw"><code class="docutils literal notranslate"><span class="pre">load_lfric_raw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.replace_level_coord_with_height"><code class="docutils literal notranslate"><span class="pre">replace_level_coord_with_height()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.simple_regrid_lfric"><code class="docutils literal notranslate"><span class="pre">simple_regrid_lfric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.ugrid_spatial"><code class="docutils literal notranslate"><span class="pre">ugrid_spatial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.lfric.ugrid_spatial_mean"><code class="docutils literal notranslate"><span class="pre">ugrid_spatial_mean()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">aeolus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">Functions for LFRic output</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/lfric.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-aeolus.lfric">
+<span id="functions-for-lfric-output"></span><h1>Functions for LFRic output<a class="headerlink" href="#module-aeolus.lfric" title="Permalink to this heading"></a></h1>
+<p>Utilities for working with LFRic output.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.add_um_height_coord">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">add_um_height_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_to_levels_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/lfric.html#add_um_height_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.add_um_height_coord" title="Permalink to this definition"></a></dt>
+<dd><p>Callback for <cite>iris.load</cite> specifically for LFRic data with vertical coord.</p>
+<p>Adds a vertical coordinate of level heights from a UM vertical levels file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path_to_levels_file</strong> (<em>Path-like</em>) – Path to the vertical levels file.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+<span class="go">    filename,</span>
+<span class="go">    callback=partial(</span>
+<span class="go">        add_um_height_coord,</span>
+<span class="go">        path_to_levels_file=Path(&#39;/path/to/vertlevs_L38_29t_9s_40km&#39;)</span>
+<span class="go">    )</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.add_equally_spaced_height_coord">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">add_equally_spaced_height_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_top_height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/lfric.html#add_equally_spaced_height_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.add_equally_spaced_height_coord" title="Permalink to this definition"></a></dt>
+<dd><p>Callback for <cite>iris.load</cite> specifically for LFRic data with vertical coord.</p>
+<p>Adds a vertical coordinate of level heights assuming equally spaced levels.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+<span class="go">    filename,</span>
+<span class="go">    callback=partial(</span>
+<span class="go">        add_equally_spaced_height_coord,</span>
+<span class="go">        model_top_height=32000</span>
+<span class="go">    )</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.clean_attrs">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">clean_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/lfric.html#clean_attrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.clean_attrs" title="Permalink to this definition"></a></dt>
+<dd><p>Callback for <cite>iris.load</cite> to clean up trivial attributes in LFRic data.</p>
+<p>Needed for concatenating cubes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.fix_time_coord">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">fix_time_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/lfric.html#fix_time_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.fix_time_coord" title="Permalink to this definition"></a></dt>
+<dd><p>Callback function for <cite>iris.load</cite> specifically for UGRID data.</p>
+<p>All field variables should have time as a coord, and mesh variables
+will not have a time coord. So ignore anything that doesn’t have a
+time coord. Note that mesh info will still be loaded in the
+coordinate part of the cube.</p>
+<p>Make sure that time coordinate is correct type, seems to always be
+loaded as a basic AuxCoord rather than a Scalar or DimCoord.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.load_lfric_raw">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">load_lfric_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><span class="pre">Callable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.6.0.dev32)"><span class="pre">CubeList</span></a></span></span><a class="reference internal" href="../_modules/aeolus/lfric.html#load_lfric_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.load_lfric_raw" title="Permalink to this definition"></a></dt>
+<dd><p>Load raw LFRic data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.replace_level_coord_with_height">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">replace_level_coord_with_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)"><span class="pre">Cube</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="../_modules/aeolus/lfric.html#replace_level_coord_with_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.replace_level_coord_with_height" title="Permalink to this definition"></a></dt>
+<dd><p>Remove <a href="#id1"><span class="problematic" id="id2">full_</span></a> or half_levels coordinate and replace it with level_height.</p>
+<p>Assumes that the cube contains level_height already.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#aeolus.lfric.add_equally_spaced_height_coord" title="aeolus.lfric.add_equally_spaced_height_coord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_equally_spaced_height_coord</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.simple_regrid_lfric">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">simple_regrid_lfric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.6.0.dev32)"><span class="pre">CubeList</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tgt_cube</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)"><span class="pre">Cube</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_cube_constr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'air_potential_temperature'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.6.0.dev32)"><span class="pre">CubeList</span></a></span></span><a class="reference internal" href="../_modules/aeolus/lfric.html#simple_regrid_lfric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.simple_regrid_lfric" title="Permalink to this definition"></a></dt>
+<dd><p>Quick&amp;dirty regridding of LFRic data to a common height/lat/lon grid.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.ugrid_spatial">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">ugrid_spatial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube:</span> <span class="pre">~iris.cube.Cube,</span> <span class="pre">aggr:</span> <span class="pre">str,</span> <span class="pre">model:</span> <span class="pre">~aeolus.model.base.Model</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="../_modules/aeolus/lfric.html#ugrid_spatial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.ugrid_spatial" title="Permalink to this definition"></a></dt>
+<dd><p>Collapse a UGRID <cite>iris.cube.Cube</cite> over x and y coord with no weights.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.lfric.ugrid_spatial_mean">
+<span class="sig-prename descclassname"><span class="pre">aeolus.lfric.</span></span><span class="sig-name descname"><span class="pre">ugrid_spatial_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube:</span> <span class="pre">~iris.cube.Cube,</span> <span class="pre">model:</span> <span class="pre">~aeolus.model.base.Model</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="../_modules/aeolus/lfric.html#ugrid_spatial_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.lfric.ugrid_spatial_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Average a UGRID <cite>iris.cube.Cube</cite> spatially.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="io.html" class="btn btn-neutral float-left" title="I/O" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-right" title="Model-specific dictionaries of variable and coordinate names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020 - 2023, aeolus contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

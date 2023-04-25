@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aeolus.lfric &mdash; aeolus 0.4.17+2.gacb54c8 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            aeolus
+          </a>
+              <div class="version">
+                0.4.17+2.gacb54c8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributor’s Guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">aeolus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">aeolus.lfric</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for aeolus.lfric</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Utilities for working with LFRic output.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">CubeList</span>
+<span class="kn">import</span> <span class="nn">iris.exceptions</span>
+<span class="kn">from</span> <span class="nn">iris.experimental.ugrid</span> <span class="kn">import</span> <span class="n">PARSE_UGRID_ON_LOAD</span>
+<span class="kn">import</span> <span class="nn">iris.coords</span>
+<span class="kn">import</span> <span class="nn">iris.util</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.io</span> <span class="kn">import</span> <span class="n">load_vert_lev</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">lfric</span>
+<span class="kn">from</span> <span class="nn">.model.base</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;add_um_height_coord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;add_equally_spaced_height_coord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;clean_attrs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fix_time_coord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_lfric_raw&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;replace_level_coord_with_height&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;simple_regrid_lfric&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ugrid_spatial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ugrid_spatial_mean&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="add_um_height_coord"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.add_um_height_coord">[docs]</a><span class="k">def</span> <span class="nf">add_um_height_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">path_to_levels_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for `iris.load` specifically for LFRic data with vertical coord.</span>
+
+<span class="sd">    Adds a vertical coordinate of level heights from a UM vertical levels file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path_to_levels_file: Path-like</span>
+<span class="sd">        Path to the vertical levels file.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from functools import partial</span>
+<span class="sd">    &gt;&gt;&gt; iris.load(</span>
+<span class="sd">        filename,</span>
+<span class="sd">        callback=partial(</span>
+<span class="sd">            add_um_height_coord,</span>
+<span class="sd">            path_to_levels_file=Path(&#39;/path/to/vertlevs_L38_29t_9s_40km&#39;)</span>
+<span class="sd">        )</span>
+<span class="sd">    )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lev_coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_levels&quot;</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">thlev</span> <span class="o">=</span> <span class="n">load_vert_lev</span><span class="p">(</span><span class="n">path_to_levels_file</span><span class="p">,</span> <span class="n">lev_type</span><span class="o">=</span><span class="s2">&quot;theta&quot;</span><span class="p">)</span>
+        <span class="n">rholev</span> <span class="o">=</span> <span class="n">load_vert_lev</span><span class="p">(</span><span class="n">path_to_levels_file</span><span class="p">,</span> <span class="n">lev_type</span><span class="o">=</span><span class="s2">&quot;rho&quot;</span><span class="p">)</span>
+        <span class="n">lev_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;full&quot;</span> <span class="ow">in</span> <span class="n">lev_coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">thlev</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">rholev</span>
+        <span class="n">hgt_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span>
+            <span class="n">points</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;level_height&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">positive</span><span class="o">=</span><span class="s2">&quot;up&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">hgt_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">hgt_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">lev_coord</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<div class="viewcode-block" id="add_equally_spaced_height_coord"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.add_equally_spaced_height_coord">[docs]</a><span class="k">def</span> <span class="nf">add_equally_spaced_height_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">model_top_height</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for `iris.load` specifically for LFRic data with vertical coord.</span>
+
+<span class="sd">    Adds a vertical coordinate of level heights assuming equally spaced levels.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from functools import partial</span>
+<span class="sd">    &gt;&gt;&gt; iris.load(</span>
+<span class="sd">        filename,</span>
+<span class="sd">        callback=partial(</span>
+<span class="sd">            add_equally_spaced_height_coord,</span>
+<span class="sd">            model_top_height=32000</span>
+<span class="sd">        )</span>
+<span class="sd">    )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lev_coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_levels&quot;</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">lev_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;full&quot;</span> <span class="ow">in</span> <span class="n">lev_coord</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model_top_height</span><span class="p">,</span> <span class="n">lev_coord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model_top_height</span><span class="p">,</span> <span class="n">lev_coord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">points</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">hgt_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span>
+            <span class="n">points</span><span class="p">,</span>
+            <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;level_height&quot;</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">positive</span><span class="o">=</span><span class="s2">&quot;up&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">hgt_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">hgt_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">lev_coord</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<div class="viewcode-block" id="clean_attrs"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.clean_attrs">[docs]</a><span class="k">def</span> <span class="nf">clean_attrs</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for `iris.load` to clean up trivial attributes in LFRic data.</span>
+
+<span class="sd">    Needed for concatenating cubes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;timeStamp&quot;</span><span class="p">,</span> <span class="s2">&quot;uuid&quot;</span><span class="p">]:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<div class="viewcode-block" id="fix_time_coord"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.fix_time_coord">[docs]</a><span class="k">def</span> <span class="nf">fix_time_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback function for `iris.load` specifically for UGRID data.</span>
+
+<span class="sd">    All field variables should have time as a coord, and mesh variables</span>
+<span class="sd">    will not have a time coord. So ignore anything that doesn&#39;t have a</span>
+<span class="sd">    time coord. Note that mesh info will still be loaded in the</span>
+<span class="sd">    coordinate part of the cube.</span>
+
+<span class="sd">    Make sure that time coordinate is correct type, seems to always be</span>
+<span class="sd">    loaded as a basic AuxCoord rather than a Scalar or DimCoord.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Ignore cubes with no time coordinate</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">iris</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">IgnoreCubeException</span>
+
+    <span class="c1"># Else, fix metadata in variables</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tcoord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If only 1 time coordinate value, downgrade AuxCoord to Scalar</span>
+        <span class="k">if</span> <span class="n">tcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">tcoord</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+        <span class="c1"># Else, upgrade AuxCoord to DimCoord</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tcoord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">):</span>
+                <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">tcoord</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<div class="viewcode-block" id="load_lfric_raw"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.load_lfric_raw">[docs]</a><span class="k">def</span> <span class="nf">load_lfric_raw</span><span class="p">(</span>
+    <span class="n">fnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+    <span class="n">callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">drop_coord</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load raw LFRic data.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">PARSE_UGRID_ON_LOAD</span><span class="o">.</span><span class="n">context</span><span class="p">():</span>
+        <span class="n">cl_raw</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fnames</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+    <span class="n">cl_raw</span> <span class="o">=</span> <span class="n">CubeList</span><span class="p">(</span><span class="n">clean_attrs</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cl_raw</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">drop_coord</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cl_raw</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cube</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">iris</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">CoordinateNotFoundError</span><span class="p">:</span>
+                <span class="k">pass</span>
+    <span class="n">cl_raw</span> <span class="o">=</span> <span class="n">cl_raw</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">check_aux_coords</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cl_raw</span></div>
+
+
+<div class="viewcode-block" id="replace_level_coord_with_height"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.replace_level_coord_with_height">[docs]</a><span class="k">def</span> <span class="nf">replace_level_coord_with_height</span><span class="p">(</span><span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove full_ or half_levels coordinate and replace it with level_height.</span>
+
+<span class="sd">    Assumes that the cube contains level_height already.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    add_equally_spaced_height_coord</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lev_coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_levels&quot;</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">lev_coord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">lev_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">lev_coord</span><span class="p">)</span>
+        <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="s2">&quot;level_height&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<span class="k">def</span> <span class="nf">_regrid_cubes_on_edges</span><span class="p">(</span><span class="n">src_cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">tgt_cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Temporary solution to regrid cubes defined on cell edges.&quot;&quot;&quot;</span>
+    <span class="c1"># Using the approach in gungho/rose-stem/app/plot/bin/plot_zonal.py</span>
+    <span class="kn">from</span> <span class="nn">iris._concatenate</span> <span class="kn">import</span> <span class="n">_CubeSignature</span>
+    <span class="kn">from</span> <span class="nn">iris.analysis.cartography</span> <span class="kn">import</span> <span class="n">get_xy_grids</span>
+    <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">griddata</span>
+
+    <span class="n">src_x</span> <span class="o">=</span> <span class="n">src_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">src_y</span> <span class="o">=</span> <span class="n">src_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">tgt_x2d</span><span class="p">,</span> <span class="n">tgt_y2d</span> <span class="o">=</span> <span class="n">get_xy_grids</span><span class="p">(</span><span class="n">tgt_cube</span><span class="p">)</span>
+
+    <span class="n">non_xy_coords</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">:=</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">())</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">CubeList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">src_2d_slice</span> <span class="ow">in</span> <span class="n">src_cube</span><span class="o">.</span><span class="n">slices_over</span><span class="p">(</span><span class="n">non_xy_coords</span><span class="p">):</span>
+        <span class="c1"># Interpolate using delaunay triangularization</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+            <span class="n">reg_data_linear</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">src_x</span><span class="p">,</span> <span class="n">src_y</span><span class="p">),</span>
+                <span class="n">src_2d_slice</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">tgt_x2d</span><span class="p">,</span> <span class="n">tgt_y2d</span><span class="p">),</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">reg_data_nearest</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">src_x</span><span class="p">,</span> <span class="n">src_y</span><span class="p">),</span>
+                <span class="n">src_2d_slice</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">tgt_x2d</span><span class="p">,</span> <span class="n">tgt_y2d</span><span class="p">),</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">reg_data_linear</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">reg_data_linear</span><span class="p">)]</span> <span class="o">=</span> <span class="n">reg_data_nearest</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">reg_data_linear</span><span class="p">)]</span>
+            <span class="n">reg_data</span> <span class="o">=</span> <span class="n">reg_data_linear</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reg_data</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">src_x</span><span class="p">,</span> <span class="n">src_y</span><span class="p">),</span>
+                <span class="n">src_2d_slice</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">tgt_x2d</span><span class="p">,</span> <span class="n">tgt_y2d</span><span class="p">),</span>
+                <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">reg_cube_slice</span> <span class="o">=</span> <span class="n">tgt_cube</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">reg_data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">scalar_coord</span> <span class="ow">in</span> <span class="n">_CubeSignature</span><span class="p">(</span><span class="n">src_2d_slice</span><span class="p">)</span><span class="o">.</span><span class="n">scalar_coords</span><span class="p">:</span>
+            <span class="n">reg_cube_slice</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">scalar_coord</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_cube_slice</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">merge_cube</span><span class="p">()</span>
+    <span class="n">dim_order</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="nb">range</span><span class="p">(</span><span class="n">src_cube</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="n">dim_order</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim_order</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dim_order</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">src_cube</span><span class="o">.</span><span class="n">metadata</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<div class="viewcode-block" id="simple_regrid_lfric"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.simple_regrid_lfric">[docs]</a><span class="k">def</span> <span class="nf">simple_regrid_lfric</span><span class="p">(</span>
+    <span class="n">cube_list</span><span class="p">:</span> <span class="n">CubeList</span><span class="p">,</span>
+    <span class="n">tgt_cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ref_cube_constr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;air_potential_temperature&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick&amp;dirty regridding of LFRic data to a common height/lat/lon grid.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">esmf_regrid.experimental.unstructured_scheme</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">MeshToGridESMFRegridder</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Horizontal regridding</span>
+    <span class="n">result_h</span> <span class="o">=</span> <span class="n">CubeList</span><span class="p">()</span>
+    <span class="n">ref_cube</span> <span class="o">=</span> <span class="n">cube_list</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">ref_cube_constr</span><span class="p">)</span>
+    <span class="n">regridder</span> <span class="o">=</span> <span class="n">MeshToGridESMFRegridder</span><span class="p">(</span><span class="n">ref_cube</span><span class="p">,</span> <span class="n">tgt_cube</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;conservative&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cube_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cube</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="s2">&quot;edge&quot;</span><span class="p">:</span>
+            <span class="n">cube_reg</span> <span class="o">=</span> <span class="n">_regrid_cubes_on_edges</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">tgt_cube</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cube_reg</span> <span class="o">=</span> <span class="n">regridder</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+        <span class="n">result_h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube_reg</span><span class="p">)</span>
+    <span class="c1"># Vertical interpolation</span>
+    <span class="n">result_v</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">()</span>
+    <span class="n">tgt_points</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;level_height&quot;</span><span class="p">,</span> <span class="n">ref_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;level_height&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">result_h</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_levels&quot;</span><span class="p">)]):</span>
+            <span class="n">result_v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">replace_level_coord_with_height</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">tgt_points</span><span class="p">],</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result_v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_v</span></div>
+
+
+<div class="viewcode-block" id="ugrid_spatial"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.ugrid_spatial">[docs]</a><span class="k">def</span> <span class="nf">ugrid_spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">aggr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">lfric</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Collapse a UGRID `iris.cube.Cube` over x and y coord with no weights.&quot;&quot;&quot;</span>
+    <span class="n">cube_copy</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">tmp_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">(</span>
+        <span class="n">points</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="n">long_name</span><span class="o">=</span><span class="s2">&quot;mesh_coordinates&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">cube_copy</span><span class="o">.</span><span class="n">add_aux_coord</span><span class="p">(</span><span class="n">tmp_coord</span><span class="p">,</span> <span class="n">data_dims</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">coord_dims</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="n">cube_copy</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">cube_copy</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">cube_aggr</span> <span class="o">=</span> <span class="n">cube_copy</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">tmp_coord</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="p">,</span> <span class="n">aggr</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+    <span class="n">cube_aggr</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">tmp_coord</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cube_aggr</span></div>
+
+
+<div class="viewcode-block" id="ugrid_spatial_mean"><a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.ugrid_spatial_mean">[docs]</a><span class="k">def</span> <span class="nf">ugrid_spatial_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">lfric</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Average a UGRID `iris.cube.Cube` spatially.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ugrid_spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020 - 2023, aeolus contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
