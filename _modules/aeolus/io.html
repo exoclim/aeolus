@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.16+15.gd4237f3 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0.4.17+1.ge79b6a7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.16+15.gd4237f3
+                0.4.17+1.ge79b6a7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,6 +77,7 @@
   <h1>Source code for aeolus.io</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
@@ -86,11 +87,20 @@
 <span class="kn">from</span> <span class="nn">iris.fileformats.um</span> <span class="kn">import</span> <span class="n">structured_um_loading</span>
 <span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 
+<span class="kn">import</span> <span class="nn">iris.pandas</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span> <span class="s2">&quot;load_data&quot;</span><span class="p">,</span> <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span> <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span> <span class="s2">&quot;save_cubelist&quot;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_conservation_diag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;save_cubelist&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="create_dummy_cube"><a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a><span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span>
@@ -199,6 +209,44 @@
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<div class="viewcode-block" id="load_conservation_diag"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_conservation_diag">[docs]</a><span class="k">def</span> <span class="nf">load_conservation_diag</span><span class="p">(</span>
+    <span class="n">fnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+    <span class="n">convert_to_iris</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">drop_duplicates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">CubeList</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load UM conservation diagnostics from a series of text files.&quot;&quot;&quot;</span>
+    <span class="n">dset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="nb">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">fpath</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">),</span>
+            <span class="n">fnames</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">drop_duplicates</span><span class="p">:</span>
+        <span class="n">dset</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+    <span class="n">dset</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">dset</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;timestep&quot;</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;total_atmosphere_mass&quot;</span><span class="p">,</span>
+                <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;total_axial_angular_momentum&quot;</span><span class="p">,</span>
+                <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;total_kinetic_energy&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;timestep&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">convert_to_iris</span><span class="p">:</span>
+        <span class="n">dset</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">as_cubes</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="s2">&quot;total_atmosphere_mass&quot;</span><span class="p">)</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;kg&quot;</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="s2">&quot;total_axial_angular_momentum&quot;</span><span class="p">)</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;kg m**2 s**-1&quot;</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="s2">&quot;total_kinetic_energy&quot;</span><span class="p">)</span>
+        <span class="n">cube</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;kg m**2 s**-2&quot;</span>
+    <span class="k">return</span> <span class="n">dset</span></div>
 
 
 <div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">structured</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
