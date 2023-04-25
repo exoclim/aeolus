@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Input and output functionality."""
+from typing import Optional, Any, Sequence, Union
 from pathlib import Path
 
 import iris
@@ -13,7 +14,6 @@ import iris.pandas
 import pandas as pd
 
 import numpy as np
-from typing import Optional, Any, Sequence
 
 
 __all__ = (
@@ -134,7 +134,11 @@ def create_dummy_cube(
     return cube
 
 
-def load_conservation_diag(fnames, convert_to_iris=True, drop_duplicates=True):
+def load_conservation_diag(
+    fnames: Sequence[Union[Path, str]],
+    convert_to_iris: Optional[bool] = True,
+    drop_duplicates: Optional[bool] = True,
+) -> Union[pd.DataFrame, CubeList]:
     """Load UM conservation diagnostics from a series of text files."""
     dset = pd.concat(
         map(

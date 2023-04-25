@@ -4,6 +4,16 @@ Changelog
 .. default-role:: py:obj
 
 
+0.4.18
+------
+
+:Date: TBA
+
+* Add `lfric` functions in a submodule with the same name.
+* Add `esmf_regrid` as a dependency.
+* Update dependencies.
+
+
 0.4.17
 ------
 

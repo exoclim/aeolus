@@ -16,9 +16,10 @@ dependencies:
 - flake8-pep3101
 - flake8-print
 - flake8-quotes
-- iris>=3.2
+- iris>=3.4
+- iris-esmf-regrid>=0.5
 - latlon23
-- matplotlib>=3.4
+- matplotlib>=3.6
 - numpy
 - pandas
 - pep8-naming

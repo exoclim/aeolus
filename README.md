@@ -2,13 +2,13 @@
 aeolus
 </h1>
 <h4 align="center">
-Python library for the analysis and visualisation of climate model output, primarily the UK Met Office Unified Model.
+Python library for the analysis and visualisation of climate model output, primarily the UK Met Office models.
 </h4>
 
 <p align="center">
 <a href="https://www.python.org/downloads/">
-<img src="https://img.shields.io/badge/python-3.8+-blue.svg?logo=python&logoColor=white"
-     alt="Python 3.8+"></a>
+<img src="https://img.shields.io/badge/python-3.9+-blue.svg?logo=python&logoColor=white"
+     alt="Python 3.9+"></a>
 <a href="https://exoclim.github.io/aeolus">
 <img src="https://img.shields.io/badge/docs-latest-green?logo=github"
      alt="Documentation"></a>
