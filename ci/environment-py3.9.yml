@@ -19,6 +19,7 @@ dependencies:
 - iris>=3.4
 - iris-esmf-regrid>=0.5
 - latlon23
+- loguru
 - matplotlib>=3.6
 - numpy
 - pandas

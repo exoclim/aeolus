@@ -24,6 +24,7 @@ __all__ = (
     "air_potential_temperature",
     "air_temperature",
     "bond_albedo",
+    "calc_derived_cubes",
     "dry_lapse_rate",
     "flux",
     "geopotential_height",
@@ -196,6 +197,27 @@ def air_density(cubelist, const=None, model=um):
         except ConMisErr:
             _msg = f"Unable to get variables from\n{cubelist}\nto calculate air density"
             raise MissingCubeError(_msg)
+
+
+@const_from_attrs()
+def calc_derived_cubes(cubelist, const=None, model=um):
+    """Calculate additional variables."""
+    try:
+        cubelist.extract_cube(model.temp)
+    except ConMisErr:
+        cubelist.append(air_temperature(cubelist, const=const, model=model))
+    try:
+        cubelist.extract_cube(model.thta)
+    except ConMisErr:
+        cubelist.append(air_potential_temperature(cubelist, const=const, model=model))
+    try:
+        cubelist.extract_cube(model.dens)
+    except ConMisErr:
+        cubelist.append(air_density(cubelist, const=const, model=model))
+    try:
+        cubelist.extract_cube(model.ghgt)
+    except ConMisErr:
+        cubelist.append(geopotential_height(cubelist, const=const, model=model))
 
 
 @update_metadata(units="m2 s-2")

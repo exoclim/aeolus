@@ -11,8 +11,9 @@ Changelog
 
 * Add `lfric` functions in a submodule with the same name.
 * Add `esmf_regrid` as a dependency.
+* Move `calc_derived_cubes` from `pouch`.
 * Add various plotting utilities.
-* Add the `log` submodule.
+* Add the `log` submodule with `loguru` as a dependency.
 * Update dependencies.
 
 
