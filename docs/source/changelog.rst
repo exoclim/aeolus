@@ -12,6 +12,7 @@ Changelog
 * Add `lfric` functions in a submodule with the same name.
 * Add `esmf_regrid` as a dependency.
 * Add various plotting utilities.
+* Add the `log` submodule.
 * Update dependencies.
 
 

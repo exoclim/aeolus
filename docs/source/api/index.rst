@@ -22,6 +22,7 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    coord
    io
    lfric
+   log
    model
    plot
    region
