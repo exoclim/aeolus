@@ -15,6 +15,7 @@ Changelog
 * Add various plotting utilities.
 * Add the `log` submodule with `loguru` as a dependency.
 * Add `proc_um_output`.
+* Add the `RUNTIME` variable.
 * Update dependencies.
 
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logging &mdash; aeolus 0.4.17+6.g424032f documentation</title>
+  <title>Logging &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -35,7 +35,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+6.g424032f
+                0.4.17+9.g63555cd
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -55,7 +55,10 @@
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lfric.html">Functions for LFRic output</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aeolus.log.create_logger"><code class="docutils literal notranslate"><span class="pre">create_logger()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proc_um_output.html">Process output of the UM</a></li>
@@ -93,8 +96,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="logging">
-<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h1>
+  <section id="module-aeolus.log">
+<span id="logging"></span><h1>Logging<a class="headerlink" href="#module-aeolus.log" title="Permalink to this heading"></a></h1>
+<p>Logging utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.log.create_logger">
+<span class="sig-prename descclassname"><span class="pre">aeolus.log.</span></span><span class="sig-name descname"><span class="pre">create_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">script_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'logs'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="../_modules/aeolus/log.html#create_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.log.create_logger" title="Permalink to this definition"></a></dt>
+<dd><p>Create a logger using loguru.</p>
+</dd></dl>
+
 </section>
 
 
