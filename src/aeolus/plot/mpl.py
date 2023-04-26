@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 """Matplotlib-related utilities."""
 from typing import Sequence, Union, Optional
+from pathlib import Path
 
 from iris.cube import Cube
 from matplotlib.axes._axes import Axes
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
+import numpy as np
 
+from . import RUNTIME
 from ..model import lfric, um
 from ..model.base import Model
 from ..coord import get_cube_rel_days
@@ -137,3 +140,38 @@ def timeseries_2d(
     fig.colorbar(mappable, ax=ax)
     if newax:
         return ax
+
+
+def figsave(fig: Figure, filename, **kw_savefig) -> None:
+    """Save figure and print relative path to it."""
+    if RUNTIME.figsave_stamp:
+        fig.suptitle(
+            filename.name,
+            x=0.5,
+            y=0.05,
+            ha="center",
+            fontsize="xx-small",
+            color="tab:grey",
+            alpha=0.5,
+        )
+    save_dir = filename.absolute().parent
+    save_dir.mkdir(parents=True, exist_ok=True)
+    fig.savefig(filename, **kw_savefig)
+    pth = Path.cwd()
+    rel_path = None
+    pref = ""
+    for par in pth.parents:
+        pref += ".." + pth.anchor
+        try:
+            rel_path = f"{pref}{filename.relative_to(par)}"
+            break
+        except ValueError:
+            pass
+    if rel_path is not None:
+        print(f"Saved to {rel_path}.{plt.rcParams['savefig.format']}")
+
+
+def linspace_pm1(n: int) -> np.typing.ArrayLike:
+    """Return 2n evenly spaced numbers from -1 to 1, always skipping 0."""
+    seq = np.linspace(0, 1, n + 1)
+    return np.concatenate([-seq[1:][::-1], seq[1:]])
