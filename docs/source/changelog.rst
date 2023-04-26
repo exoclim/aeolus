@@ -14,6 +14,7 @@ Changelog
 * Move `calc_derived_cubes` from `pouch`.
 * Add various plotting utilities.
 * Add the `log` submodule with `loguru` as a dependency.
+* Add `proc_um_output`.
 * Update dependencies.
 
 

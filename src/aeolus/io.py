@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Input and output functionality."""
-from typing import Optional, Any, Sequence, Union
+from typing import Optional, Any, Sequence, Union, Generator
 from pathlib import Path
+import re
 
 import iris
 from iris.coords import AuxCoord
@@ -18,12 +19,16 @@ import numpy as np
 
 __all__ = (
     "create_dummy_cube",
+    "get_filename_list",
     "load_conservation_diag",
     "load_data",
     "load_multidir",
     "load_vert_lev",
     "save_cubelist",
 )
+
+GLM_RUNID = r"umglaa"  # file prefix
+GLM_FILE_REGEX = GLM_RUNID + r".p[b,c,d,e]{1}[0]{6}(?P<timestamp>[0-9]{2,6})_00"
 
 
 def create_dummy_cube(
@@ -132,6 +137,49 @@ def create_dummy_cube(
     )
 
     return cube
+
+
+def full_path_glob(path: Path) -> Generator:
+    """Recursive glob, including directories with regex."""
+    resolved = Path(path.absolute().parts[0])
+    glob_parts = []
+    to_path = True
+    for part in path.parts[1:]:
+        if to_path and ("*" in part):
+            to_path = False
+        if to_path:
+            resolved /= part
+        else:
+            glob_parts.append(part)
+    gen = resolved.rglob(path.anchor.join(glob_parts))
+    return gen
+
+
+def get_filename_list(
+    path_to_dir: Path,
+    glob_pattern: Optional[str] = f"{GLM_RUNID}*",
+    ts_start: Optional[int] = 0,
+    ts_end: Optional[int] = -1,
+    every: Optional[int] = 1,
+    regex: Optional[str] = GLM_FILE_REGEX,
+    regex_key: Optional[str] = "timestamp",
+    sort: Optional[bool] = True,
+) -> Sequence[Path]:
+    """Get a list of files with timestamps greater or equal than start in a directory."""
+    glob_gen = full_path_glob(path_to_dir / glob_pattern)
+    fnames = []
+    tstamps = {}
+    for fpath in glob_gen:
+        match = re.match(regex, fpath.name)
+        if match:
+            ts_num = int(match[regex_key])
+            if (ts_num >= ts_start) and (ts_num % every == 0):
+                if (ts_end == -1) or (ts_num <= ts_end):
+                    fnames.append(fpath)
+                    tstamps[fpath] = ts_num
+    if sort:
+        fnames = sorted(fnames, key=lambda x: tstamps[x])
+    return fnames
 
 
 def load_conservation_diag(
