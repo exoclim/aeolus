@@ -10,7 +10,7 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import numpy as np
 
-from . import RUNTIME
+from ..runtime import RUNTIME
 from ..model import lfric, um
 from ..model.base import Model
 from ..coord import get_cube_rel_days
@@ -18,7 +18,9 @@ from ..coord import get_cube_rel_days
 __all__ = (
     "add_custom_legend",
     "capitalise",
+    "figsave",
     "hcross",
+    "linspace_pm1",
     "make_list_2d",
     "map_scatter",
     "timeseries_1d",
@@ -78,6 +80,12 @@ def hcross(
     fig.colorbar(mappable, ax=ax)
     if newax:
         return ax
+
+
+def linspace_pm1(n: int) -> np.typing.ArrayLike:
+    """Return 2n evenly spaced numbers from -1 to 1, always skipping 0."""
+    seq = np.linspace(0, 1, n + 1)
+    return np.concatenate([-seq[1:][::-1], seq[1:]])
 
 
 def make_list_2d(
@@ -169,9 +177,3 @@ def figsave(fig: Figure, filename, **kw_savefig) -> None:
             pass
     if rel_path is not None:
         print(f"Saved to {rel_path}.{plt.rcParams['savefig.format']}")
-
-
-def linspace_pm1(n: int) -> np.typing.ArrayLike:
-    """Return 2n evenly spaced numbers from -1 to 1, always skipping 0."""
-    seq = np.linspace(0, 1, n + 1)
-    return np.concatenate([-seq[1:][::-1], seq[1:]])

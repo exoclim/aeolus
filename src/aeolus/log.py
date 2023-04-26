@@ -3,7 +3,7 @@
 import sys
 from pathlib import Path
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Union
 
 import loguru
 from loguru import logger
@@ -12,7 +12,9 @@ from loguru import logger
 __all__ = ("create_logger",)
 
 
-def create_logger(script_path: Path, subdir: Optional[str, Path] = "logs") -> loguru._logger.Logger:
+def create_logger(
+    script_path: Path, subdir: Optional[Union[str, Path]] = "logs"
+) -> loguru._logger.Logger:
     """Create a logger using loguru."""
     logpath = script_path.parent / subdir
     logpath.mkdir(exist_ok=True)
