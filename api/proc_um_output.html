@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples &mdash; aeolus 0.4.17+6.g424032f documentation</title>
+  <title>Process output of the UM &mdash; aeolus 0.4.17+6.g424032f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Physical constants" href="00_Constants.html" />
-    <link rel="prev" title="Installation" href="../install.html" /> 
+    <link rel="next" title="Regions" href="region.html" />
+    <link rel="prev" title="Plotting functions" href="plot.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,15 +47,23 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="00_Constants.html">Physical constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_Loading_Data.html">Working with model output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Model_Field_Names.html">Model variable names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_Transmission_Spectrum.html">Working with synthetic observations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_Rotational_And_Divergent_Winds.html">A primer on calculating rotational and divergent wind components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lfric.html">Functions for LFRic output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Process output of the UM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributor’s Guide</a></li>
 </ul>
@@ -74,9 +82,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Examples</li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">Process output of the UM</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/examples/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/proc_um_output.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -84,30 +93,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="examples">
-<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
-<p>Here are few examples on how to use aeolus</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These examples provide practical ways to illustrate the usage of the software, and do not necessarily represent the best scientific methods for any particular type of study.</p>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="00_Constants.html">Physical constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_Loading_Data.html">Working with model output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_Model_Field_Names.html">Model variable names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_Transmission_Spectrum.html">Working with synthetic observations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_Rotational_And_Divergent_Winds.html">A primer on calculating rotational and divergent wind components</a></li>
-</ul>
-</div>
+  <section id="process-output-of-the-um">
+<h1>Process output of the UM<a class="headerlink" href="#process-output-of-the-um" title="Permalink to this heading"></a></h1>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="00_Constants.html" class="btn btn-neutral float-right" title="Physical constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="plot.html" class="btn btn-neutral float-left" title="Plotting functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="region.html" class="btn btn-neutral float-right" title="Regions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

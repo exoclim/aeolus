@@ -22,8 +22,10 @@ overall workflow, you are better off starting in the :ref:`examples` section of 
    coord
    io
    lfric
+   log
    model
    plot
+   proc_um_output
    region
    subset
    synthobs

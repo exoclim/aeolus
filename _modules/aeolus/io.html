@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.17+2.gacb54c8 documentation</title>
+  <title>aeolus.io &mdash; aeolus 0.4.17+6.g424032f documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+2.gacb54c8
+                0.4.17+6.g424032f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,8 +77,9 @@
   <h1>Source code for aeolus.io</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span>
@@ -95,12 +96,16 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_filename_list&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load_conservation_diag&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load_data&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load_multidir&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load_vert_lev&quot;</span><span class="p">,</span>
     <span class="s2">&quot;save_cubelist&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="n">GLM_RUNID</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;umglaa&quot;</span>  <span class="c1"># file prefix</span>
+<span class="n">GLM_FILE_REGEX</span> <span class="o">=</span> <span class="n">GLM_RUNID</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;.p[b,c,d,e]</span><span class="si">{1}</span><span class="s2">[0]</span><span class="si">{6}</span><span class="s2">(?P&lt;timestamp&gt;[0-9]{2,6})_00&quot;</span>
 
 
 <div class="viewcode-block" id="create_dummy_cube"><a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a><span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span>
@@ -209,6 +214,49 @@
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cube</span></div>
+
+
+<span class="k">def</span> <span class="nf">full_path_glob</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Recursive glob, including directories with regex.&quot;&quot;&quot;</span>
+    <span class="n">resolved</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">glob_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">to_path</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">part</span><span class="p">):</span>
+            <span class="n">to_path</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">to_path</span><span class="p">:</span>
+            <span class="n">resolved</span> <span class="o">/=</span> <span class="n">part</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">glob_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+    <span class="n">gen</span> <span class="o">=</span> <span class="n">resolved</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">glob_parts</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">gen</span>
+
+
+<div class="viewcode-block" id="get_filename_list"><a class="viewcode-back" href="../../api/io.html#aeolus.io.get_filename_list">[docs]</a><span class="k">def</span> <span class="nf">get_filename_list</span><span class="p">(</span>
+    <span class="n">path_to_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">glob_pattern</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GLM_RUNID</span><span class="si">}</span><span class="s2">*&quot;</span><span class="p">,</span>
+    <span class="n">ts_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">ts_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">every</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">regex</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">GLM_FILE_REGEX</span><span class="p">,</span>
+    <span class="n">regex_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+    <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a list of files with timestamps greater or equal than start in a directory.&quot;&quot;&quot;</span>
+    <span class="n">glob_gen</span> <span class="o">=</span> <span class="n">full_path_glob</span><span class="p">(</span><span class="n">path_to_dir</span> <span class="o">/</span> <span class="n">glob_pattern</span><span class="p">)</span>
+    <span class="n">fnames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tstamps</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">glob_gen</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">fpath</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">ts_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">regex_key</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ts_num</span> <span class="o">&gt;=</span> <span class="n">ts_start</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ts_num</span> <span class="o">%</span> <span class="n">every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">ts_end</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ts_num</span> <span class="o">&lt;=</span> <span class="n">ts_end</span><span class="p">):</span>
+                    <span class="n">fnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+                    <span class="n">tstamps</span><span class="p">[</span><span class="n">fpath</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts_num</span>
+    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">fnames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fnames</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">tstamps</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">fnames</span></div>
 
 
 <div class="viewcode-block" id="load_conservation_diag"><a class="viewcode-back" href="../../api/io.html#aeolus.io.load_conservation_diag">[docs]</a><span class="k">def</span> <span class="nf">load_conservation_diag</span><span class="p">(</span>

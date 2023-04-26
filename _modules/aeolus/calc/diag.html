@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.17+2.gacb54c8 documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 0.4.17+6.g424032f documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -32,7 +32,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+2.gacb54c8
+                0.4.17+6.g424032f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -101,6 +101,7 @@
     <span class="s2">&quot;air_potential_temperature&quot;</span><span class="p">,</span>
     <span class="s2">&quot;air_temperature&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bond_albedo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calc_derived_cubes&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dry_lapse_rate&quot;</span><span class="p">,</span>
     <span class="s2">&quot;flux&quot;</span><span class="p">,</span>
     <span class="s2">&quot;geopotential_height&quot;</span><span class="p">,</span>
@@ -273,6 +274,27 @@
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="n">_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Unable to get variables from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="se">\n</span><span class="s2">to calculate air density&quot;</span>
             <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="n">_msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calc_derived_cubes"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.calc_derived_cubes">[docs]</a><span class="nd">@const_from_attrs</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">calc_derived_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate additional variables.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">air_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">air_potential_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">air_density</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geopotential_height</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="geopotential_height"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.geopotential_height">[docs]</a><span class="nd">@update_metadata</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="s2">&quot;m2 s-2&quot;</span><span class="p">)</span>

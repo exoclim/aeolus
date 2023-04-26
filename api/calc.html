@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Science calculations &mdash; aeolus 0.4.17+2.gacb54c8 documentation</title>
+  <title>Science calculations &mdash; aeolus 0.4.17+6.g424032f documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -37,7 +37,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+2.gacb54c8
+                0.4.17+6.g424032f
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,6 +66,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.air_potential_temperature"><code class="docutils literal notranslate"><span class="pre">air_potential_temperature()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.air_temperature"><code class="docutils literal notranslate"><span class="pre">air_temperature()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.bond_albedo"><code class="docutils literal notranslate"><span class="pre">bond_albedo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.calc_derived_cubes"><code class="docutils literal notranslate"><span class="pre">calc_derived_cubes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.dry_lapse_rate"><code class="docutils literal notranslate"><span class="pre">dry_lapse_rate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.flux"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#aeolus.calc.diag.geopotential_height"><code class="docutils literal notranslate"><span class="pre">geopotential_height()</span></code></a></li>
@@ -123,8 +124,10 @@
 <li class="toctree-l2"><a class="reference internal" href="coord.html">Cube coordinate functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lfric.html">Functions for LFRic output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proc_um_output.html">Process output of the UM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
@@ -358,6 +361,12 @@ If not given, attempt to retrieve it from cube attributes.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.6.0.dev32)">iris.cube.Cube</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aeolus.calc.diag.calc_derived_cubes">
+<span class="sig-prename descclassname"><span class="pre">aeolus.calc.diag.</span></span><span class="sig-name descname"><span class="pre">calc_derived_cubes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">const=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/calc/diag.html#calc_derived_cubes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.calc.diag.calc_derived_cubes" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate additional variables.</p>
 </dd></dl>
 
 <dl class="py function">
