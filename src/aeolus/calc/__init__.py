@@ -4,6 +4,7 @@ from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
     air_density,
     air_potential_temperature,
+    air_pressure,
     air_temperature,
     bond_albedo,
     calc_derived_cubes,
@@ -57,6 +58,7 @@ __all__ = (
     "after_n_day_mean",
     "air_density",
     "air_potential_temperature",
+    "air_pressure",
     "air_temperature",
     "between_day_mean",
     "bond_albedo",

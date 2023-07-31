@@ -22,6 +22,7 @@ from ..subset import _dim_constr
 __all__ = (
     "air_density",
     "air_potential_temperature",
+    "air_pressure",
     "air_temperature",
     "bond_albedo",
     "calc_derived_cubes",
@@ -161,6 +162,54 @@ def air_potential_temperature(cubelist, const=None, model=um):
         return thta
 
 
+@const_from_attrs()
+@update_metadata(units="Pa")
+def air_pressure(cubelist, const=None, model=um):
+    """
+    Get pressure from the given cube list.
+
+    If not present, it is attempted to calculate it from other variables,
+    such as Exner pressure or air potential temperature and real temperature.
+
+    Parameters
+    ----------
+    cubelist: iris.cube.CubeList
+        Input list of cubes containing related variables.
+    const: aeolus.const.const.ConstContainer, optional
+        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        If not given, an attempt is made to retrieve it from cube attributes.
+    model: aeolus.model.Model, optional
+        Model class with relevant variable names.
+
+    Returns
+    -------
+    iris.cube.Cube
+        Cube of air pressure.
+    """
+    try:
+        return cubelist.extract_cube(model.pres)
+    except ConMisErr:
+        try:
+            exner = cubelist.extract_cube(model.exner)
+            pres = (
+                const.reference_surface_pressure
+                * exner ** (const.dry_air_spec_heat_press / const.dry_air_gas_constant).data
+            )
+        except ConMisErr:
+            try:
+                temp = cubelist.extract_cube(model.temp)
+                thta = cubelist.extract_cube(model.temp)
+                exner = temp / thta
+                pres = (
+                    const.reference_surface_pressure
+                    * exner ** (const.dry_air_spec_heat_press / const.dry_air_gas_constant).data
+                )
+            except ConMisErr:
+                raise MissingCubeError(f"Unable to calculate air pressure from {cubelist}")
+        pres.rename(model.pres)
+        return pres
+
+
 @update_metadata(units="kg m-3")
 def air_density(cubelist, const=None, model=um):
     """
@@ -210,6 +259,10 @@ def calc_derived_cubes(cubelist, const=None, model=um):
         cubelist.extract_cube(model.thta)
     except ConMisErr:
         cubelist.append(air_potential_temperature(cubelist, const=const, model=model))
+    try:
+        cubelist.extract_cube(model.pres)
+    except ConMisErr:
+        cubelist.append(air_pressure(cubelist, const=const, model=model))
     try:
         cubelist.extract_cube(model.dens)
     except ConMisErr:

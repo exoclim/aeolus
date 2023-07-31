@@ -11,7 +11,7 @@ Changelog
 
 * Add `lfric` functions in a submodule with the same name.
 * Add `esmf_regrid` as a dependency.
-* Move `calc_derived_cubes` from `pouch`.
+* Move `calc_derived_cubes` from `pouch`, add `air_pressure()`.
 * Add various plotting utilities.
 * Add the `log` submodule with `loguru` as a dependency.
 * Add `proc_um_output`.
