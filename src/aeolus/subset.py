@@ -196,7 +196,7 @@ class CellMethodConstraint(Constraint):
         super().__init__(cube_func=self._cube_func)
 
     def __eq__(self, other):
-        eq = type(other) == CellMethodConstraint and all(
+        eq = type(other) is CellMethodConstraint and all(
             getattr(self, attname) == getattr(other, attname) for attname in self._names
         )
         return eq
