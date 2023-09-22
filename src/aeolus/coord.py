@@ -933,7 +933,7 @@ def replace_z_coord(cube, model=um):
     return new_cube
 
 
-def roll_cube_0_360(cube_in, model=um):
+def roll_cube_0_360(cube_in, add_shift=0, model=um):
     """
     Take a cube spanning -180...180 degrees in longitude and roll it to 0...360 degrees.
 
@@ -943,6 +943,8 @@ def roll_cube_0_360(cube_in, model=um):
     ----------
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates.
+    add_shift: int
+        Additional shift of data (is not applied to the longitude coordinate).
     model: aeolus.model.Model, optional
         Model class with a relevant longitude coordinate name.
 
@@ -959,16 +961,17 @@ def roll_cube_0_360(cube_in, model=um):
     lon = cube.coord(coord_name)
     if (lon.points < 0.0).any():
         add = 180
-        cube.data = da.roll(cube.core_data(), len(lon.points) // 2, axis=-1)
+        cube.data = da.roll(cube.core_data(), len(lon.points) // 2 + add_shift, axis=-1)
         if lon.has_bounds():
             bounds = lon.bounds + add
         else:
             bounds = None
-        cube.replace_coord(lon.copy(points=lon.points + add, bounds=bounds))
+        new_points = lon.points + add
+        cube.replace_coord(lon.copy(points=new_points, bounds=bounds))
     return cube
 
 
-def roll_cube_pm180(cube_in, model=um):
+def roll_cube_pm180(cube_in, add_shift=0, model=um):
     """
     Take a cube spanning 0...360 degrees in longitude and roll it to -180...180 degrees.
 
@@ -978,6 +981,8 @@ def roll_cube_pm180(cube_in, model=um):
     ----------
     cube: iris.cube.Cube
         Cube with longitude and latitude coordinates.
+    add_shift: int
+        Additional shift of data (is not applied to the longitude coordinate).
     model: aeolus.model.Model, optional
         Model class with a relevant longitude coordinate name.
 
@@ -996,7 +1001,7 @@ def roll_cube_pm180(cube_in, model=um):
         assert is_regular(xcoord), "Operation is only valid for a regularly spaced coordinate."
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
-            cube.data = da.roll(cube.core_data(), len(xcoord.points) // 2, axis=-1)
+            cube.data = da.roll(cube.core_data(), len(xcoord.points) // 2 + add_shift, axis=-1)
 
         if xcoord.has_bounds():
             bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract

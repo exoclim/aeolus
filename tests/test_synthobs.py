@@ -20,12 +20,12 @@ TST_DATA = Path(__file__).parent / "data" / "test_data"
 
 @pytest.fixture(scope="module")
 def example_trans_day():
-    return iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_day.nc"))
+    return iris.load_cube(TST_DATA / "netcdf" / "planet_transmission_day.nc")
 
 
 @pytest.fixture(scope="module")
 def example_trans_night():
-    return iris.load_cube(str(TST_DATA / "netcdf" / "planet_transmission_night.nc"))
+    return iris.load_cube(TST_DATA / "netcdf" / "planet_transmission_night.nc")
 
 
 def test_read_spectral_bands():
@@ -75,11 +75,36 @@ def test_calc_stellar_flux():
 
 
 def test_calc_geom_mean_mirrored(example_trans_day, example_trans_night):
+    # Default
     actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night)
-    npt.assert_allclose(actual.data.max(), 1.7307187876145394e-08)
+    npt.assert_allclose(actual.data.max(), 1.5901232591606386e-08)
     npt.assert_allclose(
-        actual.data[123, 1, 71:74],
-        [2.40508136e-11, 2.40748625e-11, 2.40532320e-11],
+        actual.data[123, 45, 102:108],
+        [
+            0.00000000e00,
+            5.28650299e-40,
+            1.09253009e-10,
+            7.16136321e-10,
+            5.28943014e-10,
+            0.00000000e00,
+        ],
+    )
+    assert actual.units == example_trans_day.units
+    assert actual.shape == example_trans_day.shape
+    # With an additional shift along the x-coordinate
+    actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night, add_shift=-1)
+    npt.assert_allclose(actual.data.max(), 1.76899099563551e-08)
+    npt.assert_allclose(
+        actual.data[123, 45, 102:109],
+        [
+            0.00000000e00,
+            1.54026439e-67,
+            2.12892023e-11,
+            6.61482043e-10,
+            7.37627923e-10,
+            3.77198057e-10,
+            0.00000000e00,
+        ],
     )
     assert actual.units == example_trans_day.units
     assert actual.shape == example_trans_day.shape
@@ -129,21 +154,40 @@ def test_calc_transmission_spectrum(example_trans_day):
 
 
 def test_calc_transmission_spectrum_day_night_average(example_trans_day, example_trans_night):
+    # Default
     expected_rp_eff_over_rs = [
-        0.9999097552081786,
-        0.9999249847710132,
-        0.9999267911653156,
-        0.9999376935302737,
-        0.9999389664305547,
+        0.1289366838346542,
+        0.1289351109234838,
+        0.1289354291294527,
+        0.1289365978678745,
+        0.1289363841112755,
     ]
     actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
         example_trans_day,
         example_trans_night,
-        TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
-        123,
-        123,
-        123,
+        spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
+        stellar_constant_at_1_au=1272.86475403,
+        stellar_radius=7.302834e08,
+        planet_top_of_atmosphere=94193200,
     )
     assert isinstance(actual_rp_eff_over_rs, iris.cube.Cube)
     assert actual_rp_eff_over_rs.shape[0] == 500
-    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[:5])
+    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:])
+    # With an additional shift
+    expected_rp_eff_over_rs = [
+        0.1289324245796913,
+        0.1289306558725381,
+        0.1289309758113692,
+        0.1289323585757668,
+        0.1289320864595353,
+    ]
+    actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
+        example_trans_day,
+        example_trans_night,
+        add_shift=-1,
+        spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
+        stellar_constant_at_1_au=1272.86475403,
+        stellar_radius=7.302834e08,
+        planet_top_of_atmosphere=94193200,
+    )
+    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:])

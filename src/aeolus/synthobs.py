@@ -6,6 +6,7 @@ from iris.analysis import SUM
 from iris.coords import AuxCoord, DimCoord
 from iris.cube import Cube
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
+from iris.util import reverse
 
 import numpy as np
 
@@ -23,9 +24,9 @@ __all__ = (
 )
 
 
-def calc_geom_mean_mirrored(cube_a, cube_b, model=um):
+def calc_geom_mean_mirrored(cube_a, cube_b, add_shift=0, model=um):
     """
-    Calculate geometric mean of two cubes with one of them rolled along the x-axis.
+    Calculate geometric mean of two cubes with one of them flipped along the x-axis.
 
     This function can be used to get an average transmission flux
     calculated separately from the day- and night-side perspective.
@@ -34,19 +35,21 @@ def calc_geom_mean_mirrored(cube_a, cube_b, model=um):
         Cube with an x-coordinate.
     cube_b: iris.cube.Cube
         Another cube with an x-coordinate to be flipped before being averaged with cube A.
+    add_shift: int
+        Additional shift for the data along the x-coordinate.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
     """
     # Get x-coordinate from the 1st cube.
     x_coord = cube_a.coord(model.x)
 
-    # Roll the 2nd cube by 180 degrees
+    # Roll and reverse the 2nd cube by 180 degrees
     # This is specific to the UM output
-    cube_b_rolled = roll_cube_pm180(cube_b, model=model)
-    cube_b_rolled.replace_coord(x_coord)
+    cube_b_flipped = reverse(roll_cube_pm180(cube_b, add_shift=add_shift, model=model), model.x)
+    cube_b_flipped.replace_coord(x_coord)
 
     # Calculate geometric mean of the two cubes
-    geom_mean = (cube_a * cube_b_rolled) ** 0.5
+    geom_mean = (cube_a * cube_b_flipped) ** 0.5
     return geom_mean
 
 
@@ -211,6 +214,7 @@ def calc_transmission_spectrum(
 def calc_transmission_spectrum_day_night_average(
     trans_flux_day,
     trans_flux_night,
+    add_shift=0,
     spectral_file=None,
     stellar_constant_at_1_au=None,
     stellar_radius=None,
@@ -239,6 +243,8 @@ def calc_transmission_spectrum_day_night_average(
         Transmission flux on spectral bands and optionally latitudes and longitudes.
         Night-side perspective.
         In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.
+    add_shift: int, optional
+        Additional shift of data along the x-coordinate.
 
     For other parameters, see the docstring of `aeolus.synthobs.calc_transmission_spectrum()`
 
@@ -247,14 +253,16 @@ def calc_transmission_spectrum_day_night_average(
     aeolus.synthobs.calc_transmission_spectrum
     """
     # Average the day and night flux
-    trans_flux = calc_geom_mean_mirrored(trans_flux_day, trans_flux_night, model=model)
+    trans_flux = calc_geom_mean_mirrored(
+        trans_flux_day, trans_flux_night, add_shift=add_shift, model=model
+    )
     return calc_transmission_spectrum(
         trans_flux,
         spectral_file=spectral_file,
         stellar_constant_at_1_au=stellar_constant_at_1_au,
         stellar_radius=stellar_radius,
         planet_top_of_atmosphere=planet_top_of_atmosphere,
-        model=um,
+        model=model,
     )
 
 
