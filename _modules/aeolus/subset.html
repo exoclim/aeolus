@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.subset &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>aeolus.subset &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -11,9 +11,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -32,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -129,7 +131,9 @@
     <span class="k">return</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="n">__cube_func</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="l_range_constr"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.l_range_constr">[docs]</a><span class="k">def</span> <span class="nf">l_range_constr</span><span class="p">(</span><span class="n">h_min</span><span class="p">,</span> <span class="n">h_max</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">um</span><span class="o">.</span><span class="n">z</span><span class="p">):</span>
+<div class="viewcode-block" id="l_range_constr">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.l_range_constr">[docs]</a>
+<span class="k">def</span> <span class="nf">l_range_constr</span><span class="p">(</span><span class="n">h_min</span><span class="p">,</span> <span class="n">h_max</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">um</span><span class="o">.</span><span class="n">z</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a constraint on length range.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s2">&quot;km&quot;</span><span class="p">:</span>
         <span class="n">factor</span> <span class="o">=</span> <span class="mf">1e-3</span>
@@ -138,7 +142,10 @@
     <span class="k">return</span> <span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">coord</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">h_min</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">point</span> <span class="o">*</span> <span class="n">factor</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">h_max</span><span class="p">})</span></div>
 
 
-<div class="viewcode-block" id="extract_last_month"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_month">[docs]</a><span class="k">def</span> <span class="nf">extract_last_month</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="extract_last_month">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_month">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_last_month</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices within the last months of a cube.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span>
@@ -146,7 +153,10 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="extract_last_n_days"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_n_days">[docs]</a><span class="k">def</span> <span class="nf">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="extract_last_n_days">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_n_days">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices within the last `n` days of its time dimension.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">ndays_before</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
@@ -154,7 +164,10 @@
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
-<div class="viewcode-block" id="extract_between_days"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_between_days">[docs]</a><span class="k">def</span> <span class="nf">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="extract_between_days">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_between_days">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract a cube subset between `day_start` and `day_end` of its time coordinate.&quot;&quot;&quot;</span>
     <span class="n">dt_s</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">lbound</span> <span class="o">=</span> <span class="n">dt_s</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_start</span><span class="p">)</span>
@@ -163,12 +176,16 @@
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
-<div class="viewcode-block" id="extract_after_n_days"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_after_n_days">[docs]</a><span class="k">def</span> <span class="nf">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="extract_after_n_days">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_after_n_days">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices after the given number of `days`.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">ndays_after</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">Constraint</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">point</span> <span class="o">&gt;</span> <span class="n">ndays_after</span><span class="p">}))</span>
     <span class="k">return</span> <span class="n">cube_sub</span></div>
+
 
 
 <span class="n">CM_INST_CONSTR</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="n">_select_inst</span><span class="p">)</span>
@@ -183,7 +200,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="DimConstr"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr">[docs]</a><span class="k">class</span> <span class="nc">DimConstr</span><span class="p">:</span>
+<div class="viewcode-block" id="DimConstr">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr">[docs]</a>
+<span class="k">class</span> <span class="nc">DimConstr</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Container for strict or relaxed dimensional constraints.</span>
 
@@ -200,7 +219,9 @@
 <span class="sd">    &gt;&gt;&gt; cubelist.extract(dc.strict.myx)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DimConstr.__init__"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="DimConstr.__init__">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialise DimConstr.</span>
 
@@ -219,10 +240,14 @@
                         <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_dim_constr</span><span class="p">(</span>
                             <span class="o">*</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model_seq</span><span class="p">],</span> <span class="n">strict</span><span class="o">=</span><span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;strict&quot;</span><span class="p">)</span>
                         <span class="p">)</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">_ModeDimConstr</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">))</span></div></div>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">_ModeDimConstr</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">))</span></div>
+</div>
 
 
-<div class="viewcode-block" id="unique_cubes"><a class="viewcode-back" href="../../api/subset.html#aeolus.subset.unique_cubes">[docs]</a><span class="k">def</span> <span class="nf">unique_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">):</span>
+
+<div class="viewcode-block" id="unique_cubes">
+<a class="viewcode-back" href="../../api/subset.html#aeolus.subset.unique_cubes">[docs]</a>
+<span class="k">def</span> <span class="nf">unique_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove duplicate cubes from `iris.cube.CubeList`.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">CubeList</span><span class="p">([</span><span class="n">cubelist</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
@@ -236,6 +261,7 @@
         <span class="k">return</span> <span class="n">out</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cubelist</span></div>
+
 
 
 <span class="k">class</span> <span class="nc">CellMethodConstraint</span><span class="p">(</span><span class="n">Constraint</span><span class="p">):</span>
@@ -273,7 +299,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cube_func</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">eq</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">==</span> <span class="n">CellMethodConstraint</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="n">CellMethodConstraint</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attname</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">attname</span><span class="p">)</span> <span class="k">for</span> <span class="n">attname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">eq</span>

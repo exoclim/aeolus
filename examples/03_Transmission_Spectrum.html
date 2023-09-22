@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working with synthetic observations &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>Working with synthetic observations &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
@@ -13,9 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,7 +40,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -92,9 +94,9 @@
            <div itemprop="articleBody">
              
   <section id="Working-with-synthetic-observations">
-<h1>Working with synthetic observations<a class="headerlink" href="#Working-with-synthetic-observations" title="Permalink to this heading"></a></h1>
+<h1>Working with synthetic observations<a class="headerlink" href="#Working-with-synthetic-observations" title="Link to this heading"></a></h1>
 <section id="Transmission-spectrum">
-<h2>Transmission spectrum<a class="headerlink" href="#Transmission-spectrum" title="Permalink to this heading"></a></h2>
+<h2>Transmission spectrum<a class="headerlink" href="#Transmission-spectrum" title="Link to this heading"></a></h2>
 <p>An atmosphere’s transmission spectrum is the sum of absorption spectra of atoms and molecules present in the atmosphere.</p>
 <p>The methodology of obtaining the information needed to calculate the synthetic transmission spectrum using the Met Office Unified Model (UM) output is reported in Lines et al. (2018):</p>
 <ul class="simple">
@@ -350,10 +352,11 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp_eff_over_rs_dn</span> <span class="o">=</span> <span class="n">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
     <span class="n">planet_transmission_day</span><span class="p">,</span>
     <span class="n">planet_transmission_night</span><span class="p">,</span>
-    <span class="n">spectral_file</span><span class="p">,</span>
-    <span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
-    <span class="n">stellar_radius</span><span class="p">,</span>
-    <span class="n">planet_top_of_atmosphere</span><span class="p">,</span>
+    <span class="n">add_shift</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">spectral_file</span><span class="o">=</span><span class="n">spectral_file</span><span class="p">,</span>
+    <span class="n">stellar_constant_at_1_au</span><span class="o">=</span><span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
+    <span class="n">stellar_radius</span><span class="o">=</span><span class="n">stellar_radius</span><span class="p">,</span>
+    <span class="n">planet_top_of_atmosphere</span><span class="o">=</span><span class="n">planet_top_of_atmosphere</span><span class="p">,</span>
     <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -366,7 +369,7 @@ array([(1, 0.001     , 0.01      ), (2, 0.0005    , 0.001     ),
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">axins</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">inset_axes</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span>
 <span class="n">axins</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
-<span class="n">axins</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.003675</span><span class="p">,</span> <span class="mf">0.003690</span><span class="p">)</span>
+<span class="n">axins</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.003675</span><span class="p">,</span> <span class="mf">0.003695</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">_ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">axins</span><span class="p">):</span>
     <span class="n">_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">rp_eff_over_rs</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;spectral_band_centres&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">,</span>

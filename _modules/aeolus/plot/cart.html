@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.plot.cart &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>aeolus.plot.cart &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -11,9 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -32,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -90,7 +92,9 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GeoAxesGrid&quot;</span><span class="p">,</span> <span class="s2">&quot;label_global_map_gridlines&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="GeoAxesGrid"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.GeoAxesGrid">[docs]</a><span class="k">class</span> <span class="nc">GeoAxesGrid</span><span class="p">(</span><span class="n">AxesGrid</span><span class="p">):</span>
+<div class="viewcode-block" id="GeoAxesGrid">
+<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.GeoAxesGrid">[docs]</a>
+<span class="k">class</span> <span class="nc">GeoAxesGrid</span><span class="p">(</span><span class="n">AxesGrid</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Grid of cartopy axes.</span>
 
@@ -103,7 +107,9 @@
 <span class="sd">      grid lines and labels should be used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="GeoAxesGrid.__init__"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.GeoAxesGrid.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">nrows_ncols</span><span class="p">,</span> <span class="n">projection</span><span class="p">,</span> <span class="o">**</span><span class="n">axesgrid_kw</span><span class="p">):</span>
+<div class="viewcode-block" id="GeoAxesGrid.__init__">
+<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.GeoAxesGrid.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">nrows_ncols</span><span class="p">,</span> <span class="n">projection</span><span class="p">,</span> <span class="o">**</span><span class="n">axesgrid_kw</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialise GeoAxesGrid.</span>
 
@@ -116,10 +122,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">axesgrid_kw</span><span class="p">[</span><span class="s2">&quot;axes_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">GeoAxes</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;map_projection&quot;</span><span class="p">:</span> <span class="n">projection</span><span class="p">})</span>
         <span class="n">axesgrid_kw</span><span class="p">[</span><span class="s2">&quot;label_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># note the empty label_mode</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GeoAxesGrid</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">nrows_ncols</span><span class="p">,</span> <span class="o">**</span><span class="n">axesgrid_kw</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GeoAxesGrid</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">nrows_ncols</span><span class="p">,</span> <span class="o">**</span><span class="n">axesgrid_kw</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="label_global_map_gridlines"><a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.label_global_map_gridlines">[docs]</a><span class="k">def</span> <span class="nf">label_global_map_gridlines</span><span class="p">(</span>
+
+<div class="viewcode-block" id="label_global_map_gridlines">
+<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.cart.label_global_map_gridlines">[docs]</a>
+<span class="k">def</span> <span class="nf">label_global_map_gridlines</span><span class="p">(</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">xticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">xoff</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">yoff</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">text_kw</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -173,6 +183,7 @@
             <span class="n">geodetic_trans</span><span class="o">.</span><span class="n">_as_mpl_transform</span><span class="p">(</span><span class="n">ax</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;points&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xoff</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ytick</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">text_transform</span><span class="p">,</span> <span class="o">**</span><span class="n">ylab_kw</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

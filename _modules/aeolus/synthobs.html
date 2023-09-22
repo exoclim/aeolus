@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.synthobs &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>aeolus.synthobs &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -11,9 +11,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -32,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -83,6 +85,7 @@
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span><span class="p">,</span> <span class="n">DimCoord</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">CoordinateNotFoundError</span> <span class="k">as</span> <span class="n">CoNotFound</span>
+<span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">reverse</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -100,9 +103,11 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="calc_geom_mean_mirrored"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_geom_mean_mirrored">[docs]</a><span class="k">def</span> <span class="nf">calc_geom_mean_mirrored</span><span class="p">(</span><span class="n">cube_a</span><span class="p">,</span> <span class="n">cube_b</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_geom_mean_mirrored">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_geom_mean_mirrored">[docs]</a>
+<span class="k">def</span> <span class="nf">calc_geom_mean_mirrored</span><span class="p">(</span><span class="n">cube_a</span><span class="p">,</span> <span class="n">cube_b</span><span class="p">,</span> <span class="n">add_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate geometric mean of two cubes with one of them rolled along the x-axis.</span>
+<span class="sd">    Calculate geometric mean of two cubes with one of them flipped along the x-axis.</span>
 
 <span class="sd">    This function can be used to get an average transmission flux</span>
 <span class="sd">    calculated separately from the day- and night-side perspective.</span>
@@ -111,23 +116,28 @@
 <span class="sd">        Cube with an x-coordinate.</span>
 <span class="sd">    cube_b: iris.cube.Cube</span>
 <span class="sd">        Another cube with an x-coordinate to be flipped before being averaged with cube A.</span>
+<span class="sd">    add_shift: int</span>
+<span class="sd">        Additional shift for the data along the x-coordinate.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get x-coordinate from the 1st cube.</span>
     <span class="n">x_coord</span> <span class="o">=</span> <span class="n">cube_a</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 
-    <span class="c1"># Roll the 2nd cube by 180 degrees</span>
+    <span class="c1"># Roll and reverse the 2nd cube by 180 degrees</span>
     <span class="c1"># This is specific to the UM output</span>
-    <span class="n">cube_b_rolled</span> <span class="o">=</span> <span class="n">roll_cube_pm180</span><span class="p">(</span><span class="n">cube_b</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">cube_b_rolled</span><span class="o">.</span><span class="n">replace_coord</span><span class="p">(</span><span class="n">x_coord</span><span class="p">)</span>
+    <span class="n">cube_b_flipped</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">roll_cube_pm180</span><span class="p">(</span><span class="n">cube_b</span><span class="p">,</span> <span class="n">add_shift</span><span class="o">=</span><span class="n">add_shift</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">cube_b_flipped</span><span class="o">.</span><span class="n">replace_coord</span><span class="p">(</span><span class="n">x_coord</span><span class="p">)</span>
 
     <span class="c1"># Calculate geometric mean of the two cubes</span>
-    <span class="n">geom_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">cube_a</span> <span class="o">*</span> <span class="n">cube_b_rolled</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">geom_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">cube_a</span> <span class="o">*</span> <span class="n">cube_b_flipped</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">geom_mean</span></div>
 
 
-<div class="viewcode-block" id="calc_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">):</span>
+
+<div class="viewcode-block" id="calc_stellar_flux">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_stellar_flux">[docs]</a>
+<span class="k">def</span> <span class="nf">calc_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">,</span> <span class="n">stellar_constant_at_1_au</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the stellar flux per spectral band.</span>
 
@@ -156,7 +166,10 @@
     <span class="k">return</span> <span class="n">stellar_flux</span></div>
 
 
-<div class="viewcode-block" id="calc_transmission_spectrum"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum">[docs]</a><span class="k">def</span> <span class="nf">calc_transmission_spectrum</span><span class="p">(</span>
+
+<div class="viewcode-block" id="calc_transmission_spectrum">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum">[docs]</a>
+<span class="k">def</span> <span class="nf">calc_transmission_spectrum</span><span class="p">(</span>
     <span class="n">trans_flux</span><span class="p">,</span>
     <span class="n">spectral_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">stellar_constant_at_1_au</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -285,9 +298,13 @@
     <span class="k">return</span> <span class="n">rp_eff_over_rs</span></div>
 
 
-<div class="viewcode-block" id="calc_transmission_spectrum_day_night_average"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum_day_night_average">[docs]</a><span class="k">def</span> <span class="nf">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
+
+<div class="viewcode-block" id="calc_transmission_spectrum_day_night_average">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum_day_night_average">[docs]</a>
+<span class="k">def</span> <span class="nf">calc_transmission_spectrum_day_night_average</span><span class="p">(</span>
     <span class="n">trans_flux_day</span><span class="p">,</span>
     <span class="n">trans_flux_night</span><span class="p">,</span>
+    <span class="n">add_shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">spectral_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">stellar_constant_at_1_au</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">stellar_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -316,6 +333,8 @@
 <span class="sd">        Transmission flux on spectral bands and optionally latitudes and longitudes.</span>
 <span class="sd">        Night-side perspective.</span>
 <span class="sd">        In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.</span>
+<span class="sd">    add_shift: int, optional</span>
+<span class="sd">        Additional shift of data along the x-coordinate.</span>
 
 <span class="sd">    For other parameters, see the docstring of `aeolus.synthobs.calc_transmission_spectrum()`</span>
 
@@ -324,18 +343,23 @@
 <span class="sd">    aeolus.synthobs.calc_transmission_spectrum</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Average the day and night flux</span>
-    <span class="n">trans_flux</span> <span class="o">=</span> <span class="n">calc_geom_mean_mirrored</span><span class="p">(</span><span class="n">trans_flux_day</span><span class="p">,</span> <span class="n">trans_flux_night</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">trans_flux</span> <span class="o">=</span> <span class="n">calc_geom_mean_mirrored</span><span class="p">(</span>
+        <span class="n">trans_flux_day</span><span class="p">,</span> <span class="n">trans_flux_night</span><span class="p">,</span> <span class="n">add_shift</span><span class="o">=</span><span class="n">add_shift</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">calc_transmission_spectrum</span><span class="p">(</span>
         <span class="n">trans_flux</span><span class="p">,</span>
         <span class="n">spectral_file</span><span class="o">=</span><span class="n">spectral_file</span><span class="p">,</span>
         <span class="n">stellar_constant_at_1_au</span><span class="o">=</span><span class="n">stellar_constant_at_1_au</span><span class="p">,</span>
         <span class="n">stellar_radius</span><span class="o">=</span><span class="n">stellar_radius</span><span class="p">,</span>
         <span class="n">planet_top_of_atmosphere</span><span class="o">=</span><span class="n">planet_top_of_atmosphere</span><span class="p">,</span>
-        <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="read_normalized_stellar_flux"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">[docs]</a><span class="k">def</span> <span class="nf">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
+
+<div class="viewcode-block" id="read_normalized_stellar_flux">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">[docs]</a>
+<span class="k">def</span> <span class="nf">read_normalized_stellar_flux</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read the normalized stellar flux per spectral band from a SOCRATES spectral file.</span>
 
@@ -380,7 +404,10 @@
     <span class="k">return</span> <span class="n">normalized_stellar_flux</span></div>
 
 
-<div class="viewcode-block" id="read_spectral_bands"><a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_spectral_bands">[docs]</a><span class="k">def</span> <span class="nf">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
+
+<div class="viewcode-block" id="read_spectral_bands">
+<a class="viewcode-back" href="../../api/synthobs.html#aeolus.synthobs.read_spectral_bands">[docs]</a>
+<span class="k">def</span> <span class="nf">read_spectral_bands</span><span class="p">(</span><span class="n">spectral_file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read spectral bands from a SOCRATES spectral file.</span>
 
@@ -419,6 +446,7 @@
         <span class="p">],</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">spectral_bands</span></div>
+
 </pre></div>
 
            </div>

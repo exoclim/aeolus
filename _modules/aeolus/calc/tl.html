@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.tl &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>aeolus.calc.tl &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -11,9 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -32,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -97,7 +99,9 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="regrid_to_rotated_pole_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.regrid_to_rotated_pole_coordinates">[docs]</a><span class="k">def</span> <span class="nf">regrid_to_rotated_pole_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<div class="viewcode-block" id="regrid_to_rotated_pole_coordinates">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.regrid_to_rotated_pole_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">regrid_to_rotated_pole_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Regrid a cube to rotated-pole coordinates.</span>
 
@@ -154,7 +158,10 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="regrid_to_tidally_locked_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.regrid_to_tidally_locked_coordinates">[docs]</a><span class="k">def</span> <span class="nf">regrid_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="regrid_to_tidally_locked_coordinates">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.regrid_to_tidally_locked_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">regrid_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Regrid a cube to tidally locked coordinates.</span>
 
@@ -177,7 +184,10 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rotate_winds_to_tidally_locked_coordinates"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.rotate_winds_to_tidally_locked_coordinates">[docs]</a><span class="k">def</span> <span class="nf">rotate_winds_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+<div class="viewcode-block" id="rotate_winds_to_tidally_locked_coordinates">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.tl.rotate_winds_to_tidally_locked_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">rotate_winds_to_tidally_locked_coordinates</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">pole_lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pole_lat</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rotate the horizontal wind components to tidally locked coordinates.</span>
 
@@ -198,6 +208,7 @@
     <span class="n">tl_cs</span> <span class="o">=</span> <span class="n">RotatedGeogCS</span><span class="p">(</span><span class="n">pole_lon</span><span class="p">,</span> <span class="n">pole_lat</span><span class="p">,</span> <span class="n">ellipsoid</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">coord_system</span><span class="p">())</span>
     <span class="n">tl_u</span><span class="p">,</span> <span class="n">tl_v</span> <span class="o">=</span> <span class="n">rotate_winds</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">tl_cs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tl_u</span><span class="p">,</span> <span class="n">tl_v</span></div>
+
 </pre></div>
 
            </div>

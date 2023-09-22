@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.stats &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>aeolus.calc.stats &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -11,9 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -32,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -116,7 +118,9 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="abs_coord_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.abs_coord_mean">[docs]</a><span class="k">def</span> <span class="nf">abs_coord_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<div class="viewcode-block" id="abs_coord_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.abs_coord_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">abs_coord_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate cube&#39;s average over absolute values of a coordinate.</span>
 
@@ -153,7 +157,10 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="cumsum"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.cumsum">[docs]</a><span class="k">def</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="cumsum">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.cumsum">[docs]</a>
+<span class="k">def</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cumulative sum of a cube.</span>
 
@@ -194,19 +201,28 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="last_n_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.last_n_day_mean">[docs]</a><span class="k">def</span> <span class="nf">last_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="last_n_day_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.last_n_day_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">last_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Average the cube over the last `n` days of its time dimension.&quot;&quot;&quot;</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
-<div class="viewcode-block" id="after_n_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.after_n_day_mean">[docs]</a><span class="k">def</span> <span class="nf">after_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="after_n_day_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.after_n_day_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">after_n_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Average the cube over the last `n` days of its time dimension.&quot;&quot;&quot;</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span><span class="n">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
-<div class="viewcode-block" id="between_day_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.between_day_mean">[docs]</a><span class="k">def</span> <span class="nf">between_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="between_day_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.between_day_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">between_day_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Average the cube over a subset of days.&quot;&quot;&quot;</span>
     <span class="n">cube_sub</span> <span class="o">=</span> <span class="n">time_mean</span><span class="p">(</span>
         <span class="n">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="o">=</span><span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="o">=</span><span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
@@ -214,7 +230,10 @@
     <span class="k">return</span> <span class="n">cube_sub</span></div>
 
 
-<div class="viewcode-block" id="meridional_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.meridional_mean">[docs]</a><span class="k">def</span> <span class="nf">meridional_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="meridional_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.meridional_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">meridional_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate cube&#39;s meridional average.</span>
 
@@ -237,7 +256,10 @@
     <span class="k">return</span> <span class="n">cube_mean</span></div>
 
 
-<div class="viewcode-block" id="minmaxdiff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.minmaxdiff">[docs]</a><span class="k">def</span> <span class="nf">minmaxdiff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="minmaxdiff">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.minmaxdiff">[docs]</a>
+<span class="k">def</span> <span class="nf">minmaxdiff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Spatial maximum minus spatial minimum for a given cube.</span>
 
@@ -260,7 +282,10 @@
     <span class="k">return</span> <span class="n">diff</span></div>
 
 
-<div class="viewcode-block" id="normalize_cube"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.normalize_cube">[docs]</a><span class="k">def</span> <span class="nf">normalize_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
+
+<div class="viewcode-block" id="normalize_cube">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.normalize_cube">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalize cube data, i.e. make the values range from 0 to 1.</span>
 
@@ -279,7 +304,10 @@
     <span class="k">return</span> <span class="n">norm</span></div>
 
 
-<div class="viewcode-block" id="region_mean_diff"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.region_mean_diff">[docs]</a><span class="k">def</span> <span class="nf">region_mean_diff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">region_a</span><span class="p">,</span> <span class="n">region_b</span><span class="p">):</span>
+
+<div class="viewcode-block" id="region_mean_diff">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.region_mean_diff">[docs]</a>
+<span class="k">def</span> <span class="nf">region_mean_diff</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">region_a</span><span class="p">,</span> <span class="n">region_b</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Difference between averages over two regions for a given cube.</span>
 
@@ -306,7 +334,10 @@
     <span class="k">return</span> <span class="n">diff</span></div>
 
 
-<div class="viewcode-block" id="spatial"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial">[docs]</a><span class="k">def</span> <span class="nf">spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">aggr</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="spatial">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial">[docs]</a>
+<span class="k">def</span> <span class="nf">spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">aggr</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate spatial statistic with geographic grid weights.</span>
 
@@ -346,12 +377,18 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="spatial_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial_mean">[docs]</a><span class="k">def</span> <span class="nf">spatial_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="spatial_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">spatial_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Shortcut for spatial(cube, &quot;mean&quot;).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">spatial</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="spatial_quartiles"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial_quartiles">[docs]</a><span class="k">def</span> <span class="nf">spatial_quartiles</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="spatial_quartiles">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.spatial_quartiles">[docs]</a>
+<span class="k">def</span> <span class="nf">spatial_quartiles</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate quartiles over horizontal coordinates.&quot;&quot;&quot;</span>
     <span class="n">_warn</span><span class="p">(</span><span class="s2">&quot;No weights are applied!&quot;</span><span class="p">)</span>
     <span class="n">q25</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PERCENTILE</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
@@ -359,7 +396,10 @@
     <span class="k">return</span> <span class="n">q25</span><span class="p">,</span> <span class="n">q75</span></div>
 
 
-<div class="viewcode-block" id="time_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.time_mean">[docs]</a><span class="k">def</span> <span class="nf">time_mean</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="time_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.time_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">time_mean</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Time average of a cube or a container with cubes.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Cube</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -384,7 +424,10 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="vertical_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.vertical_mean">[docs]</a><span class="k">def</span> <span class="nf">vertical_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">weight_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="vertical_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.vertical_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">vertical_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">weight_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Vertical mean of a cube with optional weighting.</span>
 
@@ -427,7 +470,10 @@
     <span class="k">return</span> <span class="n">vmean</span></div>
 
 
-<div class="viewcode-block" id="zonal_mean"><a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.zonal_mean">[docs]</a><span class="k">def</span> <span class="nf">zonal_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+
+<div class="viewcode-block" id="zonal_mean">
+<a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.stats.zonal_mean">[docs]</a>
+<span class="k">def</span> <span class="nf">zonal_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate cube&#39;s zonal average.</span>
 
@@ -446,6 +492,7 @@
     <span class="n">lon_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span>
     <span class="n">cube_mean</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span><span class="n">lon_name</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">MEAN</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube_mean</span></div>
+
 </pre></div>
 
            </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Model variable names &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>Model variable names &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
@@ -13,9 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,7 +40,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -93,7 +95,7 @@
            <div itemprop="articleBody">
              
   <section id="Model-variable-names">
-<h1>Model variable names<a class="headerlink" href="#Model-variable-names" title="Permalink to this heading"></a></h1>
+<h1>Model variable names<a class="headerlink" href="#Model-variable-names" title="Link to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">aeolus</span></code> provides functionality to store model-specific variable and coordinate names in one container, which can be passed to various functions.</p>
 <p>The base class is called <code class="docutils literal notranslate"><span class="pre">Model</span></code> and is stored in the <code class="docutils literal notranslate"><span class="pre">base</span></code> submodule</p>
 <div class="nbinput nblast docutils container">
@@ -106,7 +108,7 @@
 </div>
 <p>It can be used to create custom <code class="docutils literal notranslate"><span class="pre">Model</span></code> classes for different datasets.</p>
 <section id="Example">
-<h2>Example<a class="headerlink" href="#Example" title="Permalink to this heading"></a></h2>
+<h2>Example<a class="headerlink" href="#Example" title="Link to this heading"></a></h2>
 <p>For example, for the LMD-G model, one can define the following.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -146,7 +148,7 @@
 </div>
 </section>
 <section id="Unified-Model">
-<h2>Unified Model<a class="headerlink" href="#Unified-Model" title="Permalink to this heading"></a></h2>
+<h2>Unified Model<a class="headerlink" href="#Unified-Model" title="Link to this heading"></a></h2>
 <p>The standard container for the UK Met Office Unified Model is called <code class="docutils literal notranslate"><span class="pre">um</span></code> and can be imported from <code class="docutils literal notranslate"><span class="pre">aeolus.model</span></code>:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Physical constants &mdash; aeolus 0.4.17+9.g63555cd documentation</title>
+  <title>Physical constants &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
@@ -13,9 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,7 +40,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+9.g63555cd
+                0.4.17+22.g27e529a
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -94,7 +96,7 @@
            <div itemprop="articleBody">
              
   <section id="Physical-constants">
-<h1>Physical constants<a class="headerlink" href="#Physical-constants" title="Permalink to this heading"></a></h1>
+<h1>Physical constants<a class="headerlink" href="#Physical-constants" title="Link to this heading"></a></h1>
 <p>A couple of short examples of using <code class="docutils literal notranslate"><span class="pre">aeolus</span></code> physical contants submodule, which can serve as a convenient way to store a number of constants used in an atmospheric model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -105,7 +107,7 @@
 </div>
 </div>
 <section id="General-constants">
-<h2>General constants<a class="headerlink" href="#General-constants" title="Permalink to this heading"></a></h2>
+<h2>General constants<a class="headerlink" href="#General-constants" title="Link to this heading"></a></h2>
 <p>First, generic (planet-independent constants) are available.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -224,7 +226,7 @@ iris.cube.Cube
 <p>Having constants stored as iris cubes is convenient for unit-aware operations.</p>
 </section>
 <section id="Earth-constants">
-<h2>Earth constants<a class="headerlink" href="#Earth-constants" title="Permalink to this heading"></a></h2>
+<h2>Earth constants<a class="headerlink" href="#Earth-constants" title="Link to this heading"></a></h2>
 <p>Along with <code class="docutils literal notranslate"><span class="pre">aeolus</span></code>, some basic constants of the Earth atmosphere are also provided. Note that all the “generic” constants are also added to this container.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -350,7 +352,7 @@ array(287.05797807)
 </div>
 </section>
 <section id="Extending-constants-container">
-<h2>Extending constants container<a class="headerlink" href="#Extending-constants-container" title="Permalink to this heading"></a></h2>
+<h2>Extending constants container<a class="headerlink" href="#Extending-constants-container" title="Link to this heading"></a></h2>
 <p>All constants shown above are stored in JSON files, so it is possible to create a custom JSON file and read constants from it.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
