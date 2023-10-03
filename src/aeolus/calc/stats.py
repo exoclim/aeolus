@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Statistical functions."""
 from collections.abc import Iterable, Mapping
 
@@ -10,15 +9,17 @@ from iris.exceptions import CoordinateCollapseError as CoColErr
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
 import iris.util
 from iris.util import broadcast_to_shape, promote_aux_coord_to_dim_coord
-
 import numpy as np
 
-from .calculus import integrate
 from ..coord import area_weights_cube, coord_to_cube, ensure_bounds
 from ..exceptions import ArgumentError, _warn
 from ..model import um
-from ..subset import extract_last_n_days, extract_after_n_days, extract_between_days
-
+from ..subset import (
+    extract_after_n_days,
+    extract_between_days,
+    extract_last_n_days,
+)
+from .calculus import integrate
 
 __all__ = (
     "abs_coord_mean",
@@ -58,7 +59,9 @@ def abs_coord_mean(cube, coord):
     iris.cube.Cube
         Cube with a reduced dimension.
     """
-    sign_lat = apply_ufunc(np.sign, coord_to_cube(cube, coord, broadcast=False))
+    sign_lat = apply_ufunc(
+        np.sign, coord_to_cube(cube, coord, broadcast=False)
+    )
     sign_cube = sign_lat * cube
     _coord = sign_cube.coord(coord)
     _coord_dim = sign_cube.coord_dims(_coord)
@@ -104,7 +107,9 @@ def cumsum(cube, axis, axis_weights=False, model=um):
     if axis_weights:
         if not c.has_bounds():
             c.guess_bounds()
-        weights = broadcast_to_shape(c.bounds[:, 1] - c.bounds[:, 0], cube.shape, dim)
+        weights = broadcast_to_shape(
+            c.bounds[:, 1] - c.bounds[:, 0], cube.shape, dim
+        )
         data = cube.data * weights
         units = cube.units * c.units
     else:
@@ -119,20 +124,27 @@ def cumsum(cube, axis, axis_weights=False, model=um):
 
 def last_n_day_mean(cube, days=365, model=um):
     """Average the cube over the last `n` days of its time dimension."""
-    cube_sub = time_mean(extract_last_n_days(cube, days=days, model=model), model=model)
+    cube_sub = time_mean(
+        extract_last_n_days(cube, days=days, model=model), model=model
+    )
     return cube_sub
 
 
 def after_n_day_mean(cube, days=365, model=um):
     """Average the cube over the last `n` days of its time dimension."""
-    cube_sub = time_mean(extract_after_n_days(cube, days=days, model=model), model=model)
+    cube_sub = time_mean(
+        extract_after_n_days(cube, days=days, model=model), model=model
+    )
     return cube_sub
 
 
 def between_day_mean(cube, day_start, day_end, model=um):
     """Average the cube over a subset of days."""
     cube_sub = time_mean(
-        extract_between_days(cube, day_start=day_start, day_end=day_end, model=model), model=model
+        extract_between_days(
+            cube, day_start=day_start, day_end=day_end, model=model
+        ),
+        model=model,
     )
     return cube_sub
 
@@ -155,8 +167,12 @@ def meridional_mean(cube, model=um):
     """
     lat_name = model.y
     coslat = np.cos(np.deg2rad(cube.coord(lat_name).points))
-    coslat2d = broadcast_to_shape(coslat, cube.shape, cube.coord_dims(lat_name))
-    cube_mean = (cube * coslat2d).collapsed(lat_name, iris.analysis.SUM) / np.sum(coslat)
+    coslat2d = broadcast_to_shape(
+        coslat, cube.shape, cube.coord_dims(lat_name)
+    )
+    cube_mean = (cube * coslat2d).collapsed(
+        lat_name, iris.analysis.SUM
+    ) / np.sum(coslat)
     return cube_mean
 
 
@@ -220,10 +236,14 @@ def region_mean_diff(cubelist, name, region_a, region_b):
     Returns
     -------
     iris.cube.Cube
-        Difference between the region averages with collapsed spatial dimensions.
+        Difference between the region averages with collapsed spatial dims.
     """
-    mean_a = spatial_mean(cubelist.extract_cube(name).extract(region_a.constraint))
-    mean_b = spatial_mean(cubelist.extract_cube(name).extract(region_b.constraint))
+    mean_a = spatial_mean(
+        cubelist.extract_cube(name).extract(region_a.constraint)
+    )
+    mean_b = spatial_mean(
+        cubelist.extract_cube(name).extract(region_b.constraint)
+    )
     diff = mean_a - mean_b
     diff.rename(f"{name}_mean_diff_{region_a}_{region_b}")
     return diff
@@ -277,8 +297,12 @@ def spatial_mean(cube, model=um):
 def spatial_quartiles(cube, model=um):
     """Calculate quartiles over horizontal coordinates."""
     _warn("No weights are applied!")
-    q25 = cube.collapsed((model.y, model.x), iris.analysis.PERCENTILE, percent=25)
-    q75 = cube.collapsed((model.y, model.x), iris.analysis.PERCENTILE, percent=75)
+    q25 = cube.collapsed(
+        (model.y, model.x), iris.analysis.PERCENTILE, percent=25
+    )
+    q75 = cube.collapsed(
+        (model.y, model.x), iris.analysis.PERCENTILE, percent=75
+    )
     return q25, q75
 
 
@@ -327,14 +351,18 @@ def vertical_mean(cube, weight_by=None, model=um):
     """
     coord = model.z
     if len(cube.coord_dims(coord)) == 0:
-        _warn(f"The {repr(coord)} does not describe any dimension in {repr(cube)}.")
+        _warn(
+            f"{repr(coord)} does not describe any dimension in {repr(cube)}."
+        )
         return cube
     if weight_by is None:
         vmean = cube.collapsed(coord, iris.analysis.MEAN)
     else:
         if isinstance(weight_by, (str, iris.coords.Coord)):
             weights = broadcast_to_shape(
-                cube.coord(weight_by).points.squeeze(), cube.shape, cube.coord_dims(weight_by)
+                cube.coord(weight_by).points.squeeze(),
+                cube.shape,
+                cube.coord_dims(weight_by),
             )
             vmean = cube.collapsed(coord, iris.analysis.MEAN, weights=weights)
         elif isinstance(weight_by, iris.cube.Cube):
@@ -345,7 +373,9 @@ def vertical_mean(cube, weight_by=None, model=um):
             prod = b_copy * a_copy
             vmean = integrate(prod, coord) / integrate(weight_by, coord)
         else:
-            raise ArgumentError(f"Unrecognised type of weight_by: {type(weight_by)}")
+            raise ArgumentError(
+                f"Unrecognised type of weight_by: {type(weight_by)}"
+            )
     vmean.rename(f"vertical_mean_of_{cube.name()}")
     return vmean
 

@@ -1,10 +1,58 @@
-# NOTE: you have to use single-quoted strings in TOML for regular expressions.
-# It's the equivalent of r-strings in Python.  Multiline strings are treated as
-# verbose regular expressions by Black.  Use [ ] to denote a significant space
-# character.
+[build-system]
+# Defined by PEP 518
+requires = [
+    "setuptools>=68",
+    "setuptools_scm[toml]>=8",
+    "wheel"
+]
+# Defined by PEP 517
+build-backend = "setuptools.build_meta"
+
+
+[project]
+authors = [
+    {name = "Aeolus Contributors", email = "dennis.sergeev@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+]
+description = "Analysis and visualisation of atmospheric model output powered by iris"
+dynamic = [
+    "dependencies",
+    "optional-dependencies",
+    "readme",
+    "version",
+]
+keywords = [
+    "atmospheric-science",
+    "climate-model",
+    "earth-science",
+    "planetary-science",
+]
+license.file = "LICENSE"
+name = "aeolus"
+requires-python = ">=3.9"
+
+
+[project.urls]
+Code = "https://github.com/exoclim/aeolus"
+Issues = "https://github.com/exoclim/aeolus/issues"
+Discussions = "https://github.com/exoclim/aeolus/discussions"
+Documentation = "https://exoclim.github.io/aeolus"
+
+
 [tool.black]
-line-length = 100
-py36 = true
+line-length = 79
+target-version = ["py39", "py310", "py311"]
 include = '\.pyi?$'
 exclude = '''
 (
@@ -20,8 +68,92 @@ exclude = '''
     | build
     | dist
   )/
-  | src/aeolus/_version.py
-  | versioneer.py    # also separately exclude a file named foo.py in
-                     # the root of the project
 )
 '''
+
+
+[tool.check-manifest]
+ignore = [
+    "src/aeolus/_version.py",
+]
+
+
+[tool.codespell]
+ignore-words-list = "whet,projets"
+skip = ".git,*.ipynb"
+
+
+# [tool.pytest.ini_options]
+# addopts = [
+#     "--doctest-continue-on-failure",
+#     "--doctest-modules",
+#     "--import-mode=importlib",
+#     "-ra",
+#     "--strict-config",
+#     "--strict-markers",
+#     "-v",
+# ]
+# doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+# filterwarnings = [
+#     "error",
+#     "ignore:numpy.ndarray size changed:RuntimeWarning",
+# ]
+# minversion = "6.0"
+# testpaths = "tests"
+
+
+[tool.ruff]
+extend-exclude = ["docs"]
+ignore = ["B023", "B904", "D401"]
+line-length = 79
+select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "I",   # isort
+    "E",   # pycodestyle
+    "W",
+    "D",   # pydocstyle
+    "F",   # pyflakes
+    "UP",  # pyupgrade
+]
+target-version = "py39"
+
+
+[tool.ruff.isort]
+force-sort-within-sections = true
+known-first-party = ["aeolus"]
+
+
+[tool.ruff.per-file-ignores]
+"src/aeolus/core.py" = ["D102", "D103"]
+"tests/*.py" = ["D103"]
+
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+zip-safe = false
+
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/pypi-core.txt"]}
+readme = {file = "README.md", content-type = "text/markdown"}
+
+
+# [tool.setuptools.dynamic.optional-dependencies]
+# docs = {file = ["requirements/pypi-optional-docs.txt"]}
+# exam = {file = ["requirements/pypi-optional-exam.txt"]}
+
+
+[tool.setuptools.packages.find]
+include = ["aeolus*"]
+where = ["src"]
+
+
+[tool.setuptools_scm]
+write_to = "src/aeolus/_version.py"
+local_scheme = "dirty-tag"
+version_scheme = "calver-by-date"

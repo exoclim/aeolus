@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 """Logging utilities."""
-import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+import sys
 from typing import Optional, Union
 
 import loguru
 from loguru import logger
-
 
 __all__ = ("create_logger",)
 
@@ -22,7 +20,11 @@ def create_logger(
         handlers=[
             {"sink": sys.stdout, "level": "INFO"},
             {
-                "sink": logpath / f"log_{script_path.stem}_{datetime.now():%Y-%m-%d_%H%M%S}.log",
+                "sink": logpath
+                / (
+                    f"log_{script_path.stem}"
+                    f"_{datetime.now():%Y-%m-%d_%H%M%S}.log"
+                ),
                 "level": "DEBUG",
             },
         ]

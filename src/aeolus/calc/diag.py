@@ -1,23 +1,19 @@
-# -*- coding: utf-8 -*-
 """Some commonly used diagnostics in atmospheric science."""
 from cf_units import Unit
-
 from iris.analysis.calculus import _coord_cos
 from iris.analysis.maths import add, apply_ufunc, multiply
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 from iris.util import reverse
-
 import numpy as np
 
-from .calculus import d_dz, integrate
-from .stats import cumsum, spatial_mean, time_mean, zonal_mean
 from ..const import init_const
 from ..coord import coord_to_cube, ensure_bounds, regrid_3d
 from ..exceptions import ArgumentError, MissingCubeError
 from ..meta import const_from_attrs, preserve_shape, update_metadata
 from ..model import um
 from ..subset import _dim_constr
-
+from .calculus import d_dz, integrate
+from .stats import cumsum, spatial_mean, time_mean, zonal_mean
 
 __all__ = (
     "air_density",
@@ -80,7 +76,7 @@ def air_temperature(cubelist, const=None, model=um):
     cubelist: iris.cube.CubeList
         Input list of cubes containing temperature.
     const: aeolus.const.const.ConstContainer, optional
-        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        Must have `reference_surface_pressure` and `dry_air_gas_constant`.
         If not given, an attempt is made to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -96,7 +92,9 @@ def air_temperature(cubelist, const=None, model=um):
         try:
             thta = cubelist.extract_cube(model.thta)
         except ConMisErr:
-            raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
+            raise MissingCubeError(
+                f"Unable to get air temperature from {cubelist}"
+            )
 
         if len(cubelist.extract(model.exner)) == 1:
             exner = cubelist.extract_cube(model.exner)
@@ -108,7 +106,9 @@ def air_temperature(cubelist, const=None, model=um):
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
         else:
-            raise MissingCubeError(f"Unable to get air temperature from {cubelist}")
+            raise MissingCubeError(
+                f"Unable to get air temperature from {cubelist}"
+            )
         temp = thta * exner
         temp.rename(model.temp)
         return temp
@@ -127,7 +127,7 @@ def air_potential_temperature(cubelist, const=None, model=um):
     cubelist: iris.cube.CubeList
         Input list of cubes containing temperature.
     const: aeolus.const.const.ConstContainer, optional
-        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        Must have `reference_surface_pressure` and `dry_air_gas_constant`.
         If not given, an attempt is made to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -143,7 +143,9 @@ def air_potential_temperature(cubelist, const=None, model=um):
         try:
             temp = cubelist.extract_cube(model.temp)
         except ConMisErr:
-            raise MissingCubeError(f"Unable to get air potential temperature from {cubelist}")
+            raise MissingCubeError(
+                f"Unable to get air potential temperature from {cubelist}"
+            )
 
         if len(cubelist.extract(model.exner)) == 1:
             exner = cubelist.extract_cube(model.exner)
@@ -155,7 +157,9 @@ def air_potential_temperature(cubelist, const=None, model=um):
                 const.dry_air_gas_constant / const.dry_air_spec_heat_press
             ).data
         else:
-            raise MissingCubeError(f"Unable to get air potential temperature from {cubelist}")
+            raise MissingCubeError(
+                f"Unable to get air potential temperature from {cubelist}"
+            )
         thta = temp / exner
         thta.rename(model.thta)
         thta.convert_units("K")
@@ -176,7 +180,7 @@ def air_pressure(cubelist, const=None, model=um):
     cubelist: iris.cube.CubeList
         Input list of cubes containing related variables.
     const: aeolus.const.const.ConstContainer, optional
-        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.
+        Must have `reference_surface_pressure` and `dry_air_gas_constant`.
         If not given, an attempt is made to retrieve it from cube attributes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
@@ -193,7 +197,10 @@ def air_pressure(cubelist, const=None, model=um):
             exner = cubelist.extract_cube(model.exner)
             pres = (
                 const.reference_surface_pressure
-                * exner ** (const.dry_air_spec_heat_press / const.dry_air_gas_constant).data
+                * exner
+                ** (
+                    const.dry_air_spec_heat_press / const.dry_air_gas_constant
+                ).data
             )
         except ConMisErr:
             try:
@@ -202,10 +209,16 @@ def air_pressure(cubelist, const=None, model=um):
                 exner = temp / thta
                 pres = (
                     const.reference_surface_pressure
-                    * exner ** (const.dry_air_spec_heat_press / const.dry_air_gas_constant).data
+                    * exner
+                    ** (
+                        const.dry_air_spec_heat_press
+                        / const.dry_air_gas_constant
+                    ).data
                 )
             except ConMisErr:
-                raise MissingCubeError(f"Unable to calculate air pressure from {cubelist}")
+                raise MissingCubeError(
+                    f"Unable to calculate air pressure from {cubelist}"
+                )
         pres.rename(model.pres)
         return pres
 
@@ -215,7 +228,7 @@ def air_density(cubelist, const=None, model=um):
     """
     Get air density from the given cube list.
 
-    If not present, it is attempted to calculate it from pressure and temperature.
+    If not present, try to calculate it from pressure and temperature.
 
     Parameters
     ----------
@@ -244,7 +257,10 @@ def air_density(cubelist, const=None, model=um):
             rho.rename(model.dens)
             return rho
         except ConMisErr:
-            _msg = f"Unable to get variables from\n{cubelist}\nto calculate air density"
+            _msg = (
+                f"Unable to get variables from\n{cubelist}"
+                "\nto calculate air density"
+            )
             raise MissingCubeError(_msg)
 
 
@@ -258,7 +274,9 @@ def calc_derived_cubes(cubelist, const=None, model=um):
     try:
         cubelist.extract_cube(model.thta)
     except ConMisErr:
-        cubelist.append(air_potential_temperature(cubelist, const=const, model=model))
+        cubelist.append(
+            air_potential_temperature(cubelist, const=const, model=model)
+        )
     try:
         cubelist.extract_cube(model.pres)
     except ConMisErr:
@@ -270,7 +288,9 @@ def calc_derived_cubes(cubelist, const=None, model=um):
     try:
         cubelist.extract_cube(model.ghgt)
     except ConMisErr:
-        cubelist.append(geopotential_height(cubelist, const=const, model=model))
+        cubelist.append(
+            geopotential_height(cubelist, const=const, model=model)
+        )
 
 
 @update_metadata(units="m2 s-2")
@@ -299,11 +319,17 @@ def geopotential_height(cubelist, const=None, model=um):
         return cubelist.extract_cube(model.ghgt)
     except ConMisErr:
         try:
-            cube_w_height = cubelist.extract(_dim_constr(model.z, strict=False))[0]
+            cube_w_height = cubelist.extract(
+                _dim_constr(model.z, strict=False)
+            )[0]
             if const is None:
                 const = cube_w_height.attributes["planet_conf"]
             g_hgt = coord_to_cube(cube_w_height, model.z) * const.gravity
-            g_hgt.attributes = {k: v for k, v in cube_w_height.attributes.items() if k != "STASH"}
+            g_hgt.attributes = {
+                k: v
+                for k, v in cube_w_height.attributes.items()
+                if k != "STASH"
+            }
             ensure_bounds(g_hgt, [model.z])
             g_hgt.rename(model.ghgt)
             return g_hgt
@@ -330,7 +356,7 @@ def flux(cubelist, quantity, axis, weight_by_density=True, model=um):
     axis: str
         Axis of the flux component (x|y|z)
     weight_by_density: bool, optional
-        Multiply by a cube of air density (must be present in the input cube list).
+        Multiply by air density (must be present in the input cube list).
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -419,7 +445,8 @@ def toa_net_energy(cubelist, model=um):
     terms = cubelist.extract(varnames)
     if len(terms) != 3:
         raise MissingCubeError(
-            f"{varnames} required for TOA energy balance are missing from cubelist:\n{cubelist}"
+            f"{varnames} required for TOA energy balance"
+            " are missing from cubelist:\n{cubelist}"
         )
     terms_ave = []
     for cube in terms:
@@ -436,7 +463,7 @@ def sfc_net_energy(cubelist, model=um):
     Parameters
     ----------
     cubelist: iris.cube.CubeList
-        Input list of cubes with net LW and SW radiation, sensible and latent surface fluxes.
+        Input cubes with net LW and SW, sensible and latent surface fluxes.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -482,7 +509,9 @@ def sfc_water_balance(cubelist, const=None, model=um):
             evap = lhf / const.condensible_heat_vaporization
             evap /= const.condensible_density
         except (KeyError, ConMisErr):
-            raise MissingCubeError(f"Cannot retrieve evaporation from\n{cubelist}")
+            raise MissingCubeError(
+                f"Cannot retrieve evaporation from\n{cubelist}"
+            )
     try:
         precip = cubelist.extract_cube(model.ppn)
         precip /= const.condensible_density
@@ -522,7 +551,8 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
         raise ArgumentError(f"Unknown ptype={ptype}")
     if len(cubelist.extract(varnames)) == 0:
         raise MissingCubeError(
-            f"{varnames} required for ptype={ptype} are missing from cubelist:\n{cubelist}"
+            f"{varnames} required for ptype={ptype} "
+            "are missing from cubelist:\n{cubelist}"
         )
     precip = 0.0
     for varname in varnames:
@@ -691,11 +721,12 @@ def water_path(cubelist, kind="water_vapour", model=um):
     Parameters
     ----------
     cubelist: iris.cube.CubeList
-        Input list of cubes containing appropriate mixing ratio and air density.
+        Input list of cubes containing mixing ratio and air density.
     kind: str, optional
         Short name of the water phase to be integrated.
-        Options are water_vapour (default) | liquid_water | ice_water | cloud_water
-        `cloud_water` is the sum of liquid and ice phases.
+        Options:
+        water_vapour (default) | liquid_water | ice_water | cloud_water
+        where `cloud_water` is the sum of liquid and ice phases.
     model: aeolus.model.Model, optional
         Model class with relevant coordinate names.
         `model.z` is used as a vertical coordinate for integration.
@@ -745,7 +776,7 @@ def dry_lapse_rate(cubelist, model=um):
 
 def horiz_wind_cmpnts(cubelist, model=um):
     """
-    Extract u and v wind components from a cube list and interpolate v on u's grid if necessary.
+    Extract u and v winds and interpolate v on u's grid if necessary.
 
     Parameters
     ----------
@@ -876,7 +907,7 @@ def zonal_mass_streamfunction(cubelist, const=None, model=um):
     Calculate mean zonal mass streamfunction.
 
     .. math::
-        \Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz
+        \Psi_Z=2\pi a\int_{z_{sfc}}^{z_{top}}\overline{\rho}^*\overline{u}^* dz
 
     References
     ----------
@@ -960,7 +991,7 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
     >>> from aeolus.model import um
     >>> earth_constants = init_const("earth")
     >>> cubes = iris.cube.CubeList([time_mean(cube) for cube in input_cubes])
-    >>> mmsf = meridional_mass_streamfunction(cubes, const=earth_constants, model=um)
+    >>> mmsf = meridional_mass_streamfunction(cubes, const=earth_constants)
     """
     v = cubelist.extract_cube(model.v)
     v = zonal_mean(v, model=model)
@@ -968,7 +999,7 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
         rho = zonal_mean(cubelist.extract_cube(model.dens), model=model)
         rho.coord(model.z).bounds = None
         v.coord(model.z).bounds = None
-        # Reverse the coordinate to start from the model top (where p=0 or z=z_top)
+        # Reverse the coordinate to start from the top (where p=0 or z=z_top)
         # TODO: check if the coordinate is ascending or descending
         integrand = reverse(v * rho, model.z)
         res = -1 * cumsum(integrand, "z", axis_weights=True, model=model)
@@ -986,7 +1017,7 @@ def meridional_mass_streamfunction(cubelist, const=None, model=um):
 @const_from_attrs()
 def wind_rot_div(u, v, truncation=None, const=None, model=um):
     """
-    Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).
+    Split the horizontal wind field into divergent and rotational parts.
 
     The Helmholtz decomposition method uses the `windspharm` library:
     https://ajdawson.github.io/windspharm/latest/
@@ -998,7 +1029,8 @@ def wind_rot_div(u, v, truncation=None, const=None, model=um):
     v: iris.cube.Cube
         Northward wind.
     truncation: int
-        Truncation for the spherical harmonic computation (See windspharm docs for details).
+        Truncation for the spherical harmonic computation
+        (See windspharm docs for details).
     const: aeolus.const.const.ConstContainer, optional
         If not given, constants are attempted to be retrieved from
         attributes of a cube in the cube list.
@@ -1022,7 +1054,9 @@ def wind_rot_div(u, v, truncation=None, const=None, model=um):
     from windspharm.iris import VectorWind
 
     vec = VectorWind(u, v, rsphere=const.radius.data)
-    div_cmpnt_u, div_cmpnt_v, rot_cmpnt_u, rot_cmpnt_v = vec.helmholtz(truncation=truncation)
+    div_cmpnt_u, div_cmpnt_v, rot_cmpnt_u, rot_cmpnt_v = vec.helmholtz(
+        truncation=truncation
+    )
     out = {}
     out["u_total"] = u
     out["v_total"] = v
@@ -1036,5 +1070,7 @@ def wind_rot_div(u, v, truncation=None, const=None, model=um):
         out[f"{cmpnt}_rot_zm"] = preserve_shape(zonal_mean)(rot_cmpnt)
         out[f"{cmpnt}_rot_zm"].rename(f"zonal_mean_of_{rot_cmpnt.name()}")
         out[f"{cmpnt}_rot_eddy"] = rot_cmpnt - out[f"{cmpnt}_rot_zm"]
-        out[f"{cmpnt}_rot_eddy"].rename(f"zonal_deviation_of_{rot_cmpnt.name()}")
+        out[f"{cmpnt}_rot_eddy"].rename(
+            f"zonal_deviation_of_{rot_cmpnt.name()}"
+        )
     return out

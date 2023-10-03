@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Subset cubes using iris constraints."""
 from datetime import timedelta
 from itertools import combinations
@@ -8,7 +7,6 @@ from iris.cube import CubeList
 
 from .coord import get_cube_datetimes
 from .model import um
-
 
 __all__ = (
     "CM_INST_CONSTR",
@@ -58,14 +56,21 @@ def l_range_constr(h_min, h_max, units="km", coord=um.z):
         factor = 1e-3
     else:
         factor = 1
-    return Constraint(**{coord: lambda x: h_min <= (x.point * factor) <= h_max})
+    return Constraint(
+        **{coord: lambda x: h_min <= (x.point * factor) <= h_max}
+    )
 
 
 def extract_last_month(cube, model=um):
     """Extract time slices within the last months of a cube."""
     dt = get_cube_datetimes(cube)[-1]
     return cube.extract(
-        Constraint(**{model.t: lambda x: (x.point.year == dt.year) and (x.point.month == dt.month)})
+        Constraint(
+            **{
+                model.t: lambda x: (x.point.year == dt.year)
+                and (x.point.month == dt.month)
+            }
+        )
     )
 
 
@@ -73,16 +78,20 @@ def extract_last_n_days(cube, days=365, model=um):
     """Extract time slices within the last `n` days of its time dimension."""
     dt = get_cube_datetimes(cube)[-1]
     ndays_before = dt - timedelta(days=days)
-    cube_sub = cube.extract(Constraint(**{model.t: lambda t: t.point > ndays_before}))
+    cube_sub = cube.extract(
+        Constraint(**{model.t: lambda t: t.point > ndays_before})
+    )
     return cube_sub
 
 
 def extract_between_days(cube, day_start, day_end, model=um):
-    """Extract a cube subset between `day_start` and `day_end` of its time coordinate."""
+    """Subset between `day_start` and `day_end` of its time coordinate."""
     dt_s = get_cube_datetimes(cube)[0]
     lbound = dt_s + timedelta(days=day_start)
     ubound = dt_s + timedelta(days=day_end)
-    cube_sub = cube.extract(Constraint(**{model.t: lambda t: lbound <= t.point <= ubound}))
+    cube_sub = cube.extract(
+        Constraint(**{model.t: lambda t: lbound <= t.point <= ubound})
+    )
     return cube_sub
 
 
@@ -90,7 +99,9 @@ def extract_after_n_days(cube, days=365, model=um):
     """Extract time slices after the given number of `days`."""
     dt = get_cube_datetimes(cube)[0]
     ndays_after = dt + timedelta(days=days)
-    cube_sub = cube.extract(Constraint(**{model.t: lambda t: t.point > ndays_after}))
+    cube_sub = cube.extract(
+        Constraint(**{model.t: lambda t: t.point > ndays_after})
+    )
     return cube_sub
 
 
@@ -132,7 +143,14 @@ class DimConstr:
         model: aeolus.model.Model, optional
             Model class with relevant coordinate names.
         """
-        abbr_aliases = {"t": "t", "z": "z", "m": "lev", "p": "p", "y": "y", "x": "x"}
+        abbr_aliases = {
+            "t": "t",
+            "z": "z",
+            "m": "lev",
+            "p": "p",
+            "y": "y",
+            "x": "x",
+        }
         for mode in ["strict", "relax"]:
             attrs = {}
             for key in ("z", "m", "p"):
@@ -140,7 +158,8 @@ class DimConstr:
                     for seq in combinations(["t", key, "y", "x"], n):
                         model_seq = [abbr_aliases[letter] for letter in seq]
                         attrs["".join(seq)] = _dim_constr(
-                            *[getattr(model, i) for i in model_seq], strict=(mode == "strict")
+                            *[getattr(model, i) for i in model_seq],
+                            strict=(mode == "strict"),
                         )
             setattr(self, mode, _ModeDimConstr(**attrs))
 
@@ -166,7 +185,9 @@ class CellMethodConstraint(Constraint):
 
     _names = ("method", "coord_names", "intervals", "comments")
 
-    def __init__(self, method, coord_names=None, intervals=None, comments=None):
+    def __init__(
+        self, method, coord_names=None, intervals=None, comments=None
+    ):
         """
         Initialise a CellMethod-based constraint.
 
@@ -191,13 +212,15 @@ class CellMethodConstraint(Constraint):
         self.intervals = intervals
         self.comments = comments
         # self.cell_method = iris.coords.CellMethod(
-        #     method, coords=coord_names, intervals=intervals, comments=comments
+        #     method, coords=coord_names,
+        #     intervals=intervals, comments=comments
         # )
         super().__init__(cube_func=self._cube_func)
 
     def __eq__(self, other):
         eq = type(other) is CellMethodConstraint and all(
-            getattr(self, attname) == getattr(other, attname) for attname in self._names
+            getattr(self, attname) == getattr(other, attname)
+            for attname in self._names
         )
         return eq
 
@@ -226,5 +249,5 @@ class CellMethodConstraint(Constraint):
         for name in self._names:
             value = getattr(self, name)
             if value != "none":
-                names.append("{}={!r}".format(name, value))
+                names.append(f"{name}={value!r}")
         return "{}({})".format(self.__class__.__name__, ", ".join(names))

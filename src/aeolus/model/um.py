@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """UM-specific dictionaries of variable names and coordinates."""
 from .base import Model
 

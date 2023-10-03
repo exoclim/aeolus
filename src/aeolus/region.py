@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Subsetting variables over geographical regions."""
 from iris import Constraint
 from iris.analysis.cartography import wrap_lons
@@ -6,7 +5,6 @@ from iris.analysis.cartography import wrap_lons
 from .exceptions import BoundaryError
 from .model import um
 from .plot.text import fmt_lonlat
-
 
 __all__ = ("Region",)
 
@@ -16,7 +14,9 @@ class BoundsRect:
 
     _side_names = ("west", "east", "south", "north")
 
-    def __init__(self, west_bound, east_bound, south_bound, north_bound, model=um):
+    def __init__(
+        self, west_bound, east_bound, south_bound, north_bound, model=um
+    ):
         """Initialise BoundsRect."""
         self.west = west_bound
         self.east = east_bound
@@ -29,13 +29,18 @@ class BoundsRect:
         self.north_coord = model.y
         if self.south > self.north:
             raise BoundaryError(
-                f"South boundary value ({self.south}) should be less than north ({self.north})"
+                f"South boundary value ({self.south}) should be less than"
+                f" north ({self.north})"
             )
-        self.sides = [(name, getattr(self, f"{name}_coord")) for name in self._side_names]
+        self.sides = [
+            (name, getattr(self, f"{name}_coord")) for name in self._side_names
+        ]
 
     def __repr__(self):  # noqa
         return (
-            f"BoundsRect(west={self.west}, east={self.east}, south={self.south}, "
+            f"BoundsRect(west={self.west}, "
+            f"east={self.east}, "
+            f"south={self.south}, "
             f"north={self.north})"
         )
 
@@ -55,7 +60,14 @@ class Region:
     """
 
     def __init__(
-        self, west_bound, east_bound, south_bound, north_bound, name="", description="", model=um
+        self,
+        west_bound,
+        east_bound,
+        south_bound,
+        north_bound,
+        name="",
+        description="",
+        model=um,
     ):
         """
         Instantiate a `Region` object.
@@ -63,8 +75,8 @@ class Region:
         Parameters
         ----------
         west_bound, east_bound, south_bound, north_bound : scalar, optional
-            The western, eastern, southern, and northern boundaries, respectively, of the
-            region.
+            The western, eastern, southern, and northern boundaries,
+            respectively, of the region.
         name: str, optional
             The region's name.
         description : str, optional
@@ -76,7 +88,9 @@ class Region:
         self.description = description
         self.model = model
 
-        self.bounds = BoundsRect(west_bound, east_bound, south_bound, north_bound, model)
+        self.bounds = BoundsRect(
+            west_bound, east_bound, south_bound, north_bound, model
+        )
         self._sides = self.bounds.sides
 
         self.lon_size = abs(self.bounds.east - self.bounds.west)
@@ -85,7 +99,8 @@ class Region:
     def __repr__(self):  # noqa
         txt = (
             f"Geographical region '{self.name}' (west={self.bounds.west}, "
-            f"east={self.bounds.east}, south={self.bounds.south}, north={self.bounds.north})"
+            f"east={self.bounds.east}, south={self.bounds.south},"
+            f" north={self.bounds.north})"
         )
         if self.description:
             txt += "\n\n"
@@ -100,7 +115,10 @@ class Region:
         }
 
     def _perpendicular_side_limits(self, side):
-        """Get minimum and maximum values of the region boundary perpendicular to the given one."""
+        """Get the min and max values of the region boundary perpendicular.
+
+        to the given one.
+        """
         if side in ["west", "east"]:
             coord_name = self.model.y
             _min, _max = self.bounds.south, self.bounds.north
@@ -116,7 +134,13 @@ class Region:
 
     @classmethod
     def from_cube(
-        cls, cube, name=None, margin=None, margin_units="points", shift_lons=False, model=um
+        cls,
+        cube,
+        name=None,
+        margin=None,
+        margin_units="points",
+        shift_lons=False,
+        model=um,
     ):
         """
         Create a Region from limits of longitude and latitude of the cube.
@@ -126,9 +150,10 @@ class Region:
         cube: iris.cube.Cube
             Source cube.
         name: str, optional
-            Name for the region. If not given, created automatically from `cube`'s name.
+            Name for the region.
+            If not given, created automatically from `cube`'s name.
         margin: scalar, optional
-            Use `margin` number of points or degrees to create a region smaller than the cube.
+            Number of points or degrees for a region smaller than the cube.
         margin_units: str, optional
             Units of margin. Can be "points" or "degrees".
         shift_lons: bool, optional
@@ -170,19 +195,28 @@ class Region:
 
     @property
     def constraint(self):  # noqa
-        cnstr = Constraint(latitude=lambda x: self.bounds.south <= x.point <= self.bounds.north)
+        cnstr = Constraint(
+            latitude=lambda x: self.bounds.south
+            <= x.point
+            <= self.bounds.north
+        )
         if self.bounds.west < self.bounds.east:
             # Western boundary is to the west
-            cnstr &= Constraint(longitude=lambda x: self.bounds.west <= x.point <= self.bounds.east)
+            cnstr &= Constraint(
+                longitude=lambda x: self.bounds.west
+                <= x.point
+                <= self.bounds.east
+            )
         else:
             # Region wrapping around dateline (180deg)
             cnstr &= Constraint(
-                longitude=lambda x: (self.bounds.west <= x.point) or (x.point <= self.bounds.east)
+                longitude=lambda x: (self.bounds.west <= x.point)
+                or (x.point <= self.bounds.east)
             )
         return cnstr
 
     def add_to_ax(self, ax, **kwargs):
-        """Add a Rectangle patch to matplotlib axes `ax` with given keyword arguments `kwargs`."""
+        """Add a Rectangle patch to matplotlib axes."""
         from matplotlib.patches import Rectangle  # noqa
 
         xy = (self.bounds.west, self.bounds.south)

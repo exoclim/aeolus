@@ -1,21 +1,18 @@
-# -*- coding: utf-8 -*-
 """Input and output functionality."""
-from typing import Optional, Any, Sequence, Union, Generator
+from collections.abc import Generator, Sequence
 from pathlib import Path
 import re
+from typing import Any, Optional, Union
 
 import iris
+from iris.coord_systems import GeogCS
 from iris.coords import AuxCoord
 from iris.cube import Cube, CubeList
 from iris.fileformats.pp import EARTH_RADIUS
 from iris.fileformats.um import structured_um_loading
-from iris.coord_systems import GeogCS
-
 import iris.pandas
-import pandas as pd
-
 import numpy as np
-
+import pandas as pd
 
 __all__ = (
     "create_dummy_cube",
@@ -28,7 +25,9 @@ __all__ = (
 )
 
 GLM_RUNID = r"umglaa"  # file prefix
-GLM_FILE_REGEX = GLM_RUNID + r".p[b,c,d,e]{1}[0]{6}(?P<timestamp>[0-9]{2,6})_00"
+GLM_FILE_REGEX = (
+    GLM_RUNID + r".p[b,c,d,e]{1}[0]{6}(?P<timestamp>[0-9]{2,6})_00"
+)
 
 
 def create_dummy_cube(
@@ -75,7 +74,12 @@ def create_dummy_cube(
     >>> create_dummy_cube(nlat=90, nlon=144)
     >>> create_dummy_cube(n=96)
     """
-    assert grid_type.lower() in ["a", "b", "cu", "cv"], f"Grid {grid_type} not valid."
+    assert grid_type.lower() in [
+        "a",
+        "b",
+        "cu",
+        "cv",
+    ], f"Grid {grid_type} not valid."
 
     # Calculate the number of points given the N-notation resolution.
     if n_res is not None:
@@ -121,7 +125,11 @@ def create_dummy_cube(
     if pm180:
         lons -= 180.0
     lon_coord = iris.coords.DimCoord(
-        lons, standard_name="longitude", units="degrees", circular=True, coord_system=geog_cs
+        lons,
+        standard_name="longitude",
+        units="degrees",
+        circular=True,
+        coord_system=geog_cs,
     )
     lon_coord.guess_bounds()
 
@@ -165,7 +173,7 @@ def get_filename_list(
     regex_key: Optional[str] = "timestamp",
     sort: Optional[bool] = True,
 ) -> Sequence[Path]:
-    """Get a list of files with timestamps greater or equal than start in a directory."""
+    """Get a list of files with timestamps >= than start in a directory."""
     glob_gen = full_path_glob(path_to_dir / glob_pattern)
     fnames = []
     tstamps = {}
@@ -189,10 +197,7 @@ def load_conservation_diag(
 ) -> Union[pd.DataFrame, CubeList]:
     """Load UM conservation diagnostics from a series of text files."""
     dset = pd.concat(
-        map(
-            lambda fpath: pd.read_csv(fpath, header=None, sep=r"\s+"),
-            fnames,
-        )
+        pd.read_csv(fpath, header=None, sep=r"\s+") for fpath in fnames
     )
     if drop_duplicates:
         dset = dset.drop_duplicates()
@@ -245,7 +250,9 @@ def load_multidir(
     return joint_cl.merge()
 
 
-def load_vert_lev(path_to_file: Path, lev_type: Optional[str] = "theta") -> np.array:
+def load_vert_lev(
+    path_to_file: Path, lev_type: Optional[str] = "theta"
+) -> np.array:
     """
     Read data from the UM vertical levels file.
 
@@ -265,11 +272,16 @@ def load_vert_lev(path_to_file: Path, lev_type: Optional[str] = "theta") -> np.a
 
     with path_to_file.open("r") as nml_file:
         nml = f90nml.read(nml_file)
-        levs = np.array(nml["vertlevs"][f"eta_{lev_type}"]) * nml["vertlevs"]["z_top_of_model"]
+        levs = (
+            np.array(nml["vertlevs"][f"eta_{lev_type}"])
+            * nml["vertlevs"]["z_top_of_model"]
+        )
     return levs
 
 
-def save_cubelist(cubelist: CubeList, path: Path, **aux_attrs: Optional[Any]) -> None:
+def save_cubelist(
+    cubelist: CubeList, path: Path, **aux_attrs: Optional[Any]
+) -> None:
     """
     Save a cubelist w/o the `planet_conf` container to a file.
 

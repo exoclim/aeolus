@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Contains functionality for making matplotlib plots."""
 from .cart import GeoAxesGrid, label_global_map_gridlines
 from .cloud import CloudPlotter
@@ -21,7 +20,6 @@ from .text import (
     tex2cf_units,
     unit_format,
 )
-
 
 __all__ = (
     "add_custom_legend",

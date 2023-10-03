@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 """aeolus package."""
-from . import _version
-
-__version__ = _version.get_versions()["version"]
+try:
+    from ._version import version as __version__
+except ModuleNotFoundError:
+    __version__ = "unknown"

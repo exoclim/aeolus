@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Core submodule of aeolus package."""
 from cached_property import cached_property
-
 from iris.coord_systems import GeogCS
 from iris.exceptions import ConstraintMismatchError as ConMisErr
 
@@ -23,9 +21,9 @@ class AtmoSimBase:
     Base class for creating atmospheric model simulation classes in aeolus.
 
     Used to store and calculate atmospheric fields from gridded model output.
-    Derived quantities are stored as cached properties to save computational time.
+    Derived quantities are stored as cached properties to save time.
 
-    Assumes the data are in spherical coordinates on a regular longitude-latitude grid.
+    Assumes the data are in spherical coordinates on a regular lat-lon grid.
 
     Attributes
     ----------
@@ -62,12 +60,12 @@ class AtmoSimBase:
         name: str, optional
             The name or label of this `AtmoSim`.
         description: str, optional
-            This is not used internally; it is solely for the user's information.
+            This is not used internally; solely for the user's information.
         planet: str, optional
-            Planet configuration. This is used to get appropriate physical constants.
+            Planet configuration used to get appropriate physical constants.
             If not given, Earth physical constants are initialised.
         const_dir: pathlib.Path, optional
-            Path to a folder with files containing constants for a specific planet.
+            Path to a folder with files with constants for a specific planet.
         model: aeolus.model.Model, optional
             Model class with relevant coordinate and variable names.
         model_type: str, optional
@@ -75,13 +73,13 @@ class AtmoSimBase:
         timestep: int, optional
             Model time step in s.
         vert_coord: str, optional
-            Character identificator for the type of the model's vertical coordinate.
+            Character identificator for the model's vertical coordinate.
             "z" - data on "level_height"
             "p" - data on pressure levels
         coord_check: bool, optional
             Check if all cubes have the same set of coordinates.
 
-        See also
+        See Also
         --------
         aeolus.const.init_const, aeolus.coord.CoordContainer
         """
@@ -104,7 +102,9 @@ class AtmoSimBase:
         # Domain
         try:
             cube_yx = self._cubes.extract(self.dim_constr.relax.yx)[0]
-            self.domain = Region.from_cube(cube_yx, name=f"{name}_domain", shift_lons=True)
+            self.domain = Region.from_cube(
+                cube_yx, name=f"{name}_domain", shift_lons=True
+            )
         except IndexError:
             _warn("Initialised without a domain.")
             self.domain = None
@@ -122,7 +122,9 @@ class AtmoSimBase:
             _constr = self.dim_constr.relax.p
         else:
             _constr = self.dim_constr.relax.yx
-        self.coord = CoordContainer(self._cubes.extract(_constr), coord_check=coord_check)
+        self.coord = CoordContainer(
+            self._cubes.extract(_constr), coord_check=coord_check
+        )
 
         if self.vert_coord is not None:
             dim_seq += [f"t{self.vert_coord}yx", f"{self.vert_coord}yx"]
@@ -131,7 +133,9 @@ class AtmoSimBase:
                 setattr(
                     self,
                     f"_ref_{seq}",
-                    self._cubes.extract(getattr(self.dim_constr.strict, seq))[0],
+                    self._cubes.extract(getattr(self.dim_constr.strict, seq))[
+                        0
+                    ],
                 )
             except IndexError:
                 pass
@@ -173,7 +177,9 @@ class AtmoSimBase:
         kwargs = {}
         for key in self.model.__dataclass_fields__:
             try:
-                kwargs[key] = self._cubes.extract_cube(getattr(self.model, key))
+                kwargs[key] = self._cubes.extract_cube(
+                    getattr(self.model, key)
+                )
                 self.vars.append(key)
             except ConMisErr:
                 pass
@@ -221,10 +227,10 @@ class AtmoSimBase:
 
 class AtmoSim(AtmoSimBase):
     """
-    Main class for dealing with a atmospheric model simulation output in aeolus.
+    Main class for dealing with a atmospheric model simulation output.
 
     Used to store and calculate atmospheric fields from gridded model output.
-    Derived quantities are stored as cached properties to save computational time.
+    Derived quantities are stored as cached properties to save time.
     """
 
     @cached_property
@@ -252,4 +258,6 @@ class AtmoSim(AtmoSimBase):
     @cached_property
     @copy_doc(diag.sfc_water_balance)
     def sfc_water_balance(self):
-        return diag.sfc_water_balance(self._cubes, const=self.const, model=self.model)
+        return diag.sfc_water_balance(
+            self._cubes, const=self.const, model=self.model
+        )

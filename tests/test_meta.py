@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 """Test the meta submodule."""
+import iris.cube
+import pytest
+
 from aeolus import meta
 from aeolus.const import init_const
 from aeolus.const.const import ConstContainer
 from aeolus.exceptions import ArgumentError
-
-import iris.cube
-
-import pytest
 
 
 def test_const_from_attrs_default():

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test model submodule."""
 
 from aeolus.model import um, um_stash

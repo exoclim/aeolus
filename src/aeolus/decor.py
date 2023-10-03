@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Bells and whistles."""
 from iris.experimental.representation import CubeListRepresentation
 
@@ -83,9 +82,11 @@ class ReprAtmoSimBase:
         # Long option - for __str__
         for attr in self._copy_attrs:
             if getattr(self, attr) is not None:
-                summary.append(f"{attr:>{self._max_len}} | {getattr(self, attr)}")
+                summary.append(
+                    f"{attr:>{self._max_len}} | {getattr(self, attr)}"
+                )
         if len(self._cubes) > 0:
-            summary.append("{!s}\n".format(self._cubes))
+            summary.append(f"{self._cubes!s}\n")
         return "\n".join(summary)
 
     def _make_header(self):
@@ -116,4 +117,6 @@ class ReprAtmoSimBase:
         """HTML representation used in Jupyter Notebooks."""
         header = self._make_header()
         content = self._make_content()
-        return self._template.format(id=self.as_id, header=header, content=content)
+        return self._template.format(
+            id=self.as_id, header=header, content=content
+        )

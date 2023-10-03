@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Functions for calculating synthetic observations."""
 import warnings
 
@@ -7,12 +6,10 @@ from iris.coords import AuxCoord, DimCoord
 from iris.cube import Cube
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
 from iris.util import reverse
-
 import numpy as np
 
 from .coord import roll_cube_pm180
 from .model import um
-
 
 __all__ = (
     "calc_geom_mean_mirrored",
@@ -26,7 +23,7 @@ __all__ = (
 
 def calc_geom_mean_mirrored(cube_a, cube_b, add_shift=0, model=um):
     """
-    Calculate geometric mean of two cubes with one of them flipped along the x-axis.
+    Calculate geometric mean of 2 cubes, one of them flipped along the x-axis.
 
     This function can be used to get an average transmission flux
     calculated separately from the day- and night-side perspective.
@@ -34,7 +31,7 @@ def calc_geom_mean_mirrored(cube_a, cube_b, add_shift=0, model=um):
     cube_a: iris.cube.Cube
         Cube with an x-coordinate.
     cube_b: iris.cube.Cube
-        Another cube with an x-coordinate to be flipped before being averaged with cube A.
+        Another cube, to be flipped before being averaged with cube A.
     add_shift: int
         Additional shift for the data along the x-coordinate.
     model: aeolus.model.Model, optional
@@ -45,7 +42,9 @@ def calc_geom_mean_mirrored(cube_a, cube_b, add_shift=0, model=um):
 
     # Roll and reverse the 2nd cube by 180 degrees
     # This is specific to the UM output
-    cube_b_flipped = reverse(roll_cube_pm180(cube_b, add_shift=add_shift, model=model), model.x)
+    cube_b_flipped = reverse(
+        roll_cube_pm180(cube_b, add_shift=add_shift, model=model), model.x
+    )
     cube_b_flipped.replace_coord(x_coord)
 
     # Calculate geometric mean of the two cubes
@@ -91,13 +90,14 @@ def calc_transmission_spectrum(
     model=um,
 ):
     r"""
-    Convert the model output of transmission flux to a planetary-stellar radius ratio.
+    Convert the transmission flux to a planetary-stellar radius ratio.
 
     Parameters
     ----------
     trans_flux: iris.cube.Cube
-        Transmission flux on spectral bands and optionally latitudes and longitudes.
-        In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.
+        Transmission flux on spectral bands and optionally lats and lons.
+        In the Met Office Unified Model this is
+        STASH items 555, 556, 755, 756 in section 1.
     spectral_file: pathlib.Path
         Path to the location of a SOCRATES spectral file.
     stellar_constant_at_1_au: float or iris.cube.Cube
@@ -112,26 +112,30 @@ def calc_transmission_spectrum(
     Returns
     -------
     iris.cube.Cube
-        The ratio of the effective planetary radius to the stellar radius per spectral band [1].
+        The ratio of the effective planetary radius to the stellar radius
+        per spectral band [1].
         Spectral band centres [m] is attached as an auxiliary coordinate.
 
     Notes
-    -------
-    The transmission spectrum is the ratio of the effective planetary radius to the stellar
-    radius calculated per spectral band:
+    -----
+    The transmission spectrum is the ratio of the effective planetary
+    radius to the stellar radius calculated per spectral band:
 
     .. math::
 
         \frac{R_p (\nu)}{R_s} = \sqrt{(\frac{R_{p,TOA}}{R_s})^2 -
-         \frac{\sum_{lat,lon}^{}F_{transmitted} (\nu)}{F_{stellar} (\nu)}}
+         \frac{\sum_{lat,lon}^{}F_{trans} (\nu)}{F_{stellar} (\nu)}}
 
     where
     :math:`R_p(\nu)` is the effective planetary radius,
     :math:`R_s` is the stellar radius,
-    :math:`R_{p,TOA}` is the extent of the planetary atmosphere (which usually is the sum of
-    the planetary radius and the height of the model domain),
-    :math:`\sum_{lat,lon}^{}F_{transmitted}(\nu)` is the total transmitted flux,
+    :math:`R_{p,TOA}` is the extent of the planetary atmosphere
+    (i.e. the sum of the planetary radius and the height of the model domain),
+    :math:`\sum_{lat,lon}^{}F_{trans}(\nu)` is the total transmitted flux,
     :math:`F_{stellar}(\nu)` is the stellar flux.
+
+    Smaller gas abundance leads to the corresponding limb to be
+    "more transmissive", which leads it having smaller transit depth.
     """
     # Ensure that input constants are iris cubes
     if not isinstance(stellar_constant_at_1_au, Cube):
@@ -166,25 +170,30 @@ def calc_transmission_spectrum(
     trans_flux.units = "W m-2"
 
     # Calculate the ratio of the total transmitted flux to the stellar flux
-    for coord_dim, coord in enumerate(trans_flux.dim_coords):
+    for coord in trans_flux.dim_coords:
         if coord.name().lower() in ["pseudo", "pseudo_level"]:
             coord.rename("spectral_band_index")
             break
     flux_ratio = trans_flux / stellar_flux
 
-    # Calculate the ratio of the effective planetary radius to the stellar radius
-    rp_eff_over_rs_squared = (planet_top_of_atmosphere / stellar_radius) ** 2 - flux_ratio
+    # The ratio of the effective planetary radius to the stellar radius
+    rp_eff_over_rs_squared = (
+        planet_top_of_atmosphere / stellar_radius
+    ) ** 2 - flux_ratio
     # Make all negative values zero
     rp_eff_over_rs_squared = rp_eff_over_rs_squared.copy(
         data=rp_eff_over_rs_squared.core_data().clip(min=0.0)
     )
     rp_eff_over_rs = rp_eff_over_rs_squared ** (0.5)
-    rp_eff_over_rs.rename("ratio_of_effective_planetary_radius_to_stellar_radius")
+    rp_eff_over_rs.rename(
+        "ratio_of_effective_planetary_radius_to_stellar_radius"
+    )
 
     # Find spectral band centers
     spectral_bands = read_spectral_bands(spectral_file)
     spectral_band_centres = 0.5 * (
-        spectral_bands["lower_wavelength_limit"] + spectral_bands["upper_wavelength_limit"]
+        spectral_bands["lower_wavelength_limit"]
+        + spectral_bands["upper_wavelength_limit"]
     )
     spectral_bands_coord = AuxCoord(
         spectral_band_centres,
@@ -222,31 +231,30 @@ def calc_transmission_spectrum_day_night_average(
     model=um,
 ):
     r"""
-    Convert the model output of transmission flux to a planetary-stellar radius ratio.
+    Convert the transmission flux to a planetary-stellar radius ratio.
 
-    For UM output, this function averages the flux calculated from the day-side and the night-side
-    of the planet. Why does it use a geometric mean? The reason to use a geometric average instead
-    of an arithmetic average is that you want to add the optical depths. The flux decreases via
-    Beer's law (i.e., it's proportional to :math:`exp[-optical depth]`) so when you multiply the
-    dayside fluxes and nightside fluxes together and take a square root, you end up with
-    :math:`exp[-( optical depth 1 + optical depth 2)/2]`. Since each optical depth is double the
-    optical depth for it's respective side, the factors of two cancel and you end up with
-    :math:`exp[-(true optical depth)]`.
+    For UM output, this function averages the flux calculated from the day-side
+    and the night-side of the planet.
+    Why does it use a geometric mean? The reason to use a geometric average
+    instead of an arithmetic average is that the optical depths are added.
+    The flux decreases via Beer's law (i.e., it's proportional to
+    :math:`exp[-optical depth]`) so when you multiply the dayside fluxes and
+    nightside fluxes together and take a square root, you end up with
+    :math:`exp[-( optical depth 1 + optical depth 2)/2]`. Since each optical
+    depth is double the optical depth for it's respective side, the factors of
+    two cancel and you end up with :math:`exp[-(true optical depth)]`.
 
     Parameters
     ----------
     trans_flux_day: iris.cube.Cube
-        Transmission flux on spectral bands and optionally latitudes and longitudes.
+        Transmission flux on spectral bands and optionally lats and lons.
         Day-side perspective.
-        In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.
+        In the Met Office Unified Model this is
+        STASH items 555, 556, 755, 756 in section 1.
     trans_flux_night: iris.cube.Cube
-        Transmission flux on spectral bands and optionally latitudes and longitudes.
-        Night-side perspective.
-        In the Met Office Unified Model this is STASH items 555, 556, 755, 756 in section 1.
+        Samea as day, but for the night-side calculation.
     add_shift: int, optional
         Additional shift of data along the x-coordinate.
-
-    For other parameters, see the docstring of `aeolus.synthobs.calc_transmission_spectrum()`
 
     See Also
     --------
@@ -268,7 +276,7 @@ def calc_transmission_spectrum_day_night_average(
 
 def read_normalized_stellar_flux(spectral_file):
     """
-    Read the normalized stellar flux per spectral band from a SOCRATES spectral file.
+    Read the normalized stellar flux per band from a SOCRATES spectral file.
 
     Parameters
     ----------
@@ -291,10 +299,20 @@ def read_normalized_stellar_flux(spectral_file):
                     break
                 elif line.lstrip().split(" ")[0].isnumeric():
                     lines.append(
-                        tuple([float(i) for i in line.lstrip().rstrip("\n").split(" ") if i])
+                        tuple(
+                            [
+                                float(i)
+                                for i in line.lstrip().rstrip("\n").split(" ")
+                                if i
+                            ]
+                        )
                     )
     normalized_stellar_flux_arr = np.array(
-        lines, dtype=[("spectral_band_index", "u4"), ("normalized_stellar_flux", "f4")]
+        lines,
+        dtype=[
+            ("spectral_band_index", "u4"),
+            ("normalized_stellar_flux", "f4"),
+        ],
     )
     # Compose an iris cube
     spectral_band_index = DimCoord(
@@ -339,7 +357,13 @@ def read_spectral_bands(spectral_file):
                     break
                 elif line.lstrip().split(" ")[0].isnumeric():
                     lines.append(
-                        tuple([float(i) for i in line.lstrip().rstrip("\n").split(" ") if i])
+                        tuple(
+                            [
+                                float(i)
+                                for i in line.lstrip().rstrip("\n").split(" ")
+                                if i
+                            ]
+                        )
                     )
     spectral_bands = np.array(
         lines,

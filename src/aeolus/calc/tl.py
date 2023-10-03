@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 """Operations in tidally-locked coordinates."""
 import iris.analysis
-from iris.cube import Cube
-from iris.coords import AuxCoord
 from iris.analysis.cartography import _meshgrid, rotate_pole, rotate_winds
 from iris.coord_systems import RotatedGeogCS
+from iris.coords import AuxCoord
+from iris.cube import Cube
 from iris.util import promote_aux_coord_to_dim_coord
-
 import numpy as np
 
 from ..coord import get_xy_coords
@@ -56,13 +54,21 @@ def regrid_to_rotated_pole_coordinates(cube, pole_lon, pole_lat, model=um):
         var_name=ycoord.var_name,
         coord_system=_cs,
     )
-    non_xy_coords = [(i, cube.coord_dims(i)) for i in cube.dim_coords if i not in [xcoord, ycoord]]
+    non_xy_coords = [
+        (i, cube.coord_dims(i))
+        for i in cube.dim_coords
+        if i not in [xcoord, ycoord]
+    ]
     # assume latitude and longitude are the rightmost dimensions
     lat_dim = len(non_xy_coords)
     if lat_dim != cube.coord_dims(ycoord)[0]:
-        raise BadCoordinateError("Ensure latitude and longitude are the rightmost dimensions.")
+        raise BadCoordinateError(
+            "Ensure latitude and longitude are the rightmost dimensions."
+        )
     cube_flat = Cube(
-        cube.core_data().reshape((*cube.shape[:lat_dim], np.product(cube.shape[lat_dim:]))),
+        cube.core_data().reshape(
+            (*cube.shape[:lat_dim], np.product(cube.shape[lat_dim:]))
+        ),
         aux_coords_and_dims=[
             *non_xy_coords,
             (r_lat_coord, lat_dim),
@@ -77,12 +83,14 @@ def regrid_to_rotated_pole_coordinates(cube, pole_lon, pole_lat, model=um):
     return out
 
 
-def regrid_to_tidally_locked_coordinates(cube, pole_lon=0, pole_lat=0, model=um):
+def regrid_to_tidally_locked_coordinates(
+    cube, pole_lon=0, pole_lat=0, model=um
+):
     """
     Regrid a cube to tidally locked coordinates.
 
-    The substellar and antistellar point become the north and south pole, respectively.
-    By default, the substellar point is assumed to be at (0, 0).
+    The substellar and antistellar point become the north and south pole,
+    respectively. By default, the substellar point is assumed to be at (0, 0).
 
     Parameters
     ----------
@@ -104,15 +112,15 @@ def rotate_winds_to_tidally_locked_coordinates(u, v, pole_lon=0, pole_lat=0):
     """
     Rotate the horizontal wind components to tidally locked coordinates.
 
-    The substellar and antistellar point become the north and south pole, respectively.
-    By default, the substellar point is assumed to be at (0, 0).
+    The substellar and antistellar point become the north and south pole,
+    respectively. By default, the substellar point is assumed to be at (0, 0).
 
     Parameters
     ----------
     u: iris.cube.Cube
-        An instance of :class:`iris.cube.Cube` that contains the x-component of the vector.
+        :class:`iris.cube.Cube` that contains the x-component of the vector.
     v: iris.cube.Cube
-        An instance of :class:`iris.cube.Cube` that contains the y-component of the vector.
+        :class:`iris.cube.Cube` that contains the y-component of the vector.
     pole_lon: float, optional
         New North Pole longitude.
     pole_lat: float, optional

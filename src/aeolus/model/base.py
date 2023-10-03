@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 """Model-specific dictionaries of variable names and coordinates."""
-import textwrap
 from dataclasses import dataclass
-
+import textwrap
 
 __all__ = "Model"
 
@@ -129,12 +127,25 @@ class Model:
 
     def __repr__(self):
         """Override the repr method of the dataclass."""
-        size = len([_ for _, v in self.__dataclass_fields__.items() if v.name is not None])
+        size = len(
+            [
+                _
+                for _, v in self.__dataclass_fields__.items()
+                if v.name is not None
+            ]
+        )
         return f"{self.__class__.__name__} [{size} fields]"
 
     def __str__(self):
         """Override the str method of the dataclass."""
-        fields = [v.name for _, v in self.__dataclass_fields__.items() if v.name is not None]
+        fields = [
+            v.name
+            for _, v in self.__dataclass_fields__.items()
+            if v.name is not None
+        ]
         size = len(fields)
-        s = f"{self.__class__.__name__} with {size} fields:\n{', '.join(fields)}"
+        s = (
+            f"{self.__class__.__name__} with {size} fields:"
+            f"\n{', '.join(fields)}"
+        )
         return "\n".join(textwrap.wrap(s, 100))

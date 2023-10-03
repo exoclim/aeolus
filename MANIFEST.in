@@ -5,5 +5,3 @@ include LICENSE
 include src/aeolus/const/store/*.json
 recursive-include docs *
 recursive-include tests *
-include versioneer.py
-include src/aeolus/_version.py

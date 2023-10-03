@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
 """Plotting functions used with cartopy."""
 import cartopy.crs as ccrs
 from cartopy.mpl.geoaxes import GeoAxes
-
 from matplotlib.transforms import offset_copy
-
 from mpl_toolkits.axes_grid1 import AxesGrid
 
 from .text import fmt_lonlat
-
 
 __all__ = ("GeoAxesGrid", "label_global_map_gridlines")
 
@@ -39,11 +35,18 @@ class GeoAxesGrid(AxesGrid):
         """
         axesgrid_kw["axes_class"] = (GeoAxes, {"map_projection": projection})
         axesgrid_kw["label_mode"] = ""  # note the empty label_mode
-        super(GeoAxesGrid, self).__init__(fig, rect, nrows_ncols, **axesgrid_kw)
+        super().__init__(fig, rect, nrows_ncols, **axesgrid_kw)
 
 
 def label_global_map_gridlines(
-    fig, ax, xticks=[], yticks=[], xoff=-10, yoff=-10, degree=False, **text_kw
+    fig,
+    ax,
+    xticks=None,
+    yticks=None,
+    xoff=-10,
+    yoff=-10,
+    degree=False,
+    **text_kw,
 ):
     """
     Label gridlines of a global cartopy map.
@@ -72,6 +75,10 @@ def label_global_map_gridlines(
         Label text properties.
     """
     # Define what boundary to use
+    if yticks is None:
+        yticks = []
+    if xticks is None:
+        xticks = []
     extent = ax.get_extent(crs=ccrs.PlateCarree())
     if xoff <= 0:
         xpos = extent[0]  # labels at the east boundary
@@ -86,13 +93,21 @@ def label_global_map_gridlines(
     for xtick in xticks:
         s = fmt_lonlat(xtick, "lon", degree=degree)
         text_transform = offset_copy(
-            geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=0, y=yoff
+            geodetic_trans._as_mpl_transform(ax),
+            fig=fig,
+            units="points",
+            x=0,
+            y=yoff,
         )
         ax.text(xtick, ypos, s, transform=text_transform, **xlab_kw)
 
     for ytick in yticks:
         s = fmt_lonlat(ytick, "lat", degree=degree)
         text_transform = offset_copy(
-            geodetic_trans._as_mpl_transform(ax), fig=fig, units="points", x=xoff, y=0
+            geodetic_trans._as_mpl_transform(ax),
+            fig=fig,
+            units="points",
+            x=xoff,
+            y=0,
         )
         ax.text(xpos, ytick, s, transform=text_transform, **ylab_kw)

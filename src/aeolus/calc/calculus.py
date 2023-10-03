@@ -1,19 +1,20 @@
-# -*- coding: utf-8 -*-
 """Generic calculus functions."""
 from cf_units import Unit
-
 from iris.analysis import Linear
-from iris.analysis.calculus import _coord_cos, _curl_differentiate, _curl_regrid, differentiate
+from iris.analysis.calculus import (
+    _coord_cos,
+    _curl_differentiate,
+    _curl_regrid,
+    differentiate,
+)
 from iris.analysis.maths import add, divide, multiply
 from iris.coord_systems import GeogCS, RotatedGeogCS
-
 import numpy as np
 
 from ..const import get_planet_radius
 from ..exceptions import NotYetImplementedError
 from ..meta import update_metadata
 from ..model import um
-
 
 __all__ = (
     "d_dx",
@@ -59,9 +60,9 @@ def deriv(cube, coord):
     iris.cube.Cube
         d(cube)/d(coord).
 
-    See also
+    See Also
     --------
-    aeolus.calc.calculus.d_dx, aeolus.calc.calculus.d_dy, aeolus.calc.calculus.d_dz
+    aeolus.calc.calculus.d_dx, aeolus.calc.calculus.d_dy
     """
     pnts = cube.coord(coord).points
     diff = differentiate(cube, coord)
@@ -129,12 +130,12 @@ def div_h(i_cube, j_cube, r_planet=None, model=um):
         lat_coord.convert_units("radians")
         lat_cos_coord = _coord_cos(lat_coord)
 
-        # j-component: \frac{\partial}{\partial \theta} (\vec A_\theta cos \theta))
+        # j-comp: \frac{\partial}{\partial \theta} (\vec A_\theta cos \theta))
         temp = multiply(j_cube, lat_cos_coord, y_dim)
         djcos_dtheta = _curl_differentiate(temp, lat_coord)
         prototype_diff = djcos_dtheta
 
-        # i-component: \frac{\partial \vec A_\lambda}{\partial \lambda}
+        # i-comp: \frac{\partial \vec A_\lambda}{\partial \lambda}
         d_i_cube_dlambda = _curl_differentiate(i_cube, lon_coord)
         d_i_cube_dlambda = _curl_regrid(d_i_cube_dlambda, prototype_diff)
         new_lat_coord = d_i_cube_dlambda.coord(model.y)
@@ -150,7 +151,9 @@ def div_h(i_cube, j_cube, r_planet=None, model=um):
         div.units /= r_unit
         div = div.regrid(i_cube, Linear())
     else:
-        raise NotYetImplementedError("Non-spherical coordinates are not implemented yet.")
+        raise NotYetImplementedError(
+            "Non-spherical coordinates are not implemented yet."
+        )
     return div
 
 
@@ -174,7 +177,11 @@ def integrate(cube, coord):
     """
     # TODO: allow non-dim coordinates
     c = cube.coord(coord)
-    others = [dc.name() for dc in cube.dim_coords if cube.coord_dims(dc) != cube.coord_dims(c)]
+    others = [
+        dc.name()
+        for dc in cube.dim_coords
+        if cube.coord_dims(dc) != cube.coord_dims(c)
+    ]
     dim = cube.coord_dims(c)[0]
     data = np.trapz(cube.data, c.points, axis=dim)
     res = next(cube.slices(others)).copy(data=data)
@@ -182,6 +189,6 @@ def integrate(cube, coord):
     res.remove_coord(c)
     res.rename(f"integral_of_{cube.name()}_wrt_{c.name()}")
     # ensure_bounds(cube, [c])
-    # delta = iris.coords.AuxCoord(c.bounds[:, 1] - c.bounds[:, 0], units=c.units)
+    # delta = AuxCoord(c.bounds[:, 1] - c.bounds[:, 0], units=c.units)
     # res = multiply(cube, delta, dim=dim).collapsed(c, iris.analysis.SUM)
     return res

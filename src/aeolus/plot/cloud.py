@@ -1,21 +1,16 @@
-# -*- coding: utf-8 -*-
 """Utilities to plot cloud-related output of UM."""
-import warnings
-
 import iris
-
 import matplotlib as mpl
-
 import numpy as np
 
+from ..exceptions import _warn
 from .cm_custom import cloudtypes_cmap
-
 
 __all__ = ("CloudPlotter", "cloudtypes_cmap")
 
 
 class CloudPlotter:
-    """Factory to create a composite plot of low, medium, high cloud area fractions."""
+    """Factory to create a plot of low, medium, high cloud area fractions."""
 
     _stash_items = {"lo": "m01s09i203", "me": "m01s09i204", "hi": "m01s09i205"}
     _scales = {"lo": 100, "me": 200, "hi": 400}
@@ -31,25 +26,31 @@ class CloudPlotter:
     ]
 
     def __init__(self, cubelist):
-        """Initialise CloudPlotter from `iris.cube.CubeList` containing cloud fractions."""
+        """Initialise CloudPlotter."""
         self.factor = 10.0  # scaling factor
         self.cubes = {}
         for key, stash in self._stash_items.items():
             try:
-                self.cubes[key] = cubelist.extract_cube(iris.AttributeConstraint(STASH=stash))
+                self.cubes[key] = cubelist.extract_cube(
+                    iris.AttributeConstraint(STASH=stash)
+                )
             except iris.exceptions.ConstraintMismatchError:
-                warnings.warn(f"Warning!\n{key} ({stash}) is not found in\n\n{cubelist}")
+                _warn(
+                    f"Warning!\n{key} ({stash}) is not found in\n\n{cubelist}"
+                )
 
     def scale_data(self, threshold=0.1):
         """
-        Scale cloud levels and add them together to make a composite cloud field.
+        Scale cloud levels & add them together to make a composite cloud field.
 
         Values below `threshold` are set to zero.
         """
         for i, (key, cube) in enumerate(self.cubes.items()):
             cp_cube = cube.copy(
                 data=np.where(
-                    cube.data >= threshold, cube.data * self.factor + self._scales[key], 0.0
+                    cube.data >= threshold,
+                    cube.data * self.factor + self._scales[key],
+                    0.0,
                 )
             )
             if i == 0:
@@ -59,7 +60,10 @@ class CloudPlotter:
         self.aggr_cld.rename("aggregated_cloud_fraction")
         self.aggr_cld.attributes["source"] = " + ".join(
             [
-                (f"({self._stash_items[k]}*{self.factor}" f"+{self._scales[k]})")
+                (
+                    f"({self._stash_items[k]}*{self.factor}"
+                    f"+{self._scales[k]})"
+                )
                 for k in self.cubes.keys()
             ]
         )
@@ -76,12 +80,21 @@ class CloudPlotter:
         lvls = [base]  # no clouds
         lvls.append(base + self._scales["lo"])  # low clouds (101-110)
         lvls.append(base + self._scales["me"])  # medium clouds (201-210)
-        lvls.append(base * 2 + self._scales["lo"] + self._scales["me"])  # low + medium (302-320)
-        lvls.append(base + self._scales["hi"])  # high clouds (401-410)
-        lvls.append(base * 2 + self._scales["lo"] + self._scales["hi"])  # high + low (502-520)
-        lvls.append(base * 2 + self._scales["hi"] + self._scales["me"])  # high + medium (602-620)
         lvls.append(
-            base * 3 + self._scales["lo"] + self._scales["me"] + self._scales["hi"]
+            base * 2 + self._scales["lo"] + self._scales["me"]
+        )  # low + medium (302-320)
+        lvls.append(base + self._scales["hi"])  # high clouds (401-410)
+        lvls.append(
+            base * 2 + self._scales["lo"] + self._scales["hi"]
+        )  # high + low (502-520)
+        lvls.append(
+            base * 2 + self._scales["hi"] + self._scales["me"]
+        )  # high + medium (602-620)
+        lvls.append(
+            base * 3
+            + self._scales["lo"]
+            + self._scales["me"]
+            + self._scales["hi"]
         )  # high + medium + low (703-730)
         lvls.append([1000])
         midpoints = []
@@ -93,7 +106,9 @@ class CloudPlotter:
                 if len(lvl) % 2 == 0:
                     midpoints.append(lvl[len(lvl) // 2])
                 else:
-                    midpoints.append(0.5 * (lvl[len(lvl) // 2] + lvl[(len(lvl) // 2) + 1]))
+                    midpoints.append(
+                        0.5 * (lvl[len(lvl) // 2] + lvl[(len(lvl) // 2) + 1])
+                    )
         midpoints = np.asarray(midpoints)
         norm = mpl.colors.BoundaryNorm(np.concatenate(lvls), cmap.N)
         return norm, midpoints
@@ -107,7 +122,9 @@ class CloudPlotter:
         cb_labels = self.cloud_labels
         return self.aggr_cld, plt_kw, cb_ticks, cb_labels
 
-    def pcolormesh(self, ax, xy=(), nsteps=10, cmap=None, cb_kwargs={}, **pc_kwargs):
+    def pcolormesh(
+        self, ax, xy=(), nsteps=10, cmap=None, cb_kwargs=None, **pc_kwargs
+    ):
         """
         Display composite cloud plot using `matplotlib.pyplot.pcolormesh`.
 
@@ -125,6 +142,7 @@ class CloudPlotter:
             Dictionary of kwargs passed to colorbar
         **pc_kwargs: optional
             additional pcolormesh arguments
+
         Returns
         -------
         h: `matplotlib.collections.QuadMesh`
@@ -132,11 +150,15 @@ class CloudPlotter:
         cb: `matplotlib.colorbar.Colorbar`
             colorbar
         """
+        if cb_kwargs is None:
+            cb_kwargs = {}
         fig = ax.figure
         if cmap is None:
             cmap = cloudtypes_cmap  # colormap from a separate file
         norm, midpoints = self._make_norm(cmap=cmap, nsteps=nsteps)
-        h = ax.pcolormesh(*xy, self.aggr_cld.data, cmap=cmap, norm=norm, **pc_kwargs)
+        h = ax.pcolormesh(
+            *xy, self.aggr_cld.data, cmap=cmap, norm=norm, **pc_kwargs
+        )
         if "cax" in cb_kwargs:
             ax_kw = {}
         else:

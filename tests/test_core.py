@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test the core submodule."""
 # import contextlib
 # import itertools
@@ -7,16 +6,15 @@
 # from datetime import datetime
 from pathlib import Path
 
-#
-# from aeolus import core
-from aeolus.exceptions import LoadError
-
 # import iris
 #
 # import numpy as np
 # import numpy.testing as npt
-
 import pytest
+
+#
+# from aeolus import core
+from aeolus.exceptions import LoadError
 
 TST_DATA = Path(__file__).parent / "data"
 

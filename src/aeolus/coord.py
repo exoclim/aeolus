@@ -1,20 +1,17 @@
-# -*- coding: utf-8 -*-
 """Functionality related to coordinates of cubes."""
 from datetime import timedelta
 
-import dask.array as da
-
 from cartopy.util import add_cyclic_point
-
+import dask.array as da
+from iris import Constraint
 import iris.analysis
 import iris.analysis.cartography
-from iris import Constraint
-from iris.cube import Cube, CubeList
-from iris.coords import AuxCoord, DimCoord
 from iris.analysis.cartography import wrap_lons
-import iris.fileformats
 from iris.coord_categorisation import _months_in_season, add_categorised_coord
+from iris.coords import AuxCoord, DimCoord
+from iris.cube import Cube, CubeList
 from iris.exceptions import CoordinateNotFoundError as CoNotFound
+import iris.fileformats
 from iris.util import (
     broadcast_to_shape,
     guess_coord_axis,
@@ -22,14 +19,12 @@ from iris.util import (
     promote_aux_coord_to_dim_coord,
     squeeze,
 )
-
 import numpy as np
 
 from .const import get_planet_radius
 from .exceptions import ArgumentError, BadCoordinateError, NotFoundError, _warn
 from .meta import const_from_attrs
 from .model import um
-
 
 __all__ = (
     "CoordContainer",
@@ -95,7 +90,7 @@ def _cell_bounds(points, bound_position=0.5):
     assert points.ndim == 1, "Only 1D points are allowed"
     diffs = np.diff(points)
     if not np.allclose(diffs, diffs[0]):
-        _warn("_cell_bounds() is supposed to work only for uniformly spaced points")
+        _warn("_cell_bounds() assumes uniformly spaced points")
     delta = diffs[0] * bound_position
     bounds = np.concatenate([[points[0] - delta], points + delta])
     return bounds
@@ -142,7 +137,9 @@ def _is_longitude_global(lon_points):
     """Return True if array of longitudes covers the whole sphere."""
     dx = np.diff(lon_points)[0]  # assume regular grid
     case_0_360 = ((lon_points[0] - dx) <= 0) and ((lon_points[-1] + dx) >= 360)
-    case_pm180 = ((lon_points[0] - dx) <= -180) and ((lon_points[-1] + dx) >= 180)
+    case_pm180 = ((lon_points[0] - dx) <= -180) and (
+        (lon_points[-1] + dx) >= 180
+    )
     return case_0_360 or case_pm180
 
 
@@ -209,7 +206,7 @@ def add_cyclic_point_to_cube(cube, coord=um.x):
     """
     Add a cyclic point to a cube and a corresponding coordinate.
 
-    A wrapper for `cartopy.util.add_cyclic_point()`, generalising it for iris cubes.
+    A wrapper for `cartopy.util.add_cyclic_point()` for iris cubes.
 
     Parameters
     ----------
@@ -229,10 +226,14 @@ def add_cyclic_point_to_cube(cube, coord=um.x):
     dim = cube.coord_dims(the_coord)
 
     # TODO: use core_data()?
-    cy_data, cy_coord_pnts = add_cyclic_point(cube.data, coord=the_coord.points, axis=dim[0])
+    cy_data, cy_coord_pnts = add_cyclic_point(
+        cube.data, coord=the_coord.points, axis=dim[0]
+    )
 
     dim_coords_and_dims = [
-        (coord, cube.coord_dims(coord)) for coord in cube.dim_coords if coord != the_coord
+        (coord, cube.coord_dims(coord))
+        for coord in cube.dim_coords
+        if coord != the_coord
     ]
     dim_coords_and_dims.append((the_coord.copy(cy_coord_pnts), dim))
 
@@ -287,7 +288,7 @@ def add_planet_calendar(
     days_in_month: int or float
         Number of Earth days in one month on the given planet.
     days_in_day: int or float
-        Number of Earth days in one day on the given planet (e.g. ~16 for Titan).
+        Number of Earth days in one day on the given planet.
     run_start_day: int or float, optional
         Earth day of the start of the simulation.
     seasons: tuple, optional
@@ -383,7 +384,9 @@ def check_coords(cubes):
     if bad_coords:
         raise BadCoordinateError(
             "Some coordinates are different ({}), "
-            "consider resampling.".format(", ".join(group.name() for group in bad_coords))
+            "consider resampling.".format(
+                ", ".join(group.name() for group in bad_coords)
+            )
         )
 
 
@@ -413,14 +416,23 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
     cube_out = add_binned_coord(cube_out, model.x, lon_bins)
     cube_out = add_binned_coord(cube_out, model.y, lat_bins)
 
-    # To avoid oversampling on the edges, extract subset within the boundaries of target coords
+    # To avoid oversampling on the edges,
+    # extract subset within the boundaries of target coords
     for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
         cube_out = cube_out.extract(
-            Constraint(**{coord: lambda p: target_points.min() <= p <= target_points.max()})
+            Constraint(
+                **{
+                    coord: lambda p: target_points.min()
+                    <= p
+                    <= target_points.max()
+                }
+            )
         )
 
     for coord in coord_names:
-        cube_out = cube_out.aggregated_by([f"{coord}_binned"], iris.analysis.MEAN)
+        cube_out = cube_out.aggregated_by(
+            [f"{coord}_binned"], iris.analysis.MEAN
+        )
 
     for coord, target_points in zip(coord_names, (lat_bins, lon_bins)):
         dim = cube_out.coord_dims(coord)
@@ -428,7 +440,9 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
         cube_out.remove_coord(coord)
         aux = cube_out.coord(f"{coord}_binned")
         new_points = target_points[aux.points]
-        new_coord = DimCoord.from_coord(aux.copy(points=new_points, bounds=None))
+        new_coord = DimCoord.from_coord(
+            aux.copy(points=new_points, bounds=None)
+        )
         cube_out.remove_coord(f"{coord}_binned")
         new_coord.rename(coord)
         new_coord.units = units
@@ -439,7 +453,7 @@ def coarsen_cube(cube, lon_bins, lat_bins, model=um):
 
 def coord_delta_to_cube(cube, coord, normalize=False):
     """
-    Convert 1D coordinate spacings to a cube of the same dimension as the given cube.
+    Convert 1D coord spacings to a cube of the same dim as the given cube.
 
     Parameters
     ----------
@@ -524,9 +538,13 @@ def coord_to_cube(cube, coord, broadcast=True):
         _data = broadcast_to_shape(_data, cube.shape, dim_map)
         dc = [(c.copy(), cube.coord_dims(c)) for c in cube.dim_coords]
         ac = [(c.copy(), cube.coord_dims(c)) for c in cube.aux_coords]
-        new_cube = Cube(data=_data, dim_coords_and_dims=dc, aux_coords_and_dims=ac, **kw)
+        new_cube = Cube(
+            data=_data, dim_coords_and_dims=dc, aux_coords_and_dims=ac, **kw
+        )
     else:
-        new_cube = Cube(data=_data, dim_coords_and_dims=[(_coord.copy(), 0)], **kw)
+        new_cube = Cube(
+            data=_data, dim_coords_and_dims=[(_coord.copy(), 0)], **kw
+        )
     return new_cube
 
 
@@ -587,8 +605,8 @@ def get_dim_coord(cube, axis):
     """
     Return a coordinate from a cube based on the axis it represents.
 
-    Uses :py:func:`iris.util.guess_coord_axis` to heuristically match a dimensional coordinate
-    with the requested axis.
+    Uses :py:func:`iris.util.guess_coord_axis` to heuristically match a
+    dimensional coordinate with the requested axis.
 
     Adapted from https://github.com/LSaffin/iris-extensions
 
@@ -602,18 +620,20 @@ def get_dim_coord(cube, axis):
     Returns
     -------
     iris.coords.DimCoord
-        The dimensional coordinate matching the requested axis on the given cube.
+        The dim coordinate matching the requested axis on the given cube.
 
     Raises
     ------
     ArgumentError: If axis is not one of {X, Y, Z, T}.
-    NotFoundError: If the cube does not contain a coord with the requested axis.
+    NotFoundError: If the cube does not contain a coord with the given axis.
     """
     _allowed = ["X", "Y", "Z", "T"]
     axis = axis.upper()
     # If the axis supplied is not correct raise an error
     if axis not in _allowed:
-        raise ArgumentError(f"Axis must be one of {_allowed}, {axis} is given.")
+        raise ArgumentError(
+            f"Axis must be one of {_allowed}, {axis} is given."
+        )
 
     # Loop over dimensional coords in the cube
     for coord in cube.dim_coords:
@@ -627,7 +647,7 @@ def get_dim_coord(cube, axis):
 
 def get_xy_coords(cube, model=um):
     """
-    Return X and Y coordinate tuple for a given `cube` using names from a given `model` container.
+    Return X and Y coords tuple using names from a given `model` container.
 
     Parameters
     ----------
@@ -643,27 +663,36 @@ def get_xy_coords(cube, model=um):
 
 @const_from_attrs(strict=False)
 def interp_cube_from_height_to_pressure_levels(
-    variable, pressure, levels, p_ref_frac=False, const=None, interpolator=None, model=um
+    variable,
+    pressure,
+    levels,
+    p_ref_frac=False,
+    const=None,
+    interpolator=None,
+    model=um,
 ):
     """
-    Interpolate a cube from height to pressure level(s) using stratify relevel() function.
+    Interpolate a cube from height to pressure level(s).
 
     Parameters
     ----------
     variable: iris.cube.Cube
-        A cube to interpolate. Must have the same dimensions as the pressure cube.
+        A cube to interpolate.
+        Must have the same dimensions as the pressure cube.
     pressure: iris.cube.Cube
         A cube of pressure.
     levels: array-like
-        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+        Sequence of pressure levels
+        (same units as the units of pressure cube in `cubelist`).
     p_ref_frac: bool, optional
-        If True, levels are treated as fractions of the reference surface pressure.
+        If True, `levels` are used as fractions of the surface pressure.
     const: aeolus.const.const.ConstContainer, optional
         Required if p_ref_frac=True.
         If not given, constants are attempted to be retrieved from
         attributes of a cube in the cube list.
     interpolator: callable or None
-        The interpolator to use when computing the interpolation. See relevel() docs for more.
+        The interpolator to use when computing the interpolation.
+        See `relevel()` docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
 
@@ -680,7 +709,9 @@ def interp_cube_from_height_to_pressure_levels(
         p_tgt = np.atleast_1d(levels) * float(p_ref.data)
     else:
         p_tgt = np.atleast_1d(levels)
-    cube_plev = stratify.relevel(variable, pressure, p_tgt, axis=model.z, interpolator=interpolator)
+    cube_plev = stratify.relevel(
+        variable, pressure, p_tgt, axis=model.z, interpolator=interpolator
+    )
     cube_plev.coord(model.pres).attributes = {}
     return squeeze(cube_plev)
 
@@ -696,25 +727,27 @@ def interp_cubelist_from_height_to_pressure_levels(
     include_pressure=False,
 ):
     """
-    Interpolate all cubes within a cubelist to the given set of pressure levels.
+    Interpolate all cubes to the given set of pressure levels.
 
-    Pressure variable is found using the `model.pres` name and then optionally excluded from
-    the output list of interpolated cubes.
+    Pressure variable is found using the `model.pres` name and then optionally
+    excluded from the output list of interpolated cubes.
 
     Parameters
     ----------
     cubelist: iris.cube.CubeList
         List of cubes, including a cube of pressure.
     levels: array-like
-        Sequence of pressure levels (same units as the units of pressure cube in `cubelist`).
+        Sequence of pressure levels
+        (same units as the units of pressure cube in `cubelist`).
     p_ref_frac: bool, optional
-        If True, levels are treated as fractions of the reference surface pressure.
+        If True, `levels` are used as fractions of the surface pressure.
     const: aeolus.const.const.ConstContainer, optional
         Required if p_ref_frac=True.
         If not given, constants are attempted to be retrieved from
         attributes of a cube in the cube list.
     interpolator: callable or None
-        The interpolator to use when computing the interpolation. See relevel() docs for more.
+        The interpolator to use when computing the interpolation.
+        See `relevel()` docs for more.
     model: aeolus.model.Model, optional
         Model class with relevant variable names.
     include_pressure: bool, optional
@@ -744,9 +777,9 @@ def interp_cubelist_from_height_to_pressure_levels(
 
 def interp_to_cube_time(cube_src, cube_tgt, model=um):
     """
-    Linearly interpolate `cube_src` to `cube_tgt` along the time dimension (`model.t`).
+    Interpolate `cube_src` to `cube_tgt` along the time dimension (`model.t`).
 
-    Forecast period is copied from `cube_tgt`.
+    Linear interpolation is used. Forecast period is copied from `cube_tgt`.
 
     Parameters
     ----------
@@ -815,7 +848,14 @@ def isel(obj, coord, idx, skip_not_found=None):
         out = []
         for cube in obj:
             out.append(
-                isel(cube, coord, idx, skip_not_found=((skip_not_found is None) or skip_not_found))
+                isel(
+                    cube,
+                    coord,
+                    idx,
+                    skip_not_found=(
+                        (skip_not_found is None) or skip_not_found
+                    ),
+                )
             )
         out = obj.__class__(out)
     return out
@@ -847,7 +887,9 @@ def nearest_coord_value(cube, coord_name, val):
 def not_equal_coord_axes(cube1, cube2):
     """Given 2 cubes, return axes of unequal dimensional coordinates."""
     coord_comp = iris.analysis._dimensional_metadata_comparison(cube1, cube2)
-    neq_dim_coords = set(coord_comp["not_equal"]).intersection(set(coord_comp["dimensioned"]))
+    neq_dim_coords = set(coord_comp["not_equal"]).intersection(
+        set(coord_comp["dimensioned"])
+    )
     dims = []
     for coord_pair in neq_dim_coords:
         for coord in coord_pair:
@@ -857,7 +899,7 @@ def not_equal_coord_axes(cube1, cube2):
 
 def regrid_3d(cube, target, model=um):
     """
-    Regrid a cube in the horizontal and in the vertical on to coordinates of the target cube.
+    Regrid a cube in the horizontal and in the vertical.
 
     Adapted from https://github.com/LSaffin/iris-extensions
 
@@ -935,7 +977,7 @@ def replace_z_coord(cube, model=um):
 
 def roll_cube_0_360(cube_in, add_shift=0, model=um):
     """
-    Take a cube spanning -180...180 degrees in longitude and roll it to 0...360 degrees.
+    Take a cube spanning -180...180 degrees and roll it to 0...360 degrees.
 
     Works with global model output, and in some cases for regional.
 
@@ -952,7 +994,7 @@ def roll_cube_0_360(cube_in, add_shift=0, model=um):
     -------
     iris.cube.Cube
 
-    See also
+    See Also
     --------
     aeolus.coord.roll_cube_pm180
     """
@@ -961,7 +1003,9 @@ def roll_cube_0_360(cube_in, add_shift=0, model=um):
     lon = cube.coord(coord_name)
     if (lon.points < 0.0).any():
         add = 180
-        cube.data = da.roll(cube.core_data(), len(lon.points) // 2 + add_shift, axis=-1)
+        cube.data = da.roll(
+            cube.core_data(), len(lon.points) // 2 + add_shift, axis=-1
+        )
         if lon.has_bounds():
             bounds = lon.bounds + add
         else:
@@ -973,7 +1017,7 @@ def roll_cube_0_360(cube_in, add_shift=0, model=um):
 
 def roll_cube_pm180(cube_in, add_shift=0, model=um):
     """
-    Take a cube spanning 0...360 degrees in longitude and roll it to -180...180 degrees.
+    Take a cube spanning 0...360 degrees and roll it to -180...180 degrees.
 
     Works with global model output, and in some cases for regional.
 
@@ -990,7 +1034,7 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
     -------
     iris.cube.Cube
 
-    See also
+    See Also
     --------
     aeolus.coord.roll_cube_0_360
     """
@@ -998,10 +1042,14 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
     coord_name = model.x  # get the name of the longitude coordinate
     xcoord = cube.coord(coord_name)
     if (xcoord.points >= 0.0).all():
-        assert is_regular(xcoord), "Operation is only valid for a regularly spaced coordinate."
+        assert is_regular(
+            xcoord
+        ), "Operation is only valid for a regularly spaced coordinate."
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
-            cube.data = da.roll(cube.core_data(), len(xcoord.points) // 2 + add_shift, axis=-1)
+            cube.data = da.roll(
+                cube.core_data(), len(xcoord.points) // 2 + add_shift, axis=-1
+            )
 
         if xcoord.has_bounds():
             bounds = wrap_lons(xcoord.bounds, -180, 360)  # + subtract
@@ -1009,13 +1057,21 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
         else:
             bounds = None
         cube.replace_coord(
-            xcoord.copy(points=np.sort(wrap_lons(xcoord.points, -180, 360)), bounds=bounds)
+            xcoord.copy(
+                points=np.sort(wrap_lons(xcoord.points, -180, 360)),
+                bounds=bounds,
+            )
         )
     else:
         # Nothing to do, the cube is already centered on 0 longitude
         # unless there is something wrong with longitude
-        msg = f"Incorrect {coord_name} values: from {xcoord.points.min()} to {xcoord.points.max()}"
-        assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), msg
+        msg = (
+            f"Incorrect {coord_name} values: "
+            f"from {xcoord.points.min()} to {xcoord.points.max()}"
+        )
+        assert (
+            (xcoord.points >= -180.0) & (xcoord.points <= 180.0)
+        ).all(), msg
     return cube
 
 
@@ -1068,7 +1124,9 @@ def volume_weights_cube(cube, r_planet=None, normalize=False, model=um):
     iris.cube.Cube
         Cube of area weights with the same metadata as the input cube
     """
-    area_cube = area_weights_cube(cube, r_planet=r_planet, normalize=normalize, model=model)
+    area_cube = area_weights_cube(
+        cube, r_planet=r_planet, normalize=normalize, model=model
+    )
     height_deltas = coord_delta_to_cube(cube, model.z, normalize=normalize)
     volume = area_cube * height_deltas
     if normalize:

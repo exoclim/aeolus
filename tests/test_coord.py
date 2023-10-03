@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
 """Test coord submodule."""
 from pathlib import Path
-
-from aeolus import coord
 
 import iris.coords
 import iris.cube
 import iris.exceptions
-
 import numpy as np
 import numpy.testing as npt
-
 import pytest
 
+from aeolus import coord
 
 iris.FUTURE.datum_support = True
 TST_DATA = Path(__file__).parent / "data" / "test_data"
@@ -51,8 +47,12 @@ def test__is_longitude_global():
 
 def test_coord_to_cube():
     xc = iris.coords.DimCoord([-1, 2, 3], units="m", standard_name="longitude")
-    yc = iris.coords.DimCoord([10, 30, 50, 70], units="m", standard_name="latitude")
-    zc = iris.coords.DimCoord([1000, 500], units="hPa", standard_name="air_pressure")
+    yc = iris.coords.DimCoord(
+        [10, 30, 50, 70], units="m", standard_name="latitude"
+    )
+    zc = iris.coords.DimCoord(
+        [1000, 500], units="hPa", standard_name="air_pressure"
+    )
     arr = np.arange(24).reshape((2, 4, 3))
     cube = iris.cube.Cube(
         data=arr,
@@ -99,7 +99,7 @@ def test_isel_cube(example_cubelist_from_file):
 def test_isel_cubelist(example_cubelist_from_file):
     cl = example_cubelist_from_file
     result = coord.isel(cl, "latitude", 11)
-    assert all([i.shape == (7, 72) for i in result])
+    assert all(i.shape == (7, 72) for i in result)
     assert result[-1].coord("latitude").points[0] == -44.0
     result = coord.isel(cl, "blah", 11)
     assert result == cl

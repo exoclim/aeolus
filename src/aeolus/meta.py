@@ -1,20 +1,18 @@
-# -*- coding: utf-8 -*-
 """Metadata-related functionality."""
-import functools
 from collections.abc import Iterable
 from dataclasses import is_dataclass
+import functools
 
 import cf_units
-
-from iris.cube import Cube, CubeList
 from iris.analysis import _dimensional_metadata_comparison
+from iris.cube import Cube, CubeList
 from iris.util import broadcast_to_shape
 
 from .exceptions import ArgumentError  # , _warn
 
 
 def const_from_attrs(strict=True):
-    """Get constants container from the input cube attributes if not passed explicitly."""
+    """Get constants from the cube attributes if not passed explicitly."""
 
     def decorator(func):
         @functools.wraps(func)
@@ -32,7 +30,10 @@ def const_from_attrs(strict=True):
             if is_dataclass(const):
                 kwargs.update(const=const)
             else:
-                msg = "`const` has to be the function argument or in the cube attributes."
+                msg = (
+                    "`const` has to be the function argument "
+                    "or in the cube attributes."
+                )
                 if strict:
                     raise ArgumentError(msg)
                 # else:
@@ -75,10 +76,14 @@ def preserve_shape(func):
         cell_methods = cube_out.cell_methods
         dim_map = []
         for ndim, _ in enumerate(orig_shape):
-            for pair in _dimensional_metadata_comparison(cube_out, cube_in)["not_equal"]:
+            for pair in _dimensional_metadata_comparison(cube_out, cube_in)[
+                "not_equal"
+            ]:
                 if ndim not in cube_in.coord_dims(pair[0]):
                     dim_map.append(ndim)
-        bc_data = broadcast_to_shape(cube_out.data, orig_shape, sorted(set(dim_map)))
+        bc_data = broadcast_to_shape(
+            cube_out.data, orig_shape, sorted(set(dim_map))
+        )
         cube_out = cube_in.copy(data=bc_data)
         cube_out.rename(out_name)
         cube_out.cell_methods = cell_methods

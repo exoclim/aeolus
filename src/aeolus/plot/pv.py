@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
 """Prepare data in spherical coordinates for pyvista plotting."""
 import numpy as np
-
 from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 
 from ..coord import _cell_bounds
 from ..exceptions import _warn
 from ..model import um
 
-
 __all__ = ("grid_for_scalar_cube_sph", "grid_for_vector_cubes_sph")
 
 
-def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scalar3d", model=um):
+def grid_for_scalar_cube_sph(
+    cube, z_scale=1, z_offset=0, grid=None, label="scalar3d", model=um
+):
     """
-    Create a `pyvista` grid for an `iris` cube (2D or 3D) in spherical coordinates.
+    Create a `pyvista` grid for an `iris` cube in spherical coordinates.
 
     Parameters
     ----------
@@ -25,8 +24,8 @@ def grid_for_scalar_cube_sph(cube, z_scale=1, z_offset=0, grid=None, label="scal
     z_offset: float, optional
         Scaling offset for the vertical level dimension.
     grid: pyvista.StructuredGrid, optional
-        If given, add data to the existing grid, otherwise create a new one from
-        the input cube's coordinates.
+        If given, add data to the existing grid, otherwise create a new one
+        from the input cube's coordinates.
     label: str, optional
         Label for the data within the grid.
     model: aeolus.model.Model, optional
@@ -71,7 +70,7 @@ def grid_for_vector_cubes_sph(
     model=um,
 ):
     """
-    Take wind vectors in spherical coordinates and create a `pyvista` grid for them.
+    Take winds in spherical coordinates and create a `pyvista` grid for them.
 
     Parameters
     ----------
@@ -94,8 +93,8 @@ def grid_for_vector_cubes_sph(
     ystride: float, optional
         Stride along the latitude axis.
     grid: pyvista.StructuredGrid, optional
-        If given, add data to the existing grid, otherwise create a new one from
-        the input cube's coordinates.
+        If given, add data to the existing grid, otherwise create a new one
+        from the input cube's coordinates.
     label: str, optional
         Label for the data within the grid.
     model: aeolus.model.Model, optional
@@ -127,7 +126,7 @@ def grid_for_vector_cubes_sph(
     # Rescale vertical wind for better viz
     w_sdata *= vertical_wind_scale
 
-    # Create a stack of vectors transformed from spherical to cartesian coordinates
+    # Create a stack of vectors transformed from spherical to cartesian coords
     vectors = np.stack(
         [
             i.transpose(inv_axes).swapaxes(u.ndim - 2, u.ndim - 1).ravel("C")

@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
 """Test synthobs submodule."""
 from pathlib import Path
-
-from aeolus import synthobs
 
 import iris
 import iris.coords
 import iris.cube
-
 import numpy as np
 import numpy.testing as npt
-
 import pytest
 
+from aeolus import synthobs
 
 iris.FUTURE.datum_support = True
 TST_DATA = Path(__file__).parent / "data" / "test_data"
@@ -44,12 +40,20 @@ def test_read_spectral_bands():
         0.00033333332976326346,
         0.0002500000118743628,
     ]
-    actual = synthobs.read_spectral_bands(TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11")
+    actual = synthobs.read_spectral_bands(
+        TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11"
+    )
     assert isinstance(actual, np.ndarray)
     assert actual.shape[0] == 500
-    npt.assert_allclose(expected_spectral_band_index, actual["spectral_band_index"][:5])
-    npt.assert_allclose(expected_lower_wavelength_limit, actual["lower_wavelength_limit"][:5])
-    npt.assert_allclose(expected_upper_wavelength_limit, actual["upper_wavelength_limit"][:5])
+    npt.assert_allclose(
+        expected_spectral_band_index, actual["spectral_band_index"][:5]
+    )
+    npt.assert_allclose(
+        expected_lower_wavelength_limit, actual["lower_wavelength_limit"][:5]
+    )
+    npt.assert_allclose(
+        expected_upper_wavelength_limit, actual["upper_wavelength_limit"][:5]
+    )
 
 
 def test_read_normalized_stellar_flux():
@@ -60,15 +64,25 @@ def test_read_normalized_stellar_flux():
         3.824304428690084e-08,
         6.35967865036946e-08,
     ]
-    actual = synthobs.read_normalized_stellar_flux(TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11")
+    actual = synthobs.read_normalized_stellar_flux(
+        TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11"
+    )
     assert isinstance(actual, iris.cube.Cube)
     assert actual.shape[0] == 500
     npt.assert_allclose(expected, actual.data[:5])
 
 
 def test_calc_stellar_flux():
-    expected = [4.66409295e-10, 8.61495993e-07, 2.38582461e-06, 4.70389445e-06, 7.82240474e-06]
-    actual = synthobs.calc_stellar_flux(TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11", 123)
+    expected = [
+        4.66409295e-10,
+        8.61495993e-07,
+        2.38582461e-06,
+        4.70389445e-06,
+        7.82240474e-06,
+    ]
+    actual = synthobs.calc_stellar_flux(
+        TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11", 123
+    )
     assert isinstance(actual, iris.cube.Cube)
     assert actual.shape[0] == 500
     npt.assert_allclose(expected, actual.data[:5])
@@ -76,7 +90,9 @@ def test_calc_stellar_flux():
 
 def test_calc_geom_mean_mirrored(example_trans_day, example_trans_night):
     # Default
-    actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night)
+    actual = synthobs.calc_geom_mean_mirrored(
+        example_trans_day, example_trans_night
+    )
     npt.assert_allclose(actual.data.max(), 1.5901232591606386e-08)
     npt.assert_allclose(
         actual.data[123, 45, 102:108],
@@ -92,7 +108,9 @@ def test_calc_geom_mean_mirrored(example_trans_day, example_trans_night):
     assert actual.units == example_trans_day.units
     assert actual.shape == example_trans_day.shape
     # With an additional shift along the x-coordinate
-    actual = synthobs.calc_geom_mean_mirrored(example_trans_day, example_trans_night, add_shift=-1)
+    actual = synthobs.calc_geom_mean_mirrored(
+        example_trans_day, example_trans_night, add_shift=-1
+    )
     npt.assert_allclose(actual.data.max(), 1.76899099563551e-08)
     npt.assert_allclose(
         actual.data[123, 45, 102:109],
@@ -132,7 +150,13 @@ def test_calc_transmission_spectrum(example_trans_day):
         0.00033333332976326346,
         0.0002500000118743628,
     ]
-    expected_rp_eff_over_rs = [0.06043149, 0.0605353, 0.06054769, 0.060621, 0.06062967]
+    expected_rp_eff_over_rs = [
+        0.06043149,
+        0.0605353,
+        0.06054769,
+        0.060621,
+        0.06062967,
+    ]
     actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum(
         example_trans_day,
         TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
@@ -140,20 +164,36 @@ def test_calc_transmission_spectrum(example_trans_day):
         475026500.0,
         28995379.0,
     )
-    actual_spectral_bands = actual_rp_eff_over_rs.coord("spectral_band_centres")
-    actual_spectral_band_ll = actual_rp_eff_over_rs.coord("spectral_band_lower_limit")
-    actual_spectral_band_ul = actual_rp_eff_over_rs.coord("spectral_band_upper_limit")
+    actual_spectral_bands = actual_rp_eff_over_rs.coord(
+        "spectral_band_centres"
+    )
+    actual_spectral_band_ll = actual_rp_eff_over_rs.coord(
+        "spectral_band_lower_limit"
+    )
+    actual_spectral_band_ul = actual_rp_eff_over_rs.coord(
+        "spectral_band_upper_limit"
+    )
     assert isinstance(actual_spectral_bands, iris.coords.AuxCoord)
     assert isinstance(actual_rp_eff_over_rs, iris.cube.Cube)
     assert actual_spectral_bands.shape[0] == 500
     assert actual_rp_eff_over_rs.shape[0] == 500
-    npt.assert_allclose(expected_spectral_bands, actual_spectral_bands.points[:5])
-    npt.assert_allclose(expected_lower_wavelength_limit, actual_spectral_band_ll.points[:5])
-    npt.assert_allclose(expected_upper_wavelength_limit, actual_spectral_band_ul.points[:5])
-    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[:5])
+    npt.assert_allclose(
+        expected_spectral_bands, actual_spectral_bands.points[:5]
+    )
+    npt.assert_allclose(
+        expected_lower_wavelength_limit, actual_spectral_band_ll.points[:5]
+    )
+    npt.assert_allclose(
+        expected_upper_wavelength_limit, actual_spectral_band_ul.points[:5]
+    )
+    npt.assert_allclose(
+        expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[:5]
+    )
 
 
-def test_calc_transmission_spectrum_day_night_average(example_trans_day, example_trans_night):
+def test_calc_transmission_spectrum_day_night_average(
+    example_trans_day, example_trans_night
+):
     # Default
     expected_rp_eff_over_rs = [
         0.1289366838346542,
@@ -162,17 +202,21 @@ def test_calc_transmission_spectrum_day_night_average(example_trans_day, example
         0.1289365978678745,
         0.1289363841112755,
     ]
-    actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
-        example_trans_day,
-        example_trans_night,
-        spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
-        stellar_constant_at_1_au=1272.86475403,
-        stellar_radius=7.302834e08,
-        planet_top_of_atmosphere=94193200,
+    actual_rp_eff_over_rs = (
+        synthobs.calc_transmission_spectrum_day_night_average(
+            example_trans_day,
+            example_trans_night,
+            spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
+            stellar_constant_at_1_au=1272.86475403,
+            stellar_radius=7.302834e08,
+            planet_top_of_atmosphere=94193200,
+        )
     )
     assert isinstance(actual_rp_eff_over_rs, iris.cube.Cube)
     assert actual_rp_eff_over_rs.shape[0] == 500
-    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:])
+    npt.assert_allclose(
+        expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:]
+    )
     # With an additional shift
     expected_rp_eff_over_rs = [
         0.1289324245796913,
@@ -181,13 +225,17 @@ def test_calc_transmission_spectrum_day_night_average(example_trans_day, example
         0.1289323585757668,
         0.1289320864595353,
     ]
-    actual_rp_eff_over_rs = synthobs.calc_transmission_spectrum_day_night_average(
-        example_trans_day,
-        example_trans_night,
-        add_shift=-1,
-        spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
-        stellar_constant_at_1_au=1272.86475403,
-        stellar_radius=7.302834e08,
-        planet_top_of_atmosphere=94193200,
+    actual_rp_eff_over_rs = (
+        synthobs.calc_transmission_spectrum_day_night_average(
+            example_trans_day,
+            example_trans_night,
+            add_shift=-1,
+            spectral_file=TST_DATA / "spectral" / "sp_sw_500ir_bd_hatp11",
+            stellar_constant_at_1_au=1272.86475403,
+            stellar_radius=7.302834e08,
+            planet_top_of_atmosphere=94193200,
+        )
     )
-    npt.assert_allclose(expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:])
+    npt.assert_allclose(
+        expected_rp_eff_over_rs, actual_rp_eff_over_rs.data[-5:]
+    )

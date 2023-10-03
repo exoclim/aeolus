@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Calculations."""
 from .calculus import d_dx, d_dy, d_dz, deriv, div_h, integrate
 from .diag import (
@@ -29,9 +28,14 @@ from .diag import (
     wind_speed,
     zonal_mass_streamfunction,
 )
-from .flux_h import horizontal_fluxes_through_region_boundaries, net_horizontal_flux_to_region
+from .flux_h import (
+    horizontal_fluxes_through_region_boundaries,
+    net_horizontal_flux_to_region,
+)
 from .stats import (
     abs_coord_mean,
+    after_n_day_mean,
+    between_day_mean,
     cumsum,
     last_n_day_mean,
     meridional_mean,
@@ -44,8 +48,6 @@ from .stats import (
     time_mean,
     vertical_mean,
     zonal_mean,
-    after_n_day_mean,
-    between_day_mean,
 )
 from .tl import (
     regrid_to_rotated_pole_coordinates,

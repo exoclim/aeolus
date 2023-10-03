@@ -1,0 +1,5 @@
+cached_property>=1.5.1
+matplotlib>=3.6
+numpy>=1.21.0,!=1.24.3
+scitools-iris>=3.4
+latlon23>=1.0.7

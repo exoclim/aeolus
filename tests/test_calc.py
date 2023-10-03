@@ -1,23 +1,18 @@
-# -*- coding: utf-8 -*-
 """Test calc submodule."""
 from pathlib import Path
 
-from aeolus import calc
-from aeolus.exceptions import AeolusWarning
-
 from cf_units import Unit
-
 import iris
 import iris.coord_systems
 import iris.coords
 import iris.cube
 import iris.exceptions
-
 import numpy as np
 import numpy.testing as npt
-
 import pytest
 
+from aeolus import calc
+from aeolus.exceptions import AeolusWarning
 
 iris.FUTURE.datum_support = True
 TST_DATA = Path(__file__).parent / "data" / "test_data"
@@ -30,8 +25,12 @@ def example_cubelist_from_file():
 
 def test_integrate():
     xc = iris.coords.DimCoord([-1, 2, 3], units="m", standard_name="longitude")
-    yc = iris.coords.DimCoord([10, 30, 50, 70], units="m", standard_name="latitude")
-    zc = iris.coords.DimCoord([1000, 500], units="hPa", standard_name="air_pressure")
+    yc = iris.coords.DimCoord(
+        [10, 30, 50, 70], units="m", standard_name="latitude"
+    )
+    zc = iris.coords.DimCoord(
+        [1000, 500], units="hPa", standard_name="air_pressure"
+    )
     arr = np.arange(24).reshape((2, 4, 3))
     cube = iris.cube.Cube(
         data=arr,
@@ -40,7 +39,10 @@ def test_integrate():
         units="m/s",
     )
     x_int = calc.integrate(cube, "longitude")
-    npt.assert_allclose(x_int.data, np.array([[3.0, 15.0, 27.0, 39.0], [51.0, 63.0, 75.0, 87.0]]))
+    npt.assert_allclose(
+        x_int.data,
+        np.array([[3.0, 15.0, 27.0, 39.0], [51.0, 63.0, 75.0, 87.0]]),
+    )
     assert x_int.units == Unit("m2/s")
     assert x_int.name() == "integral_of_x_wind_wrt_longitude"
     t_arr = np.array(
@@ -122,7 +124,9 @@ def test_spatial_mean_twice(example_cubelist_from_file):
 def test_time_mean_single():
     xc = iris.coords.DimCoord([0, 1], units="m", standard_name="longitude")
     tc = iris.coords.DimCoord(
-        np.arange(10), units="hours since 1970-01-01 00:00:00", standard_name="time"
+        np.arange(10),
+        units="hours since 1970-01-01 00:00:00",
+        standard_name="time",
     )
     tc.guess_bounds()
     arr = np.arange(20).reshape((10, 2))
@@ -145,7 +149,9 @@ def test_time_mean_single():
 def test_time_mean_collection():
     xc = iris.coords.DimCoord([0, 1], units="m", standard_name="longitude")
     tc = iris.coords.DimCoord(
-        np.arange(10), units="hours since 1970-01-01 00:00:00", standard_name="time"
+        np.arange(10),
+        units="hours since 1970-01-01 00:00:00",
+        standard_name="time",
     )
     tc.guess_bounds()
     arr = np.arange(20).reshape((10, 2))

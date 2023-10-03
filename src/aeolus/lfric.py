@@ -1,21 +1,19 @@
-# -*- coding: utf-8 -*-
 """Utilities for working with LFRic output."""
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Callable, Sequence, Optional, Union
+from typing import Callable, Optional, Union
 
 import iris
+import iris.coords
 from iris.cube import Cube, CubeList
 import iris.exceptions
 from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD
-import iris.coords
 import iris.util
-
 import numpy as np
 
 from .io import load_vert_lev
 from .model import lfric
 from .model.base import Model
-
 
 __all__ = (
     "add_um_height_coord",
@@ -52,7 +50,9 @@ def add_um_height_coord(cube, field, filename, path_to_levels_file):
         )
     )
     """
-    lev_coords = [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+    lev_coords = [
+        i.name() for i in cube.dim_coords if i.name().endswith("_levels")
+    ]
     if len(lev_coords) == 1:
         thlev = load_vert_lev(path_to_levels_file, lev_type="theta")
         rholev = load_vert_lev(path_to_levels_file, lev_type="rho")
@@ -65,7 +65,7 @@ def add_um_height_coord(cube, field, filename, path_to_levels_file):
             points,
             long_name="level_height",
             units="m",
-            attributes=dict(positive="up"),
+            attributes={"positive": "up"},
         )
         hgt_coord.guess_bounds()
         cube.add_aux_coord(hgt_coord, data_dims=cube.coord_dims(lev_coord))
@@ -90,7 +90,9 @@ def add_equally_spaced_height_coord(cube, field, filename, model_top_height):
         )
     )
     """
-    lev_coords = [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+    lev_coords = [
+        i.name() for i in cube.dim_coords if i.name().endswith("_levels")
+    ]
     if len(lev_coords) == 1:
         lev_coord = cube.coord(lev_coords[0])
         if "full" in lev_coord.name().lower():
@@ -102,7 +104,7 @@ def add_equally_spaced_height_coord(cube, field, filename, model_top_height):
             points,
             long_name="level_height",
             units="m",
-            attributes=dict(positive="up"),
+            attributes={"positive": "up"},
         )
         hgt_coord.guess_bounds()
         cube.add_aux_coord(hgt_coord, data_dims=cube.coord_dims(lev_coord))
@@ -136,7 +138,6 @@ def fix_time_coord(cube, field, filename):
     Make sure that time coordinate is correct type, seems to always be
     loaded as a basic AuxCoord rather than a Scalar or DimCoord.
     """
-
     # Ignore cubes with no time coordinate
     if len(cube.coords("time")) == 0:
         raise iris.exceptions.IgnoreCubeException
@@ -185,7 +186,9 @@ def replace_level_coord_with_height(cube: Cube) -> Cube:
     --------
     add_equally_spaced_height_coord
     """
-    lev_coords = [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+    lev_coords = [
+        i.name() for i in cube.dim_coords if i.name().endswith("_levels")
+    ]
     if len(lev_coords) == 1:
         lev_coord = cube.coord(lev_coords[0])
         cube.remove_coord(lev_coord)
@@ -193,7 +196,9 @@ def replace_level_coord_with_height(cube: Cube) -> Cube:
     return cube
 
 
-def _regrid_cubes_on_edges(src_cube: Cube, tgt_cube: Cube, method: Optional[str] = "auto") -> Cube:
+def _regrid_cubes_on_edges(
+    src_cube: Cube, tgt_cube: Cube, method: Optional[str] = "auto"
+) -> Cube:
     """Temporary solution to regrid cubes defined on cell edges."""
     # Using the approach in gungho/rose-stem/app/plot/bin/plot_zonal.py
     from iris._concatenate import _CubeSignature
@@ -205,7 +210,9 @@ def _regrid_cubes_on_edges(src_cube: Cube, tgt_cube: Cube, method: Optional[str]
     tgt_x2d, tgt_y2d = get_xy_grids(tgt_cube)
 
     non_xy_coords = [
-        name for c in src_cube.dim_coords if (name := c.name()) not in ["longitude", "latitude"]
+        name
+        for c in src_cube.dim_coords
+        if (name := c.name()) not in ["longitude", "latitude"]
     ]
 
     result = CubeList()
@@ -224,7 +231,9 @@ def _regrid_cubes_on_edges(src_cube: Cube, tgt_cube: Cube, method: Optional[str]
                 (tgt_x2d, tgt_y2d),
                 method="nearest",
             )
-            reg_data_linear[np.isnan(reg_data_linear)] = reg_data_nearest[np.isnan(reg_data_linear)]
+            reg_data_linear[np.isnan(reg_data_linear)] = reg_data_nearest[
+                np.isnan(reg_data_linear)
+            ]
             reg_data = reg_data_linear
         else:
             reg_data = griddata(
@@ -258,7 +267,9 @@ def simple_regrid_lfric(
     # Horizontal regridding
     result_h = CubeList()
     ref_cube = cube_list.extract_cube(ref_cube_constr)
-    regridder = MeshToGridESMFRegridder(ref_cube, tgt_cube, method="conservative")
+    regridder = MeshToGridESMFRegridder(
+        ref_cube, tgt_cube, method="conservative"
+    )
     for cube in cube_list:
         if cube.location == "edge":
             cube_reg = _regrid_cubes_on_edges(cube, tgt_cube)
@@ -269,7 +280,9 @@ def simple_regrid_lfric(
     result_v = iris.cube.CubeList()
     tgt_points = ("level_height", ref_cube.coord("level_height").points)
     for cube in result_h:
-        if len([i.name() for i in cube.dim_coords if i.name().endswith("_levels")]):
+        if len(
+            [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+        ):
             result_v.append(
                 replace_level_coord_with_height(cube).interpolate(
                     [tgt_points], iris.analysis.Linear()
@@ -280,7 +293,9 @@ def simple_regrid_lfric(
     return result_v
 
 
-def ugrid_spatial(cube: Cube, aggr: str, model: Optional[Model] = lfric) -> Cube:
+def ugrid_spatial(
+    cube: Cube, aggr: str, model: Optional[Model] = lfric
+) -> Cube:
     """Collapse a UGRID `iris.cube.Cube` over x and y coord with no weights."""
     cube_copy = cube.copy()
     tmp_coord = iris.coords.AuxCoord(
@@ -293,7 +308,9 @@ def ugrid_spatial(cube: Cube, aggr: str, model: Optional[Model] = lfric) -> Cube
     cube_copy.remove_coord(model.x)
     cube_copy.remove_coord(model.y)
 
-    cube_aggr = cube_copy.collapsed(tmp_coord.name(), getattr(iris.analysis, aggr.upper()))
+    cube_aggr = cube_copy.collapsed(
+        tmp_coord.name(), getattr(iris.analysis, aggr.upper())
+    )
     cube_aggr.remove_coord(tmp_coord)
     return cube_aggr
 

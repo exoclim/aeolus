@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Runtime configuration."""
 import threading
 
@@ -21,7 +20,7 @@ class RuntimeOpts(threading.local):
     def __setattr__(self, name, value):
         """Set attributes."""
         if name not in self.__dict__:
-            msg = "'RuntimeOpts' object has no attribute {!r}".format(name)
+            msg = f"'RuntimeOpts' object has no attribute {name!r}"
             raise AttributeError(msg)
         self.__dict__[name] = value
 

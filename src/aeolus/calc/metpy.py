@@ -1,21 +1,14 @@
-# -*- coding: utf-8 -*-
 """Interface to metpy calc functions."""
 import functools
 
 import cf_units
-
 from iris.cube import Cube
-
 import metpy.units as metunits
-
 import numpy as np
-
 import pint
-
 import xarray as xr
 
 from ..exceptions import UnitFormatError
-
 
 __all__ = ("preprocess_iris",)
 
@@ -24,15 +17,16 @@ def preprocess_iris(f):
     """
     Wrap a function from `metpy.calc` for it to accept iris cubes as arguments.
 
-    In addition, this decorator converts `metpy.calc` output by using the first input argument
-    as a 'donor' cube.
-    Note this works only for functions that preserve dimensions and may not work with some units.
-    Now that metpy has xarray preprocessor, this decorator depends on it.
+    In addition, this decorator converts `metpy.calc` output by using the first
+    input argument as a 'donor' cube.
+    Note this works only for functions that preserve dimensions and may not
+    work with some units. Now that metpy has xarray preprocessor,
+    this decorator depends on it.
     """
 
     # Define local functions
     def to_xarray(cube):
-        """Convert `iris.cube.Cube` to `xarray.DataArray` and format units correctly."""
+        """Convert `iris cube` to `DataArray` and format units correctly."""
         _unit = None
         for ut_format in set(cf_units.UT_FORMATS):
             try:
@@ -40,7 +34,9 @@ def preprocess_iris(f):
             except pint.errors.DimensionalityError:
                 pass
         if _unit is None:
-            raise UnitFormatError(f"Unable to convert cube units of\n{repr(cube)}\nto metpy units")
+            raise UnitFormatError(
+                f"Unable to convert \n{repr(cube)} units \nto metpy units"
+            )
         arr = xr.DataArray.from_iris(cube)
         arr.attrs["units"] = str(_unit)
         return arr
@@ -81,7 +77,10 @@ def preprocess_iris(f):
             else:
                 nargs.append(arg)
 
-        kwargs = {k: (to_xarray(v) if isinstance(v, Cube) else v) for k, v in kwargs.items()}
+        kwargs = {
+            k: (to_xarray(v) if isinstance(v, Cube) else v)
+            for k, v in kwargs.items()
+        }
 
         # Call the decorated function
         out = f(*nargs, **kwargs)

@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 """Functions for post-processing UM output."""
-import warnings
 from typing import Optional
 
 import iris
@@ -8,16 +6,16 @@ from iris.cube import CubeList
 
 from .coord import (
     add_planet_calendar,
+    ensure_bounds,
+    interp_to_cube_time,
     regrid_3d,
     replace_z_coord,
     roll_cube_pm180,
-    ensure_bounds,
-    interp_to_cube_time,
 )
+from .exceptions import _warn
 from .model import um
 from .model.base import Model
 from .subset import CM_INST_CONSTR, CM_MEAN_CONSTR, DimConstr, unique_cubes
-
 
 __all__ = ("process_cubes",)
 
@@ -31,15 +29,19 @@ def process_cubes(
     regrid_multi_lev: Optional[bool] = True,
     roll_pm180: Optional[bool] = True,
     add_calendar: Optional[bool] = False,
-    calendar: Optional[dict] = {},
+    calendar: Optional[dict] = None,
     planet: Optional[str] = "earth",
     remove_duplicates: Optional[bool] = True,
     use_varpack: Optional[bool] = False,
-    varpack: Optional[dict] = {},
+    varpack: Optional[dict] = None,
     interp_time: Optional[bool] = True,
     model: Optional[Model] = um,
 ) -> CubeList:
     """Post-process data for easier analysis."""
+    if varpack is None:
+        varpack = {}
+    if calendar is None:
+        calendar = {}
     DC = DimConstr(model=model)
 
     if remove_duplicates:
@@ -62,7 +64,8 @@ def process_cubes(
         if extract_incr:
             cubes += cubelist.extract(
                 iris.AttributeConstraint(
-                    STASH=lambda x: x.item in [181, 182, 233] and x.section not in [0]
+                    STASH=lambda x: x.item in [181, 182, 233]
+                    and x.section not in [0]
                 )
             )
     else:
@@ -75,7 +78,12 @@ def process_cubes(
 
         # Interpolate to common levels
         cubes = CubeList(
-            [regrid_3d(replace_z_coord(cube, model=model), ref_cube, model=model) for cube in cubes]
+            [
+                regrid_3d(
+                    replace_z_coord(cube, model=model), ref_cube, model=model
+                )
+                for cube in cubes
+            ]
         )
     # Fix units of increments
     for cube in cubes:
@@ -126,5 +134,5 @@ def process_cubes(
                     planet=planet,
                 )
         except KeyError:
-            warnings.warn(f"Calendar for {planet=} not found.")
+            _warn(f"Calendar for {planet=} not found.")
     return final

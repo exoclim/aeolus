@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 """Text-related formatting functions."""
 import itertools
 import math
 import string
 
-from ..exceptions import ArgumentError
 from ..calc import spatial_mean
-
+from ..exceptions import ArgumentError
 
 __all__ = (
     "cube_minmeanmax_str",
@@ -23,11 +21,13 @@ def cube_minmeanmax_str(
     eq_sign="=",
     fmt="auto",
     weight=True,
-    labels=["min", "mean", "max"],
+    labels=None,
     **kw_unit_format,
 ):
     """Return min, mean and max of an iris cube as a string."""
     # Compute the stats
+    if labels is None:
+        labels = ["min", "mean", "max"]
     _min = float(cube.data.min())
     if weight:
         _mean = float(spatial_mean(cube).data)
@@ -57,7 +57,8 @@ def fmt_lonlat(value, lon_or_lat, degree=False):
     Parameters
     ----------
     value: int
-        Value of longitude or latitude. Note that this function is only for integer values.
+        Value of longitude or latitude.
+        Note that this function is only for integer values.
     lon_or_lat: str
         Longitude or latitude
     degree: bool, optional
@@ -83,7 +84,9 @@ def fmt_lonlat(value, lon_or_lat, degree=False):
     elif lon_or_lat.lower().startswith("lon"):
         res = Longitude(value)
     else:
-        raise ArgumentError("2nd arg or the function should start with `lon` or `lat`")
+        raise ArgumentError(
+            "2nd arg or the function should start with `lon` or `lat`"
+        )
     out = res.to_string("%d%H")
     if degree:
         out = out[:-1] + r"$^\degree$" + out[-1]
@@ -101,16 +104,24 @@ def subplot_label_generator():
 
 def tex2cf_units(unit_str):
     """Convert a TeX string to a string that can be used in cf_units."""
-    return unit_str.replace("$", "").replace("{", "").replace("}", "").replace("^", "**")
+    return (
+        unit_str.replace("$", "")
+        .replace("{", "")
+        .replace("}", "")
+        .replace("^", "**")
+    )
 
 
-def unit_format(value, unit="1", decimal_digits=1, precision=None, exponent=None):
+def unit_format(
+    value, unit="1", decimal_digits=1, precision=None, exponent=None
+):
     r"""
     Return a string representation of a given number with units.
 
-    Format the scientific notation of the given number for use with LaTeX or Mathtext,
-    with specified number of significant decimal digits and precision (number of decimal digits
-    to show). The exponent to be used can also be specified explicitly.
+    Format the scientific notation of the given number for use with LaTeX,
+    with specified number of significant decimal digits and precision
+    (number of decimal digits to show).
+    The exponent to be used can also be specified explicitly.
 
     Parameters
     ----------

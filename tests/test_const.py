@@ -1,16 +1,12 @@
-# -*- coding: utf-8 -*-
 """Test calc submodule."""
 from pathlib import Path
 
-from aeolus import const
-from aeolus.exceptions import ArgumentError, LoadError
-
 import iris.cube
-
 import numpy.testing as npt
-
 import pytest
 
+from aeolus import const
+from aeolus.exceptions import ArgumentError, LoadError
 
 TST_DATA = Path(__file__).parent / "data" / "test_data"
 CONST_FILE = "dummy"
@@ -35,7 +31,9 @@ def test_loaderror():
     with pytest.raises(LoadError):
         const.init_const(CONST_FILE)
     with pytest.raises(LoadError):
-        const.init_const(CONST_FILE, directory=TST_DATA / "nonexistent_directory")
+        const.init_const(
+            CONST_FILE, directory=TST_DATA / "nonexistent_directory"
+        )
 
 
 def test_argumenterror():

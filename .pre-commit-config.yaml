@@ -2,27 +2,54 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0  # Use the ref you want to point at
     hooks:
+      # Prevent giant files from being committed.
+    - id: check-added-large-files
+      # Check whether files parse as valid Python.
+    - id: check-ast
+      # Check for file name conflicts on case-insensitive file-systems.
+    - id: check-case-conflict
+      # Check for files that contain merge conflict strings.
+    - id: check-merge-conflict
+      # Check for debugger imports and py37+ `breakpoint()` calls in Python source.
+    - id: debug-statements
+      # Check JSON file syntax
     - id: check-json
+      # Check TOML file syntax.
+    - id: check-toml
+      # Check YAML file syntax.
     - id: check-yaml
-    - id: fix-encoding-pragma
-      exclude: versioneer\.py|src/aeolus/_version\.py$
+      # Makes sure files end in a newline and only a newline
+    - id: end-of-file-fixer
+      exclude_types: [svg]
+      # Replaces or checks mixed line ending
+    - id: mixed-line-ending
+      # Trims trailing whitespace
     - id: trailing-whitespace
     - id: name-tests-test
       args: ['--django']
-  - repo: https://github.com/psf/black
-    rev: 23.9.1
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.0.292"
     hooks:
-    - id: black
-      language_version: python3
-      exclude: versioneer\.py|src/aeolus/_version\.py$
+      - id: ruff
+        types: [file, python]
+        args: [--fix]
+
+  - repo: https://github.com/psf/black
+    rev: "23.9.1"
+    hooks:
+      - id: black
+        types: [file, python]
+        args: [--config=./pyproject.toml]
+
   - repo: https://github.com/asottile/blacken-docs
     rev: 1.16.0
     hooks:
     - id: blacken-docs
       types: [file, rst]
       additional_dependencies: [black]
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: "v0.14"
     hooks:
-    - id: flake8
-      language_version: python3
+      - id: validate-pyproject

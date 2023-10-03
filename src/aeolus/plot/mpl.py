@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 """Matplotlib-related utilities."""
-from typing import Sequence, Union, Optional
+from collections.abc import Sequence
 from pathlib import Path
+from typing import Optional, Union
 
 from iris.cube import Cube
 from matplotlib.axes._axes import Axes
@@ -10,10 +10,10 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import numpy as np
 
-from ..runtime import RUNTIME
+from ..coord import get_cube_rel_days
 from ..model import lfric, um
 from ..model.base import Model
-from ..coord import get_cube_rel_days
+from ..runtime import RUNTIME
 
 __all__ = (
     "add_custom_legend",
@@ -28,13 +28,15 @@ __all__ = (
 )
 
 
-def add_custom_legend(ax_or_fig: Union[Axes, Figure], styles_and_labels: dict, **leg_kw) -> None:
+def add_custom_legend(
+    ax_or_fig: Union[Axes, Figure], styles_and_labels: dict, **leg_kw
+) -> None:
     """
     Add a custom legend to a matplotlib axis or figure.
 
     Parameters
     ----------
-    ax_or_fig: matplotlib.axes._subplots.AxesSubplot or matplotlib.figure.Figure
+    ax_or_fig: matplotlib.axes._subplots.AxesSubplot / matplotlib.figure.Figure
         Matplotlib object where to put the legend.
     styles_and_labels: dict
         Dictionary with labels as keys and a dictionary of plot
@@ -60,13 +62,18 @@ def add_custom_legend(ax_or_fig: Union[Axes, Figure], styles_and_labels: dict, *
         pass
 
 
-def capitalise(s: str, sep_old: Optional[str] = "_", sep_new: Optional[str] = " ") -> str:
+def capitalise(
+    s: str, sep_old: Optional[str] = "_", sep_new: Optional[str] = " "
+) -> str:
     """Split the string and capitalise each word."""
     return sep_new.join([i.capitalize() for i in s.split(sep_old)])
 
 
 def hcross(
-    cube: Cube, ax: Optional[Axes] = None, model: Optional[Model] = um, **kw_plt
+    cube: Cube,
+    ax: Optional[Axes] = None,
+    model: Optional[Model] = um,
+    **kw_plt,
 ) -> Optional[Axes]:
     """Plot a horizontal cross-section aka lat-lon map of a 2D cube."""
     newax = False
@@ -89,7 +96,9 @@ def linspace_pm1(n: int) -> np.typing.ArrayLike:
 
 
 def make_list_2d(
-    list_x: Sequence[str], list_y: Sequence[str], transpose: Optional[bool] = False
+    list_x: Sequence[str],
+    list_y: Sequence[str],
+    transpose: Optional[bool] = False,
 ) -> list:
     """Create a nested list out of 2 given lists."""
     if transpose:
@@ -99,7 +108,10 @@ def make_list_2d(
 
 
 def map_scatter(
-    cube: Cube, ax: Optional[Axes] = None, model: Optional[Model] = lfric, **kw_plt
+    cube: Cube,
+    ax: Optional[Axes] = None,
+    model: Optional[Model] = lfric,
+    **kw_plt,
 ) -> Optional[Axes]:
     """Plot a lat-lon scatter plot of a 2D cube."""
     newax = False
@@ -120,7 +132,10 @@ def map_scatter(
 
 
 def timeseries_1d(
-    cube: Cube, ax: Optional[Axes] = None, model: Optional[Model] = um, **kw_plt
+    cube: Cube,
+    ax: Optional[Axes] = None,
+    model: Optional[Model] = um,
+    **kw_plt,
 ) -> Optional[Axes]:
     """Plot time series of a 1D cube."""
     newax = False
@@ -134,7 +149,10 @@ def timeseries_1d(
 
 
 def timeseries_2d(
-    cube: Cube, ax: Optional[Axes] = None, model: Optional[Model] = um, **kw_plt
+    cube: Cube,
+    ax: Optional[Axes] = None,
+    model: Optional[Model] = um,
+    **kw_plt,
 ) -> Optional[Axes]:
     """Plot time series of a 2D cube."""
     newax = False

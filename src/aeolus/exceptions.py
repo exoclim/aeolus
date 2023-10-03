@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 """Exceptions specific to aeolus package."""
 from warnings import warn
 
 
 def _warn(msg):
     """Raise an aeolus-related warning."""
-    warn(msg, AeolusWarning)
+    warn(msg, AeolusWarning, stacklevel=2)
 
 
 class AeolusWarning(UserWarning):
