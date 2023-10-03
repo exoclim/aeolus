@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Physical constants &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>Physical constants &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,7 +37,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -106,11 +106,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.const.add_planet_conf_to_cubes">
 <span class="sig-prename descclassname"><span class="pre">aeolus.const.</span></span><span class="sig-name descname"><span class="pre">add_planet_conf_to_cubes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cubelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#add_planet_conf_to_cubes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.add_planet_conf_to_cubes" title="Link to this definition"></a></dt>
-<dd><p>Add constants container to the cube attributes and replace its coordinate system.</p>
+<dd><p>Add constants container to the cube attributes and adjust its coord system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.8.0.dev23)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube of zonal velocity (u).</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.8.0.dev28)"><em>iris.cube.CubeList</em></a>) – List of cubes containing a cube of zonal velocity (u).</p></li>
 <li><p><strong>const</strong> (<em>aeolus.const.const.ConstContainer</em><em>, </em><em>optional</em>) – Constainer with the relevant planetary constants.</p></li>
 </ul>
 </dd>
@@ -120,7 +120,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.const.get_planet_radius">
 <span class="sig-prename descclassname"><span class="pre">aeolus.const.</span></span><span class="sig-name descname"><span class="pre">get_planet_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6371229.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/const/const.html#get_planet_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.const.get_planet_radius" title="Link to this definition"></a></dt>
-<dd><p>Get planet radius in metres from cube attributes or coordinate system.</p>
+<dd><p>Get the planet radius in metres from cube attributes.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -131,9 +131,9 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the constants set.
-Should be identical to the JSON file name (without the .json extension).
+Should be identical to the JSON file name (w/o the .json extension).
 If not given, only general physical constants are returned.</p></li>
-<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files containing constants for a specific planet.</p></li>
+<li><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a><em>, </em><em>optional</em>) – Path to a folder with JSON files with constants for a specific planet.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -143,7 +143,7 @@ If not given, only general physical constants are returned.</p></li>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">init_const</span><span class="p">(</span><span class="s1">&#39;earth&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
-<span class="go">EarthConstants(gravity [m s-2], radius [m], day [s], solar_constant [W m-2], ...)</span>
+<span class="go">EarthConstants(gravity [m s-2], radius [m], day [s], ...)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">gravity</span>
 <span class="go">&lt;iris &#39;Cube&#39; of gravity / (m s-2) (scalar cube)&gt;</span>
 </pre></div>

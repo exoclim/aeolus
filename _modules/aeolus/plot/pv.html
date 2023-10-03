@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.plot.pv &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.plot.pv &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -77,25 +77,24 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.plot.pv</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Prepare data in spherical coordinates for pyvista plotting.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Prepare data in spherical coordinates for pyvista plotting.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
 <span class="kn">from</span> <span class="nn">pyvista</span> <span class="kn">import</span> <span class="n">grid_from_sph_coords</span><span class="p">,</span> <span class="n">transform_vectors_sph_to_cart</span>
 
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">_cell_bounds</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">_warn</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 
-
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;grid_for_scalar_cube_sph&quot;</span><span class="p">,</span> <span class="s2">&quot;grid_for_vector_cubes_sph&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="grid_for_scalar_cube_sph">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.pv.grid_for_scalar_cube_sph">[docs]</a>
-<span class="k">def</span> <span class="nf">grid_for_scalar_cube_sph</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;scalar3d&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">grid_for_scalar_cube_sph</span><span class="p">(</span>
+    <span class="n">cube</span><span class="p">,</span> <span class="n">z_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;scalar3d&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a `pyvista` grid for an `iris` cube (2D or 3D) in spherical coordinates.</span>
+<span class="sd">    Create a `pyvista` grid for an `iris` cube in spherical coordinates.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -106,8 +105,8 @@
 <span class="sd">    z_offset: float, optional</span>
 <span class="sd">        Scaling offset for the vertical level dimension.</span>
 <span class="sd">    grid: pyvista.StructuredGrid, optional</span>
-<span class="sd">        If given, add data to the existing grid, otherwise create a new one from</span>
-<span class="sd">        the input cube&#39;s coordinates.</span>
+<span class="sd">        If given, add data to the existing grid, otherwise create a new one</span>
+<span class="sd">        from the input cube&#39;s coordinates.</span>
 <span class="sd">    label: str, optional</span>
 <span class="sd">        Label for the data within the grid.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
@@ -155,7 +154,7 @@
     <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Take wind vectors in spherical coordinates and create a `pyvista` grid for them.</span>
+<span class="sd">    Take winds in spherical coordinates and create a `pyvista` grid for them.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -178,8 +177,8 @@
 <span class="sd">    ystride: float, optional</span>
 <span class="sd">        Stride along the latitude axis.</span>
 <span class="sd">    grid: pyvista.StructuredGrid, optional</span>
-<span class="sd">        If given, add data to the existing grid, otherwise create a new one from</span>
-<span class="sd">        the input cube&#39;s coordinates.</span>
+<span class="sd">        If given, add data to the existing grid, otherwise create a new one</span>
+<span class="sd">        from the input cube&#39;s coordinates.</span>
 <span class="sd">    label: str, optional</span>
 <span class="sd">        Label for the data within the grid.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
@@ -211,7 +210,7 @@
     <span class="c1"># Rescale vertical wind for better viz</span>
     <span class="n">w_sdata</span> <span class="o">*=</span> <span class="n">vertical_wind_scale</span>
 
-    <span class="c1"># Create a stack of vectors transformed from spherical to cartesian coordinates</span>
+    <span class="c1"># Create a stack of vectors transformed from spherical to cartesian coords</span>
     <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="n">i</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">inv_axes</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>

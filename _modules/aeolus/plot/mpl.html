@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.plot.mpl &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.plot.mpl &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -77,10 +77,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.plot.mpl</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Matplotlib-related utilities.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="sd">&quot;&quot;&quot;Matplotlib-related utilities.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
 <span class="kn">from</span> <span class="nn">matplotlib.axes._axes</span> <span class="kn">import</span> <span class="n">Axes</span>
@@ -89,10 +89,10 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..runtime</span> <span class="kn">import</span> <span class="n">RUNTIME</span>
+<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">get_cube_rel_days</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">lfric</span><span class="p">,</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">..model.base</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">get_cube_rel_days</span>
+<span class="kn">from</span> <span class="nn">..runtime</span> <span class="kn">import</span> <span class="n">RUNTIME</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;add_custom_legend&quot;</span><span class="p">,</span>
@@ -109,13 +109,15 @@
 
 <div class="viewcode-block" id="add_custom_legend">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.add_custom_legend">[docs]</a>
-<span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span><span class="n">ax_or_fig</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Axes</span><span class="p">,</span> <span class="n">Figure</span><span class="p">],</span> <span class="n">styles_and_labels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span>
+    <span class="n">ax_or_fig</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Axes</span><span class="p">,</span> <span class="n">Figure</span><span class="p">],</span> <span class="n">styles_and_labels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add a custom legend to a matplotlib axis or figure.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ax_or_fig: matplotlib.axes._subplots.AxesSubplot or matplotlib.figure.Figure</span>
+<span class="sd">    ax_or_fig: matplotlib.axes._subplots.AxesSubplot / matplotlib.figure.Figure</span>
 <span class="sd">        Matplotlib object where to put the legend.</span>
 <span class="sd">    styles_and_labels: dict</span>
 <span class="sd">        Dictionary with labels as keys and a dictionary of plot</span>
@@ -144,7 +146,9 @@
 
 <div class="viewcode-block" id="capitalise">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.capitalise">[docs]</a>
-<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sep_old</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">sep_new</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sep_old</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">sep_new</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Split the string and capitalise each word.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">sep_new</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep_old</span><span class="p">)])</span></div>
 
@@ -153,7 +157,10 @@
 <div class="viewcode-block" id="hcross">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.hcross">[docs]</a>
 <span class="k">def</span> <span class="nf">hcross</span><span class="p">(</span>
-    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span>
+    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a horizontal cross-section aka lat-lon map of a 2D cube.&quot;&quot;&quot;</span>
     <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
@@ -182,7 +189,9 @@
 <div class="viewcode-block" id="make_list_2d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.make_list_2d">[docs]</a>
 <span class="k">def</span> <span class="nf">make_list_2d</span><span class="p">(</span>
-    <span class="n">list_x</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">list_y</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">transpose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">list_x</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">list_y</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">transpose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a nested list out of 2 given lists.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">transpose</span><span class="p">:</span>
@@ -195,7 +204,10 @@
 <div class="viewcode-block" id="map_scatter">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.map_scatter">[docs]</a>
 <span class="k">def</span> <span class="nf">map_scatter</span><span class="p">(</span>
-    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">lfric</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span>
+    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">lfric</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a lat-lon scatter plot of a 2D cube.&quot;&quot;&quot;</span>
     <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
@@ -219,7 +231,10 @@
 <div class="viewcode-block" id="timeseries_1d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.timeseries_1d">[docs]</a>
 <span class="k">def</span> <span class="nf">timeseries_1d</span><span class="p">(</span>
-    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span>
+    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot time series of a 1D cube.&quot;&quot;&quot;</span>
     <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
@@ -236,7 +251,10 @@
 <div class="viewcode-block" id="timeseries_2d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.timeseries_2d">[docs]</a>
 <span class="k">def</span> <span class="nf">timeseries_2d</span><span class="p">(</span>
-    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span>
+    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot time series of a 2D cube.&quot;&quot;&quot;</span>
     <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>

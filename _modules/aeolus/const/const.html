@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.const.const &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.const.const &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -77,20 +77,17 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.const.const</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Main interface to the physical constants store.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<span></span><span class="sd">&quot;&quot;&quot;Main interface to the physical constants store.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">make_dataclass</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">iris.fileformats</span>
 <span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
-
+<span class="kn">import</span> <span class="nn">iris.fileformats</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">LoadError</span><span class="p">,</span> <span class="n">_warn</span>
-
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;add_planet_conf_to_cubes&quot;</span><span class="p">,</span> <span class="s2">&quot;get_planet_radius&quot;</span><span class="p">,</span> <span class="s2">&quot;init_const&quot;</span><span class="p">)</span>
 
@@ -102,14 +99,18 @@
         <span class="s2">&quot;J kg-1 K-1&quot;</span><span class="p">,</span>
     <span class="p">),</span>
     <span class="s2">&quot;molecular_weight_ratio&quot;</span><span class="p">:</span> <span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">slf</span><span class="p">:</span> <span class="n">slf</span><span class="o">.</span><span class="n">condensible_molecular_weight</span> <span class="o">/</span> <span class="n">slf</span><span class="o">.</span><span class="n">dry_air_molecular_weight</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">slf</span><span class="p">:</span> <span class="n">slf</span><span class="o">.</span><span class="n">condensible_molecular_weight</span>
+        <span class="o">/</span> <span class="n">slf</span><span class="o">.</span><span class="n">dry_air_molecular_weight</span><span class="p">,</span>
         <span class="s2">&quot;1&quot;</span><span class="p">,</span>
     <span class="p">),</span>
-    <span class="s2">&quot;poisson_exponent&quot;</span><span class="p">:</span> <span class="p">(</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="p">(</span>
         <span class="k">lambda</span> <span class="n">slf</span><span class="p">:</span> <span class="n">slf</span><span class="o">.</span><span class="n">dry_air_gas_constant</span> <span class="o">/</span> <span class="n">slf</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span><span class="p">,</span>
         <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># poisson_exponent</span>
+    <span class="s2">&quot;planet_rotation_rate&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">slf</span><span class="p">:</span> <span class="p">(</span><span class="n">slf</span><span class="o">.</span><span class="n">day</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;s-1&quot;</span><span class="p">,</span>
     <span class="p">),</span>
-    <span class="s2">&quot;planet_rotation_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">slf</span><span class="p">:</span> <span class="p">(</span><span class="n">slf</span><span class="o">.</span><span class="n">day</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;s-1&quot;</span><span class="p">),</span>
 <span class="p">}</span>
 
 
@@ -120,7 +121,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create custom repr.&quot;&quot;&quot;</span>
         <span class="n">cubes_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_field</span><span class="p">)</span><span class="o">.</span><span class="n">long_name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_field</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+                <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_field</span><span class="p">)</span><span class="o">.</span><span class="n">long_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; [</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_field</span><span class="p">)</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+                <span class="p">)</span>
                 <span class="k">for</span> <span class="n">_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dataclass_fields__</span>
             <span class="p">]</span>
         <span class="p">)</span>
@@ -135,7 +139,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Loop through fields and convert each of them to `iris.cube.Cube`.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
             <span class="n">_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-            <span class="n">cube</span> <span class="o">=</span> <span class="n">Cube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">),</span> <span class="n">units</span><span class="o">=</span><span class="n">_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">long_name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">Cube</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">),</span>
+                <span class="n">units</span><span class="o">=</span><span class="n">_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">long_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cube</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_derive_const</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -161,11 +169,14 @@
         <span class="c1"># transform the list of dictionaries into a dictionary</span>
         <span class="n">const_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">vardict</span> <span class="ow">in</span> <span class="n">list_of_dicts</span><span class="p">:</span>
-            <span class="n">const_dict</span><span class="p">[</span><span class="n">vardict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vardict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>
+            <span class="n">const_dict</span><span class="p">[</span><span class="n">vardict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vardict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;name&quot;</span>
+            <span class="p">}</span>
         <span class="k">return</span> <span class="n">const_dict</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">LoadError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;JSON file for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> configuration not found, check the directory: </span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;JSON file for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> configuration not found,&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;check the directory: </span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
 
@@ -179,10 +190,10 @@
 <span class="sd">    ----------</span>
 <span class="sd">    name: str, optional</span>
 <span class="sd">        Name of the constants set.</span>
-<span class="sd">        Should be identical to the JSON file name (without the .json extension).</span>
+<span class="sd">        Should be identical to the JSON file name (w/o the .json extension).</span>
 <span class="sd">        If not given, only general physical constants are returned.</span>
 <span class="sd">    directory: pathlib.Path, optional</span>
-<span class="sd">        Path to a folder with JSON files containing constants for a specific planet.</span>
+<span class="sd">        Path to a folder with JSON files with constants for a specific planet.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -192,7 +203,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; c = init_const(&#39;earth&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; c</span>
-<span class="sd">    EarthConstants(gravity [m s-2], radius [m], day [s], solar_constant [W m-2], ...)</span>
+<span class="sd">    EarthConstants(gravity [m s-2], radius [m], day [s], ...)</span>
 <span class="sd">    &gt;&gt;&gt; c.gravity</span>
 <span class="sd">    &lt;iris &#39;Cube&#39; of gravity / (m s-2) (scalar cube)&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -220,7 +231,7 @@
 <div class="viewcode-block" id="get_planet_radius">
 <a class="viewcode-back" href="../../../api/const.html#aeolus.const.get_planet_radius">[docs]</a>
 <span class="k">def</span> <span class="nf">get_planet_radius</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">fileformats</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">EARTH_RADIUS</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get planet radius in metres from cube attributes or coordinate system.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the planet radius in metres from cube attributes.&quot;&quot;&quot;</span>
     <span class="n">cs</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_system</span><span class="p">(</span><span class="s2">&quot;CoordSystem&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">semi_major_axis</span>
@@ -240,7 +251,7 @@
 <a class="viewcode-back" href="../../../api/const.html#aeolus.const.add_planet_conf_to_cubes">[docs]</a>
 <span class="k">def</span> <span class="nf">add_planet_conf_to_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add constants container to the cube attributes and replace its coordinate system.</span>
+<span class="sd">    Add constants container to the cube attributes and adjust its coord system.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -256,7 +267,7 @@
         <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">const</span>
         <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">coords</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">coord</span><span class="o">.</span><span class="n">coord_system</span><span class="p">:</span>
-                <span class="c1"># Replace coordinate system with the planet radius given in `self.const`</span>
+                <span class="c1"># Replace coordinate system with the radius from `self.const`</span>
                 <span class="n">coord</span><span class="o">.</span><span class="n">coord_system</span> <span class="o">=</span> <span class="n">_coord_system</span></div>
 
 </pre></div>

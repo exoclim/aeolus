@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -77,26 +77,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.calc.diag</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Some commonly used diagnostics in atmospheric science.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Some commonly used diagnostics in atmospheric science.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cf_units</span> <span class="kn">import</span> <span class="n">Unit</span>
-
 <span class="kn">from</span> <span class="nn">iris.analysis.calculus</span> <span class="kn">import</span> <span class="n">_coord_cos</span>
 <span class="kn">from</span> <span class="nn">iris.analysis.maths</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">apply_ufunc</span><span class="p">,</span> <span class="n">multiply</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">ConstraintMismatchError</span> <span class="k">as</span> <span class="n">ConMisErr</span>
 <span class="kn">from</span> <span class="nn">iris.util</span> <span class="kn">import</span> <span class="n">reverse</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">d_dz</span><span class="p">,</span> <span class="n">integrate</span>
-<span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">cumsum</span><span class="p">,</span> <span class="n">spatial_mean</span><span class="p">,</span> <span class="n">time_mean</span><span class="p">,</span> <span class="n">zonal_mean</span>
 <span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">init_const</span>
 <span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">coord_to_cube</span><span class="p">,</span> <span class="n">ensure_bounds</span><span class="p">,</span> <span class="n">regrid_3d</span>
 <span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">MissingCubeError</span>
 <span class="kn">from</span> <span class="nn">..meta</span> <span class="kn">import</span> <span class="n">const_from_attrs</span><span class="p">,</span> <span class="n">preserve_shape</span><span class="p">,</span> <span class="n">update_metadata</span>
 <span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
 <span class="kn">from</span> <span class="nn">..subset</span> <span class="kn">import</span> <span class="n">_dim_constr</span>
-
+<span class="kn">from</span> <span class="nn">.calculus</span> <span class="kn">import</span> <span class="n">d_dz</span><span class="p">,</span> <span class="n">integrate</span>
+<span class="kn">from</span> <span class="nn">.stats</span> <span class="kn">import</span> <span class="n">cumsum</span><span class="p">,</span> <span class="n">spatial_mean</span><span class="p">,</span> <span class="n">time_mean</span><span class="p">,</span> <span class="n">zonal_mean</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;air_density&quot;</span><span class="p">,</span>
@@ -161,7 +157,7 @@
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes containing temperature.</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.</span>
+<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant`.</span>
 <span class="sd">        If not given, an attempt is made to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -177,7 +173,9 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">thta</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to get air temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
@@ -189,7 +187,9 @@
                 <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
             <span class="p">)</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to get air temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">thta</span> <span class="o">*</span> <span class="n">exner</span>
         <span class="n">temp</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">temp</span></div>
@@ -211,7 +211,7 @@
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes containing temperature.</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.</span>
+<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant`.</span>
 <span class="sd">        If not given, an attempt is made to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -227,7 +227,9 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">temp</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">temp</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air potential temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to get air potential temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
@@ -239,7 +241,9 @@
                 <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
             <span class="p">)</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to get air potential temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to get air potential temperature from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="n">thta</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">/</span> <span class="n">exner</span>
         <span class="n">thta</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
         <span class="n">thta</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
@@ -263,7 +267,7 @@
 <span class="sd">    cubelist: iris.cube.CubeList</span>
 <span class="sd">        Input list of cubes containing related variables.</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
-<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant` as attributes.</span>
+<span class="sd">        Must have `reference_surface_pressure` and `dry_air_gas_constant`.</span>
 <span class="sd">        If not given, an attempt is made to retrieve it from cube attributes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
@@ -280,7 +284,10 @@
             <span class="n">exner</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">exner</span><span class="p">)</span>
             <span class="n">pres</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span>
-                <span class="o">*</span> <span class="n">exner</span> <span class="o">**</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+                <span class="o">*</span> <span class="n">exner</span>
+                <span class="o">**</span> <span class="p">(</span>
+                    <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">data</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -289,10 +296,16 @@
                 <span class="n">exner</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">/</span> <span class="n">thta</span>
                 <span class="n">pres</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">const</span><span class="o">.</span><span class="n">reference_surface_pressure</span>
-                    <span class="o">*</span> <span class="n">exner</span> <span class="o">**</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+                    <span class="o">*</span> <span class="n">exner</span>
+                    <span class="o">**</span> <span class="p">(</span>
+                        <span class="n">const</span><span class="o">.</span><span class="n">dry_air_spec_heat_press</span>
+                        <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">dry_air_gas_constant</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">data</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to calculate air pressure from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unable to calculate air pressure from </span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
         <span class="n">pres</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pres</span></div>
 
@@ -305,7 +318,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get air density from the given cube list.</span>
 
-<span class="sd">    If not present, it is attempted to calculate it from pressure and temperature.</span>
+<span class="sd">    If not present, try to calculate it from pressure and temperature.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -334,7 +347,10 @@
             <span class="n">rho</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">rho</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-            <span class="n">_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Unable to get variables from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="se">\n</span><span class="s2">to calculate air density&quot;</span>
+            <span class="n">_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unable to get variables from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">to calculate air density&quot;</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="n">_msg</span><span class="p">)</span></div>
 
 
@@ -351,7 +367,9 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">thta</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">air_potential_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">air_potential_temperature</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">pres</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
@@ -363,7 +381,9 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
-        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geopotential_height</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span></div>
+        <span class="n">cubelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">geopotential_height</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 
@@ -395,11 +415,17 @@
         <span class="k">return</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">cube_w_height</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cube_w_height</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span>
+                <span class="n">_dim_constr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">const</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">const</span> <span class="o">=</span> <span class="n">cube_w_height</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;planet_conf&quot;</span><span class="p">]</span>
             <span class="n">g_hgt</span> <span class="o">=</span> <span class="n">coord_to_cube</span><span class="p">(</span><span class="n">cube_w_height</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">gravity</span>
-            <span class="n">g_hgt</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cube_w_height</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;STASH&quot;</span><span class="p">}</span>
+            <span class="n">g_hgt</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cube_w_height</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;STASH&quot;</span>
+            <span class="p">}</span>
             <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">g_hgt</span><span class="p">,</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">])</span>
             <span class="n">g_hgt</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ghgt</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">g_hgt</span>
@@ -429,7 +455,7 @@
 <span class="sd">    axis: str</span>
 <span class="sd">        Axis of the flux component (x|y|z)</span>
 <span class="sd">    weight_by_density: bool, optional</span>
-<span class="sd">        Multiply by a cube of air density (must be present in the input cube list).</span>
+<span class="sd">        Multiply by air density (must be present in the input cube list).</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
 
@@ -524,7 +550,8 @@
     <span class="n">terms</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">varnames</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">terms</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">varnames</span><span class="si">}</span><span class="s2"> required for TOA energy balance are missing from cubelist:</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">varnames</span><span class="si">}</span><span class="s2"> required for TOA energy balance&quot;</span>
+            <span class="s2">&quot; are missing from cubelist:</span><span class="se">\n</span><span class="si">{cubelist}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
     <span class="n">terms_ave</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
@@ -544,7 +571,7 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cubelist: iris.cube.CubeList</span>
-<span class="sd">        Input list of cubes with net LW and SW radiation, sensible and latent surface fluxes.</span>
+<span class="sd">        Input cubes with net LW and SW, sensible and latent surface fluxes.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant variable names.</span>
 
@@ -593,7 +620,9 @@
             <span class="n">evap</span> <span class="o">=</span> <span class="n">lhf</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_heat_vaporization</span>
             <span class="n">evap</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">ConMisErr</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot retrieve evaporation from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Cannot retrieve evaporation from</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">precip</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ppn</span><span class="p">)</span>
         <span class="n">precip</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span>
@@ -636,7 +665,8 @@
         <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown ptype=</span><span class="si">{</span><span class="n">ptype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">varnames</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">MissingCubeError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">varnames</span><span class="si">}</span><span class="s2"> required for ptype=</span><span class="si">{</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> are missing from cubelist:</span><span class="se">\n</span><span class="si">{</span><span class="n">cubelist</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">varnames</span><span class="si">}</span><span class="s2"> required for ptype=</span><span class="si">{</span><span class="n">ptype</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="s2">&quot;are missing from cubelist:</span><span class="se">\n</span><span class="si">{cubelist}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
     <span class="n">precip</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">varname</span> <span class="ow">in</span> <span class="n">varnames</span><span class="p">:</span>
@@ -823,11 +853,12 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cubelist: iris.cube.CubeList</span>
-<span class="sd">        Input list of cubes containing appropriate mixing ratio and air density.</span>
+<span class="sd">        Input list of cubes containing mixing ratio and air density.</span>
 <span class="sd">    kind: str, optional</span>
 <span class="sd">        Short name of the water phase to be integrated.</span>
-<span class="sd">        Options are water_vapour (default) | liquid_water | ice_water | cloud_water</span>
-<span class="sd">        `cloud_water` is the sum of liquid and ice phases.</span>
+<span class="sd">        Options:</span>
+<span class="sd">        water_vapour (default) | liquid_water | ice_water | cloud_water</span>
+<span class="sd">        where `cloud_water` is the sum of liquid and ice phases.</span>
 <span class="sd">    model: aeolus.model.Model, optional</span>
 <span class="sd">        Model class with relevant coordinate names.</span>
 <span class="sd">        `model.z` is used as a vertical coordinate for integration.</span>
@@ -883,7 +914,7 @@
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.diag.horiz_wind_cmpnts">[docs]</a>
 <span class="k">def</span> <span class="nf">horiz_wind_cmpnts</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract u and v wind components from a cube list and interpolate v on u&#39;s grid if necessary.</span>
+<span class="sd">    Extract u and v winds and interpolate v on u&#39;s grid if necessary.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1023,7 +1054,7 @@
 <span class="sd">    Calculate mean zonal mass streamfunction.</span>
 
 <span class="sd">    .. math::</span>
-<span class="sd">        \Psi_Z = 2\pi a \int_{z_{sfc}}^{z_{top}}\overline{\rho}^* \overline{u}^* dz</span>
+<span class="sd">        \Psi_Z=2\pi a\int_{z_{sfc}}^{z_{top}}\overline{\rho}^*\overline{u}^* dz</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
@@ -1110,7 +1141,7 @@
 <span class="sd">    &gt;&gt;&gt; from aeolus.model import um</span>
 <span class="sd">    &gt;&gt;&gt; earth_constants = init_const(&quot;earth&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; cubes = iris.cube.CubeList([time_mean(cube) for cube in input_cubes])</span>
-<span class="sd">    &gt;&gt;&gt; mmsf = meridional_mass_streamfunction(cubes, const=earth_constants, model=um)</span>
+<span class="sd">    &gt;&gt;&gt; mmsf = meridional_mass_streamfunction(cubes, const=earth_constants)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -1118,7 +1149,7 @@
         <span class="n">rho</span> <span class="o">=</span> <span class="n">zonal_mean</span><span class="p">(</span><span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">dens</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
         <span class="n">rho</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">v</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># Reverse the coordinate to start from the model top (where p=0 or z=z_top)</span>
+        <span class="c1"># Reverse the coordinate to start from the top (where p=0 or z=z_top)</span>
         <span class="c1"># TODO: check if the coordinate is ascending or descending</span>
         <span class="n">integrand</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">axis_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -1139,7 +1170,7 @@
 <span class="nd">@const_from_attrs</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">wind_rot_div</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Split the horizontal wind field into divergent and rotational parts (Helmholtz decomposition).</span>
+<span class="sd">    Split the horizontal wind field into divergent and rotational parts.</span>
 
 <span class="sd">    The Helmholtz decomposition method uses the `windspharm` library:</span>
 <span class="sd">    https://ajdawson.github.io/windspharm/latest/</span>
@@ -1151,7 +1182,8 @@
 <span class="sd">    v: iris.cube.Cube</span>
 <span class="sd">        Northward wind.</span>
 <span class="sd">    truncation: int</span>
-<span class="sd">        Truncation for the spherical harmonic computation (See windspharm docs for details).</span>
+<span class="sd">        Truncation for the spherical harmonic computation</span>
+<span class="sd">        (See windspharm docs for details).</span>
 <span class="sd">    const: aeolus.const.const.ConstContainer, optional</span>
 <span class="sd">        If not given, constants are attempted to be retrieved from</span>
 <span class="sd">        attributes of a cube in the cube list.</span>
@@ -1175,7 +1207,9 @@
     <span class="kn">from</span> <span class="nn">windspharm.iris</span> <span class="kn">import</span> <span class="n">VectorWind</span>
 
     <span class="n">vec</span> <span class="o">=</span> <span class="n">VectorWind</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">rsphere</span><span class="o">=</span><span class="n">const</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">rot_cmpnt_v</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">helmholtz</span><span class="p">(</span><span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span><span class="p">)</span>
+    <span class="n">div_cmpnt_u</span><span class="p">,</span> <span class="n">div_cmpnt_v</span><span class="p">,</span> <span class="n">rot_cmpnt_u</span><span class="p">,</span> <span class="n">rot_cmpnt_v</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">helmholtz</span><span class="p">(</span>
+        <span class="n">truncation</span><span class="o">=</span><span class="n">truncation</span>
+    <span class="p">)</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">out</span><span class="p">[</span><span class="s2">&quot;u_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
     <span class="n">out</span><span class="p">[</span><span class="s2">&quot;v_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
@@ -1189,7 +1223,9 @@
         <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preserve_shape</span><span class="p">(</span><span class="n">zonal_mean</span><span class="p">)(</span><span class="n">rot_cmpnt</span><span class="p">)</span>
         <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zonal_mean_of_</span><span class="si">{</span><span class="n">rot_cmpnt</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_eddy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rot_cmpnt</span> <span class="o">-</span> <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_zm&quot;</span><span class="p">]</span>
-        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_eddy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zonal_deviation_of_</span><span class="si">{</span><span class="n">rot_cmpnt</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cmpnt</span><span class="si">}</span><span class="s2">_rot_eddy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;zonal_deviation_of_</span><span class="si">{</span><span class="n">rot_cmpnt</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
 </pre></div>

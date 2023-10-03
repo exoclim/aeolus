@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.core &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.core &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,10 +77,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.core</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Core submodule of aeolus package.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Core submodule of aeolus package.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cached_property</span> <span class="kn">import</span> <span class="n">cached_property</span>
-
 <span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 <span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">ConstraintMismatchError</span> <span class="k">as</span> <span class="n">ConMisErr</span>
 
@@ -104,9 +102,9 @@
 <span class="sd">    Base class for creating atmospheric model simulation classes in aeolus.</span>
 
 <span class="sd">    Used to store and calculate atmospheric fields from gridded model output.</span>
-<span class="sd">    Derived quantities are stored as cached properties to save computational time.</span>
+<span class="sd">    Derived quantities are stored as cached properties to save time.</span>
 
-<span class="sd">    Assumes the data are in spherical coordinates on a regular longitude-latitude grid.</span>
+<span class="sd">    Assumes the data are in spherical coordinates on a regular lat-lon grid.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -145,12 +143,12 @@
 <span class="sd">        name: str, optional</span>
 <span class="sd">            The name or label of this `AtmoSim`.</span>
 <span class="sd">        description: str, optional</span>
-<span class="sd">            This is not used internally; it is solely for the user&#39;s information.</span>
+<span class="sd">            This is not used internally; solely for the user&#39;s information.</span>
 <span class="sd">        planet: str, optional</span>
-<span class="sd">            Planet configuration. This is used to get appropriate physical constants.</span>
+<span class="sd">            Planet configuration used to get appropriate physical constants.</span>
 <span class="sd">            If not given, Earth physical constants are initialised.</span>
 <span class="sd">        const_dir: pathlib.Path, optional</span>
-<span class="sd">            Path to a folder with files containing constants for a specific planet.</span>
+<span class="sd">            Path to a folder with files with constants for a specific planet.</span>
 <span class="sd">        model: aeolus.model.Model, optional</span>
 <span class="sd">            Model class with relevant coordinate and variable names.</span>
 <span class="sd">        model_type: str, optional</span>
@@ -158,13 +156,13 @@
 <span class="sd">        timestep: int, optional</span>
 <span class="sd">            Model time step in s.</span>
 <span class="sd">        vert_coord: str, optional</span>
-<span class="sd">            Character identificator for the type of the model&#39;s vertical coordinate.</span>
+<span class="sd">            Character identificator for the model&#39;s vertical coordinate.</span>
 <span class="sd">            &quot;z&quot; - data on &quot;level_height&quot;</span>
 <span class="sd">            &quot;p&quot; - data on pressure levels</span>
 <span class="sd">        coord_check: bool, optional</span>
 <span class="sd">            Check if all cubes have the same set of coordinates.</span>
 
-<span class="sd">        See also</span>
+<span class="sd">        See Also</span>
 <span class="sd">        --------</span>
 <span class="sd">        aeolus.const.init_const, aeolus.coord.CoordContainer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -187,7 +185,9 @@
         <span class="c1"># Domain</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">cube_yx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">Region</span><span class="o">.</span><span class="n">from_cube</span><span class="p">(</span><span class="n">cube_yx</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_domain&quot;</span><span class="p">,</span> <span class="n">shift_lons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">Region</span><span class="o">.</span><span class="n">from_cube</span><span class="p">(</span>
+                <span class="n">cube_yx</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_domain&quot;</span><span class="p">,</span> <span class="n">shift_lons</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="n">_warn</span><span class="p">(</span><span class="s2">&quot;Initialised without a domain.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="kc">None</span>
@@ -205,7 +205,9 @@
             <span class="n">_constr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">p</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_constr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">relax</span><span class="o">.</span><span class="n">yx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">_constr</span><span class="p">),</span> <span class="n">coord_check</span><span class="o">=</span><span class="n">coord_check</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coord</span> <span class="o">=</span> <span class="n">CoordContainer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">_constr</span><span class="p">),</span> <span class="n">coord_check</span><span class="o">=</span><span class="n">coord_check</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dim_seq</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;t</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_coord</span><span class="si">}</span><span class="s2">yx&quot;</span><span class="p">]</span>
@@ -214,7 +216,9 @@
                 <span class="nb">setattr</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">,</span>
                     <span class="sa">f</span><span class="s2">&quot;_ref_</span><span class="si">{</span><span class="n">seq</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">strict</span><span class="p">,</span> <span class="n">seq</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_constr</span><span class="o">.</span><span class="n">strict</span><span class="p">,</span> <span class="n">seq</span><span class="p">))[</span>
+                        <span class="mi">0</span>
+                    <span class="p">],</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="k">pass</span>
@@ -260,7 +264,9 @@
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
                 <span class="k">pass</span>
@@ -314,10 +320,10 @@
 <a class="viewcode-back" href="../../api/core.html#aeolus.core.AtmoSim">[docs]</a>
 <span class="k">class</span> <span class="nc">AtmoSim</span><span class="p">(</span><span class="n">AtmoSimBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main class for dealing with a atmospheric model simulation output in aeolus.</span>
+<span class="sd">    Main class for dealing with a atmospheric model simulation output.</span>
 
 <span class="sd">    Used to store and calculate atmospheric fields from gridded model output.</span>
-<span class="sd">    Derived quantities are stored as cached properties to save computational time.</span>
+<span class="sd">    Derived quantities are stored as cached properties to save time.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@cached_property</span>
@@ -345,7 +351,9 @@
     <span class="nd">@cached_property</span>
     <span class="nd">@copy_doc</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">sfc_water_balance</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cubes</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">const</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+        <span class="p">)</span></div>
 
 </pre></div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.io &mdash; aeolus 0.4.17+22.g27e529a documentation</title>
+  <title>aeolus.io &mdash; aeolus 23.10.3.1.dev1+dirty documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=039f13ef"></script>
+        <script src="../../_static/documentation_options.js?v=15d20bf6"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                0.4.17+22.g27e529a
+                23.10.3.1.dev1+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,24 +77,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for aeolus.io</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Generator</span>
+<span></span><span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
 <span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">CubeList</span>
 <span class="kn">from</span> <span class="nn">iris.fileformats.pp</span> <span class="kn">import</span> <span class="n">EARTH_RADIUS</span>
 <span class="kn">from</span> <span class="nn">iris.fileformats.um</span> <span class="kn">import</span> <span class="n">structured_um_loading</span>
-<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
-
 <span class="kn">import</span> <span class="nn">iris.pandas</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span>
@@ -107,7 +104,9 @@
 <span class="p">)</span>
 
 <span class="n">GLM_RUNID</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;umglaa&quot;</span>  <span class="c1"># file prefix</span>
-<span class="n">GLM_FILE_REGEX</span> <span class="o">=</span> <span class="n">GLM_RUNID</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;.p[b,c,d,e]</span><span class="si">{1}</span><span class="s2">[0]</span><span class="si">{6}</span><span class="s2">(?P&lt;timestamp&gt;[0-9]{2,6})_00&quot;</span>
+<span class="n">GLM_FILE_REGEX</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">GLM_RUNID</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;.p[b,c,d,e]</span><span class="si">{1}</span><span class="s2">[0]</span><span class="si">{6}</span><span class="s2">(?P&lt;timestamp&gt;[0-9]{2,6})_00&quot;</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="create_dummy_cube">
@@ -156,7 +155,12 @@
 <span class="sd">    &gt;&gt;&gt; create_dummy_cube(nlat=90, nlon=144)</span>
 <span class="sd">    &gt;&gt;&gt; create_dummy_cube(n=96)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;cu&quot;</span><span class="p">,</span> <span class="s2">&quot;cv&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;Grid </span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> not valid.&quot;</span>
+    <span class="k">assert</span> <span class="n">grid_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cu&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cv&quot;</span><span class="p">,</span>
+    <span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;Grid </span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> not valid.&quot;</span>
 
     <span class="c1"># Calculate the number of points given the N-notation resolution.</span>
     <span class="k">if</span> <span class="n">n_res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -202,7 +206,11 @@
     <span class="k">if</span> <span class="n">pm180</span><span class="p">:</span>
         <span class="n">lons</span> <span class="o">-=</span> <span class="mf">180.0</span>
     <span class="n">lon_coord</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">(</span>
-        <span class="n">lons</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="n">circular</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coord_system</span><span class="o">=</span><span class="n">geog_cs</span>
+        <span class="n">lons</span><span class="p">,</span>
+        <span class="n">standard_name</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;degrees&quot;</span><span class="p">,</span>
+        <span class="n">circular</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">coord_system</span><span class="o">=</span><span class="n">geog_cs</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">lon_coord</span><span class="o">.</span><span class="n">guess_bounds</span><span class="p">()</span>
 
@@ -249,7 +257,7 @@
     <span class="n">regex_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a list of files with timestamps greater or equal than start in a directory.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a list of files with timestamps &gt;= than start in a directory.&quot;&quot;&quot;</span>
     <span class="n">glob_gen</span> <span class="o">=</span> <span class="n">full_path_glob</span><span class="p">(</span><span class="n">path_to_dir</span> <span class="o">/</span> <span class="n">glob_pattern</span><span class="p">)</span>
     <span class="n">fnames</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">tstamps</span> <span class="o">=</span> <span class="p">{}</span>
@@ -276,10 +284,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">CubeList</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load UM conservation diagnostics from a series of text files.&quot;&quot;&quot;</span>
     <span class="n">dset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-        <span class="nb">map</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">fpath</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">),</span>
-            <span class="n">fnames</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">fnames</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">drop_duplicates</span><span class="p">:</span>
         <span class="n">dset</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
@@ -341,7 +346,9 @@
 
 <div class="viewcode-block" id="load_vert_lev">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.load_vert_lev">[docs]</a>
-<span class="k">def</span> <span class="nf">load_vert_lev</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">lev_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;theta&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">load_vert_lev</span><span class="p">(</span>
+    <span class="n">path_to_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">lev_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;theta&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read data from the UM vertical levels file.</span>
 
@@ -361,14 +368,19 @@
 
     <span class="k">with</span> <span class="n">path_to_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">nml_file</span><span class="p">:</span>
         <span class="n">nml</span> <span class="o">=</span> <span class="n">f90nml</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nml_file</span><span class="p">)</span>
-        <span class="n">levs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;eta_</span><span class="si">{</span><span class="n">lev_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="s2">&quot;z_top_of_model&quot;</span><span class="p">]</span>
+        <span class="n">levs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;eta_</span><span class="si">{</span><span class="n">lev_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+            <span class="o">*</span> <span class="n">nml</span><span class="p">[</span><span class="s2">&quot;vertlevs&quot;</span><span class="p">][</span><span class="s2">&quot;z_top_of_model&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">levs</span></div>
 
 
 
 <div class="viewcode-block" id="save_cubelist">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.save_cubelist">[docs]</a>
-<span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span><span class="n">cubelist</span><span class="p">:</span> <span class="n">CubeList</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span>
+    <span class="n">cubelist</span><span class="p">:</span> <span class="n">CubeList</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save a cubelist w/o the `planet_conf` container to a file.</span>
 
