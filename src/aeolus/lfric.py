@@ -28,7 +28,9 @@ __all__ = (
 )
 
 
-def add_um_height_coord(cube, field, filename, path_to_levels_file):
+def add_um_height_coord(
+    cube: Cube, field: str, filename: str, path_to_levels_file: Path
+) -> Cube:
     """
     Callback for `iris.load` specifically for LFRic data with vertical coord.
 
@@ -73,7 +75,9 @@ def add_um_height_coord(cube, field, filename, path_to_levels_file):
     return cube
 
 
-def add_equally_spaced_height_coord(cube, field, filename, model_top_height):
+def add_equally_spaced_height_coord(
+    cube: Cube, field: str, filename: str, model_top_height: float
+) -> Cube:
     """
     Callback for `iris.load` specifically for LFRic data with vertical coord.
 
@@ -112,7 +116,7 @@ def add_equally_spaced_height_coord(cube, field, filename, model_top_height):
     return cube
 
 
-def clean_attrs(cube, field, filename):
+def clean_attrs(cube: Cube, field: str, filename: str) -> Cube:
     """
     Callback for `iris.load` to clean up trivial attributes in LFRic data.
 
@@ -126,7 +130,7 @@ def clean_attrs(cube, field, filename):
     return cube
 
 
-def fix_time_coord(cube, field, filename):
+def fix_time_coord(cube: Cube, field: str, filename: str) -> Cube:
     """
     Callback function for `iris.load` specifically for UGRID data.
 
@@ -145,7 +149,6 @@ def fix_time_coord(cube, field, filename):
     # Else, fix metadata in variables
     else:
         tcoord = cube.coord("time")
-
         # If only 1 time coordinate value, downgrade AuxCoord to Scalar
         if tcoord.points.size == 1:
             cube = cube.extract(iris.Constraint(time=tcoord.cell(0)))
@@ -153,7 +156,6 @@ def fix_time_coord(cube, field, filename):
         else:
             if isinstance(tcoord, iris.coords.AuxCoord):
                 iris.util.promote_aux_coord_to_dim_coord(cube, tcoord)
-
     return cube
 
 
@@ -294,7 +296,10 @@ def simple_regrid_lfric(
 
 
 def ugrid_spatial(
-    cube: Cube, aggr: str, model: Optional[Model] = lfric
+    cube: Cube,
+    aggr: str,
+    model: Optional[Model] = lfric,
+    **kwargs,
 ) -> Cube:
     """Collapse a UGRID `iris.cube.Cube` over x and y coord with no weights."""
     cube_copy = cube.copy()
@@ -309,12 +314,14 @@ def ugrid_spatial(
     cube_copy.remove_coord(model.y)
 
     cube_aggr = cube_copy.collapsed(
-        tmp_coord.name(), getattr(iris.analysis, aggr.upper())
+        tmp_coord.name(), getattr(iris.analysis, aggr.upper(), **kwargs)
     )
     cube_aggr.remove_coord(tmp_coord)
     return cube_aggr
 
 
-def ugrid_spatial_mean(cube: Cube, model: Optional[Model] = lfric) -> Cube:
+def ugrid_spatial_mean(
+    cube: Cube, model: Optional[Model] = lfric, **kwargs
+) -> Cube:
     """Average a UGRID `iris.cube.Cube` spatially."""
-    return ugrid_spatial(cube, "mean", model=model)
+    return ugrid_spatial(cube, "mean", model=model, **kwargs)
