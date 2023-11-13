@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.lfric &mdash; aeolus 23.11.13.1.dev14+dirty documentation</title>
+  <title>aeolus.lfric &mdash; aeolus 23.11.13.1.dev15+dirty documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=c959121b"></script>
+        <script src="../../_static/documentation_options.js?v=d91c2ad5"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                23.11.13.1.dev14+dirty
+                23.11.13.1.dev15+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -86,7 +86,7 @@
 <span class="kn">import</span> <span class="nn">iris.coords</span>
 <span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">CubeList</span>
 <span class="kn">import</span> <span class="nn">iris.exceptions</span>
-<span class="kn">from</span> <span class="nn">iris.experimental.ugrid</span> <span class="kn">import</span> <span class="n">PARSE_UGRID_ON_LOAD</span>
+<span class="kn">from</span> <span class="nn">iris.experimental.ugrid</span> <span class="kn">import</span> <span class="n">PARSE_UGRID_ON_LOAD</span><span class="p">,</span> <span class="n">load_mesh</span>
 <span class="kn">import</span> <span class="nn">iris.util</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -99,6 +99,7 @@
     <span class="s2">&quot;add_equally_spaced_height_coord&quot;</span><span class="p">,</span>
     <span class="s2">&quot;clean_attrs&quot;</span><span class="p">,</span>
     <span class="s2">&quot;fix_time_coord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_lfric_mesh&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load_lfric_raw&quot;</span><span class="p">,</span>
     <span class="s2">&quot;replace_level_coord_with_height&quot;</span><span class="p">,</span>
     <span class="s2">&quot;simple_regrid_lfric&quot;</span><span class="p">,</span>
@@ -247,6 +248,19 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tcoord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">):</span>
                 <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">tcoord</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube</span></div>
+
+
+
+<div class="viewcode-block" id="load_lfric_mesh">
+<a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.load_lfric_mesh">[docs]</a>
+<span class="k">def</span> <span class="nf">load_lfric_mesh</span><span class="p">(</span>
+    <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mesh.nc&quot;</span><span class="p">,</span> <span class="n">var_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dynamics&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">iris</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">ugrid</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">Mesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load LFRic mesh from a netCDF file.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">PARSE_UGRID_ON_LOAD</span><span class="o">.</span><span class="n">context</span><span class="p">():</span>
+        <span class="n">loaded_mesh</span> <span class="o">=</span> <span class="n">load_mesh</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">var_name</span><span class="o">=</span><span class="n">var_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loaded_mesh</span></div>
 
 
 
