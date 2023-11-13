@@ -1,17 +1,33 @@
 """Prepare data in spherical coordinates for pyvista plotting."""
+from typing import Optional
+
+import geovista as gv
+import iris
 import numpy as np
 from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
+import pyvista as pv
 
 from ..coord import _cell_bounds
 from ..exceptions import _warn
 from ..model import um
+from ..model.base import Model
 
-__all__ = ("grid_for_scalar_cube_sph", "grid_for_vector_cubes_sph")
+__all__ = (
+    "grid_for_scalar_cube_sph",
+    "grid_for_vector_cubes_sph",
+    "cube2d_to_mesh",
+    "ugrid_mesh_to_gv_mesh",
+)
 
 
 def grid_for_scalar_cube_sph(
-    cube, z_scale=1, z_offset=0, grid=None, label="scalar3d", model=um
-):
+    cube: iris.cube.Cube,
+    z_scale: Optional[float] = 1,
+    z_offset: Optional[float] = 0,
+    grid: Optional[pv.StructuredGrid] = None,
+    label: Optional[str] = "scalar3d",
+    model: Optional[Model] = um,
+) -> pv.PolyData:
     """
     Create a `pyvista` grid for an `iris` cube in spherical coordinates.
 
@@ -56,19 +72,19 @@ def grid_for_scalar_cube_sph(
 
 
 def grid_for_vector_cubes_sph(
-    u,
-    v,
-    w,
-    vector_scale=1,
-    vertical_wind_scale=1,
-    z_scale=1,
-    z_offset=0,
-    xstride=1,
-    ystride=1,
-    grid=None,
-    label="vector3d",
-    model=um,
-):
+    u: iris.cube.Cube,
+    v: iris.cube.Cube,
+    w: iris.cube.Cube,
+    vector_scale: Optional[float] = 1,
+    vertical_wind_scale: Optional[float] = 1,
+    z_scale: Optional[float] = 1,
+    z_offset: Optional[float] = 0,
+    xstride: Optional[int] = 1,
+    ystride: Optional[int] = 1,
+    grid: Optional[pv.StructuredGrid] = None,
+    label: Optional[str] = "vector3d",
+    model: Optional[Model] = um,
+) -> pv.PolyData:
     """
     Take winds in spherical coordinates and create a `pyvista` grid for them.
 
@@ -145,3 +161,34 @@ def grid_for_vector_cubes_sph(
     # Add vectors to the grid
     grid.point_data[label] = vectors
     return grid
+
+
+def cube2d_to_mesh(cube2d: iris.cube.Cube, **kwargs) -> pv.PolyData:
+    """Construct a spherical mesh from a 2D iris cube using geovista."""
+    mesh = gv.Transform.from_unstructured(
+        *[i.points for i in cube2d.mesh.node_coords],
+        cube2d.mesh.face_node_connectivity.indices_by_location(),
+        data=cube2d.data,
+        start_index=cube2d.mesh.face_node_connectivity.start_index,
+        **kwargs,
+    )
+    return mesh
+
+
+def ugrid_mesh_to_gv_mesh(
+    topology: iris.experimental.ugrid.mesh.Mesh, **kwargs
+) -> pv.PolyData:
+    """Create a geovista mesh from the LFRic mesh."""
+    face_node = topology.face_node_connectivity
+
+    indices = face_node.indices_by_location()
+
+    lons, lats = topology.node_coords
+
+    return gv.Transform.from_unstructured(
+        lons.points,
+        lats.points,
+        indices,
+        start_index=face_node.start_index,
+        **kwargs,
+    )

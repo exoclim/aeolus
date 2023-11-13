@@ -7,7 +7,7 @@ import iris
 import iris.coords
 from iris.cube import Cube, CubeList
 import iris.exceptions
-from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD
+from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD, load_mesh
 import iris.util
 import numpy as np
 
@@ -20,6 +20,7 @@ __all__ = (
     "add_equally_spaced_height_coord",
     "clean_attrs",
     "fix_time_coord",
+    "load_lfric_mesh",
     "load_lfric_raw",
     "replace_level_coord_with_height",
     "simple_regrid_lfric",
@@ -157,6 +158,16 @@ def fix_time_coord(cube: Cube, field: str, filename: str) -> Cube:
             if isinstance(tcoord, iris.coords.AuxCoord):
                 iris.util.promote_aux_coord_to_dim_coord(cube, tcoord)
     return cube
+
+
+def load_lfric_mesh(
+    fname: str = "mesh.nc", var_name: str = "dynamics"
+) -> iris.experimental.ugrid.mesh.Mesh:
+    """Load LFRic mesh from a netCDF file."""
+    with PARSE_UGRID_ON_LOAD.context():
+        loaded_mesh = load_mesh(fname, var_name=var_name)
+
+    return loaded_mesh
 
 
 def load_lfric_raw(
