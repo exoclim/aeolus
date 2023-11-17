@@ -131,7 +131,7 @@ def clean_attrs(cube: Cube, field: str, filename: str) -> Cube:
     return cube
 
 
-def fix_time_coord(cube: Cube, field: str, filename: str) -> Cube:
+def fix_time_coord(cube: Cube, field: str, filename: str, downgrade_to_scalar: Optional[bool]=True) -> Cube:
     """
     Callback function for `iris.load` specifically for UGRID data.
 
@@ -151,12 +151,11 @@ def fix_time_coord(cube: Cube, field: str, filename: str) -> Cube:
     else:
         tcoord = cube.coord("time")
         # If only 1 time coordinate value, downgrade AuxCoord to Scalar
-        if tcoord.points.size == 1:
+        if downgrade_to_scalar and tcoord.points.size == 1:
             cube = cube.extract(iris.Constraint(time=tcoord.cell(0)))
         # Else, upgrade AuxCoord to DimCoord
         else:
-            if isinstance(tcoord, iris.coords.AuxCoord):
-                iris.util.promote_aux_coord_to_dim_coord(cube, tcoord)
+            iris.util.promote_aux_coord_to_dim_coord(cube, tcoord)
     return cube
 
 
@@ -325,7 +324,7 @@ def ugrid_spatial(
     cube_copy.remove_coord(model.y)
 
     cube_aggr = cube_copy.collapsed(
-        tmp_coord.name(), getattr(iris.analysis, aggr.upper(), **kwargs)
+        tmp_coord.name(), getattr(iris.analysis, aggr.upper()), **kwargs
     )
     cube_aggr.remove_coord(tmp_coord)
     return cube_aggr
