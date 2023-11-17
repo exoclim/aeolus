@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.lfric &mdash; aeolus 23.11.13.1.dev15+dirty documentation</title>
+  <title>aeolus.lfric &mdash; aeolus 23.11.17.1.dev18+dirty documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -13,7 +13,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=d91c2ad5"></script>
+        <script src="../../_static/documentation_options.js?v=93d0f265"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -34,7 +34,7 @@
             aeolus
           </a>
               <div class="version">
-                23.11.13.1.dev15+dirty
+                23.11.17.1.dev18+dirty
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -221,7 +221,7 @@
 
 <div class="viewcode-block" id="fix_time_coord">
 <a class="viewcode-back" href="../../api/lfric.html#aeolus.lfric.fix_time_coord">[docs]</a>
-<span class="k">def</span> <span class="nf">fix_time_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">fix_time_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">downgrade_to_scalar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Cube</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Callback function for `iris.load` specifically for UGRID data.</span>
 
@@ -241,12 +241,11 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tcoord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
         <span class="c1"># If only 1 time coordinate value, downgrade AuxCoord to Scalar</span>
-        <span class="k">if</span> <span class="n">tcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">downgrade_to_scalar</span> <span class="ow">and</span> <span class="n">tcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">tcoord</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
         <span class="c1"># Else, upgrade AuxCoord to DimCoord</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tcoord</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">AuxCoord</span><span class="p">):</span>
-                <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">tcoord</span><span class="p">)</span>
+            <span class="n">iris</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">tcoord</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube</span></div>
 
 
@@ -430,7 +429,7 @@
     <span class="n">cube_copy</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">cube_aggr</span> <span class="o">=</span> <span class="n">cube_copy</span><span class="o">.</span><span class="n">collapsed</span><span class="p">(</span>
-        <span class="n">tmp_coord</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="p">,</span> <span class="n">aggr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">tmp_coord</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">analysis</span><span class="p">,</span> <span class="n">aggr</span><span class="o">.</span><span class="n">upper</span><span class="p">()),</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span>
     <span class="n">cube_aggr</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">tmp_coord</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cube_aggr</span></div>
