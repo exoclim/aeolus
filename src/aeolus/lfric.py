@@ -131,7 +131,12 @@ def clean_attrs(cube: Cube, field: str, filename: str) -> Cube:
     return cube
 
 
-def fix_time_coord(cube: Cube, field: str, filename: str, downgrade_to_scalar: Optional[bool]=True) -> Cube:
+def fix_time_coord(
+    cube: Cube,
+    field: str,
+    filename: str,
+    downgrade_to_scalar: Optional[bool] = True,
+) -> Cube:
     """
     Callback function for `iris.load` specifically for UGRID data.
 
