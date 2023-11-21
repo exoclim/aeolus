@@ -358,8 +358,7 @@ def area_weights_cube(cube, r_planet=None, normalize=False, model=um):
             r = get_planet_radius(cube)
         else:
             r = r_planet
-        aw *= (r / iris.fileformats.pp.EARTH_RADIUS) ** 2
-        aw = cube.copy(data=aw)
+        aw = cube.copy(data=aw * (r / iris.fileformats.pp.EARTH_RADIUS) ** 2)
         aw.rename("grid_cell_area")
         aw.units = "m**2"
     return aw
