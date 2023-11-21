@@ -4,8 +4,8 @@ from typing import Optional
 import geovista as gv
 import iris
 import numpy as np
-from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 import pyvista as pv
+from pyvista import grid_from_sph_coords, transform_vectors_sph_to_cart
 
 from ..coord import _cell_bounds
 from ..exceptions import _warn
