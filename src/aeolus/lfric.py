@@ -135,7 +135,7 @@ def fix_time_coord(
     cube: Cube,
     field: str,
     filename: str,
-    downgrade_to_scalar: Optional[bool] = True,
+    downgrade_to_scalar: Optional[bool] = False,
 ) -> Cube:
     """
     Callback function for `iris.load` specifically for UGRID data.
