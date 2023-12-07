@@ -275,6 +275,8 @@ def simple_regrid_lfric(
     cube_list: CubeList,
     tgt_cube: Cube,
     ref_cube_constr: Optional[str] = "air_potential_temperature",
+    interp_vertically: Optional[bool] = True,
+    model: Optional[Model] = lfric,
 ) -> CubeList:
     """Quick&dirty regridding of LFRic data to a common height/lat/lon grid."""
     from esmf_regrid.experimental.unstructured_scheme import (
@@ -293,21 +295,24 @@ def simple_regrid_lfric(
         else:
             cube_reg = regridder(cube)
         result_h.append(cube_reg)
-    # Vertical interpolation
-    result_v = iris.cube.CubeList()
-    tgt_points = ("level_height", ref_cube.coord("level_height").points)
-    for cube in result_h:
-        if len(
-            [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
-        ):
-            result_v.append(
-                replace_level_coord_with_height(cube).interpolate(
-                    [tgt_points], iris.analysis.Linear()
+    result = result_h
+    if interp_vertically:
+        # Vertical interpolation
+        result_v = iris.cube.CubeList()
+        tgt_points = (model.z, ref_cube.coord(model.z).points)
+        for cube in result:
+            if len(
+                [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+            ):
+                result_v.append(
+                    replace_level_coord_with_height(cube).interpolate(
+                        [tgt_points], iris.analysis.Linear()
+                    )
                 )
-            )
-        else:
-            result_v.append(cube)
-    return result_v
+            else:
+                result_v.append(cube)
+        result = result_v
+    return result
 
 
 def ugrid_spatial(
