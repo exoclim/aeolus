@@ -302,7 +302,11 @@ def simple_regrid_lfric(
         tgt_points = (model.z, ref_cube.coord(model.z).points)
         for cube in result:
             if len(
-                [i.name() for i in cube.dim_coords if i.name().endswith("_levels")]
+                [
+                    i.name()
+                    for i in cube.dim_coords
+                    if i.name().endswith("_levels")
+                ]
             ):
                 result_v.append(
                     replace_level_coord_with_height(cube).interpolate(
