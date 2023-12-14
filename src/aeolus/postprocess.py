@@ -48,7 +48,7 @@ def process_lfric(
         inpdir = Path(inpdir)
     else:
         try:
-            inpdir = os.environ["AEOLUS_PROJ_INP_DIR"] / label / c_num
+            inpdir = Path(os.environ["AEOLUS_PROJ_INP_DIR"]) / label / c_num
             L.info(f"{inpdir=}")
         except KeyError:
             err_msg = (
@@ -62,7 +62,7 @@ def process_lfric(
         outdir = Path(outdir)
     else:
         try:
-            outdir = os.environ["AEOLUS_PROJ_OUT_DIR"] / label / c_num
+            outdir = Path(os.environ["AEOLUS_PROJ_OUT_DIR"]) / label / c_num
             L.info(f"{outdir=}")
         except KeyError:
             err_msg = (
@@ -89,7 +89,7 @@ def process_lfric(
     elif level_height.startswith("um_"):
         add_levs = partial(
             add_um_height_coord,
-            path_to_levels_file=os.environ["AEOLUS_PROJ_VERT_DIR"]
+            path_to_levels_file=Path(os.environ["AEOLUS_PROJ_VERT_DIR"])
             / level_height.replace("um_", "vertlevs_"),
         )
     else:
@@ -154,7 +154,7 @@ def process_lfric(
             cubes_to_regrid, tgt_cube=tgt_cube, ref_cube_constr=ref_cube
         )
         const = init_const(
-            planet, directory=os.environ["AEOLUS_PROJ_CONST_DIR"]
+            planet, directory=Path(os.environ["AEOLUS_PROJ_CONST_DIR"])
         )
         add_planet_conf_to_cubes(cl_proc, const=const)
 
