@@ -50,6 +50,10 @@ Discussions = "https://github.com/exoclim/aeolus/discussions"
 Documentation = "https://exoclim.github.io/aeolus"
 
 
+[project.scripts]
+aeolus = "aeolus.cli:main"
+
+
 [tool.black]
 line-length = 79
 target-version = ["py39", "py310", "py311"]
