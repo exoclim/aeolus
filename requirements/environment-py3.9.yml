@@ -5,6 +5,7 @@ dependencies:
 - python=3.9
 - cached-property>=1.5.1
 - cartopy
+- click
 - dask-core
 - f90nml
 - flake8-builtins
@@ -29,3 +30,5 @@ dependencies:
 - pytest-cov
 - pytest-flake8
 - python-stratify
+- pip:
+  - click_default_group

@@ -5,6 +5,7 @@ dependencies:
 - python=3.11
 - cached-property>=1.5.1
 - cartopy
+- click
 - f90nml
 - ipython
 - iris>=3.4
@@ -18,3 +19,5 @@ dependencies:
 - pyvista
 - sphinx
 - sphinx_rtd_theme
+- pip:
+  - click_default_group
