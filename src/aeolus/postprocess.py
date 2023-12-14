@@ -47,14 +47,30 @@ def process_lfric(
     if inpdir:
         inpdir = Path(inpdir)
     else:
-        inpdir = os.environ["AEOLUS_PROJ_INP_DIR"] / label / c_num
-        L.info(f"{inpdir=}")
+        try:
+            inpdir = os.environ["AEOLUS_PROJ_INP_DIR"] / label / c_num
+            L.info(f"{inpdir=}")
+        except KeyError:
+            err_msg = (
+                "Environment variable AEOLUS_PROJ_INP_DIR not defined."
+                "Define it or use the --inpdir argument explicitly."
+            )
+            L.critical(err_msg)
+            return
     # Create a subdirectory for processed data
     if outdir:
         outdir = Path(outdir)
     else:
-        outdir = os.environ["AEOLUS_PROJ_OUT_DIR"] / label / c_num
-        L.info(f"{outdir=}")
+        try:
+            outdir = os.environ["AEOLUS_PROJ_OUT_DIR"] / label / c_num
+            L.info(f"{outdir=}")
+        except KeyError:
+            err_msg = (
+                "Environment variable AEOLUS_PROJ_OUT_DIR not defined."
+                "Define it or use the --outdir argument explicitly."
+            )
+            L.critical(err_msg)
+            return
     outdir.mkdir(parents=True, exist_ok=True)
     # Global attributes of the output file
     gl_attrs = {
