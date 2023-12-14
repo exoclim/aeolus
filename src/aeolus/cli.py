@@ -3,9 +3,9 @@ import click
 from click_default_group import DefaultGroup
 
 from ._version import version as __version__
-from .postprocess import process_lfric
 
 __all__ = ["main"]
+
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
 
@@ -107,6 +107,8 @@ def pp(
     nlon: int,
 ) -> None:
     """Post-process model output."""
+    from .postprocess import process_lfric  # noqa
+
     click.secho(f"Processing {model} output...")
     if model == "lfric":
         fname_out = process_lfric(
