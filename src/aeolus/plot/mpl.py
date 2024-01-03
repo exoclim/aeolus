@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
 
 from ..coord import get_cube_rel_days
 from ..model import lfric, um
@@ -168,7 +169,7 @@ def timeseries_2d(
         return ax
 
 
-def figsave(fig: Figure, filename, **kw_savefig) -> None:
+def figsave(fig: Figure, filename: Path, **kw_savefig) -> None:
     """Save figure and print relative path to it."""
     if RUNTIME.figsave_stamp:
         fig.suptitle(
@@ -183,15 +184,27 @@ def figsave(fig: Figure, filename, **kw_savefig) -> None:
     save_dir = filename.absolute().parent
     save_dir.mkdir(parents=True, exist_ok=True)
     fig.savefig(filename, **kw_savefig)
+    fmt = plt.rcParams["savefig.format"]
+    fname_orig = filename.with_suffix(f".{fmt}")
+    if RUNTIME.figsave_reduce_size:
+        # See MetPy Mondays #273
+        orig_copy = fname_orig.with_stem(f"{fname_orig.stem}_original")
+        fname_orig.replace(orig_copy)
+        with Image.open(orig_copy) as im_orig:
+            im = im_orig.convert("P", palette=Image.Palette.ADAPTIVE)
+            im.save(fname_orig)
+        # Delete the original
+        orig_copy.unlink()
     pth = Path.cwd()
     rel_path = None
     pref = ""
     for par in pth.parents:
         pref += ".." + pth.anchor
         try:
-            rel_path = f"{pref}{filename.relative_to(par)}"
+            rel_path = f"{pref}{fname_orig.relative_to(par)}"
             break
         except ValueError:
             pass
     if rel_path is not None:
-        print(f"Saved to {rel_path}.{plt.rcParams['savefig.format']}")
+        print(f"Saved to {rel_path}")
+        print(f"Size: {fname_orig.stat().st_size / 1024:.1f} KB")

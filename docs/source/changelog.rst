@@ -3,6 +3,14 @@ Changelog
 
 .. default-role:: py:obj
 
+dev
+---
+
+:Date: TBA
+
+* Add a run-time option to reduce image file size (`RUNTIME.figsave_reduce_size`), set to `True` by default.
+* Update dependencies.
+
 
 0.4.18
 ------
