@@ -165,7 +165,10 @@ def unit_format(
         if precision is None:
             precision = decimal_digits
         if exponent is None:
-            exponent = int(math.floor(math.log10(abs(value))))
+            try:
+                exponent = int(math.floor(math.log10(abs(value))))
+            except ValueError:
+                exponent = 0
 
         coeff = round(value / 10**exponent, decimal_digits)
 
