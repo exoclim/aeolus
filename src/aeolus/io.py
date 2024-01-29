@@ -1,4 +1,5 @@
 """Input and output functionality."""
+
 from collections.abc import Generator, Sequence
 from pathlib import Path
 import re

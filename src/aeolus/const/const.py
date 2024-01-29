@@ -1,4 +1,5 @@
 """Main interface to the physical constants store."""
+
 from dataclasses import make_dataclass
 import json
 from pathlib import Path

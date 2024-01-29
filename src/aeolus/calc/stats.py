@@ -1,4 +1,5 @@
 """Statistical functions."""
+
 from collections.abc import Iterable, Mapping
 
 import iris.analysis

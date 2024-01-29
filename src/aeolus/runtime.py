@@ -1,4 +1,5 @@
 """Runtime configuration."""
+
 import threading
 
 __all__ = ("RUNTIME",)

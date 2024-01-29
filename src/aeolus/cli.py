@@ -1,4 +1,5 @@
 """Command line interface (CLI) support for the aeolus entry-point."""
+
 import click
 from click_default_group import DefaultGroup
 

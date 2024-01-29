@@ -1,4 +1,5 @@
 """Test the plot submodule."""
+
 import iris.coords
 import iris.cube
 import pytest

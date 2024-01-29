@@ -1,4 +1,5 @@
 """Text-related formatting functions."""
+
 import itertools
 import math
 import string

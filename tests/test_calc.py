@@ -1,4 +1,5 @@
 """Test calc submodule."""
+
 from pathlib import Path
 
 from cf_units import Unit

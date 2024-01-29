@@ -1,4 +1,5 @@
 """Metadata-related functionality."""
+
 from collections.abc import Iterable
 from dataclasses import is_dataclass
 import functools
