@@ -1,4 +1,5 @@
 """Core submodule of aeolus package."""
+
 from cached_property import cached_property
 from iris.coord_systems import GeogCS
 from iris.exceptions import ConstraintMismatchError as ConMisErr

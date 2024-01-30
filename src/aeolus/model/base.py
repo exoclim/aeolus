@@ -1,4 +1,5 @@
 """Model-specific dictionaries of variable names and coordinates."""
+
 from dataclasses import dataclass
 import textwrap
 

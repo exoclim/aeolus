@@ -1,4 +1,5 @@
 """Functions for calculating synthetic observations."""
+
 import warnings
 
 from iris.analysis import SUM
