@@ -7,8 +7,8 @@ Python library for the analysis and visualisation of climate model output, prima
 
 <p align="center">
 <a href="https://www.python.org/downloads/">
-<img src="https://img.shields.io/badge/python-3.9+-blue.svg?logo=python&logoColor=white"
-     alt="Python 3.9+"></a>
+<img src="https://img.shields.io/badge/python-3.10+-blue.svg?logo=python&logoColor=white"
+     alt="Python 3.10+"></a>
 <a href="https://exoclim.github.io/aeolus">
 <img src="https://img.shields.io/badge/docs-latest-green?logo=github"
      alt="Documentation"></a>
