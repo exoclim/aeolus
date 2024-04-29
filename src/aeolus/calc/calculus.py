@@ -1,4 +1,5 @@
 """Generic calculus functions."""
+
 from cf_units import Unit
 from iris.analysis import Linear
 from iris.analysis.calculus import (

@@ -1,4 +1,5 @@
 """Utilities for working with LFRic output."""
+
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Callable, Optional, Union

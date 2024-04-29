@@ -1,4 +1,5 @@
 """Integrated fluxes."""
+
 from iris import Constraint
 from iris.analysis import SUM
 from iris.cube import CubeList

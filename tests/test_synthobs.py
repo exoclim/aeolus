@@ -1,4 +1,5 @@
 """Test synthobs submodule."""
+
 from pathlib import Path
 
 import iris

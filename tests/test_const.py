@@ -1,4 +1,5 @@
 """Test calc submodule."""
+
 from pathlib import Path
 
 import iris.cube

@@ -1,4 +1,5 @@
 """Functions for post-processing UM output."""
+
 from typing import Optional
 
 import iris

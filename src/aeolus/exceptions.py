@@ -1,4 +1,5 @@
 """Exceptions specific to aeolus package."""
+
 from warnings import warn
 
 

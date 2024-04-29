@@ -1,4 +1,5 @@
 """Post-process model output by interpolating it to a common grid."""
+
 # Standard library
 from functools import partial
 import os

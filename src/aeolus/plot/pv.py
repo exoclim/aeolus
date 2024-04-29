@@ -1,4 +1,5 @@
 """Prepare data in spherical coordinates for pyvista plotting."""
+
 from typing import Optional
 
 import geovista as gv
