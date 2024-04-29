@@ -306,7 +306,8 @@ def save_cubelist(
             pass
         cube.attributes = new_attrs
         out.append(cube)
-    iris.save(out, str(path))
+    with iris.FUTURE.context(save_split_attrs=True):
+        iris.save(out, str(path))
     # Restore original attributes
     for cube, attrs in zip(cubelist, old_attrs):
         cube.attributes = attrs

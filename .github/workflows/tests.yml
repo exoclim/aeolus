@@ -24,13 +24,15 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        python-version: ['3.9', '3.10', '3.11']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
         exclude:
           # excludes py3.10 on windows because of python-stratify
           - os: windows-latest
             python-version: '3.10'
           - os: windows-latest
             python-version: '3.11'
+          - os: windows-latest
+            python-version: '3.12'
 
     steps:
       - name: Checkout source

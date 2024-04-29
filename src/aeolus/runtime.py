@@ -7,7 +7,7 @@ __all__ = ("RUNTIME",)
 class RuntimeOpts(threading.local):
     """Run-time configuration controller."""
 
-    def __init__(self, figsave_stamp=False, figsave_reduce_size=True):
+    def __init__(self, figsave_stamp=False, figsave_reduce_size=False):
         """Initialise run-time configuration."""
         self.__dict__["figsave_stamp"] = figsave_stamp
         self.__dict__["figsave_reduce_size"] = figsave_reduce_size

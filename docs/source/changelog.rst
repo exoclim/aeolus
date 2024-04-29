@@ -8,7 +8,18 @@ dev
 
 :Date: TBA
 
-* Add a run-time option to reduce image file size (`RUNTIME.figsave_reduce_size`), set to `True` by default.
+* TODO
+
+2024-05
+-------
+
+:Date: TBA
+
+* Require iris>=3.9.
+* Add Python 3.12 CI.
+* Add `lfric.replace_mesh()`.
+* Remove `plot.pv.cube2d_to_polydata()` (Replaced by `iris.experimental.geovista.cube_to_polydata()`).
+* Add a run-time option to reduce image file size (`RUNTIME.figsave_reduce_size`), set to `False` by default.
 * Update dependencies.
 
 

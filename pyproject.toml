@@ -56,7 +56,7 @@ aeolus = "aeolus.cli:main"
 
 [tool.black]
 line-length = 79
-target-version = ["py39", "py310", "py311"]
+target-version = ["py39", "py310", "py311", "py312"]
 include = '\.pyi?$'
 exclude = '''
 (

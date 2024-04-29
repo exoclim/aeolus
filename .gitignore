@@ -5,6 +5,9 @@ docs/source/examples/index.rst
 tests/data
 examples/data
 
+# setuptools-scm
+_version.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
