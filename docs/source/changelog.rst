@@ -16,7 +16,7 @@ dev
 :Date: TBA
 
 * Require iris>=3.9.
-* Add Python 3.12 CI.
+* Add Python 3.12, drop 3.9.
 * Modify `precip_sum()` for missing data in LFRic output
 * Add `plot.text.all_sim_file_label()`
 * Add `lfric.replace_mesh()`.
