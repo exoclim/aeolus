@@ -7,7 +7,8 @@ import iris
 import iris.coords
 from iris.cube import Cube, CubeList
 import iris.exceptions
-from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD, load_mesh
+from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD, MeshCoord, load_mesh
+from iris.experimental.ugrid.mesh import Mesh
 import iris.util
 import numpy as np
 
@@ -23,6 +24,7 @@ __all__ = (
     "load_lfric_mesh",
     "load_lfric_raw",
     "replace_level_coord_with_height",
+    "replace_mesh",
     "simple_regrid_lfric",
     "ugrid_spatial",
     "ugrid_spatial_mean",
@@ -166,7 +168,7 @@ def fix_time_coord(
 
 def load_lfric_mesh(
     fname: str = "mesh.nc", var_name: str = "dynamics"
-) -> iris.experimental.ugrid.mesh.Mesh:
+) -> Mesh:
     """Load LFRic mesh from a netCDF file."""
     with PARSE_UGRID_ON_LOAD.context():
         loaded_mesh = load_mesh(fname, var_name=var_name)
@@ -211,6 +213,16 @@ def replace_level_coord_with_height(cube: Cube) -> Cube:
         cube.remove_coord(lev_coord)
         iris.util.promote_aux_coord_to_dim_coord(cube, "level_height")
     return cube
+
+
+def replace_mesh(cube: Cube, new_mesh: Mesh) -> Cube:
+    """Replace mesh in a 1d cube by creating a new copy of that cube."""
+    mesh_x = MeshCoord(mesh=new_mesh, location="face", axis="x")
+    mesh_y = MeshCoord(mesh=new_mesh, location="face", axis="y")
+
+    new_cube = Cube(cube.data, aux_coords_and_dims=[(mesh_x, 0), (mesh_y, 0)])
+    new_cube.metadata = cube.metadata
+    return new_cube
 
 
 def _regrid_cubes_on_edges(

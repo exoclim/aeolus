@@ -15,7 +15,6 @@ from ..model.base import Model
 __all__ = (
     "grid_for_scalar_cube_sph",
     "grid_for_vector_cubes_sph",
-    "cube2d_to_mesh",
     "ugrid_mesh_to_gv_mesh",
 )
 
@@ -161,18 +160,6 @@ def grid_for_vector_cubes_sph(
     # Add vectors to the grid
     grid.point_data[label] = vectors
     return grid
-
-
-def cube2d_to_mesh(cube2d: iris.cube.Cube, **kwargs) -> pv.PolyData:
-    """Construct a spherical mesh from a 2D iris cube using geovista."""
-    mesh = gv.Transform.from_unstructured(
-        *[i.points for i in cube2d.mesh.node_coords],
-        cube2d.mesh.face_node_connectivity.indices_by_location(),
-        data=cube2d.data,
-        start_index=cube2d.mesh.face_node_connectivity.start_index,
-        **kwargs,
-    )
-    return mesh
 
 
 def ugrid_mesh_to_gv_mesh(
