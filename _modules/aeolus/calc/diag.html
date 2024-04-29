@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aeolus.calc.diag &mdash; aeolus 24.1.30.1.dev48+dirty documentation</title>
+  <title>aeolus.calc.diag &mdash; aeolus 24.4.29.2.dev29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -15,8 +15,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=83a3270f"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/documentation_options.js?v=85eef970"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -36,7 +36,7 @@
             aeolus
           </a>
               <div class="version">
-                24.1.30.1.dev48+dirty
+                24.4.29.2.dev29
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -675,11 +675,13 @@
     <span class="k">for</span> <span class="n">varname</span> <span class="ow">in</span> <span class="n">varnames</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">cube</span> <span class="o">=</span> <span class="n">cubelist</span><span class="o">.</span><span class="n">extract_cube</span><span class="p">(</span><span class="n">varname</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">varname</span> <span class="ow">in</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">cv_rain</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">cv_snow</span><span class="p">]:</span>
+                <span class="n">cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
             <span class="n">precip</span> <span class="o">+=</span> <span class="n">cube</span>
         <span class="k">except</span> <span class="n">ConMisErr</span><span class="p">:</span>
             <span class="k">pass</span>
     <span class="n">precip</span> <span class="o">/=</span> <span class="n">const</span><span class="o">.</span><span class="n">condensible_density</span>
-    <span class="n">precip</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;mm day^-1&quot;</span><span class="p">)</span>
+    <span class="n">precip</span><span class="o">.</span><span class="n">convert_units</span><span class="p">(</span><span class="s2">&quot;mm day-1&quot;</span><span class="p">)</span>
     <span class="n">precip</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ptype</span><span class="si">}</span><span class="s2">_precip_rate&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">precip</span></div>
 
