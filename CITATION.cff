@@ -10,6 +10,6 @@ authors:
     orcid: https://orcid.org/0000-0002-9705-0535
     website: https://mzamyatina.github.io/
 title: "Aeolus - a Python library for the analysis and visualisation of climate model output."
-version: 0.4.15
+version: 24.4.29.1
 doi: 10.5281/zenodo.5145604
-date-released: 2022-04-22
+date-released: 2024-04-29
