@@ -10,13 +10,15 @@ dev
 
 * TODO
 
-2024-05
+2024-04
 -------
 
 :Date: TBA
 
 * Require iris>=3.9.
 * Add Python 3.12 CI.
+* Modify `precip_sum()` for missing data in LFRic output
+* Add `plot.text.all_sim_file_label()`
 * Add `lfric.replace_mesh()`.
 * Remove `plot.pv.cube2d_to_polydata()` (Replaced by `iris.experimental.geovista.cube_to_polydata()`).
 * Add a run-time option to reduce image file size (`RUNTIME.figsave_reduce_size`), set to `False` by default.
