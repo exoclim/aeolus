@@ -558,11 +558,13 @@ def precip_sum(cubelist, ptype="total", const=None, model=um):
     for varname in varnames:
         try:
             cube = cubelist.extract_cube(varname)
+            if varname in [model.cv_rain, model.cv_snow]:
+                cube = cube.copy(data=cube.data.filled(fill_value=0))
             precip += cube
         except ConMisErr:
             pass
     precip /= const.condensible_density
-    precip.convert_units("mm day^-1")
+    precip.convert_units("mm day-1")
     precip.rename(f"{ptype}_precip_rate")
     return precip
 

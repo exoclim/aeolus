@@ -14,6 +14,7 @@ from .mpl import (
     timeseries_2d,
 )
 from .text import (
+    all_sim_file_label,
     cube_minmeanmax_str,
     fmt_lonlat,
     subplot_label_generator,
@@ -23,6 +24,7 @@ from .text import (
 
 __all__ = (
     "add_custom_legend",
+    "all_sim_file_label",
     "capitalise",
     "CloudPlotter",
     "cloudtypes_cmap",

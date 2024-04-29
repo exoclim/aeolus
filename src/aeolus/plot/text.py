@@ -1,18 +1,26 @@
 """Text-related formatting functions."""
 import itertools
 import math
+import os
 import string
 
 from ..calc import spatial_mean
 from ..exceptions import ArgumentError
 
 __all__ = (
+    "all_sim_file_label",
     "cube_minmeanmax_str",
     "fmt_lonlat",
     "subplot_label_generator",
     "tex2cf_units",
     "unit_format",
 )
+
+
+def all_sim_file_label(sims):
+    """Make a shorter label for a list of labels with a common prefix."""
+    pref = os.path.commonprefix(sims)
+    return f"{pref}_{'_'.join([i.removeprefix(pref) for i in sims])}"
 
 
 def cube_minmeanmax_str(

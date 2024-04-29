@@ -35,4 +35,6 @@ lfric = Model(
     sfc_dn_lw="lw_down_surf",
     sfc_up_lw="lw_up_surf",
     sfc_up_sw="sw_up_surf",
+    ls_rain="ls_prec",  # TODO: correct
+    cv_rain="conv_prec",  # TODO: correct
 )
