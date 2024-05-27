@@ -1,139 +1,393 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cube coordinate functionality &mdash; aeolus 24.4.29.2.dev29 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cube coordinate functionality &#8212; aeolus 24.5.27.0.dev9 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=85eef970"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/js/theme.js"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=bb2f2eb9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/coord';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="I/O" href="io.html" />
-    <link rel="prev" title="Physical constants" href="const.html" /> 
-</head>
+    <link rel="prev" title="Physical constants" href="const.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            aeolus
-          </a>
-              <div class="version">
-                24.4.29.2.dev29
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calc.html">Science calculations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html">Core hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="const.html">Physical constants</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Cube coordinate functionality</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.CoordContainer"><code class="docutils literal notranslate"><span class="pre">CoordContainer</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#aeolus.coord.CoordContainer.__init__"><code class="docutils literal notranslate"><span class="pre">CoordContainer.__init__()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.add_binned_coord"><code class="docutils literal notranslate"><span class="pre">add_binned_coord()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.add_cyclic_point_to_cube"><code class="docutils literal notranslate"><span class="pre">add_cyclic_point_to_cube()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.add_planet_calendar"><code class="docutils literal notranslate"><span class="pre">add_planet_calendar()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.area_weights_cube"><code class="docutils literal notranslate"><span class="pre">area_weights_cube()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.check_coords"><code class="docutils literal notranslate"><span class="pre">check_coords()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.coarsen_cube"><code class="docutils literal notranslate"><span class="pre">coarsen_cube()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.coord_delta_to_cube"><code class="docutils literal notranslate"><span class="pre">coord_delta_to_cube()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.coord_to_cube"><code class="docutils literal notranslate"><span class="pre">coord_to_cube()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.ensure_bounds"><code class="docutils literal notranslate"><span class="pre">ensure_bounds()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.get_cube_datetimes"><code class="docutils literal notranslate"><span class="pre">get_cube_datetimes()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.get_cube_rel_days"><code class="docutils literal notranslate"><span class="pre">get_cube_rel_days()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.get_dim_coord"><code class="docutils literal notranslate"><span class="pre">get_dim_coord()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.get_xy_coords"><code class="docutils literal notranslate"><span class="pre">get_xy_coords()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.isel"><code class="docutils literal notranslate"><span class="pre">isel()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels"><code class="docutils literal notranslate"><span class="pre">interp_cube_from_height_to_pressure_levels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels"><code class="docutils literal notranslate"><span class="pre">interp_cubelist_from_height_to_pressure_levels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.interp_to_cube_time"><code class="docutils literal notranslate"><span class="pre">interp_to_cube_time()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.nearest_coord_value"><code class="docutils literal notranslate"><span class="pre">nearest_coord_value()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.not_equal_coord_axes"><code class="docutils literal notranslate"><span class="pre">not_equal_coord_axes()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.regrid_3d"><code class="docutils literal notranslate"><span class="pre">regrid_3d()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.replace_z_coord"><code class="docutils literal notranslate"><span class="pre">replace_z_coord()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.roll_cube_0_360"><code class="docutils literal notranslate"><span class="pre">roll_cube_0_360()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.roll_cube_pm180"><code class="docutils literal notranslate"><span class="pre">roll_cube_pm180()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.vertical_cross_section_area"><code class="docutils literal notranslate"><span class="pre">vertical_cross_section_area()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#aeolus.coord.volume_weights_cube"><code class="docutils literal notranslate"><span class="pre">volume_weights_cube()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="io.html">I/O</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lfric.html">Functions for LFRic output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="log.html">Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot.html">Plotting functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="proc_um_output.html">Process output of the UM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="region.html">Regions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributor’s Guide</a></li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-        </div>
-      </div>
-    </nav>
+  
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">aeolus</a>
-      </nav>
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">aeolus 24.5.27.0.dev9 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
-      <li class="breadcrumb-item active">Cube coordinate functionality</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api/coord.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contributing.html">
+                        Contributor’s Guide
+                      </a>
+                    </li>
+                
   </ul>
-  <hr/>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contributing.html">
+                        Contributor’s Guide
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="calc.html">Science calculations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="const.html">Physical constants</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Cube coordinate functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lfric.html">Functions for LFRic output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-specific dictionaries of variable and coordinate names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">Plotting functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proc_um_output.html">Process output of the UM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="region.html">Regions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synthobs.html">Synthetic observations</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Cube...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="module-aeolus.coord">
-<span id="cube-coordinate-functionality"></span><h1>Cube coordinate functionality<a class="headerlink" href="#module-aeolus.coord" title="Link to this heading"></a></h1>
+<span id="cube-coordinate-functionality"></span><h1>Cube coordinate functionality<a class="headerlink" href="#module-aeolus.coord" title="Link to this heading">#</a></h1>
 <p>Functionality related to coordinates of cubes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Coordinate container.</p>
 <dl class="py attribute">
@@ -149,12 +403,12 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate an <cite>AtmosFlow</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev26)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
+<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev44)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
 <li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
@@ -166,32 +420,32 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.add_binned_coord">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_binned_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_binned_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_binned_coord" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_binned_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_binned_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_binned_coord" title="Link to this definition">#</a></dt>
 <dd><p>Bin coordinate points and add them as an auxiliary coordinate to a cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with the given coordinate.</p></li>
-<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a>) – Coordinate name.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with the given coordinate.</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a>) – Coordinate name.</p></li>
 <li><p><strong>bins</strong> (<em>array-like</em>) – Coordinate bins.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.add_cyclic_point_to_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_cyclic_point_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'longitude'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_cyclic_point_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_cyclic_point_to_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_cyclic_point_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'longitude'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_cyclic_point_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_cyclic_point_to_cube" title="Link to this definition">#</a></dt>
 <dd><p>Add a cyclic point to a cube and a corresponding coordinate.</p>
 <p>A wrapper for <cite>cartopy.util.add_cyclic_point()</cite> for iris cubes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – An n-dimensional cube of data to add a cyclic point to.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A 1-dimensional coordinate which specifies the coordinate values for
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – An n-dimensional cube of data to add a cyclic point to.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A 1-dimensional coordinate which specifies the coordinate values for
 the dimension the cyclic point is to be added to. The coordinate
 values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 </ul>
@@ -200,20 +454,20 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 <dd class="field-even"><p>The cube with a cyclic point added.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.add_planet_calendar">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_planet_calendar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_start_day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('djf',</span> <span class="pre">'mam',</span> <span class="pre">'jja',</span> <span class="pre">'son')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'planet'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_planet_calendar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_planet_calendar" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">add_planet_calendar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days_in_day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_start_day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seasons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('djf',</span> <span class="pre">'mam',</span> <span class="pre">'jja',</span> <span class="pre">'son')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'planet'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#add_planet_calendar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.add_planet_calendar" title="Link to this definition">#</a></dt>
 <dd><p>Add an auxiliary time axis with the non-Earth period lengths.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>time_coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Original time coordinate of the cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>time_coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Original time coordinate of the cube.</p></li>
 <li><p><strong>days_in_year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Number of Earth days in one year on the given planet.</p></li>
 <li><p><strong>days_in_month</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Number of Earth days in one month on the given planet.</p></li>
 <li><p><strong>days_in_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Number of Earth days in one day on the given planet.</p></li>
@@ -227,12 +481,12 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.area_weights_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">area_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#area_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.area_weights_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">area_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#area_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.area_weights_cube" title="Link to this definition">#</a></dt>
 <dd><p>Create a cube of area weights for an arbitrary planet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates</p></li>
 <li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize areas.</p></li>
@@ -243,46 +497,46 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.check_coords">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">check_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cubes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#check_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.check_coords" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">check_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cubes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#check_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.check_coords" title="Link to this definition">#</a></dt>
 <dd><p>Check the cubes coordinates for consistency.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.coarsen_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coarsen_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">lon_bins,</span> <span class="pre">lat_bins,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coarsen_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coarsen_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coarsen_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">lon_bins,</span> <span class="pre">lat_bins,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coarsen_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coarsen_cube" title="Link to this definition">#</a></dt>
 <dd><p>Block-average cube in longitude and latitude.</p>
 <p>Note: no weighting is applied!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>lon_bins</strong> (<em>array-like</em>) – Longitude bins.</p></li>
 <li><p><strong>lat_bins</strong> (<em>array-like</em>) – Latitude bins.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.coord_delta_to_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coord_delta_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_delta_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_delta_to_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coord_delta_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_delta_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_delta_to_cube" title="Link to this definition">#</a></dt>
 <dd><p>Convert 1D coord spacings to a cube of the same dim as the given cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
 </ul>
 </dd>
@@ -290,20 +544,20 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of broadcast coordinate deltas.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.coord_to_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coord_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">broadcast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_to_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">coord_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">broadcast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#coord_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.coord_to_cube" title="Link to this definition">#</a></dt>
 <dd><p>Convert coordinate points to a cube with the same dimensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
 <li><p><strong>broadcast</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Broadcast the coordinate points to the shape of the cube.</p></li>
 </ul>
 </dd>
@@ -311,25 +565,25 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of broadcast coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.ensure_bounds">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">ensure_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">coords=('x',</span> <span class="pre">'y'),</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#ensure_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.ensure_bounds" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">ensure_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">coords=('x',</span> <span class="pre">'y'),</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#ensure_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.ensure_bounds" title="Link to this definition">#</a></dt>
 <dd><p>Auto-generate bounds for cube coordinates.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_cube_datetimes">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_datetimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_datetimes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_datetimes" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_datetimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_datetimes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_datetimes" title="Link to this definition">#</a></dt>
 <dd><p>Convert points of a cube’s time coordinate to datetimes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -344,12 +598,12 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_cube_rel_days">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_rel_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_rel_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_rel_days" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_cube_rel_days</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_cube_rel_days"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_cube_rel_days" title="Link to this definition">#</a></dt>
 <dd><p>Convert points of a cube’s time coordinate to relative number of days.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -364,15 +618,15 @@ to get it from the cube metadata.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_dim_coord">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_dim_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_dim_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_dim_coord" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_dim_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_dim_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_dim_coord" title="Link to this definition">#</a></dt>
 <dd><p>Return a coordinate from a cube based on the axis it represents.</p>
-<p>Uses <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.util.html#iris.util.guess_coord_axis" title="(in Iris v3.10.0.dev26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">iris.util.guess_coord_axis()</span></code></a> to heuristically match a
+<p>Uses <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.util.html#iris.util.guess_coord_axis" title="(in Iris v3.10.0.dev44)"><code class="xref py py-func docutils literal notranslate"><span class="pre">iris.util.guess_coord_axis()</span></code></a> to heuristically match a
 dimensional coordinate with the requested axis.</p>
-<p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
+<p>Adapted from <a class="github reference external" href="https://github.com/LSaffin/iris-extensions">LSaffin/iris-extensions</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with the desired coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with the desired coordinate.</p></li>
 <li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The co-ordinate axis to take from the cube. Must be one of X, Y, Z, T.</p></li>
 </ul>
 </dd>
@@ -380,7 +634,7 @@ dimensional coordinate with the requested axis.</p>
 <dd class="field-even"><p>The dim coordinate matching the requested axis on the given cube.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.DimCoord" title="(in Iris v3.10.0.dev26)">iris.coords.DimCoord</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.DimCoord" title="(in Iris v3.10.0.dev44)">iris.coords.DimCoord</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -393,12 +647,12 @@ dimensional coordinate with the requested axis.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.get_xy_coords">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_xy_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_xy_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_xy_coords" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_xy_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_xy_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_xy_coords" title="Link to this definition">#</a></dt>
 <dd><p>Return X and Y coords tuple using names from a given <cite>model</cite> container.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
 </dd>
@@ -407,13 +661,13 @@ dimensional coordinate with the requested axis.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.isel">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">isel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_not_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#isel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.isel" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">isel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_not_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#isel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.isel" title="Link to this definition">#</a></dt>
 <dd><p>Slice cubes by an index of a coordinate (index-selector).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev26)"><em>iris.cube.CubeList</em></a>) – Cube or list of cubes.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a>) – Coordinate for selection.</p></li>
+<li><p><strong>obj</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev44)"><em>iris.cube.CubeList</em></a>) – Cube or list of cubes.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a>) – Coordinate for selection.</p></li>
 <li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Index along the given coordinate.</p></li>
 <li><p><strong>skip_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Skip if coordinate not found. By default it is active when dealing with
 a cube list and inactive if dealing with a single cube.</p></li>
@@ -423,21 +677,21 @@ a cube list and inactive if dealing with a single cube.</p></li>
 <dd class="field-even"><p>Slice along the coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a> or <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev26)">iris.cube.CubeList</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a> or <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev44)">iris.cube.CubeList</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_cube_from_height_to_pressure_levels">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cube_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variable,</span> <span class="pre">pressure,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cube_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cube_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variable,</span> <span class="pre">pressure,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cube_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels" title="Link to this definition">#</a></dt>
 <dd><p>Interpolate a cube from height to pressure level(s).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>variable</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – A cube to interpolate.
+<li><p><strong>variable</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – A cube to interpolate.
 Must have the same dimensions as the pressure cube.</p></li>
-<li><p><strong>pressure</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – A cube of pressure.</p></li>
+<li><p><strong>pressure</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – A cube of pressure.</p></li>
 <li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels
 (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
 <li><p><strong>p_ref_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, <cite>levels</cite> are used as fractions of the surface pressure.</p></li>
@@ -453,21 +707,21 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>The variable interpolated to pressure level(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_cubelist_from_height_to_pressure_levels">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cubelist_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields],</span> <span class="pre">include_pressure=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cubelist_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_cubelist_from_height_to_pressure_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubelist,</span> <span class="pre">levels,</span> <span class="pre">p_ref_frac=False,</span> <span class="pre">const=None,</span> <span class="pre">interpolator=None,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields],</span> <span class="pre">include_pressure=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_cubelist_from_height_to_pressure_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels" title="Link to this definition">#</a></dt>
 <dd><p>Interpolate all cubes to the given set of pressure levels.</p>
 <p>Pressure variable is found using the <cite>model.pres</cite> name and then optionally
 excluded from the output list of interpolated cubes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev26)"><em>iris.cube.CubeList</em></a>) – List of cubes, including a cube of pressure.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev44)"><em>iris.cube.CubeList</em></a>) – List of cubes, including a cube of pressure.</p></li>
 <li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels
 (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
 <li><p><strong>p_ref_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, <cite>levels</cite> are used as fractions of the surface pressure.</p></li>
@@ -484,21 +738,21 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>List of cubes interpolated to pressure level(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev26)">iris.cube.CubeList</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.10.0.dev44)">iris.cube.CubeList</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.interp_to_cube_time">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_to_cube_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_src,</span> <span class="pre">cube_tgt,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_cube_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_to_cube_time" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">interp_to_cube_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_src,</span> <span class="pre">cube_tgt,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#interp_to_cube_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.interp_to_cube_time" title="Link to this definition">#</a></dt>
 <dd><p>Interpolate <cite>cube_src</cite> to <cite>cube_tgt</cite> along the time dimension (<cite>model.t</cite>).</p>
 <p>Linear interpolation is used. Forecast period is copied from <cite>cube_tgt</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube_src</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube to interpolate.</p></li>
-<li><p><strong>cube_tgt</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with time dimension to interpolate to.</p></li>
+<li><p><strong>cube_src</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube to interpolate.</p></li>
+<li><p><strong>cube_tgt</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with time dimension to interpolate to.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -506,20 +760,20 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>Cube with the time dimension equal to <cite>cube_tgt</cite>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.nearest_coord_value">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">nearest_coord_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#nearest_coord_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.nearest_coord_value" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">nearest_coord_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#nearest_coord_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.nearest_coord_value" title="Link to this definition">#</a></dt>
 <dd><p>Get the nearest value of a coordinate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with the coordinate</p></li>
-<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev26)"><em>iris.coords.Coord</em></a>) – Coordinate where to look the nearest point up</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with the coordinate</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.10.0.dev44)"><em>iris.coords.Coord</em></a>) – Coordinate where to look the nearest point up</p></li>
 <li><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The value to find</p></li>
 </ul>
 </dd>
@@ -534,37 +788,37 @@ See <cite>relevel()</cite> docs for more.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.not_equal_coord_axes">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">not_equal_coord_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cube2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#not_equal_coord_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.not_equal_coord_axes" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">not_equal_coord_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cube2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#not_equal_coord_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.not_equal_coord_axes" title="Link to this definition">#</a></dt>
 <dd><p>Given 2 cubes, return axes of unequal dimensional coordinates.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.regrid_3d">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">regrid_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">target,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#regrid_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.regrid_3d" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">regrid_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">target,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#regrid_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.regrid_3d" title="Link to this definition">#</a></dt>
 <dd><p>Regrid a cube in the horizontal and in the vertical.</p>
-<p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
+<p>Adapted from <a class="github reference external" href="https://github.com/LSaffin/iris-extensions">LSaffin/iris-extensions</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – The cube to be regridded.</p></li>
-<li><p><strong>target</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – The cube to regrid to.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – The cube to be regridded.</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – The cube to regrid to.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.replace_z_coord">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Link to this definition">#</a></dt>
 <dd><p>Replace dimensional vertical coordinate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -572,26 +826,26 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>Copy of the input cube with a new vertical coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.roll_cube_0_360">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_0_360</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">add_shift=0,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_0_360"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_0_360" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_0_360</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">add_shift=0,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_0_360"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_0_360" title="Link to this definition">#</a></dt>
 <dd><p>Take a cube spanning -180…180 degrees and roll it to 0…360 degrees.</p>
 <p>Works with global model output, and in some cases for regional.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>add_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Additional shift of data (is not applied to the longitude coordinate).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -602,19 +856,19 @@ See <cite>relevel()</cite> docs for more.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.roll_cube_pm180">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_pm180</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">add_shift=0,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_pm180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_pm180" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">roll_cube_pm180</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube_in,</span> <span class="pre">add_shift=0,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#roll_cube_pm180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.roll_cube_pm180" title="Link to this definition">#</a></dt>
 <dd><p>Take a cube spanning 0…360 degrees and roll it to -180…180 degrees.</p>
 <p>Works with global model output, and in some cases for regional.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>add_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Additional shift of data (is not applied to the longitude coordinate).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -625,18 +879,18 @@ See <cite>relevel()</cite> docs for more.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.vertical_cross_section_area">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">vertical_cross_section_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube2d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_planet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#vertical_cross_section_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.vertical_cross_section_area" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">vertical_cross_section_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube2d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_planet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#vertical_cross_section_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.vertical_cross_section_area" title="Link to this definition">#</a></dt>
 <dd><p>Create a cube of vertical cross-section areas in metres.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.volume_weights_cube">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">volume_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#volume_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.volume_weights_cube" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">volume_weights_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">r_planet=None,</span> <span class="pre">normalize=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#volume_weights_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.volume_weights_cube" title="Link to this definition">#</a></dt>
 <dd><p>Create a cube of volume weights from a grid of a given cube.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)"><em>iris.cube.Cube</em></a>) – Cube with longitude, latitude and height coordinates</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)"><em>iris.cube.Cube</em></a>) – Cube with longitude, latitude and height coordinates</p></li>
 <li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
@@ -647,7 +901,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev26)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.10.0.dev44)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -655,34 +909,146 @@ to get it from the cube metadata.</p></li>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="const.html" class="btn btn-neutral float-left" title="Physical constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="io.html" class="btn btn-neutral float-right" title="I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2020 - 2024, aeolus contributors.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="const.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Physical constants</p>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class="right-next"
+       href="io.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">I/O</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-</body>
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.CoordContainer"><code class="docutils literal notranslate"><span class="pre">CoordContainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.CoordContainer.__init__"><code class="docutils literal notranslate"><span class="pre">CoordContainer.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.add_binned_coord"><code class="docutils literal notranslate"><span class="pre">add_binned_coord()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.add_cyclic_point_to_cube"><code class="docutils literal notranslate"><span class="pre">add_cyclic_point_to_cube()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.add_planet_calendar"><code class="docutils literal notranslate"><span class="pre">add_planet_calendar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.area_weights_cube"><code class="docutils literal notranslate"><span class="pre">area_weights_cube()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.check_coords"><code class="docutils literal notranslate"><span class="pre">check_coords()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.coarsen_cube"><code class="docutils literal notranslate"><span class="pre">coarsen_cube()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.coord_delta_to_cube"><code class="docutils literal notranslate"><span class="pre">coord_delta_to_cube()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.coord_to_cube"><code class="docutils literal notranslate"><span class="pre">coord_to_cube()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.ensure_bounds"><code class="docutils literal notranslate"><span class="pre">ensure_bounds()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.get_cube_datetimes"><code class="docutils literal notranslate"><span class="pre">get_cube_datetimes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.get_cube_rel_days"><code class="docutils literal notranslate"><span class="pre">get_cube_rel_days()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.get_dim_coord"><code class="docutils literal notranslate"><span class="pre">get_dim_coord()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.get_xy_coords"><code class="docutils literal notranslate"><span class="pre">get_xy_coords()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.isel"><code class="docutils literal notranslate"><span class="pre">isel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.interp_cube_from_height_to_pressure_levels"><code class="docutils literal notranslate"><span class="pre">interp_cube_from_height_to_pressure_levels()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.interp_cubelist_from_height_to_pressure_levels"><code class="docutils literal notranslate"><span class="pre">interp_cubelist_from_height_to_pressure_levels()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.interp_to_cube_time"><code class="docutils literal notranslate"><span class="pre">interp_to_cube_time()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.nearest_coord_value"><code class="docutils literal notranslate"><span class="pre">nearest_coord_value()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.not_equal_coord_axes"><code class="docutils literal notranslate"><span class="pre">not_equal_coord_axes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.regrid_3d"><code class="docutils literal notranslate"><span class="pre">regrid_3d()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.replace_z_coord"><code class="docutils literal notranslate"><span class="pre">replace_z_coord()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.roll_cube_0_360"><code class="docutils literal notranslate"><span class="pre">roll_cube_0_360()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.roll_cube_pm180"><code class="docutils literal notranslate"><span class="pre">roll_cube_pm180()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.vertical_cross_section_area"><code class="docutils literal notranslate"><span class="pre">vertical_cross_section_area()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeolus.coord.volume_weights_cube"><code class="docutils literal notranslate"><span class="pre">volume_weights_cube()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/coord.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2020 - 2024, aeolus contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>
