@@ -15,9 +15,9 @@ dependencies:
 - nbsphinx
 - numpy
 - pip
+- pydata-sphinx-theme
 - python-stratify
 - pyvista
 - sphinx
-- sphinx_rtd_theme
 - pip:
   - click_default_group

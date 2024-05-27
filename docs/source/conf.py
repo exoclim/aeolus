@@ -91,11 +91,10 @@ highlight_language = "python3"
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html_theme_path = ["_themes"]
+# html_theme_path = ["_themes"]
 
 # import sphinx_rtd_theme  # noqa
-html_theme = "sphinx_rtd_theme"
-# html_theme = 'sphinxdoc'
+html_theme = "pydata_sphinx_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
