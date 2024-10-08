@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0  # Use the ref you want to point at
+    rev: v5.0.0  # Use the ref you want to point at
     hooks:
       # Prevent giant files from being committed.
     - id: check-added-large-files
@@ -29,21 +29,21 @@ repos:
       args: ['--django']
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.6.8"
+    rev: "v0.6.9"
     hooks:
       - id: ruff
         types: [file, python]
         args: [--fix]
 
   - repo: https://github.com/psf/black
-    rev: "24.8.0"
+    rev: "24.10.0"
     hooks:
       - id: black
         types: [file, python]
         args: [--config=./pyproject.toml]
 
   - repo: https://github.com/asottile/blacken-docs
-    rev: 1.18.0
+    rev: 1.19.0
     hooks:
     - id: blacken-docs
       types: [file, rst]
