@@ -123,17 +123,17 @@ select = [
 target-version = "py39"
 
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-sort-within-sections = true
 known-first-party = ["aeolus"]
 
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/aeolus/core.py" = ["D102", "D103"]
 "tests/*.py" = ["D103"]
 
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
 

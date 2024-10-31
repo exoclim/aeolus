@@ -17,7 +17,7 @@ dependencies:
 - flake8-pep3101
 - flake8-print
 - flake8-quotes
-- iris>=3.9
+- iris>=3.10
 - iris-esmf-regrid>=0.5
 - latlon23
 - loguru

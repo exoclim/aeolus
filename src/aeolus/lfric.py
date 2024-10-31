@@ -8,8 +8,7 @@ import iris
 import iris.coords
 from iris.cube import Cube, CubeList
 import iris.exceptions
-from iris.experimental.ugrid import PARSE_UGRID_ON_LOAD, MeshCoord, load_mesh
-from iris.experimental.ugrid.mesh import Mesh
+from iris.mesh import MeshCoord, MeshXY
 import iris.util
 import numpy as np
 
@@ -22,7 +21,6 @@ __all__ = (
     "add_equally_spaced_height_coord",
     "clean_attrs",
     "fix_time_coord",
-    "load_lfric_mesh",
     "load_lfric_raw",
     "replace_level_coord_with_height",
     "replace_mesh",
@@ -167,24 +165,13 @@ def fix_time_coord(
     return cube
 
 
-def load_lfric_mesh(
-    fname: str = "mesh.nc", var_name: str = "dynamics"
-) -> Mesh:
-    """Load LFRic mesh from a netCDF file."""
-    with PARSE_UGRID_ON_LOAD.context():
-        loaded_mesh = load_mesh(fname, var_name=var_name)
-
-    return loaded_mesh
-
-
 def load_lfric_raw(
     fnames: Sequence[Union[Path, str]],
     callback: Optional[Callable] = None,
     drop_coord: Optional[Sequence[str]] = (),
 ) -> CubeList:
     """Load raw LFRic data."""
-    with PARSE_UGRID_ON_LOAD.context():
-        cl_raw = iris.load(fnames, callback=callback)
+    cl_raw = iris.load(fnames, callback=callback)
     cl_raw = CubeList(clean_attrs(cube, None, None) for cube in cl_raw)
     for coord in drop_coord:
         for cube in cl_raw:
@@ -216,7 +203,7 @@ def replace_level_coord_with_height(cube: Cube) -> Cube:
     return cube
 
 
-def replace_mesh(cube: Cube, new_mesh: Mesh) -> Cube:
+def replace_mesh(cube: Cube, new_mesh: MeshXY) -> Cube:
     """Replace mesh in a 1d cube by creating a new copy of that cube."""
     mesh_x = MeshCoord(mesh=new_mesh, location="face", axis="x")
     mesh_y = MeshCoord(mesh=new_mesh, location="face", axis="y")
