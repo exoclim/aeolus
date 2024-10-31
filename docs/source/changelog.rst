@@ -10,10 +10,19 @@ dev
 
 * TODO
 
+2024-11
+-------
+
+:Date: 1 November 2024
+
+* Make aeolus compatible with iris>=3.10.
+* Improve `lfric.process_lfric`.
+* Add an example notebook for regridding LFRic output.
+
 2024-04
 -------
 
-:Date: TBA
+:Date: 29 April 2024
 
 * Require iris>=3.9.
 * Add Python 3.12, drop 3.9.
