@@ -18,3 +18,4 @@ Here are few examples on how to use aeolus
    02_Model_Field_Names.ipynb
    03_Transmission_Spectrum.ipynb
    04_Rotational_And_Divergent_Winds.ipynb
+   05_Postprocessing_LFRic.ipynb
