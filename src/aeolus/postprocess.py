@@ -84,11 +84,11 @@ def process_lfric(
 
     # Height coordinate
     if level_height == "uniform":
-        add_levs = partial(
+        _add_levs = partial(
             add_equally_spaced_height_coord, model_top_height=top_height
         )
     elif level_height.startswith("um_"):
-        add_levs = partial(
+        _add_levs = partial(
             add_um_height_coord,
             path_to_levels_file=Path(os.environ["AEOLUS_PROJ_VERT_DIR"])
             / level_height.replace("um_", "vertlevs_"),
@@ -96,11 +96,15 @@ def process_lfric(
     else:
         raise ValueError(f"{level_height=} is not valid.")
 
+    _fix_time = partial(fix_time_coord, downgrade_to_scalar=True)
+
     def _combi_callback(cube, field, filename):
-        [
-            fix_time_coord(cube, field, filename),
-            add_levs(cube, field, filename),
-        ]
+        return _fix_time(
+            _add_levs(cube, field, filename),
+            field,
+            filename,
+            downgrade_to_scalar=True,
+        )
 
     # File names
     if time_prof == "inst":
@@ -127,10 +131,11 @@ def process_lfric(
 
     # Load the data in chunks
     for _ichunk, file_batch in enumerate(chunker(fnames, file_chunk_size)):
-        L.info(
-            f"Loading {file_chunk_size} files ="
-            f" {file_batch[0]} ... {file_batch[-1]}"
-        )
+        if len(fnames) > 1:
+            L.info(
+                f"Loading {file_chunk_size} files ="
+                f" {file_batch[0]} ... {file_batch[-1]}"
+            )
         # Make a label depending on the chunk
         chunk_label = f"_{int(file_batch[0].parent.parent.name):03d}"
         chunk_label += f"-{int(file_batch[-1].parent.parent.name):03d}"
@@ -154,10 +159,11 @@ def process_lfric(
         cl_proc = simple_regrid_lfric(
             cubes_to_regrid, tgt_cube=tgt_cube, ref_cube_constr=ref_cube
         )
-        const = init_const(
-            planet, directory=Path(os.environ["AEOLUS_PROJ_CONST_DIR"])
-        )
-        add_planet_conf_to_cubes(cl_proc, const=const)
+        if planet:
+            const = init_const(
+                planet, directory=Path(os.environ["AEOLUS_PROJ_CONST_DIR"])
+            )
+            add_planet_conf_to_cubes(cl_proc, const=const)
 
         # Write the data to a netCDF file
         fname_out = (

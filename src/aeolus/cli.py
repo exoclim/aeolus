@@ -30,7 +30,7 @@ def main(version: bool) -> None:
         click.secho(f"{__version__}")
 
 
-@main.command(no_args_is_help=True)
+@main.command(no_args_is_help=True, context_settings={"show_default": True})
 @click.option(
     "-m",
     "--model",

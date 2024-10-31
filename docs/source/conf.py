@@ -209,7 +209,6 @@ intersphinx_mapping = {
     "cartopy": ("https://scitools.org.uk/cartopy/docs/latest/", None),
     "iris": ("https://scitools-iris.readthedocs.io/en/latest/", None),
     "matplotlib": ("https://matplotlib.org", None),
-    "mpl_toolkits": ("https://matplotlib.org", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "python": ("https://docs.python.org/3/", None),
     "pyvista": ("https://docs.pyvista.org/", None),
