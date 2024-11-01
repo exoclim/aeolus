@@ -19,7 +19,6 @@ dependencies:
 - flake8-quotes
 - iris>=3.10
 - iris-esmf-regrid>=0.5
-- latlon23
 - loguru
 - matplotlib>=3.6
 - numpy
