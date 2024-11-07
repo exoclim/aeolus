@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Getting LFRic output on a rectiliniear lat-lon grid &#8212; aeolus 24.11.1.0.dev58 documentation</title>
+    <title>Getting LFRic output on a rectiliniear lat-lon grid &#8212; aeolus 24.11.7.0.dev3 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=979d9e50"></script>
+    <script src="../_static/documentation_options.js?v=345b7681"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -53,7 +53,7 @@
     <link rel="prev" title="A primer on calculating rotational and divergent wind components" href="04_Rotational_And_Divergent_Winds.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.1.0.dev58" />
+  <meta name="docsearch:version" content="24.11.7.0.dev3" />
   </head>
   
   
@@ -115,7 +115,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.1.0.dev58 documentation</p>
+    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
   
 </a></div>
     
@@ -361,6 +361,10 @@
                   
   <section id="Getting-LFRic-output-on-a-rectiliniear-lat-lon-grid">
 <h1>Getting LFRic output on a rectiliniear lat-lon grid<a class="headerlink" href="#Getting-LFRic-output-on-a-rectiliniear-lat-lon-grid" title="Link to this heading">#</a></h1>
+<p>Note: you need to install <a class="reference external" href="https://github.com/SciTools/python-stratify">python-stratify</a> and <a class="reference external" href="https://earthsystemmodeling.org/esmpy/">esmpy</a>. The best way to do it is to use conda/mamba:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>python-stratify<span class="w"> </span>esmpy
+</pre></div>
+</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -594,7 +598,7 @@ air_potential_temperature / (K)     (latitude: 48; longitude: 96)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_Postprocessing_LFRic_28_0.png" src="../_images/examples_05_Postprocessing_LFRic_28_0.png" />
+<img alt="../_images/examples_05_Postprocessing_LFRic_29_0.png" src="../_images/examples_05_Postprocessing_LFRic_29_0.png" />
 </div>
 </div>
 </section>
@@ -654,7 +658,7 @@ air_potential_temperature / (K)     (latitude: 48; longitude: 96)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_Postprocessing_LFRic_35_0.png" src="../_images/examples_05_Postprocessing_LFRic_35_0.png" />
+<img alt="../_images/examples_05_Postprocessing_LFRic_36_0.png" src="../_images/examples_05_Postprocessing_LFRic_36_0.png" />
 </div>
 </div>
 </section>
@@ -712,7 +716,7 @@ Text(0.5, 1.0, &#39;Zonal mean eastward wind&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_Postprocessing_LFRic_39_1.png" src="../_images/examples_05_Postprocessing_LFRic_39_1.png" />
+<img alt="../_images/examples_05_Postprocessing_LFRic_40_1.png" src="../_images/examples_05_Postprocessing_LFRic_40_1.png" />
 </div>
 </div>
 </section>
@@ -743,11 +747,12 @@ Text(0.5, 1.0, &#39;Zonal mean eastward wind&#39;)
 </div>
 </div>
 <p>Temporarily rename the pressure variable in the <code class="docutils literal notranslate"><span class="pre">lfric</span></code> registry.</p>
+<p>If your output contains another pressure variable, change it accordingly.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lfric</span><span class="o">.</span><span class="n">pres</span> <span class="o">=</span> <span class="s2">&quot;pressure_at_cell_interfaces&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lfric</span><span class="o">.</span><span class="n">pres</span> <span class="o">=</span> <span class="s2">&quot;pressure_at_cell_interfaces&quot;</span>  <span class="c1"># optional</span>
 </pre></div>
 </div>
 </div>
@@ -824,7 +829,7 @@ array([100000.,  90000.,  80000.,  70000.,  60000.,  50000.,  40000.,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_Postprocessing_LFRic_53_0.png" src="../_images/examples_05_Postprocessing_LFRic_53_0.png" />
+<img alt="../_images/examples_05_Postprocessing_LFRic_54_0.png" src="../_images/examples_05_Postprocessing_LFRic_54_0.png" />
 </div>
 </div>
 </section>
@@ -888,9 +893,9 @@ array([100000.,  90000.,  80000.,  70000.,  60000.,  50000.,  40000.,
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-green-fg">2024-10-31 20:44:30.038</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">123</span> - <span class="ansi-bold">fnames(1) = ../tests/data/test_data/netcdf/lfric/1/run_gungho_model_shallow-hot-jupiter_C24_MG_dt-2400p0_intel_64-bit_fast-debug/lfric_diag.nc</span>
-<span class="ansi-green-fg">2024-10-31 20:44:31.189</span> | <span class="ansi-green-intense-fg ansi-bold">SUCCESS </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">169</span> - <span class="ansi-green-intense-fg ansi-bold">Saved to /tmp/tmp1swf4v1_/shj_c24_inst__001-001_regr.nc</span>
-<span class="ansi-green-fg">2024-10-31 20:44:31.190</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">170</span> - <span class="ansi-bold">Execution time: 1.2s</span>
+<span class="ansi-green-fg">2024-11-07 14:40:03.089</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">128</span> - <span class="ansi-bold">fnames(1) = ../tests/data/test_data/netcdf/lfric/1/run_gungho_model_shallow-hot-jupiter_C24_MG_dt-2400p0_intel_64-bit_fast-debug/lfric_diag.nc</span>
+<span class="ansi-green-fg">2024-11-07 14:40:04.208</span> | <span class="ansi-green-intense-fg ansi-bold">SUCCESS </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">174</span> - <span class="ansi-green-intense-fg ansi-bold">Saved to /tmp/tmpkv1oabui/shj_c24_inst__001-001_regr.nc</span>
+<span class="ansi-green-fg">2024-11-07 14:40:04.208</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">175</span> - <span class="ansi-bold">Execution time: 1.1s</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -908,12 +913,12 @@ array([100000.,  90000.,  80000.,  70000.,  60000.,  50000.,  40000.,
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 0: potential_temperature_increment_from_slow_physics / (K) (level_height: 33; latitude: 48; longitude: 96)
-1: atmosphere_mass_of_air_per_unit_area / (kg m-2) (latitude: 48; longitude: 96)
-2: physics W wind on W3 points / (m s-1) (level_height: 33; latitude: 48; longitude: 96)
+1: Vertical kinetic energy on W3 points / (J) (level_height: 33; latitude: 48; longitude: 96)
+2: atmosphere_mass_of_air_per_unit_area / (kg m-2) (latitude: 48; longitude: 96)
 3: Axial Angular Momentum on W3 points / (kg m2 s-1) (level_height: 33; latitude: 48; longitude: 96)
 4: pressure_at_cell_interfaces / (Pa)  (level_height: 33; latitude: 48; longitude: 96)
 5: Horisontal kinetic energy on W3 points / (J) (level_height: 33; latitude: 48; longitude: 96)
-6: Vertical kinetic energy on W3 points / (J) (level_height: 33; latitude: 48; longitude: 96)
+6: physics W wind on W3 points / (m s-1) (level_height: 33; latitude: 48; longitude: 96)
 7: air_density / (kg m-3)              (level_height: 33; latitude: 48; longitude: 96)
 8: air_potential_temperature / (K)     (level_height: 33; latitude: 48; longitude: 96)
 9: air_pressure / (1)                  (level_height: 33; latitude: 48; longitude: 96)
@@ -939,9 +944,9 @@ array([100000.,  90000.,  80000.,  70000.,  60000.,  50000.,  40000.,
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Processing lfric output...
-<span class="ansi-green-fg">2024-10-31 20:44:32.534</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">123</span> - <span class="ansi-bold">fnames(1) = ../tests/data/test_data/netcdf/lfric/1/run_gungho_model_shallow-hot-jupiter_C24_MG_dt-2400p0_intel_64-bit_fast-debug/lfric_diag.nc</span>
-<span class="ansi-green-fg">2024-10-31 20:44:34.048</span> | <span class="ansi-green-intense-fg ansi-bold">SUCCESS </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">169</span> - <span class="ansi-green-intense-fg ansi-bold">Saved to tmp/shj_c24_inst__001-001_regr.nc</span>
-<span class="ansi-green-fg">2024-10-31 20:44:34.049</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">170</span> - <span class="ansi-bold">Execution time: 1.5s</span>
+<span class="ansi-green-fg">2024-11-07 14:40:05.568</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">128</span> - <span class="ansi-bold">fnames(1) = ../tests/data/test_data/netcdf/lfric/1/run_gungho_model_shallow-hot-jupiter_C24_MG_dt-2400p0_intel_64-bit_fast-debug/lfric_diag.nc</span>
+<span class="ansi-green-fg">2024-11-07 14:40:07.097</span> | <span class="ansi-green-intense-fg ansi-bold">SUCCESS </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">174</span> - <span class="ansi-green-intense-fg ansi-bold">Saved to tmp/shj_c24_inst__001-001_regr.nc</span>
+<span class="ansi-green-fg">2024-11-07 14:40:07.097</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">aeolus.postprocess</span>:<span class="ansi-cyan-fg">process_lfric</span>:<span class="ansi-cyan-fg">175</span> - <span class="ansi-bold">Execution time: 1.5s</span>
 Saved to tmp/shj_c24_inst__001-001_regr.nc
 </pre></div></div>
 </div>
@@ -960,12 +965,12 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 0: potential_temperature_increment_from_slow_physics / (K) (level_height: 33; latitude: 90; longitude: 144)
-1: atmosphere_mass_of_air_per_unit_area / (kg m-2) (latitude: 90; longitude: 144)
-2: physics W wind on W3 points / (m s-1) (level_height: 33; latitude: 90; longitude: 144)
+1: Vertical kinetic energy on W3 points / (J) (level_height: 33; latitude: 90; longitude: 144)
+2: atmosphere_mass_of_air_per_unit_area / (kg m-2) (latitude: 90; longitude: 144)
 3: Axial Angular Momentum on W3 points / (kg m2 s-1) (level_height: 33; latitude: 90; longitude: 144)
 4: pressure_at_cell_interfaces / (Pa)  (level_height: 33; latitude: 90; longitude: 144)
 5: Horisontal kinetic energy on W3 points / (J) (level_height: 33; latitude: 90; longitude: 144)
-6: Vertical kinetic energy on W3 points / (J) (level_height: 33; latitude: 90; longitude: 144)
+6: physics W wind on W3 points / (m s-1) (level_height: 33; latitude: 90; longitude: 144)
 7: air_density / (kg m-3)              (level_height: 33; latitude: 90; longitude: 144)
 8: air_potential_temperature / (K)     (level_height: 33; latitude: 90; longitude: 144)
 9: air_pressure / (1)                  (level_height: 33; latitude: 90; longitude: 144)
