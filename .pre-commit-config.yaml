@@ -55,4 +55,4 @@ repos:
       - id: validate-pyproject
 
 ci:
-    autoupdate_schedule: weekly
+    autoupdate_schedule: monthly
