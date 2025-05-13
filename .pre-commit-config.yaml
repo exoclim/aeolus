@@ -53,3 +53,6 @@ repos:
     rev: "v0.24.1"
     hooks:
       - id: validate-pyproject
+
+ci:
+    autoupdate_schedule: weekly
