@@ -4,20 +4,7 @@
 Installation
 ############
 
-Supported language:
-
-- Python: 3.7
-- Python: 3.8
-- Python: 3.9
-
 .. note::
-
-   We highly recommend installing and using the free `Anaconda
-   <https://www.anaconda.com/download/>`_ distribution of Python (or
-   `Miniconda <https://conda.io/miniconda.html>`_, if you don't want
-   all of the extra packages that come built-in with Anaconda), which
-   works on Mac, Linux, and Windows, both on normal computers and
-   institutional clusters and doesn't require root permissions.
 
 The main dependency of aeolus is `iris <https://scitools.org.uk/iris/docs/latest/>`_, but various
 minor parts also depend on the following Python packages
@@ -32,27 +19,36 @@ minor parts also depend on the following Python packages
 - pyvista
 - xarray
 
-After the required packages are installed, aeolus can be installed either from Anaconda, PyPI, or from source.
+
+Recommended method: pixi
+========================
+
+Install `pixi <https://pixi.sh/>`_ and create a local project following the instructions there.
+Add aeolus to the project:
+
+  pixi add aeolus
+
+Verify the installation:
+
+  pixi run aeolus --version
 
 
-Recommended installation method: conda
-======================================
+Alternative method 1: conda
+===========================
 
-The recommended installation method is via `conda <https://conda.io/docs/>`_
-
-To install aeolus and its primary dependencies ::
+Another installation method is via `conda <https://conda.io/docs/>`_ ::
 
   conda install -c conda-forge aeolus
 
-Alternative method: PyPI
-========================
-Install aeolus from the Python Package Index ::
+Alternative method 2: pip
+=========================
+You can also install aeolus from the Python Package Index (PyPI) ::
 
   pip install aeolus
 
 
-Alternative method: install from source
-=======================================
+Alternative method 3: install from source
+=========================================
 
 To get the latest (potentially unstable) version of the library you can directly clone the `GitHub repository <https://github.com/exoclim/aeolus>`_ ::
 
@@ -72,14 +68,14 @@ or::
   pip install -e .
 
 
-Verifying proper installation
-=============================
+Verifying installation
+======================
 
 Once installed via any of these methods, you can run aeolus's suite of
 tests using `pytest <http://doc.pytest.org/>`_.  From the top-level
 directory of the aeolus installation ::
 
-  conda install pytest  # if you don't have it already; or 'pip install pytest'
+  conda install pytest  # if you don't have it already; or 'pip install pytest', or 'pixi add pytest'
   pytest aeolus
 
 If you don't know the directory where aeolus was installed, you can find it via ::
