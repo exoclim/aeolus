@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Getting LFRic output on a rectiliniear lat-lon grid &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>Getting LFRic output on a rectiliniear lat-lon grid &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -16,8 +16,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -27,24 +27,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/05_Postprocessing_LFRic';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -53,7 +51,7 @@
     <link rel="prev" title="A primer on calculating rotational and divergent wind components" href="04_Rotational_And_Divergent_Winds.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -115,7 +113,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -311,9 +309,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -369,18 +372,18 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">iris</span>
-<span class="kn">from</span> <span class="nn">aeolus.io</span> <span class="kn">import</span> <span class="n">create_dummy_cube</span>
-<span class="kn">from</span> <span class="nn">aeolus.lfric</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dummy_cube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.lfric</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">add_equally_spaced_height_coord</span><span class="p">,</span>
     <span class="n">fix_time_coord</span><span class="p">,</span>
     <span class="n">load_lfric_raw</span><span class="p">,</span>
     <span class="n">simple_regrid_lfric</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">aeolus.model</span> <span class="kn">import</span> <span class="n">lfric</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">lfric</span>
 </pre></div>
 </div>
 </div>
@@ -430,7 +433,7 @@
 <span class="n">_fix_time</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">fix_time_coord</span><span class="p">,</span> <span class="n">downgrade_to_scalar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_combi_callback</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_combi_callback</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_fix_time</span><span class="p">(</span>
         <span class="n">_add_levs</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="n">field</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">downgrade_to_scalar</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -517,8 +520,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcol</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcol</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;mathtext.default&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;regular&quot;</span>
 </pre></div>
@@ -608,7 +611,7 @@ air_potential_temperature / (K)     (latitude: 48; longitude: 96)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aeolus.coord</span> <span class="kn">import</span> <span class="n">isel</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.coord</span><span class="w"> </span><span class="kn">import</span> <span class="n">isel</span>
 </pre></div>
 </div>
 </div>
@@ -668,7 +671,7 @@ air_potential_temperature / (K)     (latitude: 48; longitude: 96)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aeolus.calc</span> <span class="kn">import</span> <span class="n">zonal_mean</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.calc</span><span class="w"> </span><span class="kn">import</span> <span class="n">zonal_mean</span>
 </pre></div>
 </div>
 </div>
@@ -727,9 +730,9 @@ Text(0.5, 1.0, &#39;Zonal mean eastward wind&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">aeolus.coord</span> <span class="kn">import</span> <span class="n">interp_cube_from_height_to_pressure_levels</span>
-<span class="kn">from</span> <span class="nn">iris.experimental</span> <span class="kn">import</span> <span class="n">stratify</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.coord</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp_cube_from_height_to_pressure_levels</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.experimental</span><span class="w"> </span><span class="kn">import</span> <span class="n">stratify</span>
 </pre></div>
 </div>
 </div>
@@ -842,9 +845,9 @@ array([100000.,  90000.,  80000.,  70000.,  60000.,  50000.,  40000.,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
-<span class="kn">from</span> <span class="nn">aeolus.postprocess</span> <span class="kn">import</span> <span class="n">process_lfric</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aeolus.postprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_lfric</span>
 </pre></div>
 </div>
 </div>
@@ -982,7 +985,7 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 
 <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1057,13 +1060,13 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../_sources/examples/05_Postprocessing_LFRic.ipynb.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/05_Postprocessing_LFRic.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -1078,8 +1081,8 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1090,7 +1093,7 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -1099,7 +1102,7 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -1112,7 +1115,8 @@ Saved to tmp/shj_c24_inst__001-001_regr.nc
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

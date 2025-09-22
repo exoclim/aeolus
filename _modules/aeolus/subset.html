@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aeolus.subset &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>aeolus.subset &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -47,7 +47,7 @@
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -109,7 +109,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -286,9 +286,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,14 +342,14 @@
   <h1>Source code for aeolus.subset</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Subset cubes using iris constraints.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
 
-<span class="kn">from</span> <span class="nn">iris</span> <span class="kn">import</span> <span class="n">Constraint</span>
-<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">CubeList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris</span><span class="w"> </span><span class="kn">import</span> <span class="n">Constraint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.cube</span><span class="w"> </span><span class="kn">import</span> <span class="n">CubeList</span>
 
-<span class="kn">from</span> <span class="nn">.coord</span> <span class="kn">import</span> <span class="n">get_cube_datetimes</span>
-<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">um</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.coord</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_cube_datetimes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">um</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;CM_INST_CONSTR&quot;</span><span class="p">,</span>
@@ -359,12 +364,12 @@
 <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_select_inst</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_select_inst</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if cube has no cell methods.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">cell_methods</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 
 
-<span class="k">def</span> <span class="nf">_select_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_select_mean</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if cube has a &quot;mean&quot; cell method.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">cell_methods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span>
@@ -372,11 +377,11 @@
         <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">_dim_constr</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_dim_constr</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make an `iris.Constraint` from given dimensional coordinates.&quot;&quot;&quot;</span>
     <span class="n">coord_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__cube_func</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>  <span class="c1"># noqa</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__cube_func</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="n">cube_dimcoords</span> <span class="o">=</span> <span class="p">{</span><span class="n">dc</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">cube</span><span class="o">.</span><span class="n">dim_coords</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
             <span class="c1"># Cube has exactly the same dim coords</span>
@@ -390,7 +395,7 @@
 
 <div class="viewcode-block" id="l_range_constr">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.l_range_constr">[docs]</a>
-<span class="k">def</span> <span class="nf">l_range_constr</span><span class="p">(</span><span class="n">h_min</span><span class="p">,</span> <span class="n">h_max</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">um</span><span class="o">.</span><span class="n">z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">l_range_constr</span><span class="p">(</span><span class="n">h_min</span><span class="p">,</span> <span class="n">h_max</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">um</span><span class="o">.</span><span class="n">z</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a constraint on length range.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s2">&quot;km&quot;</span><span class="p">:</span>
         <span class="n">factor</span> <span class="o">=</span> <span class="mf">1e-3</span>
@@ -404,7 +409,7 @@
 
 <div class="viewcode-block" id="extract_last_month">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_month">[docs]</a>
-<span class="k">def</span> <span class="nf">extract_last_month</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_last_month</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices within the last months of a cube.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">cube</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span>
@@ -420,7 +425,7 @@
 
 <div class="viewcode-block" id="extract_last_n_days">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_last_n_days">[docs]</a>
-<span class="k">def</span> <span class="nf">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_last_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices within the last `n` days of its time dimension.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">ndays_before</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
@@ -433,7 +438,7 @@
 
 <div class="viewcode-block" id="extract_between_days">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_between_days">[docs]</a>
-<span class="k">def</span> <span class="nf">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_between_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">day_start</span><span class="p">,</span> <span class="n">day_end</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Subset between `day_start` and `day_end` of its time coordinate.&quot;&quot;&quot;</span>
     <span class="n">dt_s</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">lbound</span> <span class="o">=</span> <span class="n">dt_s</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_start</span><span class="p">)</span>
@@ -447,7 +452,7 @@
 
 <div class="viewcode-block" id="extract_after_n_days">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.extract_after_n_days">[docs]</a>
-<span class="k">def</span> <span class="nf">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_after_n_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract time slices after the given number of `days`.&quot;&quot;&quot;</span>
     <span class="n">dt</span> <span class="o">=</span> <span class="n">get_cube_datetimes</span><span class="p">(</span><span class="n">cube</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">ndays_after</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
@@ -462,17 +467,17 @@
 <span class="n">CM_MEAN_CONSTR</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="n">_select_mean</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">_ModeDimConstr</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_ModeDimConstr</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for storing constraints in `DimConstr` grouped by their mode.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign all keyword arguments to attributes of this class.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="DimConstr">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr">[docs]</a>
-<span class="k">class</span> <span class="nc">DimConstr</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DimConstr</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Container for strict or relaxed dimensional constraints.</span>
 
@@ -491,7 +496,7 @@
 
 <div class="viewcode-block" id="DimConstr.__init__">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.DimConstr.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialise DimConstr.</span>
 
@@ -525,7 +530,7 @@
 
 <div class="viewcode-block" id="unique_cubes">
 <a class="viewcode-back" href="../../api/subset.html#aeolus.subset.unique_cubes">[docs]</a>
-<span class="k">def</span> <span class="nf">unique_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">unique_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove duplicate cubes from `iris.cube.CubeList`.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cubelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">CubeList</span><span class="p">([</span><span class="n">cubelist</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
@@ -542,12 +547,12 @@
 
 
 
-<span class="k">class</span> <span class="nc">CellMethodConstraint</span><span class="p">(</span><span class="n">Constraint</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CellMethodConstraint</span><span class="p">(</span><span class="n">Constraint</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Provides a simple Cube-CellMethod based :class:`Constraint`.&quot;&quot;&quot;</span>
 
     <span class="n">_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="s2">&quot;coord_names&quot;</span><span class="p">,</span> <span class="s2">&quot;intervals&quot;</span><span class="p">,</span> <span class="s2">&quot;comments&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">coord_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -579,18 +584,18 @@
         <span class="c1"># )</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cube_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cube_func</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="n">eq</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="n">CellMethodConstraint</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attname</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">attname</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">attname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">eq</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Must re-define if you overload __eq__ : Use object identity.</span>
         <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_cube_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cube</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cube_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cube</span><span class="p">):</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">cell_methods</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">cell_methods</span>
@@ -606,7 +611,7 @@
             <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">match</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -642,8 +647,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -654,7 +659,7 @@
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -663,7 +668,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -676,7 +681,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

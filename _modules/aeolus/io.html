@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aeolus.io &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>aeolus.io &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -47,7 +47,7 @@
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -109,7 +109,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -286,9 +286,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,20 +342,20 @@
   <h1>Source code for aeolus.io</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Input and output functionality.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Sequence</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">iris</span>
-<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
-<span class="kn">from</span> <span class="nn">iris.coords</span> <span class="kn">import</span> <span class="n">AuxCoord</span>
-<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">CubeList</span>
-<span class="kn">from</span> <span class="nn">iris.fileformats.pp</span> <span class="kn">import</span> <span class="n">EARTH_RADIUS</span>
-<span class="kn">from</span> <span class="nn">iris.fileformats.um</span> <span class="kn">import</span> <span class="n">structured_um_loading</span>
-<span class="kn">import</span> <span class="nn">iris.pandas</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.coord_systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeogCS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.coords</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuxCoord</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.cube</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cube</span><span class="p">,</span> <span class="n">CubeList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.fileformats.pp</span><span class="w"> </span><span class="kn">import</span> <span class="n">EARTH_RADIUS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.fileformats.um</span><span class="w"> </span><span class="kn">import</span> <span class="n">structured_um_loading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">iris.pandas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;create_dummy_cube&quot;</span><span class="p">,</span>
@@ -370,7 +375,7 @@
 
 <div class="viewcode-block" id="create_dummy_cube">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.create_dummy_cube">[docs]</a>
-<span class="k">def</span> <span class="nf">create_dummy_cube</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_dummy_cube</span><span class="p">(</span>
     <span class="n">nlat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">nlon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">n_res</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -488,7 +493,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">full_path_glob</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">full_path_glob</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Recursive glob, including directories with regex.&quot;&quot;&quot;</span>
     <span class="n">resolved</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">glob_parts</span> <span class="o">=</span> <span class="p">[]</span>
@@ -506,7 +511,7 @@
 
 <div class="viewcode-block" id="get_filename_list">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.get_filename_list">[docs]</a>
-<span class="k">def</span> <span class="nf">get_filename_list</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_filename_list</span><span class="p">(</span>
     <span class="n">path_to_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
     <span class="n">glob_pattern</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GLM_RUNID</span><span class="si">}</span><span class="s2">*&quot;</span><span class="p">,</span>
     <span class="n">ts_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
@@ -536,7 +541,7 @@
 
 <div class="viewcode-block" id="load_conservation_diag">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.load_conservation_diag">[docs]</a>
-<span class="k">def</span> <span class="nf">load_conservation_diag</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_conservation_diag</span><span class="p">(</span>
     <span class="n">fnames</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
     <span class="n">convert_to_iris</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">drop_duplicates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -574,7 +579,7 @@
 
 <div class="viewcode-block" id="load_data">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.load_data">[docs]</a>
-<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">structured</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">structured</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use `iris.load` with optional structured loading for PP files.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">structured</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">structured_um_loading</span><span class="p">():</span>
@@ -588,7 +593,7 @@
 
 <div class="viewcode-block" id="load_multidir">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.load_multidir">[docs]</a>
-<span class="k">def</span> <span class="nf">load_multidir</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_multidir</span><span class="p">(</span>
     <span class="n">path_mask</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">label_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;run&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CubeList</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load cubelists from multiple directories and merge.&quot;&quot;&quot;</span>
@@ -605,7 +610,7 @@
 
 <div class="viewcode-block" id="load_vert_lev">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.load_vert_lev">[docs]</a>
-<span class="k">def</span> <span class="nf">load_vert_lev</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_vert_lev</span><span class="p">(</span>
     <span class="n">path_to_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">lev_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;theta&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -623,7 +628,7 @@
 <span class="sd">    levs: numpy.array</span>
 <span class="sd">        Array of height levels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">f90nml</span>  <span class="c1"># noqa</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">f90nml</span>  <span class="c1"># noqa</span>
 
     <span class="k">with</span> <span class="n">path_to_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">nml_file</span><span class="p">:</span>
         <span class="n">nml</span> <span class="o">=</span> <span class="n">f90nml</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nml_file</span><span class="p">)</span>
@@ -637,7 +642,7 @@
 
 <div class="viewcode-block" id="save_cubelist">
 <a class="viewcode-back" href="../../api/io.html#aeolus.io.save_cubelist">[docs]</a>
-<span class="k">def</span> <span class="nf">save_cubelist</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_cubelist</span><span class="p">(</span>
     <span class="n">cubelist</span><span class="p">:</span> <span class="n">CubeList</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">aux_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -699,8 +704,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -711,7 +716,7 @@
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -720,7 +725,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -733,7 +738,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

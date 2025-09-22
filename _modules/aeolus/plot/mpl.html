@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aeolus.plot.mpl &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>aeolus.plot.mpl &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../../../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -47,7 +47,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -109,7 +109,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -286,9 +286,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,22 +342,22 @@
   <h1>Source code for aeolus.plot.mpl</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Matplotlib-related utilities.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
-<span class="kn">from</span> <span class="nn">matplotlib.axes._axes</span> <span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
-<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.cube</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes._axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 
-<span class="kn">from</span> <span class="nn">..coord</span> <span class="kn">import</span> <span class="n">get_cube_rel_days</span>
-<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">lfric</span><span class="p">,</span> <span class="n">um</span>
-<span class="kn">from</span> <span class="nn">..model.base</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">..runtime</span> <span class="kn">import</span> <span class="n">RUNTIME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..coord</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_cube_rel_days</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model</span><span class="w"> </span><span class="kn">import</span> <span class="n">lfric</span><span class="p">,</span> <span class="n">um</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">RUNTIME</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;add_custom_legend&quot;</span><span class="p">,</span>
@@ -362,6 +367,7 @@
     <span class="s2">&quot;linspace_pm1&quot;</span><span class="p">,</span>
     <span class="s2">&quot;make_list_2d&quot;</span><span class="p">,</span>
     <span class="s2">&quot;map_scatter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stream&quot;</span><span class="p">,</span>
     <span class="s2">&quot;timeseries_1d&quot;</span><span class="p">,</span>
     <span class="s2">&quot;timeseries_2d&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -369,7 +375,7 @@
 
 <div class="viewcode-block" id="add_custom_legend">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.add_custom_legend">[docs]</a>
-<span class="k">def</span> <span class="nf">add_custom_legend</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_custom_legend</span><span class="p">(</span>
     <span class="n">ax_or_fig</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Axes</span><span class="p">,</span> <span class="n">Figure</span><span class="p">],</span> <span class="n">styles_and_labels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">**</span><span class="n">leg_kw</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -406,7 +412,7 @@
 
 <div class="viewcode-block" id="capitalise">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.capitalise">[docs]</a>
-<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">capitalise</span><span class="p">(</span>
     <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sep_old</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">sep_new</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Split the string and capitalise each word.&quot;&quot;&quot;</span>
@@ -414,23 +420,42 @@
 
 
 
-<div class="viewcode-block" id="hcross">
-<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.hcross">[docs]</a>
-<span class="k">def</span> <span class="nf">hcross</span><span class="p">(</span>
-    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+<div class="viewcode-block" id="stream">
+<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.stream">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">stream</span><span class="p">(</span>
+    <span class="n">u_cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">v_cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a horizontal cross-section aka lat-lon map of a 2D cube.&quot;&quot;&quot;</span>
-    <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a streamline plot in lat/lon coordinates.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">newax</span> <span class="o">:=</span> <span class="p">(</span><span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="n">newax</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">u_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">u_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">),</span> <span class="n">u_cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">v_cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">newax</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ax</span></div>
+
+
+
+<div class="viewcode-block" id="hcross">
+<a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.hcross">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">hcross</span><span class="p">(</span>
+    <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pcolormesh&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a horizontal cross-section aka lat-lon map of a 2D cube.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">newax</span> <span class="o">:=</span> <span class="p">(</span><span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">lons</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
-    <span class="n">lats</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
-    <span class="n">mappable</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">mappable</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">method</span><span class="p">)(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">newax</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ax</span></div>
@@ -439,7 +464,7 @@
 
 <div class="viewcode-block" id="linspace_pm1">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.linspace_pm1">[docs]</a>
-<span class="k">def</span> <span class="nf">linspace_pm1</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">typing</span><span class="o">.</span><span class="n">ArrayLike</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">linspace_pm1</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">typing</span><span class="o">.</span><span class="n">ArrayLike</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 2n evenly spaced numbers from -1 to 1, always skipping 0.&quot;&quot;&quot;</span>
     <span class="n">seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="o">-</span><span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span></div>
@@ -448,7 +473,7 @@
 
 <div class="viewcode-block" id="make_list_2d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.make_list_2d">[docs]</a>
-<span class="k">def</span> <span class="nf">make_list_2d</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_list_2d</span><span class="p">(</span>
     <span class="n">list_x</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">list_y</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">transpose</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -463,17 +488,15 @@
 
 <div class="viewcode-block" id="map_scatter">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.map_scatter">[docs]</a>
-<span class="k">def</span> <span class="nf">map_scatter</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_scatter</span><span class="p">(</span>
     <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">lfric</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a lat-lon scatter plot of a 2D cube.&quot;&quot;&quot;</span>
-    <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">newax</span> <span class="o">:=</span> <span class="p">(</span><span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="n">newax</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="c1"># This doesn&#39;t work because lons and lats in the mesh are of size N+2</span>
     <span class="c1"># while the data array is of size N</span>
@@ -490,17 +513,15 @@
 
 <div class="viewcode-block" id="timeseries_1d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.timeseries_1d">[docs]</a>
-<span class="k">def</span> <span class="nf">timeseries_1d</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">timeseries_1d</span><span class="p">(</span>
     <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot time series of a 1D cube.&quot;&quot;&quot;</span>
-    <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">newax</span> <span class="o">:=</span> <span class="p">(</span><span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="n">newax</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">days</span> <span class="o">=</span> <span class="n">get_cube_rel_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">newax</span><span class="p">:</span>
@@ -510,21 +531,20 @@
 
 <div class="viewcode-block" id="timeseries_2d">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.timeseries_2d">[docs]</a>
-<span class="k">def</span> <span class="nf">timeseries_2d</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">timeseries_2d</span><span class="p">(</span>
     <span class="n">cube</span><span class="p">:</span> <span class="n">Cube</span><span class="p">,</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pcolormesh&quot;</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Model</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kw_plt</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot time series of a 2D cube.&quot;&quot;&quot;</span>
-    <span class="n">newax</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">newax</span> <span class="o">:=</span> <span class="p">(</span><span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-        <span class="n">newax</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">days</span> <span class="o">=</span> <span class="n">get_cube_rel_days</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">um</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
-    <span class="n">mappable</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
+    <span class="n">mappable</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">method</span><span class="p">)(</span><span class="n">days</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_plt</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">newax</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ax</span></div>
@@ -533,7 +553,7 @@
 
 <div class="viewcode-block" id="figsave">
 <a class="viewcode-back" href="../../../api/plot.html#aeolus.plot.mpl.figsave">[docs]</a>
-<span class="k">def</span> <span class="nf">figsave</span><span class="p">(</span><span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_savefig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">figsave</span><span class="p">(</span><span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_savefig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Save figure and print relative path to it.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">RUNTIME</span><span class="o">.</span><span class="n">figsave_stamp</span><span class="p">:</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
@@ -602,8 +622,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -614,7 +634,7 @@
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -623,7 +643,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -636,7 +656,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

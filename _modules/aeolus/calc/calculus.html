@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aeolus.calc.calculus &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>aeolus.calc.calculus &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../../../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -47,7 +47,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -109,7 +109,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -286,9 +286,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,22 +342,22 @@
   <h1>Source code for aeolus.calc.calculus</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic calculus functions.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">cf_units</span> <span class="kn">import</span> <span class="n">Unit</span>
-<span class="kn">from</span> <span class="nn">iris.analysis</span> <span class="kn">import</span> <span class="n">Linear</span>
-<span class="kn">from</span> <span class="nn">iris.analysis.calculus</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cf_units</span><span class="w"> </span><span class="kn">import</span> <span class="n">Unit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">Linear</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.analysis.calculus</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_coord_cos</span><span class="p">,</span>
     <span class="n">_curl_differentiate</span><span class="p">,</span>
     <span class="n">_curl_regrid</span><span class="p">,</span>
     <span class="n">differentiate</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">iris.analysis.maths</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">divide</span><span class="p">,</span> <span class="n">multiply</span>
-<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span><span class="p">,</span> <span class="n">RotatedGeogCS</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.analysis.maths</span><span class="w"> </span><span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">divide</span><span class="p">,</span> <span class="n">multiply</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.coord_systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeogCS</span><span class="p">,</span> <span class="n">RotatedGeogCS</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..const</span> <span class="kn">import</span> <span class="n">get_planet_radius</span>
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">NotYetImplementedError</span>
-<span class="kn">from</span> <span class="nn">..meta</span> <span class="kn">import</span> <span class="n">update_metadata</span>
-<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="n">um</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..const</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_planet_radius</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotYetImplementedError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..meta</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_metadata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model</span><span class="w"> </span><span class="kn">import</span> <span class="n">um</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;d_dx&quot;</span><span class="p">,</span>
@@ -366,7 +371,7 @@
 
 <div class="viewcode-block" id="d_dx">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.d_dx">[docs]</a>
-<span class="k">def</span> <span class="nf">d_dx</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">d_dx</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. x-coordinate.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">)</span></div>
 
@@ -374,7 +379,7 @@
 
 <div class="viewcode-block" id="d_dy">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.d_dy">[docs]</a>
-<span class="k">def</span> <span class="nf">d_dy</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">d_dy</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. y-coordinate.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
 
@@ -382,7 +387,7 @@
 
 <div class="viewcode-block" id="d_dz">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.d_dz">[docs]</a>
-<span class="k">def</span> <span class="nf">d_dz</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">d_dz</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate a derivative w.r.t. z-coordinate.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span></div>
 
@@ -390,7 +395,7 @@
 
 <div class="viewcode-block" id="deriv">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.deriv">[docs]</a>
-<span class="k">def</span> <span class="nf">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">deriv</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate a derivative w.r.t. the given coordinate.</span>
 
@@ -423,7 +428,7 @@
 <div class="viewcode-block" id="div_h">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.div_h">[docs]</a>
 <span class="nd">@update_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;horizontal_divergence&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">div_h</span><span class="p">(</span><span class="n">i_cube</span><span class="p">,</span> <span class="n">j_cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">div_h</span><span class="p">(</span><span class="n">i_cube</span><span class="p">,</span> <span class="n">j_cube</span><span class="p">,</span> <span class="n">r_planet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate horizontal divergence.</span>
 
@@ -512,7 +517,7 @@
 
 <div class="viewcode-block" id="integrate">
 <a class="viewcode-back" href="../../../api/calc.html#aeolus.calc.calculus.integrate">[docs]</a>
-<span class="k">def</span> <span class="nf">integrate</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Integrate the cube along a 1D coordinate using the trapezoidal rule.</span>
 
@@ -577,8 +582,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -589,7 +594,7 @@
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -598,7 +603,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -611,7 +616,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

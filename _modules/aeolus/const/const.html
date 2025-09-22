@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aeolus.const.const &#8212; aeolus 24.11.7.0.dev3 documentation</title>
+    <title>aeolus.const.const &#8212; aeolus 25.9.22.0.dev63 documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=345b7681"></script>
+    <script src="../../../_static/documentation_options.js?v=5faf1c42"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -47,7 +47,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="24.11.7.0.dev3" />
+  <meta name="docsearch:version" content="25.9.22.0.dev63" />
   </head>
   
   
@@ -109,7 +109,7 @@
   
   
   
-    <p class="title logo__title">aeolus 24.11.7.0.dev3 documentation</p>
+    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
   
 </a></div>
     
@@ -286,9 +286,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -337,16 +342,16 @@
   <h1>Source code for aeolus.const.const</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Main interface to the physical constants store.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">make_dataclass</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">iris.coord_systems</span> <span class="kn">import</span> <span class="n">GeogCS</span>
-<span class="kn">from</span> <span class="nn">iris.cube</span> <span class="kn">import</span> <span class="n">Cube</span>
-<span class="kn">import</span> <span class="nn">iris.fileformats</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.coord_systems</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeogCS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iris.cube</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cube</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">iris.fileformats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">LoadError</span><span class="p">,</span> <span class="n">_warn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentError</span><span class="p">,</span> <span class="n">LoadError</span><span class="p">,</span> <span class="n">_warn</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;add_planet_conf_to_cubes&quot;</span><span class="p">,</span> <span class="s2">&quot;get_planet_radius&quot;</span><span class="p">,</span> <span class="s2">&quot;init_const&quot;</span><span class="p">)</span>
 
@@ -373,10 +378,10 @@
 <span class="p">}</span>
 
 
-<span class="k">class</span> <span class="nc">ConstContainer</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConstContainer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for creating dataclasses and storing planetary constants.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create custom repr.&quot;&quot;&quot;</span>
         <span class="n">cubes_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">[</span>
@@ -389,12 +394,12 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">cubes_str</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do things automatically after __init__().&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_iris_cubes</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_derive_const</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_convert_to_iris_cubes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_to_iris_cubes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Loop through fields and convert each of them to `iris.cube.Cube`.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
             <span class="n">_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -405,7 +410,7 @@
             <span class="p">)</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cube</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_derive_const</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_derive_const</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not fully implemented yet.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">recipe</span> <span class="ow">in</span> <span class="n">DERIVED_CONST</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">func</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">recipe</span>
@@ -418,7 +423,7 @@
                 <span class="k">pass</span>
 
 
-<span class="k">def</span> <span class="nf">_read_const_file</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">CONST_DIR</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_const_file</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="n">CONST_DIR</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read constants from the JSON file.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="s2">&quot;directory must be a pathlib.Path object&quot;</span><span class="p">)</span>
@@ -441,7 +446,7 @@
 
 <div class="viewcode-block" id="init_const">
 <a class="viewcode-back" href="../../../api/const.html#aeolus.const.init_const">[docs]</a>
-<span class="k">def</span> <span class="nf">init_const</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_const</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a dataclass with a given set of constants.</span>
 
@@ -489,7 +494,7 @@
 
 <div class="viewcode-block" id="get_planet_radius">
 <a class="viewcode-back" href="../../../api/const.html#aeolus.const.get_planet_radius">[docs]</a>
-<span class="k">def</span> <span class="nf">get_planet_radius</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">fileformats</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">EARTH_RADIUS</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_planet_radius</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">fileformats</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">EARTH_RADIUS</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the planet radius in metres from cube attributes.&quot;&quot;&quot;</span>
     <span class="n">cs</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord_system</span><span class="p">(</span><span class="s2">&quot;CoordSystem&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -508,7 +513,7 @@
 
 <div class="viewcode-block" id="add_planet_conf_to_cubes">
 <a class="viewcode-back" href="../../../api/const.html#aeolus.const.add_planet_conf_to_cubes">[docs]</a>
-<span class="k">def</span> <span class="nf">add_planet_conf_to_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_planet_conf_to_cubes</span><span class="p">(</span><span class="n">cubelist</span><span class="p">,</span> <span class="n">const</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add constants container to the cube attributes and adjust its coord system.</span>
 
@@ -558,8 +563,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -570,7 +575,7 @@
 
   <p class="copyright">
     
-      © Copyright 2020 - 2024, aeolus contributors.
+      © Copyright 2020 - 2025, aeolus contributors.
       <br/>
     
   </p>
@@ -579,7 +584,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -592,7 +597,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>
