@@ -11,6 +11,7 @@ from .mpl import (
     linspace_pm1,
     make_list_2d,
     map_scatter,
+    stream,
     timeseries_1d,
     timeseries_2d,
 )
@@ -38,6 +39,7 @@ __all__ = (
     "linspace_pm1",
     "make_list_2d",
     "map_scatter",
+    "stream",
     "subplot_label_generator",
     "tex2cf_units",
     "timeseries_1d",

@@ -25,6 +25,7 @@ __all__ = (
     "linspace_pm1",
     "make_list_2d",
     "map_scatter",
+    "stream",
     "timeseries_1d",
     "timeseries_2d",
 )
@@ -71,21 +72,37 @@ def capitalise(
     return sep_new.join([i.capitalize() for i in s.split(sep_old)])
 
 
-def hcross(
-    cube: Cube,
+def stream(
+    u_cube: Cube,
+    v_cube: Cube,
     ax: Optional[Axes] = None,
     model: Optional[Model] = um,
     **kw_plt,
 ) -> Optional[Axes]:
-    """Plot a horizontal cross-section aka lat-lon map of a 2D cube."""
-    newax = False
-    if ax is None:
+    """Plot a streamline plot in lat/lon coordinates."""
+    if newax := (ax is None):
         ax = plt.axes()
-        newax = True
+    lons = u_cube.coord(model.x).points
+    lats = u_cube.coord(model.y).points
+    ax.streamplot(*np.meshgrid(lons, lats), u_cube.data, v_cube.data, **kw_plt)
+    if newax:
+        return ax
+
+
+def hcross(
+    cube: Cube,
+    ax: Optional[Axes] = None,
+    method: Optional[str] = "pcolormesh",
+    model: Optional[Model] = um,
+    **kw_plt,
+) -> Optional[Axes]:
+    """Plot a horizontal cross-section aka lat-lon map of a 2D cube."""
+    if newax := (ax is None):
+        ax = plt.axes()
     fig = ax.figure
-    lons = cube.coord(um.x).points
-    lats = cube.coord(um.y).points
-    mappable = ax.pcolormesh(lons, lats, cube.data, **kw_plt)
+    lons = cube.coord(model.x).points
+    lats = cube.coord(model.y).points
+    mappable = getattr(ax, method)(lons, lats, cube.data, **kw_plt)
     fig.colorbar(mappable, ax=ax)
     if newax:
         return ax
@@ -116,10 +133,8 @@ def map_scatter(
     **kw_plt,
 ) -> Optional[Axes]:
     """Plot a lat-lon scatter plot of a 2D cube."""
-    newax = False
-    if ax is None:
+    if newax := (ax is None):
         ax = plt.axes()
-        newax = True
     fig = ax.figure
     # This doesn't work because lons and lats in the mesh are of size N+2
     # while the data array is of size N
@@ -140,10 +155,8 @@ def timeseries_1d(
     **kw_plt,
 ) -> Optional[Axes]:
     """Plot time series of a 1D cube."""
-    newax = False
-    if ax is None:
+    if newax := (ax is None):
         ax = plt.axes()
-        newax = True
     days = get_cube_rel_days(cube, model=um)
     ax.plot(days, cube.data, **kw_plt)
     if newax:
@@ -153,18 +166,17 @@ def timeseries_1d(
 def timeseries_2d(
     cube: Cube,
     ax: Optional[Axes] = None,
+    method: Optional[str] = "pcolormesh",
     model: Optional[Model] = um,
     **kw_plt,
 ) -> Optional[Axes]:
     """Plot time series of a 2D cube."""
-    newax = False
-    if ax is None:
+    if newax := (ax is None):
         ax = plt.axes()
-        newax = True
     fig = ax.figure
     days = get_cube_rel_days(cube, model=um)
     z = cube.coord(um.z).points
-    mappable = ax.pcolormesh(days, z, cube.data.T, **kw_plt)
+    mappable = getattr(ax, method)(days, z, cube.data.T, **kw_plt)
     fig.colorbar(mappable, ax=ax)
     if newax:
         return ax
