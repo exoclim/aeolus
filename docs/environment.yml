@@ -1,23 +1,24 @@
 name: aeolus_docs
 channels:
-- conda-forge
+  - conda-forge
 dependencies:
-- python=3.12
-- cached-property>=1.5.1
-- cartopy
-- click
-- f90nml
-- ipython
-- iris>=3.10
-- iris-esmf-regrid>=0.5
-- latlon23
-- matplotlib>=3.6
-- nbsphinx
-- numpy
-- pip
-- pydata-sphinx-theme
-- python-stratify
-- pyvista
-- sphinx
-- pip:
-  - click_default_group
+  - python=3.12
+  - cached-property>=1.5.1
+  - cartopy
+  - click
+  - f90nml
+  - ipython
+  - iris>=3.10
+  - iris-esmf-regrid>=0.5
+  - latlon23
+  - matplotlib>=3.6
+  - nbsphinx
+  - numpy
+  - pip
+  - pydata-sphinx-theme
+  - python-stratify
+  - pyvista
+  - sphinx
+  - pip:
+      - click_default_group
+      - furo
