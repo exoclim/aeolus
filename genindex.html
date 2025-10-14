@@ -1,1049 +1,971 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
 
-<!DOCTYPE html>
-
-
-<html lang="en" data-content_root="./" >
-
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; aeolus 25.9.22.0.dev63 documentation</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-  
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
-
-    <script src="_static/documentation_options.js?v=5faf1c42"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
-    <link rel="icon" href="_static/favicon.ico"/>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="25.9.22.0.dev63" />
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
-  
-  <dialog id="pst-search-dialog">
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 --><title>Index - aeolus 25.10.14.0.dev66 documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
-<form class="bd-search d-flex align-items-center"
-      action="search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search the docs ..."
-         aria-label="Search the docs ..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">aeolus 25.10.14.0.dev66 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">aeolus 25.10.14.0.dev66 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
 </form>
-  </dialog>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/00_Constants.html">Physical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/01_Loading_Data.html">Working with model output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/02_Model_Field_Names.html">Model variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/03_Transmission_Spectrum.html">Working with synthetic observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/04_Rotational_And_Divergent_Winds.html">A primer on calculating rotational and divergent wind components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/05_Postprocessing_LFRic.html">Getting LFRic output on a rectiliniear lat-lon grid</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/calc.html">Science calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/core.html">Core hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/const.html">Physical constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/coord.html">Cube coordinate functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/io.html">I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lfric.html">Functions for LFRic output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/log.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/model.html">Model-specific dictionaries of variable and coordinate names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot.html">Plotting functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/proc_um_output.html">Process output of the UM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/region.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/subset.html">Subset cubes using constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/synthobs.html">Synthetic observations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributor’s Guide</a></li>
+</ul>
 
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
 </div>
 
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-3 navbar-header-items__start">
-    
-      <div class="navbar-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">aeolus 25.9.22.0.dev63 documentation</p>
-  
-</a></div>
-    
-  </div>
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    <div class="me-auto navbar-header-items__center">
-      
-        <div class="navbar-item">
-<nav>
-  <ul class="bd-navbar-elements navbar-nav">
-    
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="install.html">
-    Installation
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="examples/index.html">
-    Examples
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="api/index.html">
-    API reference
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="changelog.html">
-    Changelog
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="contributing.html">
-    Contributor’s Guide
-  </a>
-</li>
-
-  </ul>
-</nav></div>
+      </div>
       
     </div>
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
         </div>
-      
-      
-        <div class="navbar-item">
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-</div>
-
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-        
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-      <div class="sidebar-header-items__center">
-        
+        <article role="main" id="furo-main-content">
           
-          
-            <div class="navbar-item">
-<nav>
-  <ul class="bd-navbar-elements navbar-nav">
-    
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="install.html">
-    Installation
-  </a>
-</li>
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Z"><strong>Z</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/coord.html#aeolus.coord.CoordContainer.__init__">__init__() (aeolus.coord.CoordContainer method)</a>
 
+        <ul>
+          <li><a href="api/core.html#aeolus.core.AtmoSimBase.__init__">(aeolus.core.AtmoSimBase method)</a>
+</li>
+          <li><a href="api/plot.html#aeolus.plot.cart.GeoAxesGrid.__init__">(aeolus.plot.cart.GeoAxesGrid method)</a>
+</li>
+          <li><a href="api/region.html#aeolus.region.Region.__init__">(aeolus.region.Region method)</a>
+</li>
+          <li><a href="api/subset.html#aeolus.subset.DimConstr.__init__">(aeolus.subset.DimConstr method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="examples/index.html">
-    Examples
-  </a>
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.stats.abs_coord_mean">abs_coord_mean() (in module aeolus.calc.stats)</a>
 </li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="api/index.html">
-    API reference
-  </a>
+        <li><a href="api/coord.html#aeolus.coord.add_binned_coord">add_binned_coord() (in module aeolus.coord)</a>
 </li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="changelog.html">
-    Changelog
-  </a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.add_custom_legend">add_custom_legend() (in module aeolus.plot.mpl)</a>
 </li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="contributing.html">
-    Contributor’s Guide
-  </a>
+        <li><a href="api/coord.html#aeolus.coord.add_cyclic_point_to_cube">add_cyclic_point_to_cube() (in module aeolus.coord)</a>
 </li>
-
-  </ul>
-</nav></div>
-          
-        
-      </div>
-    
-    
-    
-      <div class="sidebar-header-items__end">
-        
-          <div class="navbar-item">
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
-        
-      </div>
-    
-  </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none"></div>
-              
-              
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
- | <a href="#C"><strong>C</strong></a>
- | <a href="#D"><strong>D</strong></a>
- | <a href="#E"><strong>E</strong></a>
- | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
- | <a href="#H"><strong>H</strong></a>
- | <a href="#I"><strong>I</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
- | <a href="#P"><strong>P</strong></a>
- | <a href="#R"><strong>R</strong></a>
- | <a href="#S"><strong>S</strong></a>
- | <a href="#T"><strong>T</strong></a>
- | <a href="#U"><strong>U</strong></a>
- | <a href="#V"><strong>V</strong></a>
- | <a href="#W"><strong>W</strong></a>
- | <a href="#Z"><strong>Z</strong></a>
- 
-</div>
-<h2 id="_">_</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/coord.html#aeolus.coord.CoordContainer.__init__">__init__() (aeolus.coord.CoordContainer method)</a>
-
-      <ul>
-        <li><a href="api/core.html#aeolus.core.AtmoSimBase.__init__">(aeolus.core.AtmoSimBase method)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.add_equally_spaced_height_coord">add_equally_spaced_height_coord() (in module aeolus.lfric)</a>
 </li>
-        <li><a href="api/plot.html#aeolus.plot.cart.GeoAxesGrid.__init__">(aeolus.plot.cart.GeoAxesGrid method)</a>
+        <li><a href="api/coord.html#aeolus.coord.add_planet_calendar">add_planet_calendar() (in module aeolus.coord)</a>
 </li>
-        <li><a href="api/region.html#aeolus.region.Region.__init__">(aeolus.region.Region method)</a>
+        <li><a href="api/const.html#aeolus.const.add_planet_conf_to_cubes">add_planet_conf_to_cubes() (in module aeolus.const)</a>
 </li>
-        <li><a href="api/subset.html#aeolus.subset.DimConstr.__init__">(aeolus.subset.DimConstr method)</a>
+        <li><a href="api/region.html#aeolus.region.Region.add_to_ax">add_to_ax() (aeolus.region.Region method)</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.stats.abs_coord_mean">abs_coord_mean() (in module aeolus.calc.stats)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.add_um_height_coord">add_um_height_coord() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.add_binned_coord">add_binned_coord() (in module aeolus.coord)</a>
-</li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.add_custom_legend">add_custom_legend() (in module aeolus.plot.mpl)</a>
-</li>
-      <li><a href="api/coord.html#aeolus.coord.add_cyclic_point_to_cube">add_cyclic_point_to_cube() (in module aeolus.coord)</a>
-</li>
-      <li><a href="api/lfric.html#aeolus.lfric.add_equally_spaced_height_coord">add_equally_spaced_height_coord() (in module aeolus.lfric)</a>
-</li>
-      <li><a href="api/coord.html#aeolus.coord.add_planet_calendar">add_planet_calendar() (in module aeolus.coord)</a>
-</li>
-      <li><a href="api/const.html#aeolus.const.add_planet_conf_to_cubes">add_planet_conf_to_cubes() (in module aeolus.const)</a>
-</li>
-      <li><a href="api/region.html#aeolus.region.Region.add_to_ax">add_to_ax() (aeolus.region.Region method)</a>
-</li>
-      <li><a href="api/lfric.html#aeolus.lfric.add_um_height_coord">add_um_height_coord() (in module aeolus.lfric)</a>
-</li>
-      <li>
+        <li>
     aeolus.calc.calculus
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.calculus">module</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.calculus">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.calc.diag
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.diag">module</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.diag">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.calc.flux_h
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.flux_h">module</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.flux_h">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.calc.stats
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.stats">module</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.stats">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.calc.tl
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.tl">module</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.tl">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.const
 
-      <ul>
-        <li><a href="api/const.html#module-aeolus.const">module</a>
+        <ul>
+          <li><a href="api/const.html#module-aeolus.const">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.coord
 
-      <ul>
-        <li><a href="api/coord.html#module-aeolus.coord">module</a>
+        <ul>
+          <li><a href="api/coord.html#module-aeolus.coord">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.core
 
-      <ul>
-        <li><a href="api/core.html#module-aeolus.core">module</a>
+        <ul>
+          <li><a href="api/core.html#module-aeolus.core">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.io
 
-      <ul>
-        <li><a href="api/io.html#module-aeolus.io">module</a>
+        <ul>
+          <li><a href="api/io.html#module-aeolus.io">module</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
     aeolus.lfric
 
-      <ul>
-        <li><a href="api/lfric.html#module-aeolus.lfric">module</a>
+        <ul>
+          <li><a href="api/lfric.html#module-aeolus.lfric">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.log
 
-      <ul>
-        <li><a href="api/log.html#module-aeolus.log">module</a>
+        <ul>
+          <li><a href="api/log.html#module-aeolus.log">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.plot.cart
 
-      <ul>
-        <li><a href="api/plot.html#module-aeolus.plot.cart">module</a>
+        <ul>
+          <li><a href="api/plot.html#module-aeolus.plot.cart">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.plot.mpl
 
-      <ul>
-        <li><a href="api/plot.html#module-aeolus.plot.mpl">module</a>
+        <ul>
+          <li><a href="api/plot.html#module-aeolus.plot.mpl">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.plot.text
 
-      <ul>
-        <li><a href="api/plot.html#module-aeolus.plot.text">module</a>
+        <ul>
+          <li><a href="api/plot.html#module-aeolus.plot.text">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.region
 
-      <ul>
-        <li><a href="api/region.html#module-aeolus.region">module</a>
+        <ul>
+          <li><a href="api/region.html#module-aeolus.region">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.subset
 
-      <ul>
-        <li><a href="api/subset.html#module-aeolus.subset">module</a>
+        <ul>
+          <li><a href="api/subset.html#module-aeolus.subset">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     aeolus.synthobs
 
-      <ul>
-        <li><a href="api/synthobs.html#module-aeolus.synthobs">module</a>
+        <ul>
+          <li><a href="api/synthobs.html#module-aeolus.synthobs">module</a>
 </li>
-      </ul></li>
-      <li><a href="api/calc.html#aeolus.calc.stats.after_n_day_mean">after_n_day_mean() (in module aeolus.calc.stats)</a>
+        </ul></li>
+        <li><a href="api/calc.html#aeolus.calc.stats.after_n_day_mean">after_n_day_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.air_density">air_density() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.air_density">air_density() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.air_potential_temperature">air_potential_temperature() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.air_potential_temperature">air_potential_temperature() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.air_pressure">air_pressure() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.air_pressure">air_pressure() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.air_temperature">air_temperature() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.air_temperature">air_temperature() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.text.all_sim_file_label">all_sim_file_label() (in module aeolus.plot.text)</a>
+        <li><a href="api/plot.html#aeolus.plot.text.all_sim_file_label">all_sim_file_label() (in module aeolus.plot.text)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.area_weights_cube">area_weights_cube() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.area_weights_cube">area_weights_cube() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSim">AtmoSim (class in aeolus.core)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSim">AtmoSim (class in aeolus.core)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase">AtmoSimBase (class in aeolus.core)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase">AtmoSimBase (class in aeolus.core)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.stats.between_day_mean">between_day_mean() (in module aeolus.calc.stats)</a>
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.stats.between_day_mean">between_day_mean() (in module aeolus.calc.stats)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.bond_albedo">bond_albedo() (in module aeolus.calc.diag)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.bond_albedo">bond_albedo() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.calc_derived_cubes">calc_derived_cubes() (in module aeolus.calc.diag)</a>
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.calc_derived_cubes">calc_derived_cubes() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/synthobs.html#aeolus.synthobs.calc_geom_mean_mirrored">calc_geom_mean_mirrored() (in module aeolus.synthobs)</a>
+        <li><a href="api/synthobs.html#aeolus.synthobs.calc_geom_mean_mirrored">calc_geom_mean_mirrored() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/synthobs.html#aeolus.synthobs.calc_stellar_flux">calc_stellar_flux() (in module aeolus.synthobs)</a>
+        <li><a href="api/synthobs.html#aeolus.synthobs.calc_stellar_flux">calc_stellar_flux() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum">calc_transmission_spectrum() (in module aeolus.synthobs)</a>
+        <li><a href="api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum">calc_transmission_spectrum() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum_day_night_average">calc_transmission_spectrum_day_night_average() (in module aeolus.synthobs)</a>
+        <li><a href="api/synthobs.html#aeolus.synthobs.calc_transmission_spectrum_day_night_average">calc_transmission_spectrum_day_night_average() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.capitalise">capitalise() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.capitalise">capitalise() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.check_coords">check_coords() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.check_coords">check_coords() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.clean_attrs">clean_attrs() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.clean_attrs">clean_attrs() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.coarsen_cube">coarsen_cube() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.coarsen_cube">coarsen_cube() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.const">const (aeolus.core.AtmoSimBase attribute)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.const">const (aeolus.core.AtmoSimBase attribute)</a>
 </li>
-      <li><a href="api/region.html#aeolus.region.Region.constraint">constraint (aeolus.region.Region attribute)</a>
+        <li><a href="api/region.html#aeolus.region.Region.constraint">constraint (aeolus.region.Region attribute)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.coord_delta_to_cube">coord_delta_to_cube() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.coord_delta_to_cube">coord_delta_to_cube() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.coord_to_cube">coord_to_cube() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.coord_to_cube">coord_to_cube() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.CoordContainer">CoordContainer (class in aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.CoordContainer">CoordContainer (class in aeolus.coord)</a>
 </li>
-      <li><a href="api/io.html#aeolus.io.create_dummy_cube">create_dummy_cube() (in module aeolus.io)</a>
+        <li><a href="api/io.html#aeolus.io.create_dummy_cube">create_dummy_cube() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/log.html#aeolus.log.create_logger">create_logger() (in module aeolus.log)</a>
+        <li><a href="api/log.html#aeolus.log.create_logger">create_logger() (in module aeolus.log)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.text.cube_minmeanmax_str">cube_minmeanmax_str() (in module aeolus.plot.text)</a>
+        <li><a href="api/plot.html#aeolus.plot.text.cube_minmeanmax_str">cube_minmeanmax_str() (in module aeolus.plot.text)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.cumsum">cumsum() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.cumsum">cumsum() (in module aeolus.calc.stats)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="D">D</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.calculus.d_dx">d_dx() (in module aeolus.calc.calculus)</a>
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.calculus.d_dx">d_dx() (in module aeolus.calc.calculus)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.calculus.d_dy">d_dy() (in module aeolus.calc.calculus)</a>
+        <li><a href="api/calc.html#aeolus.calc.calculus.d_dy">d_dy() (in module aeolus.calc.calculus)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.calculus.d_dz">d_dz() (in module aeolus.calc.calculus)</a>
+        <li><a href="api/calc.html#aeolus.calc.calculus.d_dz">d_dz() (in module aeolus.calc.calculus)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.calculus.deriv">deriv() (in module aeolus.calc.calculus)</a>
+        <li><a href="api/calc.html#aeolus.calc.calculus.deriv">deriv() (in module aeolus.calc.calculus)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.description">description (aeolus.core.AtmoSimBase attribute)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.description">description (aeolus.core.AtmoSimBase attribute)</a>
 
-      <ul>
-        <li><a href="api/region.html#aeolus.region.Region.description">(aeolus.region.Region attribute)</a>
+        <ul>
+          <li><a href="api/region.html#aeolus.region.Region.description">(aeolus.region.Region attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="api/subset.html#aeolus.subset.DimConstr">DimConstr (class in aeolus.subset)</a>
+        </ul></li>
+        <li><a href="api/subset.html#aeolus.subset.DimConstr">DimConstr (class in aeolus.subset)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.calculus.div_h">div_h() (in module aeolus.calc.calculus)</a>
+        <li><a href="api/calc.html#aeolus.calc.calculus.div_h">div_h() (in module aeolus.calc.calculus)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.dry_lapse_rate">dry_lapse_rate() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.dry_lapse_rate">dry_lapse_rate() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="E">E</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/coord.html#aeolus.coord.ensure_bounds">ensure_bounds() (in module aeolus.coord)</a>
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/coord.html#aeolus.coord.ensure_bounds">ensure_bounds() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.extract">extract() (aeolus.core.AtmoSimBase method)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.extract">extract() (aeolus.core.AtmoSimBase method)</a>
 </li>
-      <li><a href="api/subset.html#aeolus.subset.extract_after_n_days">extract_after_n_days() (in module aeolus.subset)</a>
+        <li><a href="api/subset.html#aeolus.subset.extract_after_n_days">extract_after_n_days() (in module aeolus.subset)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/subset.html#aeolus.subset.extract_between_days">extract_between_days() (in module aeolus.subset)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/subset.html#aeolus.subset.extract_between_days">extract_between_days() (in module aeolus.subset)</a>
 </li>
-      <li><a href="api/subset.html#aeolus.subset.extract_last_month">extract_last_month() (in module aeolus.subset)</a>
+        <li><a href="api/subset.html#aeolus.subset.extract_last_month">extract_last_month() (in module aeolus.subset)</a>
 </li>
-      <li><a href="api/subset.html#aeolus.subset.extract_last_n_days">extract_last_n_days() (in module aeolus.subset)</a>
+        <li><a href="api/subset.html#aeolus.subset.extract_last_n_days">extract_last_n_days() (in module aeolus.subset)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.mpl.figsave">figsave() (in module aeolus.plot.mpl)</a>
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.mpl.figsave">figsave() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.fix_time_coord">fix_time_coord() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.fix_time_coord">fix_time_coord() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.flux">flux() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.flux">flux() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.text.fmt_lonlat">fmt_lonlat() (in module aeolus.plot.text)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.text.fmt_lonlat">fmt_lonlat() (in module aeolus.plot.text)</a>
 </li>
-      <li><a href="api/region.html#aeolus.region.Region.from_cube">from_cube() (aeolus.region.Region class method)</a>
+        <li><a href="api/region.html#aeolus.region.Region.from_cube">from_cube() (aeolus.region.Region class method)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.from_parent_class">from_parent_class() (aeolus.core.AtmoSimBase class method)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.from_parent_class">from_parent_class() (aeolus.core.AtmoSimBase class method)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.cart.GeoAxesGrid">GeoAxesGrid (class in aeolus.plot.cart)</a>
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.cart.GeoAxesGrid">GeoAxesGrid (class in aeolus.plot.cart)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.geopotential_height">geopotential_height() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.geopotential_height">geopotential_height() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.get_cube_datetimes">get_cube_datetimes() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.get_cube_datetimes">get_cube_datetimes() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.get_cube_rel_days">get_cube_rel_days() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.get_cube_rel_days">get_cube_rel_days() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.get_dim_coord">get_dim_coord() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.get_dim_coord">get_dim_coord() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/io.html#aeolus.io.get_filename_list">get_filename_list() (in module aeolus.io)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/io.html#aeolus.io.get_filename_list">get_filename_list() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/const.html#aeolus.const.get_planet_radius">get_planet_radius() (in module aeolus.const)</a>
+        <li><a href="api/const.html#aeolus.const.get_planet_radius">get_planet_radius() (in module aeolus.const)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.get_xy_coords">get_xy_coords() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.get_xy_coords">get_xy_coords() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.ghe_norm">ghe_norm() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.ghe_norm">ghe_norm() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.greenhouse_effect">greenhouse_effect() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.greenhouse_effect">greenhouse_effect() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="H">H</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.mpl.hcross">hcross() (in module aeolus.plot.mpl)</a>
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.mpl.hcross">hcross() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.heat_redist_eff">heat_redist_eff() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.heat_redist_eff">heat_redist_eff() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.horiz_wind_cmpnts">horiz_wind_cmpnts() (in module aeolus.calc.diag)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.horiz_wind_cmpnts">horiz_wind_cmpnts() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.flux_h.horizontal_fluxes_through_region_boundaries">horizontal_fluxes_through_region_boundaries() (in module aeolus.calc.flux_h)</a>
+        <li><a href="api/calc.html#aeolus.calc.flux_h.horizontal_fluxes_through_region_boundaries">horizontal_fluxes_through_region_boundaries() (in module aeolus.calc.flux_h)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="I">I</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/const.html#aeolus.const.init_const">init_const() (in module aeolus.const)</a>
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/const.html#aeolus.const.init_const">init_const() (in module aeolus.const)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.calculus.integrate">integrate() (in module aeolus.calc.calculus)</a>
+        <li><a href="api/calc.html#aeolus.calc.calculus.integrate">integrate() (in module aeolus.calc.calculus)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.interp_cube_from_height_to_pressure_levels">interp_cube_from_height_to_pressure_levels() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.interp_cube_from_height_to_pressure_levels">interp_cube_from_height_to_pressure_levels() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/coord.html#aeolus.coord.interp_cubelist_from_height_to_pressure_levels">interp_cubelist_from_height_to_pressure_levels() (in module aeolus.coord)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/coord.html#aeolus.coord.interp_cubelist_from_height_to_pressure_levels">interp_cubelist_from_height_to_pressure_levels() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.interp_to_cube_time">interp_to_cube_time() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.interp_to_cube_time">interp_to_cube_time() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.isel">isel() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.isel">isel() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/subset.html#aeolus.subset.l_range_constr">l_range_constr() (in module aeolus.subset)</a>
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/subset.html#aeolus.subset.l_range_constr">l_range_constr() (in module aeolus.subset)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.cart.label_global_map_gridlines">label_global_map_gridlines() (in module aeolus.plot.cart)</a>
+        <li><a href="api/plot.html#aeolus.plot.cart.label_global_map_gridlines">label_global_map_gridlines() (in module aeolus.plot.cart)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.last_n_day_mean">last_n_day_mean() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.last_n_day_mean">last_n_day_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.linspace_pm1">linspace_pm1() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.linspace_pm1">linspace_pm1() (in module aeolus.plot.mpl)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/io.html#aeolus.io.load_conservation_diag">load_conservation_diag() (in module aeolus.io)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/io.html#aeolus.io.load_conservation_diag">load_conservation_diag() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/io.html#aeolus.io.load_data">load_data() (in module aeolus.io)</a>
+        <li><a href="api/io.html#aeolus.io.load_data">load_data() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.load_lfric_raw">load_lfric_raw() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.load_lfric_raw">load_lfric_raw() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/io.html#aeolus.io.load_multidir">load_multidir() (in module aeolus.io)</a>
+        <li><a href="api/io.html#aeolus.io.load_multidir">load_multidir() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/io.html#aeolus.io.load_vert_lev">load_vert_lev() (in module aeolus.io)</a>
+        <li><a href="api/io.html#aeolus.io.load_vert_lev">load_vert_lev() (in module aeolus.io)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.mpl.make_list_2d">make_list_2d() (in module aeolus.plot.mpl)</a>
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.mpl.make_list_2d">make_list_2d() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.map_scatter">map_scatter() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.map_scatter">map_scatter() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.meridional_mass_streamfunction">meridional_mass_streamfunction() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.meridional_mass_streamfunction">meridional_mass_streamfunction() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.meridional_mean">meridional_mean() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.meridional_mean">meridional_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.minmaxdiff">minmaxdiff() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.minmaxdiff">minmaxdiff() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.model">model (aeolus.core.AtmoSimBase attribute)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.model">model (aeolus.core.AtmoSimBase attribute)</a>
 </li>
-      <li>
+        <li>
     module
 
-      <ul>
-        <li><a href="api/calc.html#module-aeolus.calc.calculus">aeolus.calc.calculus</a>
+        <ul>
+          <li><a href="api/calc.html#module-aeolus.calc.calculus">aeolus.calc.calculus</a>
 </li>
-        <li><a href="api/calc.html#module-aeolus.calc.diag">aeolus.calc.diag</a>
+          <li><a href="api/calc.html#module-aeolus.calc.diag">aeolus.calc.diag</a>
 </li>
-        <li><a href="api/calc.html#module-aeolus.calc.flux_h">aeolus.calc.flux_h</a>
+          <li><a href="api/calc.html#module-aeolus.calc.flux_h">aeolus.calc.flux_h</a>
 </li>
-        <li><a href="api/calc.html#module-aeolus.calc.stats">aeolus.calc.stats</a>
+          <li><a href="api/calc.html#module-aeolus.calc.stats">aeolus.calc.stats</a>
 </li>
-        <li><a href="api/calc.html#module-aeolus.calc.tl">aeolus.calc.tl</a>
+          <li><a href="api/calc.html#module-aeolus.calc.tl">aeolus.calc.tl</a>
 </li>
-        <li><a href="api/const.html#module-aeolus.const">aeolus.const</a>
+          <li><a href="api/const.html#module-aeolus.const">aeolus.const</a>
 </li>
-        <li><a href="api/coord.html#module-aeolus.coord">aeolus.coord</a>
+          <li><a href="api/coord.html#module-aeolus.coord">aeolus.coord</a>
 </li>
-        <li><a href="api/core.html#module-aeolus.core">aeolus.core</a>
+          <li><a href="api/core.html#module-aeolus.core">aeolus.core</a>
 </li>
-        <li><a href="api/io.html#module-aeolus.io">aeolus.io</a>
+          <li><a href="api/io.html#module-aeolus.io">aeolus.io</a>
 </li>
-        <li><a href="api/lfric.html#module-aeolus.lfric">aeolus.lfric</a>
+          <li><a href="api/lfric.html#module-aeolus.lfric">aeolus.lfric</a>
 </li>
-        <li><a href="api/log.html#module-aeolus.log">aeolus.log</a>
+          <li><a href="api/log.html#module-aeolus.log">aeolus.log</a>
 </li>
-        <li><a href="api/plot.html#module-aeolus.plot.cart">aeolus.plot.cart</a>
+          <li><a href="api/plot.html#module-aeolus.plot.cart">aeolus.plot.cart</a>
 </li>
-        <li><a href="api/plot.html#module-aeolus.plot.mpl">aeolus.plot.mpl</a>
+          <li><a href="api/plot.html#module-aeolus.plot.mpl">aeolus.plot.mpl</a>
 </li>
-        <li><a href="api/plot.html#module-aeolus.plot.text">aeolus.plot.text</a>
+          <li><a href="api/plot.html#module-aeolus.plot.text">aeolus.plot.text</a>
 </li>
-        <li><a href="api/region.html#module-aeolus.region">aeolus.region</a>
+          <li><a href="api/region.html#module-aeolus.region">aeolus.region</a>
 </li>
-        <li><a href="api/subset.html#module-aeolus.subset">aeolus.subset</a>
+          <li><a href="api/subset.html#module-aeolus.subset">aeolus.subset</a>
 </li>
-        <li><a href="api/synthobs.html#module-aeolus.synthobs">aeolus.synthobs</a>
+          <li><a href="api/synthobs.html#module-aeolus.synthobs">aeolus.synthobs</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/core.html#aeolus.core.AtmoSimBase.name">name (aeolus.core.AtmoSimBase attribute)</a>
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#aeolus.core.AtmoSimBase.name">name (aeolus.core.AtmoSimBase attribute)</a>
 
-      <ul>
-        <li><a href="api/region.html#aeolus.region.Region.name">(aeolus.region.Region attribute)</a>
+        <ul>
+          <li><a href="api/region.html#aeolus.region.Region.name">(aeolus.region.Region attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="api/coord.html#aeolus.coord.nearest_coord_value">nearest_coord_value() (in module aeolus.coord)</a>
+        </ul></li>
+        <li><a href="api/coord.html#aeolus.coord.nearest_coord_value">nearest_coord_value() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.flux_h.net_horizontal_flux_to_region">net_horizontal_flux_to_region() (in module aeolus.calc.flux_h)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.flux_h.net_horizontal_flux_to_region">net_horizontal_flux_to_region() (in module aeolus.calc.flux_h)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.normalize_cube">normalize_cube() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.normalize_cube">normalize_cube() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.not_equal_coord_axes">not_equal_coord_axes() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.not_equal_coord_axes">not_equal_coord_axes() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="P">P</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.precip_sum">precip_sum() (in module aeolus.calc.diag)</a>
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.precip_sum">precip_sum() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">read_normalized_stellar_flux() (in module aeolus.synthobs)</a>
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/synthobs.html#aeolus.synthobs.read_normalized_stellar_flux">read_normalized_stellar_flux() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/synthobs.html#aeolus.synthobs.read_spectral_bands">read_spectral_bands() (in module aeolus.synthobs)</a>
+        <li><a href="api/synthobs.html#aeolus.synthobs.read_spectral_bands">read_spectral_bands() (in module aeolus.synthobs)</a>
 </li>
-      <li><a href="api/region.html#aeolus.region.Region">Region (class in aeolus.region)</a>
+        <li><a href="api/region.html#aeolus.region.Region">Region (class in aeolus.region)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.region_mean_diff">region_mean_diff() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.region_mean_diff">region_mean_diff() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.regrid_3d">regrid_3d() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.regrid_3d">regrid_3d() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.tl.regrid_to_rotated_pole_coordinates">regrid_to_rotated_pole_coordinates() (in module aeolus.calc.tl)</a>
+        <li><a href="api/calc.html#aeolus.calc.tl.regrid_to_rotated_pole_coordinates">regrid_to_rotated_pole_coordinates() (in module aeolus.calc.tl)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.tl.regrid_to_tidally_locked_coordinates">regrid_to_tidally_locked_coordinates() (in module aeolus.calc.tl)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.tl.regrid_to_tidally_locked_coordinates">regrid_to_tidally_locked_coordinates() (in module aeolus.calc.tl)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.replace_level_coord_with_height">replace_level_coord_with_height() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.replace_level_coord_with_height">replace_level_coord_with_height() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.replace_mesh">replace_mesh() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.replace_mesh">replace_mesh() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.replace_z_coord">replace_z_coord() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.replace_z_coord">replace_z_coord() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.roll_cube_0_360">roll_cube_0_360() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.roll_cube_0_360">roll_cube_0_360() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.roll_cube_pm180">roll_cube_pm180() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.roll_cube_pm180">roll_cube_pm180() (in module aeolus.coord)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.tl.rotate_winds_to_tidally_locked_coordinates">rotate_winds_to_tidally_locked_coordinates() (in module aeolus.calc.tl)</a>
+        <li><a href="api/calc.html#aeolus.calc.tl.rotate_winds_to_tidally_locked_coordinates">rotate_winds_to_tidally_locked_coordinates() (in module aeolus.calc.tl)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/io.html#aeolus.io.save_cubelist">save_cubelist() (in module aeolus.io)</a>
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/io.html#aeolus.io.save_cubelist">save_cubelist() (in module aeolus.io)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.sfc_net_energy">sfc_net_energy() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.sfc_net_energy">sfc_net_energy() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSim.sfc_water_balance">sfc_water_balance (aeolus.core.AtmoSim attribute)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSim.sfc_water_balance">sfc_water_balance (aeolus.core.AtmoSim attribute)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.sfc_water_balance">sfc_water_balance() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.sfc_water_balance">sfc_water_balance() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSim.sigma_p">sigma_p (aeolus.core.AtmoSim attribute)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSim.sigma_p">sigma_p (aeolus.core.AtmoSim attribute)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.sigma_p">sigma_p() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.sigma_p">sigma_p() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/lfric.html#aeolus.lfric.simple_regrid_lfric">simple_regrid_lfric() (in module aeolus.lfric)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/lfric.html#aeolus.lfric.simple_regrid_lfric">simple_regrid_lfric() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.spatial">spatial() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.spatial">spatial() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.spatial_mean">spatial_mean() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.spatial_mean">spatial_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.spatial_quartiles">spatial_quartiles() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.spatial_quartiles">spatial_quartiles() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.stream">stream() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.stream">stream() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.text.subplot_label_generator">subplot_label_generator() (in module aeolus.plot.text)</a>
+        <li><a href="api/plot.html#aeolus.plot.text.subplot_label_generator">subplot_label_generator() (in module aeolus.plot.text)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="T">T</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/plot.html#aeolus.plot.text.tex2cf_units">tex2cf_units() (in module aeolus.plot.text)</a>
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/plot.html#aeolus.plot.text.tex2cf_units">tex2cf_units() (in module aeolus.plot.text)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.stats.time_mean">time_mean() (in module aeolus.calc.stats)</a>
+        <li><a href="api/calc.html#aeolus.calc.stats.time_mean">time_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.timeseries_1d">timeseries_1d() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.timeseries_1d">timeseries_1d() (in module aeolus.plot.mpl)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.mpl.timeseries_2d">timeseries_2d() (in module aeolus.plot.mpl)</a>
+        <li><a href="api/plot.html#aeolus.plot.mpl.timeseries_2d">timeseries_2d() (in module aeolus.plot.mpl)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.toa_cloud_radiative_effect">toa_cloud_radiative_effect() (in module aeolus.calc.diag)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.toa_cloud_radiative_effect">toa_cloud_radiative_effect() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.toa_eff_temp">toa_eff_temp() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.toa_eff_temp">toa_eff_temp() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/core.html#aeolus.core.AtmoSim.toa_net_energy">toa_net_energy (aeolus.core.AtmoSim attribute)</a>
+        <li><a href="api/core.html#aeolus.core.AtmoSim.toa_net_energy">toa_net_energy (aeolus.core.AtmoSim attribute)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.toa_net_energy">toa_net_energy() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.toa_net_energy">toa_net_energy() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="U">U</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/lfric.html#aeolus.lfric.ugrid_spatial">ugrid_spatial() (in module aeolus.lfric)</a>
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/lfric.html#aeolus.lfric.ugrid_spatial">ugrid_spatial() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/lfric.html#aeolus.lfric.ugrid_spatial_mean">ugrid_spatial_mean() (in module aeolus.lfric)</a>
+        <li><a href="api/lfric.html#aeolus.lfric.ugrid_spatial_mean">ugrid_spatial_mean() (in module aeolus.lfric)</a>
 </li>
-      <li><a href="api/model.html#aeolus.model.um">um (in module aeolus.model)</a>
+        <li><a href="api/model.html#aeolus.model.um">um (in module aeolus.model)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/model.html#aeolus.model.um_stash">um_stash (in module aeolus.model)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/model.html#aeolus.model.um_stash">um_stash (in module aeolus.model)</a>
 </li>
-      <li><a href="api/subset.html#aeolus.subset.unique_cubes">unique_cubes() (in module aeolus.subset)</a>
+        <li><a href="api/subset.html#aeolus.subset.unique_cubes">unique_cubes() (in module aeolus.subset)</a>
 </li>
-      <li><a href="api/plot.html#aeolus.plot.text.unit_format">unit_format() (in module aeolus.plot.text)</a>
+        <li><a href="api/plot.html#aeolus.plot.text.unit_format">unit_format() (in module aeolus.plot.text)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="V">V</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/coord.html#aeolus.coord.vertical_cross_section_area">vertical_cross_section_area() (in module aeolus.coord)</a>
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/coord.html#aeolus.coord.vertical_cross_section_area">vertical_cross_section_area() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.stats.vertical_mean">vertical_mean() (in module aeolus.calc.stats)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.stats.vertical_mean">vertical_mean() (in module aeolus.calc.stats)</a>
 </li>
-      <li><a href="api/coord.html#aeolus.coord.volume_weights_cube">volume_weights_cube() (in module aeolus.coord)</a>
+        <li><a href="api/coord.html#aeolus.coord.volume_weights_cube">volume_weights_cube() (in module aeolus.coord)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.water_path">water_path() (in module aeolus.calc.diag)</a>
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.water_path">water_path() (in module aeolus.calc.diag)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.wind_rot_div">wind_rot_div() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.wind_rot_div">wind_rot_div() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/core.html#aeolus.core.AtmoSim.wind_speed">wind_speed (aeolus.core.AtmoSim attribute)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core.html#aeolus.core.AtmoSim.wind_speed">wind_speed (aeolus.core.AtmoSim attribute)</a>
 </li>
-      <li><a href="api/calc.html#aeolus.calc.diag.wind_speed">wind_speed() (in module aeolus.calc.diag)</a>
+        <li><a href="api/calc.html#aeolus.calc.diag.wind_speed">wind_speed() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="Z">Z</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.diag.zonal_mass_streamfunction">zonal_mass_streamfunction() (in module aeolus.calc.diag)</a>
+<section id="Z" class="genindex-section">
+  <h2>Z</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.diag.zonal_mass_streamfunction">zonal_mass_streamfunction() (in module aeolus.calc.diag)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/calc.html#aeolus.calc.stats.zonal_mean">zonal_mean() (in module aeolus.calc.stats)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/calc.html#aeolus.calc.stats.zonal_mean">zonal_mean() (in module aeolus.calc.stats)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
 
-
-                </article>
-              
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-</div>
-                </footer>
-              
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2020 - 2025, aeolus contributors
             </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
-            
-              
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
             
           </div>
-          <footer class="bd-footer-content">
+          <div class="right-details">
             
-          </footer>
+          </div>
+        </div>
         
-      </main>
+      </footer>
     </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
   </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
-
-  <footer class="bd-footer">
-<div class="bd-footer__inner bd-page-width">
-  
-    <div class="footer-items__start">
-      
-        <div class="footer-item">
-
-  <p class="copyright">
-    
-      © Copyright 2020 - 2025, aeolus contributors.
-      <br/>
-    
-  </p>
-</div>
-      
-        <div class="footer-item">
-
-  <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
-    <br/>
-  </p>
-</div>
-      
-    </div>
-  
-  
-  
-    <div class="footer-items__end">
-      
-        <div class="footer-item">
-<p class="theme-version">
-  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
-</p></div>
-      
-    </div>
-  
-</div>
-
-  </footer>
-  </body>
+</div><script src="_static/documentation_options.js?v=5bbdda1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
 </html>
