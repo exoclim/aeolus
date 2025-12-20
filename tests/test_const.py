@@ -39,11 +39,11 @@ def test_loaderror():
 
 def test_argumenterror():
     with pytest.raises(ArgumentError):
-        const.init_const(CONST_FILE, directory=str(TST_DATA / "json"))
+        const.init_const(CONST_FILE, directory=123)
 
 
 def test_init_const_custom():
-    cnsts = const.init_const(CONST_FILE, directory=TST_DATA / "json")
+    cnsts = const.init_const(CONST_FILE, directory=TST_DATA / "yaml")
     assert str(cnsts).startswith("DummyConstants")
     assert isinstance(cnsts, const.const.ConstContainer)
     for key in cnsts.__dataclass_fields__.keys():

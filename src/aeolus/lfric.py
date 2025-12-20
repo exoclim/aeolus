@@ -24,6 +24,7 @@ __all__ = (
     "load_lfric_raw",
     "replace_level_coord_with_height",
     "replace_mesh",
+    "reshape_ugrid_cube_to_xy_grid",
     "simple_regrid_lfric",
     "ugrid_spatial",
     "ugrid_spatial_mean",

@@ -1,13 +1,14 @@
 """Main interface to the physical constants store."""
 
 from dataclasses import make_dataclass
-import json
 from pathlib import Path
+from typing import Any, Callable, Optional, Union
 
 from iris.coord_systems import GeogCS
 from iris.cube import Cube
 import iris.fileformats
 import numpy as np
+import yaml
 
 from ..exceptions import ArgumentError, LoadError, _warn
 
@@ -15,7 +16,7 @@ __all__ = ("add_planet_conf_to_cubes", "get_planet_radius", "init_const")
 
 CONST_DIR = Path(__file__).parent / "store"
 
-DERIVED_CONST = {
+DERIVED_CONST: dict[str, tuple[Callable[[Any], Any], str]] = {
     "dry_air_gas_constant": (
         lambda slf: slf.molar_gas_constant / slf.dry_air_molecular_weight,
         "J kg-1 K-1",
@@ -28,7 +29,7 @@ DERIVED_CONST = {
     "kappa": (
         lambda slf: slf.dry_air_gas_constant / slf.dry_air_spec_heat_press,
         "1",
-    ),  # poisson_exponent
+    ),
     "planet_rotation_rate": (
         lambda slf: (slf.day / (2 * np.pi)) ** (-1),
         "s-1",
@@ -39,7 +40,7 @@ DERIVED_CONST = {
 class ConstContainer:
     """Base class for creating dataclasses and storing planetary constants."""
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Create custom repr."""
         cubes_str = ", ".join(
             [
@@ -52,12 +53,12 @@ class ConstContainer:
         )
         return f"{self.__class__.__name__}({cubes_str})"
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Do things automatically after __init__()."""
         self._convert_to_iris_cubes()
         self._derive_const()
 
-    def _convert_to_iris_cubes(self):
+    def _convert_to_iris_cubes(self) -> None:
         """Loop through fields and convert each of them to `iris.cube.Cube`."""
         for name in self.__dataclass_fields__:
             _field = getattr(self, name)
@@ -68,7 +69,7 @@ class ConstContainer:
             )
             object.__setattr__(self, name, cube)
 
-    def _derive_const(self):
+    def _derive_const(self) -> None:
         """Not fully implemented yet."""
         for name, recipe in DERIVED_CONST.items():
             func, units = recipe
@@ -81,13 +82,15 @@ class ConstContainer:
                 pass
 
 
-def _read_const_file(name, directory=CONST_DIR):
-    """Read constants from the JSON file."""
-    if not isinstance(directory, Path):
-        raise ArgumentError("directory must be a pathlib.Path object")
+def _read_const_file(
+    name: str, directory: Union[Path, str] = CONST_DIR
+) -> dict[str, dict[str, Any]]:
+    """Read constants from the YAML file."""
+    if not isinstance(directory, (Path, str)):
+        raise ArgumentError("directory must be a path-like object")
     try:
-        with (directory / name).with_suffix(".json").open("r") as fp:
-            list_of_dicts = json.load(fp)
+        with (Path(directory) / name).with_suffix(".yaml").open("r") as fp:
+            list_of_dicts = yaml.safe_load(fp)
         # transform the list of dictionaries into a dictionary
         const_dict = {}
         for vardict in list_of_dicts:
@@ -97,12 +100,14 @@ def _read_const_file(name, directory=CONST_DIR):
         return const_dict
     except FileNotFoundError:
         raise LoadError(
-            f"JSON file for {name} configuration not found,"
+            f"YAML file for {name} configuration not found,"
             f"check the directory: {directory}"
         )
 
 
-def init_const(name="general", directory=None):
+def init_const(
+    name: str = "general", directory: Optional[Union[Path, str]] = None
+) -> ConstContainer:
     """
     Create a dataclass with a given set of constants.
 
@@ -147,7 +152,9 @@ def init_const(name="general", directory=None):
     return kls(**const_dict)
 
 
-def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
+def get_planet_radius(
+    cube: Cube, default: float = iris.fileformats.pp.EARTH_RADIUS
+) -> float:
     """Get the planet radius in metres from cube attributes."""
     cs = cube.coord_system("CoordSystem")
     if cs is not None:
@@ -163,7 +170,9 @@ def get_planet_radius(cube, default=iris.fileformats.pp.EARTH_RADIUS):
     return r
 
 
-def add_planet_conf_to_cubes(cubelist, const):
+def add_planet_conf_to_cubes(
+    cubelist: iris.cube.CubeList, const: ConstContainer
+) -> None:
     """
     Add constants container to the cube attributes and adjust its coord system.
 
