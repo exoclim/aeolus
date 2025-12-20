@@ -383,8 +383,7 @@ def check_coords(cubes):
     bad_coords = coord_comparison["resamplable"]
     if bad_coords:
         raise BadCoordinateError(
-            "Some coordinates are different ({}), "
-            "consider resampling.".format(
+            "Some coordinates are different ({}), consider resampling.".format(
                 ", ".join(group.name() for group in bad_coords)
             )
         )
@@ -946,9 +945,9 @@ def regrid_3d(cube, target, model=um):
     return cube
 
 
-def replace_z_coord(cube, model=um):
+def replace_z_coord(cube, remove_level_coord=False, inplace=False, model=um):
     """
-    Replace dimensional vertical coordinate.
+    Replace levels coordinate with level_height.
 
     Parameters
     ----------
@@ -962,17 +961,28 @@ def replace_z_coord(cube, model=um):
     iris.cube.Cube
         Copy of the input cube with a new vertical coordinate.
     """
-    new_cube = cube.copy()
-    new_cube.coord(model.z).bounds = None
+    if inplace:
+        new_cube = cube
+    else:
+        new_cube = cube.copy()
     promote_aux_coord_to_dim_coord(new_cube, model.z)
+    # Reset bounds for the new z coordinate
+    new_cube.coord(model.z).bounds = None
     ensure_bounds(new_cube, coords=[model.z])
-    for coord in [model.s, model.lev]:
-        # By default, model levels and sigma coordinates are removed.
-        try:
-            new_cube.remove_coord(coord)
-        except CoNotFound:
-            pass
-    return new_cube
+    # Remove the old levels coordinate
+    if remove_level_coord:
+        lev_coords = [
+            i.name()
+            for i in new_cube.coords()
+            if i.name() in ["full_levels", "half_levels", "model_level_number"]
+        ]
+        for coord in lev_coords:
+            try:
+                new_cube.remove_coord(coord)
+            except CoNotFound:
+                pass
+    if not inplace:
+        return new_cube
 
 
 def roll_cube_0_360(cube_in, add_shift=0, model=um):
@@ -1042,9 +1052,9 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
     coord_name = model.x  # get the name of the longitude coordinate
     xcoord = cube.coord(coord_name)
     if (xcoord.points >= 0.0).all():
-        assert is_regular(
-            xcoord
-        ), "Operation is only valid for a regularly spaced coordinate."
+        assert is_regular(xcoord), (
+            "Operation is only valid for a regularly spaced coordinate."
+        )
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
             cube.data = da.roll(
@@ -1069,9 +1079,9 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
             f"Incorrect {coord_name} values: "
             f"from {xcoord.points.min()} to {xcoord.points.max()}"
         )
-        assert (
-            (xcoord.points >= -180.0) & (xcoord.points <= 180.0)
-        ).all(), msg
+        assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), (
+            msg
+        )
     return cube
 
 

@@ -213,6 +213,78 @@ def replace_mesh(cube: Cube, new_mesh: MeshXY) -> Cube:
     return new_cube
 
 
+def reshape_ugrid_cube_to_xy_grid(
+    cube: iris.cube.Cube, nx: int, ny: int, delta_x: float, delta_y: float
+) -> iris.cube.Cube:
+    """
+    Reshape an iris cube on a UGRID into a cube with x/y distance coordinates.
+
+    Parameters
+    ----------
+    cube : iris.cube.Cube
+        Input cube to reshape
+    nx : int, optional
+        Number of grid points in x direction
+    ny : int, optional
+        Number of grid points in y direction
+    delta_x : float, optional
+        Grid spacing in x direction in metres
+    delta_y : float, optional
+        Grid spacing in y direction in metres
+
+    Returns
+    -------
+    iris.cube.Cube
+        Reshaped cube with x/y coordinates
+    """
+    # Promote auxiliary time coordinate to dimension coordinate if necessary
+    try:
+        iris.util.promote_aux_coord_to_dim_coord(cube, "time")
+    except iris.exceptions.CoordinateNotFoundError:
+        pass
+
+    # Calculate domain sizes
+    domain_size_x: float = nx * delta_x
+    domain_size_y: float = ny * delta_y
+
+    # Define new shape
+    new_shape: tuple = cube.shape[:-1] + (ny, nx)
+
+    # Create spatial coordinates
+    x_coord: iris.coords.DimCoord = iris.coords.DimCoord(
+        np.linspace(0, domain_size_x, nx + 1)[:-1],
+        standard_name="projection_x_coordinate",
+        units="m",
+    )
+    y_coord: iris.coords.DimCoord = iris.coords.DimCoord(
+        np.linspace(0, domain_size_y, ny + 1)[:-1],
+        standard_name="projection_y_coordinate",
+        units="m",
+    )
+
+    # Create new cube with reshaped data
+    new_cube: iris.cube.Cube = iris.cube.Cube(
+        iris.util.reverse(
+            cube.core_data().reshape(new_shape),
+            new_shape.index(y_coord.shape[0]),
+        ),
+        dim_coords_and_dims=[
+            (c, cube.coord_dims(c)[0]) for c in cube.dim_coords
+        ]
+        + [
+            (y_coord, len(new_shape) - 2),
+            (x_coord, len(new_shape) - 1),
+        ],
+    )
+
+    # Copy metadata from original cube
+    new_cube.metadata = iris.common.metadata.CubeMetadata(
+        **cube.metadata._asdict()
+    )
+
+    return new_cube
+
+
 def _regrid_cubes_on_edges(
     src_cube: Cube, tgt_cube: Cube, method: Optional[str] = "auto"
 ) -> Cube:
