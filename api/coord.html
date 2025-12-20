@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="I/O" href="io.html"><link rel="prev" title="Physical constants" href="const.html">
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Cube coordinate functionality - aeolus 25.10.14.0.dev66 documentation</title>
+    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Cube coordinate functionality - aeolus 25.12.20.0.dev71 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">aeolus 25.10.14.0.dev66 documentation</div></a>
+      <a href="../index.html"><div class="brand">aeolus 25.12.20.0.dev71 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +182,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">aeolus 25.10.14.0.dev66 documentation</span>
+  <span class="sidebar-brand-text">aeolus 25.12.20.0.dev71 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -262,7 +262,7 @@
 <p>Functionality related to coordinates of cubes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="aeolus.coord.CoordContainer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">CoordContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cubes,</span> <span class="pre">coord_check=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#CoordContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.CoordContainer" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Coordinate container.</p>
 <dl class="py attribute">
@@ -283,7 +283,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.14.0.dev97)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
+<li><p><strong>cubes</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.15.0.dev48)"><em>iris.cube.CubeList</em></a>) – Atmospheric fields with necessary coordinates.</p></li>
 <li><p><strong>coord_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Check if all cubes have the same set of coordinates.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
@@ -300,13 +300,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with the given coordinate.</p></li>
-<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a>) – Coordinate name.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with the given coordinate.</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a>) – Coordinate name.</p></li>
 <li><p><strong>bins</strong> (<em>array-like</em>) – Coordinate bins.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -319,8 +319,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – An n-dimensional cube of data to add a cyclic point to.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A 1-dimensional coordinate which specifies the coordinate values for
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – An n-dimensional cube of data to add a cyclic point to.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – A 1-dimensional coordinate which specifies the coordinate values for
 the dimension the cyclic point is to be added to. The coordinate
 values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 </ul>
@@ -329,7 +329,7 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 <dd class="field-even"><p>The cube with a cyclic point added.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -341,8 +341,8 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
-<li><p><strong>time_coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Original time coordinate of the cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>time_coord</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Original time coordinate of the cube.</p></li>
 <li><p><strong>days_in_year</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Number of Earth days in one year on the given planet.</p></li>
 <li><p><strong>days_in_month</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Number of Earth days in one month on the given planet.</p></li>
 <li><p><strong>days_in_day</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Number of Earth days in one day on the given planet.</p></li>
@@ -361,7 +361,7 @@ values must be regularly spaced. Defaults to the “x”-coordinate.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates</p></li>
 <li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize areas.</p></li>
@@ -372,7 +372,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,14 +391,14 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>lon_bins</strong> (<em>array-like</em>) – Longitude bins.</p></li>
 <li><p><strong>lat_bins</strong> (<em>array-like</em>) – Latitude bins.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -410,8 +410,8 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
 </ul>
 </dd>
@@ -419,7 +419,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of broadcast coordinate deltas.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -431,8 +431,8 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube containing the coordinate to be broadcast.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a>) – Coordinate to be broadcast.</p></li>
 <li><p><strong>broadcast</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Broadcast the coordinate points to the shape of the cube.</p></li>
 </ul>
 </dd>
@@ -440,7 +440,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of broadcast coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -458,7 +458,7 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -478,7 +478,7 @@ to get it from the cube metadata.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube containing a time coordinate.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -495,13 +495,13 @@ to get it from the cube metadata.</p></li>
 <dt class="sig sig-object py" id="aeolus.coord.get_dim_coord">
 <span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">get_dim_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#get_dim_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.get_dim_coord" title="Link to this definition">¶</a></dt>
 <dd><p>Return a coordinate from a cube based on the axis it represents.</p>
-<p>Uses <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.util.html#iris.util.guess_coord_axis" title="(in Iris v3.14.0.dev97)"><code class="xref py py-func docutils literal notranslate"><span class="pre">iris.util.guess_coord_axis()</span></code></a> to heuristically match a
+<p>Uses <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.util.html#iris.util.guess_coord_axis" title="(in Iris v3.15.0.dev48)"><code class="xref py py-func docutils literal notranslate"><span class="pre">iris.util.guess_coord_axis()</span></code></a> to heuristically match a
 dimensional coordinate with the requested axis.</p>
 <p>Adapted from <a class="reference external" href="https://github.com/LSaffin/iris-extensions">https://github.com/LSaffin/iris-extensions</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with the desired coordinate.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with the desired coordinate.</p></li>
 <li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The co-ordinate axis to take from the cube. Must be one of X, Y, Z, T.</p></li>
 </ul>
 </dd>
@@ -509,7 +509,7 @@ dimensional coordinate with the requested axis.</p>
 <dd class="field-even"><p>The dim coordinate matching the requested axis on the given cube.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.DimCoord" title="(in Iris v3.14.0.dev97)">iris.coords.DimCoord</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.DimCoord" title="(in Iris v3.15.0.dev48)">iris.coords.DimCoord</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -527,7 +527,7 @@ dimensional coordinate with the requested axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate and variable names.</p></li>
 </ul>
 </dd>
@@ -541,8 +541,8 @@ dimensional coordinate with the requested axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.14.0.dev97)"><em>iris.cube.CubeList</em></a>) – Cube or list of cubes.</p></li>
-<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a>) – Coordinate for selection.</p></li>
+<li><p><strong>obj</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.15.0.dev48)"><em>iris.cube.CubeList</em></a>) – Cube or list of cubes.</p></li>
+<li><p><strong>coord</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a>) – Coordinate for selection.</p></li>
 <li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Index along the given coordinate.</p></li>
 <li><p><strong>skip_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Skip if coordinate not found. By default it is active when dealing with
 a cube list and inactive if dealing with a single cube.</p></li>
@@ -552,7 +552,7 @@ a cube list and inactive if dealing with a single cube.</p></li>
 <dd class="field-even"><p>Slice along the coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a> or <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.14.0.dev97)">iris.cube.CubeList</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a> or <a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.15.0.dev48)">iris.cube.CubeList</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -564,9 +564,9 @@ a cube list and inactive if dealing with a single cube.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>variable</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – A cube to interpolate.
+<li><p><strong>variable</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – A cube to interpolate.
 Must have the same dimensions as the pressure cube.</p></li>
-<li><p><strong>pressure</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – A cube of pressure.</p></li>
+<li><p><strong>pressure</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – A cube of pressure.</p></li>
 <li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels
 (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
 <li><p><strong>p_ref_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, <cite>levels</cite> are used as fractions of the surface pressure.</p></li>
@@ -582,7 +582,7 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>The variable interpolated to pressure level(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,7 +596,7 @@ excluded from the output list of interpolated cubes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.14.0.dev97)"><em>iris.cube.CubeList</em></a>) – List of cubes, including a cube of pressure.</p></li>
+<li><p><strong>cubelist</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.15.0.dev48)"><em>iris.cube.CubeList</em></a>) – List of cubes, including a cube of pressure.</p></li>
 <li><p><strong>levels</strong> (<em>array-like</em>) – Sequence of pressure levels
 (same units as the units of pressure cube in <cite>cubelist</cite>).</p></li>
 <li><p><strong>p_ref_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, <cite>levels</cite> are used as fractions of the surface pressure.</p></li>
@@ -613,7 +613,7 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>List of cubes interpolated to pressure level(s).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.14.0.dev97)">iris.cube.CubeList</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.CubeList" title="(in Iris v3.15.0.dev48)">iris.cube.CubeList</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -626,8 +626,8 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube_src</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube to interpolate.</p></li>
-<li><p><strong>cube_tgt</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with time dimension to interpolate to.</p></li>
+<li><p><strong>cube_src</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube to interpolate.</p></li>
+<li><p><strong>cube_tgt</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with time dimension to interpolate to.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -635,7 +635,7 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>Cube with the time dimension equal to <cite>cube_tgt</cite>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -647,8 +647,8 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with the coordinate</p></li>
-<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.14.0.dev97)"><em>iris.coords.Coord</em></a>) – Coordinate where to look the nearest point up</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with the coordinate</p></li>
+<li><p><strong>coord_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.coords.html#iris.coords.Coord" title="(in Iris v3.15.0.dev48)"><em>iris.coords.Coord</em></a>) – Coordinate where to look the nearest point up</p></li>
 <li><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The value to find</p></li>
 </ul>
 </dd>
@@ -675,25 +675,25 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – The cube to be regridded.</p></li>
-<li><p><strong>target</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – The cube to regrid to.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – The cube to be regridded.</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – The cube to regrid to.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="aeolus.coord.replace_z_coord">
-<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Link to this definition">¶</a></dt>
-<dd><p>Replace dimensional vertical coordinate.</p>
+<span class="sig-prename descclassname"><span class="pre">aeolus.coord.</span></span><span class="sig-name descname"><span class="pre">replace_z_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cube,</span> <span class="pre">remove_level_coord=False,</span> <span class="pre">inplace=False,</span> <span class="pre">model=Model</span> <span class="pre">[99</span> <span class="pre">fields]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aeolus/coord.html#replace_z_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aeolus.coord.replace_z_coord" title="Link to this definition">¶</a></dt>
+<dd><p>Replace levels coordinate with level_height.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Input cube.</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant coordinate names.</p></li>
 </ul>
 </dd>
@@ -701,7 +701,7 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dd class="field-even"><p>Copy of the input cube with a new vertical coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -714,13 +714,13 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>add_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Additional shift of data (is not applied to the longitude coordinate).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -737,13 +737,13 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with longitude and latitude coordinates.</p></li>
 <li><p><strong>add_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Additional shift of data (is not applied to the longitude coordinate).</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with a relevant longitude coordinate name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -765,7 +765,7 @@ See <cite>relevel()</cite> docs for more.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Cube with longitude, latitude and height coordinates</p></li>
+<li><p><strong>cube</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Cube with longitude, latitude and height coordinates</p></li>
 <li><p><strong>r_planet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Radius of the planet (m). If not given, an attempt is made
 to get it from the cube metadata.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Normalize the data.</p></li>
@@ -776,7 +776,7 @@ to get it from the cube metadata.</p></li>
 <dd class="field-even"><p>Cube of area weights with the same metadata as the input cube</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -879,9 +879,9 @@ to get it from the cube metadata.</p></li>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=5bbdda1a"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+</div><script src="../_static/documentation_options.js?v=216cb221"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

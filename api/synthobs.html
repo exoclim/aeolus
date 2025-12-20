@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Changelog" href="../changelog.html"><link rel="prev" title="Subset cubes using constraints" href="subset.html">
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Synthetic observations - aeolus 25.10.14.0.dev66 documentation</title>
+    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Synthetic observations - aeolus 25.12.20.0.dev71 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">aeolus 25.10.14.0.dev66 documentation</div></a>
+      <a href="../index.html"><div class="brand">aeolus 25.12.20.0.dev71 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +182,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">aeolus 25.10.14.0.dev66 documentation</span>
+  <span class="sidebar-brand-text">aeolus 25.12.20.0.dev71 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -286,14 +286,14 @@ calculated separately from the day- and night-side perspective.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
+<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Stellar flux per spectral band [W m-2].</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -305,13 +305,13 @@ calculated separately from the day- and night-side perspective.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally lats and lons.
+<li><p><strong>trans_flux</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally lats and lons.
 In the Met Office Unified Model this is
 STASH items 555, 556, 755, 756 in section 1.</p></li>
 <li><p><strong>spectral_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>pathlib.Path</em></a>) – Path to the location of a SOCRATES spectral file.</p></li>
-<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
-<li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
-<li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>
+<li><p><strong>stellar_constant_at_1_au</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Stellar constant at 1 AU [W m-2].</p></li>
+<li><p><strong>stellar_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Stellar radius [m].</p></li>
+<li><p><strong>planet_top_of_atmosphere</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – The extent of the planetary atmosphere [m].</p></li>
 <li><p><strong>model</strong> (<em>aeolus.model.Model</em><em>, </em><em>optional</em>) – Model class with relevant variable names.</p></li>
 </ul>
 </dd>
@@ -321,7 +321,7 @@ per spectral band [1].
 Spectral band centres [m] is attached as an auxiliary coordinate.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -360,11 +360,11 @@ two cancel and you end up with <span class="math notranslate nohighlight">\(exp[
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_flux_day</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally lats and lons.
+<li><p><strong>trans_flux_day</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Transmission flux on spectral bands and optionally lats and lons.
 Day-side perspective.
 In the Met Office Unified Model this is
 STASH items 555, 556, 755, 756 in section 1.</p></li>
-<li><p><strong>trans_flux_night</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)"><em>iris.cube.Cube</em></a>) – Samea as day, but for the night-side calculation.</p></li>
+<li><p><strong>trans_flux_night</strong> (<a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)"><em>iris.cube.Cube</em></a>) – Samea as day, but for the night-side calculation.</p></li>
 <li><p><strong>add_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Additional shift of data along the x-coordinate.</p></li>
 </ul>
 </dd>
@@ -387,7 +387,7 @@ STASH items 555, 556, 755, 756 in section 1.</p></li>
 <dd class="field-even"><p>Normalized stellar flux per spectral band [1].</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.14.0.dev97)">iris.cube.Cube</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://scitools-iris.readthedocs.io/en/latest/generated/api/iris.cube.html#iris.cube.Cube" title="(in Iris v3.15.0.dev48)">iris.cube.Cube</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -487,12 +487,12 @@ Units [m] as stated in a spectral file but not checked directly.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=5bbdda1a"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+</div><script src="../_static/documentation_options.js?v=216cb221"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

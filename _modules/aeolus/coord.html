@@ -4,10 +4,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>aeolus.coord - aeolus 25.10.14.0.dev66 documentation</title>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>aeolus.coord - aeolus 25.12.20.0.dev71 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -160,7 +160,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">aeolus 25.10.14.0.dev66 documentation</div></a>
+      <a href="../../index.html"><div class="brand">aeolus 25.12.20.0.dev71 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -181,7 +181,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">aeolus 25.10.14.0.dev66 documentation</span>
+  <span class="sidebar-brand-text">aeolus 25.12.20.0.dev71 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -656,8 +656,7 @@
     <span class="n">bad_coords</span> <span class="o">=</span> <span class="n">coord_comparison</span><span class="p">[</span><span class="s2">&quot;resamplable&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">bad_coords</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">BadCoordinateError</span><span class="p">(</span>
-            <span class="s2">&quot;Some coordinates are different (</span><span class="si">{}</span><span class="s2">), &quot;</span>
-            <span class="s2">&quot;consider resampling.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Some coordinates are different (</span><span class="si">{}</span><span class="s2">), consider resampling.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">bad_coords</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
@@ -1267,9 +1266,9 @@
 
 <div class="viewcode-block" id="replace_z_coord">
 <a class="viewcode-back" href="../../api/coord.html#aeolus.coord.replace_z_coord">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">replace_z_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">replace_z_coord</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">remove_level_coord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">um</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Replace dimensional vertical coordinate.</span>
+<span class="sd">    Replace levels coordinate with level_height.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1283,17 +1282,28 @@
 <span class="sd">    iris.cube.Cube</span>
 <span class="sd">        Copy of the input cube with a new vertical coordinate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">new_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">cube</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">promote_aux_coord_to_dim_coord</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+    <span class="c1"># Reset bounds for the new z coordinate</span>
+    <span class="n">new_cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">ensure_bounds</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">z</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">lev</span><span class="p">]:</span>
-        <span class="c1"># By default, model levels and sigma coordinates are removed.</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">new_cube</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">CoNotFound</span><span class="p">:</span>
-            <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">new_cube</span></div>
+    <span class="c1"># Remove the old levels coordinate</span>
+    <span class="k">if</span> <span class="n">remove_level_coord</span><span class="p">:</span>
+        <span class="n">lev_coords</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">new_cube</span><span class="o">.</span><span class="n">coords</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;full_levels&quot;</span><span class="p">,</span> <span class="s2">&quot;half_levels&quot;</span><span class="p">,</span> <span class="s2">&quot;model_level_number&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">lev_coords</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">new_cube</span><span class="o">.</span><span class="n">remove_coord</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">CoNotFound</span><span class="p">:</span>
+                <span class="k">pass</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new_cube</span></div>
 
 
 
@@ -1369,9 +1379,9 @@
     <span class="n">coord_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># get the name of the longitude coordinate</span>
     <span class="n">xcoord</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">coord_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-        <span class="k">assert</span> <span class="n">is_regular</span><span class="p">(</span>
-            <span class="n">xcoord</span>
-        <span class="p">),</span> <span class="s2">&quot;Operation is only valid for a regularly spaced coordinate.&quot;</span>
+        <span class="k">assert</span> <span class="n">is_regular</span><span class="p">(</span><span class="n">xcoord</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s2">&quot;Operation is only valid for a regularly spaced coordinate.&quot;</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">_is_longitude_global</span><span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="p">):</span>
             <span class="c1"># Shift data symmetrically only when dealing with global cubes</span>
             <span class="n">cube</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span>
@@ -1396,9 +1406,9 @@
             <span class="sa">f</span><span class="s2">&quot;Incorrect </span><span class="si">{</span><span class="n">coord_name</span><span class="si">}</span><span class="s2"> values: &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;from </span><span class="si">{</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">180.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="mf">180.0</span><span class="p">)</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">msg</span>
+        <span class="k">assert</span> <span class="p">((</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">180.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xcoord</span><span class="o">.</span><span class="n">points</span> <span class="o">&lt;=</span> <span class="mf">180.0</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="p">(</span>
+            <span class="n">msg</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">cube</span></div>
 
 
@@ -1502,9 +1512,9 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=5bbdda1a"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+</div><script src="../../_static/documentation_options.js?v=216cb221"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
