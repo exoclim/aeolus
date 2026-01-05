@@ -1052,9 +1052,9 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
     coord_name = model.x  # get the name of the longitude coordinate
     xcoord = cube.coord(coord_name)
     if (xcoord.points >= 0.0).all():
-        assert is_regular(xcoord), (
-            "Operation is only valid for a regularly spaced coordinate."
-        )
+        assert is_regular(
+            xcoord
+        ), "Operation is only valid for a regularly spaced coordinate."
         if _is_longitude_global(xcoord.points):
             # Shift data symmetrically only when dealing with global cubes
             cube.data = da.roll(
@@ -1079,9 +1079,9 @@ def roll_cube_pm180(cube_in, add_shift=0, model=um):
             f"Incorrect {coord_name} values: "
             f"from {xcoord.points.min()} to {xcoord.points.max()}"
         )
-        assert ((xcoord.points >= -180.0) & (xcoord.points <= 180.0)).all(), (
-            msg
-        )
+        assert (
+            (xcoord.points >= -180.0) & (xcoord.points <= 180.0)
+        ).all(), msg
     return cube
 
 
