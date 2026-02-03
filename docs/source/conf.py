@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Sphinx configuration."""
+
 #
 # Configuration file for the Sphinx documentation builder.
 #
@@ -22,7 +23,6 @@ import os
 from glob import glob
 
 import aeolus
-
 
 # -- Project information -----------------------------------------------------
 
