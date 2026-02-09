@@ -184,7 +184,7 @@ def integrate(cube, coord):
         if cube.coord_dims(dc) != cube.coord_dims(c)
     ]
     dim = cube.coord_dims(c)[0]
-    data = np.trapz(cube.data, c.points, axis=dim)
+    data = np.trapezoid(cube.data, c.points, axis=dim)
     res = next(cube.slices(others)).copy(data=data)
     res.units = cube.units * c.units
     res.remove_coord(c)
