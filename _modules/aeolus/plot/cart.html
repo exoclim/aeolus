@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
 
     <link rel="shortcut icon" href="../../../_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>aeolus.plot.cart - aeolus 26.2.3.0.dev78 documentation</title>
+        <title>aeolus.plot.cart - aeolus 26.2.9.0.dev82 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -160,7 +160,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">aeolus 26.2.3.0.dev78 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">aeolus 26.2.9.0.dev82 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -181,7 +181,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
-  <span class="sidebar-brand-text">aeolus 26.2.3.0.dev78 documentation</span>
+  <span class="sidebar-brand-text">aeolus 26.2.9.0.dev82 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -292,7 +292,9 @@
 <span class="sd">        the subplot position code (e.g., &quot;121&quot;).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">axesgrid_kw</span><span class="p">[</span><span class="s2">&quot;axes_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">GeoAxes</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;map_projection&quot;</span><span class="p">:</span> <span class="n">projection</span><span class="p">})</span>
-        <span class="n">axesgrid_kw</span><span class="p">[</span><span class="s2">&quot;label_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># note the empty label_mode</span>
+        <span class="n">axesgrid_kw</span><span class="p">[</span><span class="s2">&quot;label_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;L&quot;</span>  <span class="c1"># other systems may require an empty label_mode</span>
+        <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="n">nrows_ncols</span><span class="p">,</span> <span class="o">**</span><span class="n">axesgrid_kw</span><span class="p">)</span></div>
 </div>
 
@@ -406,7 +408,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=113a2554"></script>
+</div><script src="../../../_static/documentation_options.js?v=7365997b"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
