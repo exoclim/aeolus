@@ -35,7 +35,9 @@ class GeoAxesGrid(AxesGrid):
         the subplot position code (e.g., "121").
         """
         axesgrid_kw["axes_class"] = (GeoAxes, {"map_projection": projection})
-        axesgrid_kw["label_mode"] = ""  # note the empty label_mode
+        axesgrid_kw["label_mode"] = (
+            "L"  # other systems may require an empty label_mode
+        )
         super().__init__(fig, rect, nrows_ncols, **axesgrid_kw)
 
 
